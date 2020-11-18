@@ -27,6 +27,14 @@ read_amw_data <- function () {
                                  "Horses",
                                  "Mules",
                                  "Buffaloes",
-                                 "Camelids, other"))
+                                 "Camelids, other")) %>%
+    tidyr::pivot_wider(names_from = Species,
+                       values_from = Live_Animals) %>%
+    replace(is.na(.), 0) %>%
+    dplyr::mutate(Camelids = Camels + `Camelids, other`,
+                  .keep = "unused") %>%
+    tidyr::pivot_longer(cols = c("Asses", "Buffaloes", "Camelids", "Cattle", "Horses", "Mules"),
+                        names_to = "Species",
+                        values_to = "Live_Animals")
 
 }

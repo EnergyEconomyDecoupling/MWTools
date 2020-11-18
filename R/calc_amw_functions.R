@@ -40,4 +40,36 @@ tidy_trim_amw_data <- function (.df) {
 
 }
 
+calc_working_animals <- function(.df) {
+
+  country_mapping_path <- paste(PFUSetup::get_abs_paths()$project_path,
+                                "/Mapping/Country_Mapping_2020.xlsx", sep = "")
+
+  MW_mapping <- readxl::read_excel(country_mapping_path,
+                                   sheet = "MW_PFU") %>%
+    tibble::tibble() %>%
+    dplyr::select(MW_region_code, `2018`) %>%
+    magrittr::set_colnames(c("MW_region_code", "ISO_Country_Code"))
+
+  PS_mapping_path <- paste(PFUSetup::get_abs_paths()$project_path,
+                           "/Muscle work/PS_amw_draft_perc.xlsx", sep = "")
+
+  working_animal_mapping <- readxl::read_excel(PS_mapping_path,
+                                   sheet = "DA_perc") %>%
+    tibble::tibble() %>%
+    dplyr::select(-MW_region, -`Exemplar/Method`) %>%
+    tidyr::pivot_longer(cols = `1960`:`2019`,
+                        names_to = "Year",
+                        values_to = "Prop_Working_Animal")
+
+  working_animal_mapping$Year <- as.numeric(working_animal_mapping$Year)
+
+  .df %>%
+    dplyr::left_join(MW_mapping, by = "ISO_Country_Code") %>%
+    dplyr::relocate(MW_region_code, .before = Country) %>%
+    dplyr::left_join(working_animal_mapping, by = c("Species", "MW_region_code", "Year")) %>%
+    dplyr::mutate(working_animals = Live_Animals * Prop_Working_Animal)
+
+
+}
 

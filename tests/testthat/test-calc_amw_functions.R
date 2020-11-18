@@ -6,3 +6,5 @@ test_that("multiplication works", {
 amw_1 <- read_amw_data()
 
 amw_2 <- tidy_trim_amw_data(amw_1)
+
+amw_3 <- calc_working_animals(amw_2)
