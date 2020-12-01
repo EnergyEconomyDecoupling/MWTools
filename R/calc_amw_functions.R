@@ -177,9 +177,21 @@ calc_useful_work <- function(.df) {
   .df %>%
     dplyr::left_join(power, by = c("Species", "MW_region_code")) %>%
     dplyr::left_join(working_time, by = c("Species", "MW_region_code")) %>%
-    dplyr::mutate("useful_work_total" = `Working_Animals` * `power_per_animal` * `working_time_per_animal`) %>%
-    dplyr::mutate("useful_work_ag" = `Working_animals_ag` * `power_per_animal` * `working_time_per_animal`) %>%
-    dplyr::mutate("useful_work_tr" = `Working_animals_tr` * `power_per_animal` * `working_time_per_animal`) %>%
+    dplyr::mutate("useful_energy_total" = `Working_Animals` * `power_per_animal` * `working_time_per_animal` / 1000000) %>%
+    dplyr::mutate("useful_energy_ag" = `Working_animals_ag` * `power_per_animal` * `working_time_per_animal` / 1000000) %>%
+    dplyr::mutate("useful_energy_tr" = `Working_animals_tr` * `power_per_animal` * `working_time_per_animal` / 1000000) %>%
     tibble::as_tibble()
 
+}
+
+tidy_amw_df <- function(.df) {
+
+  .df %>%
+    dplyr::select(Continent, ISO_Country_Code, Year, Species,
+                  final_energy_total:primary_energy_tr,
+                  useful_energy_total:useful_energy_tr) %>%
+    tidyr::pivot_longer(cols = final_energy_total:useful_energy_tr,
+                        names_to = c("stage", "sector"),
+                        names_sep = "_energy_",
+                        values_to = "Energy [J]")
 }
