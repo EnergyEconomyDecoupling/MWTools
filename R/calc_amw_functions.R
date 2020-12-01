@@ -195,3 +195,20 @@ tidy_amw_df <- function(.df) {
                         names_sep = "_energy_",
                         values_to = "Energy [J]")
 }
+
+calc_amw_pfu <- function() {
+
+  read_amw_data() %>%
+    tidy_trim_amw_data() %>%
+    calc_working_animals() %>%
+    calc_work_split() %>%
+    calc_working_animals_split() %>%
+    calc_yearly_feed() %>%
+    calc_final_energy() %>%
+    calc_primary_energy() %>%
+    calc_useful_work() %>%
+    tidy_amw_df
+
+}
+
+amw <- calc_amw_pfu()
