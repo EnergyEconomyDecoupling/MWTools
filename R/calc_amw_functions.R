@@ -162,6 +162,9 @@ calc_primary_energy <- function(.df) {
 
 calc_useful_work <- function(.df) {
 
+  PS_mapping_path <- paste(PFUSetup::get_abs_paths()$project_path,
+                           "/Muscle work/amw_master_data.xlsx", sep = "")
+
   power <- readxl::read_excel(PS_mapping_path, sheet = "DA_power") %>%
     dplyr::select(-`Method/Source`) %>%
     magrittr::set_colnames(c("Species", "MW_region_code", "power_per_animal"))
