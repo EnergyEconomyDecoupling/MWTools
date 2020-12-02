@@ -134,14 +134,14 @@ calc_yearly_feed <- function(.df) {
 
 calc_final_energy <- function(.df) {
 
-  trough_waste <- 0.1
+  trough_waste <- 0.1 # Trough waste ~ 10%
 
-  # ge_de <-
+  ge_de <- (12.8/11) # Gross energy to digestible energy ratio
 
   .df %>%
-    dplyr::mutate("final_energy_total" = (Working_Animals * year_feed_per_animal) * (1/(1 - trough_waste))) %>% # (ge_de) *
-    dplyr::mutate("final_energy_ag" = (Working_animals_ag * year_feed_per_animal) * (1/(1 - trough_waste))) %>%
-    dplyr::mutate("final_energy_tr" = (Working_animals_tr * year_feed_per_animal) * (1/(1 - trough_waste)))
+    dplyr::mutate("final_energy_total" = (Working_Animals * year_feed_per_animal) * (ge_de) * (1/(1 - trough_waste))) %>%
+    dplyr::mutate("final_energy_ag" = (Working_animals_ag * year_feed_per_animal) * (ge_de) * (1/(1 - trough_waste))) %>%
+    dplyr::mutate("final_energy_tr" = (Working_animals_tr * year_feed_per_animal) * (ge_de) * (1/(1 - trough_waste)))
 }
 
 
