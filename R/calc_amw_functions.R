@@ -188,6 +188,7 @@ tidy_amw_df <- function(.df) {
 
   .df %>%
     dplyr::select(Continent, ISO_Country_Code, Year, Species,
+                  Live_Animals, Working_Animals,
                   final_energy_total:primary_energy_tr,
                   useful_energy_total:useful_energy_tr) %>%
     tidyr::pivot_longer(cols = final_energy_total:useful_energy_tr,
