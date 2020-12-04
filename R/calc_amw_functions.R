@@ -211,5 +211,3 @@ calc_amw_pfu <- function() {
     tidy_amw_df
 
 }
-
-amw <- calc_amw_pfu()
