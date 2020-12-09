@@ -2,27 +2,26 @@
 # I need to read the mapping data in from a drake target
 # I need to create a new path in PFU setup
 
-tidy_trim_amw_data <- function (.df) {
+tidy_trim_amw_data <- function (.df, mw_mapping_path) {
 
-  # Creates a filepath to the country_mapping concordance file
-  country_mapping_path <- paste(PFUSetup::get_abs_paths()$project_path,
-                                "/Mapping/Country_Mapping_2020.xlsx", sep = "")
+  # Creates a filepath to the mw_mapping concordance file
+  mw_mapping_path <- mw_mapping_path
 
   # Reads the FAO_PFU concordance sheet of the country mapping file, which maps
-  # World bank country names to ISO country codes by year in accordance with
+  # FAO country names to ISO country codes by year in accordance with
   # the IEA data
-  country_mapping <- readxl::read_excel(country_mapping_path,
+  FAO_mapping <- readxl::read_excel(mw_mapping_path,
                                         sheet = "FAO_PFU") %>%
     tibble::tibble()
 
   # Reads the IEA_PFU concordance sheet of the country mapping file,
   # which contains associated continent codes (Region.code)
-  continent_mapping <- readxl::read_excel(country_mapping_path,
-                                          sheet = "IEA_PFU") %>%
+  continent_mapping <- readxl::read_excel(mw_mapping_path,
+                                          sheet = "MW_PFU") %>%
     tibble::tibble()
 
   # Selects relevant columns, and removes countries which are not in the IEA data
-  concordance_iea <- country_mapping %>%
+  concordance_iea <- FAO_mapping %>%
     dplyr::select(c("ISO_Country_Code", "2018")) %>% # This will need to updated with each update of the IEA data! or use max_year from _drake.R
     magrittr::set_colnames(c("ISO_Country_Code", "PFU_Country_Code")) %>%
     dplyr::filter(PFU_Country_Code != "")
@@ -44,21 +43,19 @@ tidy_trim_amw_data <- function (.df) {
 
 
 
-calc_working_animals <- function(.df) {
+calc_working_animals <- function(.df, mw_mapping_path, amw_path) {
 
-  country_mapping_path <- paste(PFUSetup::get_abs_paths()$project_path,
-                                "/Mapping/Country_Mapping_2020.xlsx", sep = "")
+  mw_mapping_path <- mw_mapping_path
 
-  MW_mapping <- readxl::read_excel(country_mapping_path,
+  MW_mapping <- readxl::read_excel(mw_mapping_path,
                                    sheet = "MW_PFU") %>%
     tibble::tibble() %>%
     dplyr::select(MW_region_code, `2018`) %>%
     magrittr::set_colnames(c("MW_region_code", "ISO_Country_Code"))
 
-  PS_mapping_path <- paste(PFUSetup::get_abs_paths()$project_path,
-                           "/Muscle work/amw_master_data.xlsx", sep = "")
+  PS_mapping_path <- amw_path
 
-  working_animal_mapping <- readxl::read_excel(PS_mapping_path,
+  working_animal_mapping <- readxl::read_excel(amw_path,
                                    sheet = "DA_perc") %>%
     tibble::tibble() %>%
     dplyr::select(-MW_region, -`Exemplar/Method`) %>%
@@ -76,13 +73,11 @@ calc_working_animals <- function(.df) {
 
 }
 
-calc_work_split <- function(.df) {
+calc_work_split <- function(.df, amw_path) {
 
-  PS_mapping_path <- paste(PFUSetup::get_abs_paths()$project_path,
-                           "/Muscle work/amw_master_data.xlsx", sep = "")
+  amw_path <- amw_path
 
-
-  end_use <- readxl::read_excel(PS_mapping_path, sheet = "DA_enduse") %>%
+  end_use <- readxl::read_excel(amw_path, sheet = "DA_enduse") %>%
     dplyr::select(-`Method/Source`, -Metric, -MW_region) %>%
     tidyr::pivot_longer(cols = `1960`:`2019`,
                         names_to = "Year",
@@ -105,15 +100,14 @@ calc_working_animals_split <- function(.df) {
 }
 
 
-calc_yearly_feed <- function(.df) {
+calc_yearly_feed <- function(.df, amw_path) {
 
-  PS_mapping_path <- paste(PFUSetup::get_abs_paths()$project_path,
-                           "/Muscle work/amw_master_data.xlsx", sep = "")
+  amw_path <- amw_path
 
-  feed <- readxl::read_excel(PS_mapping_path, sheet = "DA_feed") %>%
+  feed <- readxl::read_excel(amw_path, sheet = "DA_feed") %>%
     dplyr::select(-`Method/Source`)
 
-  working_days <- readxl::read_excel(PS_mapping_path, sheet = "DA_days_hours") %>%
+  working_days <- readxl::read_excel(amw_path, sheet = "DA_days_hours") %>%
     dplyr::select(-`Method/Source`, -`Working hours [hour]`) %>%
     dplyr::mutate(`Non-Working days [day]` = 365 - `Working days [day]`)
 
@@ -160,16 +154,15 @@ calc_primary_energy <- function(.df) {
 
 
 
-calc_useful_work <- function(.df) {
+calc_useful_work <- function(.df, amw_path) {
 
-  PS_mapping_path <- paste(PFUSetup::get_abs_paths()$project_path,
-                           "/Muscle work/amw_master_data.xlsx", sep = "")
+  amw_path <- amw_path
 
-  power <- readxl::read_excel(PS_mapping_path, sheet = "DA_power") %>%
+  power <- readxl::read_excel(amw_path, sheet = "DA_power") %>%
     dplyr::select(-`Method/Source`) %>%
     magrittr::set_colnames(c("Species", "MW_region_code", "power_per_animal"))
 
-  working_time <- readxl::read_excel(PS_mapping_path, sheet = "DA_days_hours") %>%
+  working_time <- readxl::read_excel(amw_path, sheet = "DA_days_hours") %>%
     dplyr::select(-`Method/Source`, -`Working days [day]`) %>%
     magrittr::set_colnames(c("Species", "MW_region_code", "Working time [hour]")) %>%
     dplyr::mutate("working_time_per_animal" = `Working time [hour]` * 3600, .keep = "unused")
@@ -197,17 +190,18 @@ tidy_amw_df <- function(.df) {
                         values_to = "Energy [J]")
 }
 
-calc_amw_pfu <- function() {
+calc_amw_pfu <- function(amw_data_path, mw_mapping_path, amw_path) {
 
-  read_amw_data() %>%
-    tidy_trim_amw_data() %>%
-    calc_working_animals() %>%
-    calc_work_split() %>%
+  read_amw_data(amw_data_path) %>%
+    tidy_trim_amw_data(mw_mapping_path) %>%
+    calc_working_animals(mw_mapping_path, amw_path) %>%
+    calc_work_split(amw_path) %>%
     calc_working_animals_split() %>%
-    calc_yearly_feed() %>%
+    calc_yearly_feed(amw_path) %>%
     calc_final_energy() %>%
     calc_primary_energy() %>%
-    calc_useful_work() %>%
-    tidy_amw_df
+    calc_useful_work(amw_path) %>%
+    tidy_amw_df()
 
 }
+

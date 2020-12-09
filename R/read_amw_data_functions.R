@@ -3,12 +3,11 @@
 
 library(tidyverse)
 
-read_amw_data <- function () {
+read_amw_data <- function (amw_data_path) {
 
   # Creates a file path to the FAO data in dropbox.
   # This data contains the number of live animals, per species, per country, by year
-  amw_data_path <- paste(PFUSetup::get_abs_paths()$project_path,
-                         "/Data/FAO Data/FAOSTAT_data_10-9-2020.csv", sep = "")
+  amw_data_path <- amw_data_path
 
   # Reads the livestock data .csv file and creates a tibble
   animals_data_raw <- readr::read_csv(amw_data_path) %>%
