@@ -112,7 +112,7 @@ calc_yearly_feed <- function(.df, amw_path) {
     dplyr::mutate(`Non-Working days [day]` = 365 - `Working days [day]`)
 
   yearly_feed <- feed %>%
-    left_join(working_days, by = c("Species", "Region")) %>%
+    dplyr::left_join(working_days, by = c("Species", "Region")) %>%
     dplyr::mutate("Working Day Feed [MJ/year]" = `Working Day Feed [MJ/day]` * `Working days [day]`,
                   .keep = "unused") %>%
     dplyr::mutate("Non-Working Day Feed [MJ/year]" = `Non-Working Day Feed [MJ/day]` * `Non-Working days [day]`,
@@ -179,7 +179,7 @@ calc_useful_work <- function(.df, amw_path) {
 
 tidy_amw_df <- function(.df) {
 
-  .df %>%
+  tidy_data <- .df %>%
     dplyr::select(Continent, ISO_Country_Code, Year, Species,
                   Live_Animals, Working_Animals,
                   final_energy_total:primary_energy_tr,
@@ -188,6 +188,9 @@ tidy_amw_df <- function(.df) {
                         names_to = c("stage", "sector"),
                         names_sep = "_energy_",
                         values_to = "Energy [J]")
+
+  # tidy_data$stage <- factor(tidy_data$stage, levels = c("primary", "final", "useful"))
+
 }
 
 calc_amw_pfu <- function(amw_data_path, mw_mapping_path, amw_path) {
