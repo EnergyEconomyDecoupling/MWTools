@@ -40,12 +40,10 @@ get_ilo_hmw_data <- function(country_name = MWTools::mw_constants$country_name,
   ilo_hmw_data <- employment %>%
     left_join(working_hours, by = c(country_name, sex, sector, year)) %>%
     dplyr::mutate(
-      "{employed_persons}" = .data[[employed_persons]] * 1000,
-      .keep = "unused"
+      "{employed_persons}" = .data[[employed_persons]] * 1000
     ) %>%
     dplyr::mutate(
-      "{working_hours}" = .data[[working_hours]] * 52,
-      .keep = "unused"
+      "{working_hours}" = .data[[working_hours]] * 52
     )
 
   return(ilo_hmw_data)
