@@ -21,7 +21,7 @@ Imports:
     Rilostat,
     tidyverse
 Suggests: 
-    testthat
+    testthat (>= 3.0.0)
 Depends: 
     R (>= 2.10)
 Config/testthat/edition: 3
