@@ -1,13 +1,28 @@
 Package: MWTools
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Functions for the calculation of muscle work Within the PSUT Framework
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author:
+    person(given = "Zeke",
+           family = "Marshall",
+           role = c("aut", "cre"),
+           email = "marshall_zeke@outlook.com",
+           comment = c(ORCID = "0000-0001-9260-7827"))
+Description: MWTools provides functions for retrieving and wrangling data for the
+             calculation of human and animal muscle work dat, and conversion into
+             the PSUT format.
+License: MIT + file LICENSE
+Language: en-US
 Encoding: UTF-8
 LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports:
+    Rilostat,
+    tidyverse
 Suggests: 
     testthat
+Depends: 
+    R (>= 2.10)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
