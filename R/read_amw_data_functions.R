@@ -1,8 +1,5 @@
 # This script reads FAO data for the number of live animals which has been
 # manually downloaded and placed in dropbox
-
-library(tidyverse)
-
 read_amw_data <- function (amw_data_path) {
 
   # Creates a file path to the FAO data in dropbox.
