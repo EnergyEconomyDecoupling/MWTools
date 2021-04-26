@@ -2,7 +2,7 @@
 #'
 #' A string list containing contants used in the MWTools package functions
 #'
-#' @format A string list with `r length(socioecon_cols)` entries.
+#' @format A string list with `r length(mw_constants)` entries.
 #' \describe{
 #' \item{country_name}{The name of a metadata column containing full length country names.}
 #' \item{sex}{The name of a metadata column representing gender.}
