@@ -4,6 +4,7 @@
 #
 # Constants for use in MWTools package
 #
+
 mw_constants <- list(country_name = "Country.name",
                      year = "Year",
                      species = "Species",
@@ -11,6 +12,7 @@ mw_constants <- list(country_name = "Country.name",
                      value = "Value")
 
 usethis::use_data(mw_constants, overwrite = TRUE)
+
 
 #
 # ILO data columns
