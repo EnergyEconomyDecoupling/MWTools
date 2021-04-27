@@ -1,3 +1,5 @@
+library(magrittr)
+
 ################################################################################
 ## ILO data ##
 ################################################################################
@@ -38,7 +40,7 @@ get_ilo_hmw_data <- function(country_name = MWTools::mw_constants$country_name,
   # Convert Employed persons [1000 persons] to employed persons [persons] and
   # mean working hours [hours/week] to mean working hours [hours/year]
   ilo_hmw_data <- employment %>%
-    left_join(working_hours, by = c(country_name, sex, sector, year)) %>%
+    dplyr::left_join(working_hours, by = c(country_name, sex, sector, year)) %>%
     dplyr::mutate(
       "{employed_persons}" := .data[[employed_persons]] * 1000
     ) %>%

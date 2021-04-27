@@ -5,7 +5,7 @@
 \alias{mw_constants}
 \title{General MWTools contants}
 \format{
-A string list with 6 entries.
+A string list with 9 entries.
 \describe{
 \item{country_name}{The name of a metadata column containing full length country names.}
 \item{sex}{The name of a metadata column representing gender.}
@@ -13,6 +13,9 @@ A string list with 6 entries.
 \item{year}{The name of a metadata column containing values for the year of the observation.}
 \item{working_hours}{The name of the data column containing data for the number of working hours.}
 \item{employed_persons}{The name of the data column containing data for the number of employed persons.}
+\item{species}{The name of the metadata column representing a species of live animal from FAO data.}
+\item{unit}{The name of the metadata column containing the units associated with the \code{value} column}
+\item{value}{The name of the data column containing the values of a given observation.}
 }
 }
 \usage{

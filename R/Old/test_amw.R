@@ -35,21 +35,21 @@ unique(data$ISO_Country_Code)
 
 
 plot_data <- data %>%
-  dplyr::filter(ISO_Country_Code == "CHN", sector == "total") %>%
+  dplyr::filter(ISO_Country_Code == "JPN", sector == "total") %>%
   as.data.frame()
 
 
 pfu_plot <- ggplot2::ggplot() +
-  ggplot2::geom_line(data = plot_data, mapping =  aes(x = Year, y = `Energy [J]`, color = stage)) +
+  ggplot2::geom_line(data = plot_data, mapping = aes(x = Year, y = `Energy [J]`, color = stage)) +
   ggplot2::facet_wrap(facets = "Species", scales = "free_y") +
   labs(color = "ECC Stage") +
-  labs(title = "CHN", subtitle = "total")
+  labs(title = "JPN", subtitle = "Working Animal Energy")
 
 wa_plot <- ggplot2::ggplot() +
   ggplot2::geom_line(data = plot_data, aes(x = Year, y = Working_Animals, color = "Working")) +
   ggplot2::geom_line(data = plot_data, aes(x = Year, y = Live_Animals, color = "Live")) +
   ggplot2::facet_wrap(facets = "Species", scales = "free_y") +
   labs(y = "Number of Animals", color = "Metric") +
-  labs(title = "CHN", subtitle = "total")
+  labs(title = "JPN", subtitle = "Number of Animals")
 
 cowplot::plot_grid(pfu_plot, wa_plot, ncol = 1)

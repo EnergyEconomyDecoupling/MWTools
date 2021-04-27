@@ -1,7 +1,12 @@
-
-# I need to read the mapping data in from a drake target
-# I need to create a new path in PFU setup
-
+#' Title
+#'
+#' @param .df
+#' @param mw_mapping_path
+#'
+#' @return
+#' @export
+#'
+#' @examples
 tidy_trim_amw_data <- function (.df, mw_mapping_path) {
 
   # Creates a filepath to the mw_mapping concordance file
@@ -11,7 +16,7 @@ tidy_trim_amw_data <- function (.df, mw_mapping_path) {
   # FAO country names to ISO country codes by year in accordance with
   # the IEA data
   FAO_mapping <- readxl::read_excel(mw_mapping_path,
-                                        sheet = "FAO_PFU") %>%
+                                    sheet = "FAO_PFU") %>%
     tibble::tibble()
 
   # Reads the IEA_PFU concordance sheet of the country mapping file,
@@ -193,9 +198,25 @@ tidy_amw_df <- function(.df) {
 
 }
 
+#' Calculate primary, final, and useful working animal energy
+#'
+#' This function calculates the total number of working animals and primary,
+#' final, and useful working animal energy by country, and for six species:
+#' Asses, Buffaloes, Camelids, Cattle, Horses, and Mules.
+#'
+#' @param amw_data_path
+#' @param mw_mapping_path
+#' @param amw_path
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' data <- calc_amw_pfu(amw_data_path, mw_mapping_path, amw_path) # Add paths here.
+#'
 calc_amw_pfu <- function(amw_data_path, mw_mapping_path, amw_path) {
 
-  read_amw_data(amw_data_path) %>%
+  amw_pfu_data <- read_amw_data(amw_data_path) %>%
     tidy_trim_amw_data(mw_mapping_path) %>%
     calc_working_animals(mw_mapping_path, amw_path) %>%
     calc_work_split(amw_path) %>%
@@ -205,6 +226,8 @@ calc_amw_pfu <- function(amw_data_path, mw_mapping_path, amw_path) {
     calc_primary_energy() %>%
     calc_useful_work(amw_path) %>%
     tidy_amw_df()
+
+  return(amw_pfu_data)
 
 }
 
