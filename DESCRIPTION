@@ -18,8 +18,11 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports:
+    FAOSTAT,
+    fs,
     Rilostat,
-    tidyverse
+    tidyverse,
+    
 Suggests: 
     testthat (>= 3.0.0)
 Depends: 
