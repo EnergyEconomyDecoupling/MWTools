@@ -1,84 +1,70 @@
-#' Title
-#'
-#' @param .df
-#' @param mw_mapping_path
-#'
-#' @return
-#' @export
-#'
-#' @examples
-tidy_trim_amw_data <- function (.df, mw_mapping_path) {
+mw_mapping_path <- "C:\\Users\\earzm\\Dropbox\\Fellowship 1960-2015 PFU database\\Mapping\\MW_mapping.xlsx"
 
-  # Creates a filepath to the mw_mapping concordance file
-  mw_mapping_path <- mw_mapping_path
 
-  # Reads the FAO_PFU concordance sheet of the country mapping file, which maps
-  # FAO country names to ISO country codes by year in accordance with
-  # the IEA data
-  FAO_mapping <- readxl::read_excel(mw_mapping_path,
-                                    sheet = "FAO_PFU") %>%
-    tibble::tibble()
+add_iso_codes <- function(fao_df){
 
-  # Reads the IEA_PFU concordance sheet of the country mapping file,
-  # which contains associated continent codes (Region.code)
-  continent_mapping <- readxl::read_excel(mw_mapping_path,
-                                          sheet = "MW_PFU") %>%
-    tibble::tibble()
+  iso3_fao_names <- FAOSTAT::FAOregionProfile %>%
+    dplyr::select(ISO3_CODE, FAO_TABLE_NAME) %>%
+    magrittr::set_colnames(c("Country.code", "Country.name"))
 
-  # Selects relevant columns, and removes countries which are not in the IEA data
-  concordance_iea <- FAO_mapping %>%
-    dplyr::select(c("ISO_Country_Code", "2018")) %>% # This will need to updated with each update of the IEA data! or use max_year from _drake.R
-    magrittr::set_colnames(c("ISO_Country_Code", "PFU_Country_Code")) %>%
-    dplyr::filter(PFU_Country_Code != "")
+  fao_df_with_iso3 <- data_tidy %>% # change
+    dplyr::left_join(iso3_fao_names, by = "Country.name") %>%
+    dplyr::relocate("Country.code", .before = "Country.name")
 
-  concordance_continent <- continent_mapping %>%
-    dplyr::select(c("Region.code", "2018")) %>% # This will need to updated with each update of the IEA data! or use max_year from _drake.R
-    magrittr::set_colnames(c("Continent", "PFU_Country_Code"))
-
-  # Creates a tibble from a amw df which only contains iea countries,
-  # adds the PFU codes associated with the ISO codes,
-  # and adds the continent codes for each country
-  .df %>%
-    dplyr::right_join(concordance_iea, by = "ISO_Country_Code") %>%
-    merge(concordance_continent, by = "PFU_Country_Code") %>%
-    dplyr::relocate("Continent", .before = "ISO_Country_Code") %>%
-    dplyr::relocate("PFU_Country_Code", .after = "ISO_Country_Code")
+  return(fao_df_with_iso3)
 
 }
 
 
+add_mw.region_codes <- function(fao_df_with_iso3, mw_mapping_path){
 
-calc_working_animals <- function(.df, mw_mapping_path, amw_path) {
+  mw.region_to_iso3 <- readxl::read_xlsx(path = mw_mapping_path,
+                                         sheet = "MW_PFU") %>%
+    dplyr::select(MW_region_code, `2019`) %>%
+    magrittr::set_colnames(c("MW.Region.code", "Country.code"))
 
-  mw_mapping_path <- mw_mapping_path
+  fao_df_with_region <- fao_df_with_iso3 %>%
+    dplyr::left_join(mw.region_to_iso3, by = "Country.code") %>%
+    dplyr::relocate("MW.Region.code", .before = "Country.code")
 
-  MW_mapping <- readxl::read_excel(mw_mapping_path,
-                                   sheet = "MW_PFU") %>%
+  return(fao_df_with_region) # Doesn't include Afghanistan etc need complete concordance!
+
+
+}
+
+
+calc_working_animals <- function(working_species_data,
+                                 mw_mapping_path,
+                                 amw_analysis_path,
+                                 year = MWTools::mw_constants$year,
+                                 species = MWTools::mw_constants$species,
+                                 prop_working_animal = MWTools::amw_analysis_constants$prop_working_animal,
+                                 da_perc = MWTools::amw_analysis_constants$da_perc,
+                                 working_animals_col = MWTools::amw_analysis_constants$working_animals_col,
+                                 live_animals_col= MWTools::amw_analysis_constants$live_animals_col){
+
+  # Reads the amw analysis excel file to determine the percentage of live animals
+  # that are working animals.
+  working_species_mapping <- readxl::read_excel(amw_analysis_path,
+                                                sheet = da_perc) %>%
     tibble::tibble() %>%
-    dplyr::select(MW_region_code, `2018`) %>%
-    magrittr::set_colnames(c("MW_region_code", "ISO_Country_Code"))
-
-  PS_mapping_path <- amw_path
-
-  working_animal_mapping <- readxl::read_excel(amw_path,
-                                   sheet = "DA_perc") %>%
-    tibble::tibble() %>%
-    dplyr::select(-MW_region, -`Exemplar/Method`) %>%
+    dplyr::select(-MW_region, -`Exemplar/Method`) %>% # add constants
     tidyr::pivot_longer(cols = `1960`:`2019`,
-                        names_to = "Year",
-                        values_to = "Prop_Working_Animal")
+                        names_to = year,
+                        values_to = prop_working_animal) %>% # ad constants
+    dplyr::mutate(
+      "{year}" := as.numeric(.data[[year]])
+    )
 
-  working_animal_mapping$Year <- as.numeric(working_animal_mapping$Year)
-
-  .df %>%
-    dplyr::left_join(MW_mapping, by = "ISO_Country_Code") %>%
-    dplyr::relocate(MW_region_code, .before = Country) %>%
-    dplyr::left_join(working_animal_mapping, by = c("Species", "MW_region_code", "Year")) %>%
-    dplyr::mutate(Working_Animals = Live_Animals * Prop_Working_Animal)
+  working_species_data %>%
+    dplyr::left_join(working_species_mapping, by = c(species, "MW_region_code", year)) %>%
+    dplyr::mutate(
+      "{working_animals_col}" := .data[[live_animals_col]] * .data[[prop_working_animal]]
+      )
 
 }
 
-calc_work_split <- function(.df, amw_path) {
+calc_sector_split <- function(.df, amw_path) {
 
   amw_path <- amw_path
 

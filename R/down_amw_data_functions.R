@@ -7,9 +7,7 @@ library(magrittr)
 #'
 #' @param data_folder A user-specified file path to the directory in which to
 #'                    download the FAO live animals data.
-#' @param live_animals_code The two letter item code representing data for the
-#'                          number of live animals. See `FAOSTAT::FAOsearch()`
-#'                          to view the associated items, codes, and other metadata.
+#' @param live_animals_code See `MWTools::fao_codes$live_animals_code`.
 #'
 #' @return
 #' @export
@@ -95,13 +93,13 @@ tidy_fao_live_animals <- function(data_folder,
 }
 
 
-#' Create a data frame containing the number of working animals only
-#'
+#' Create a data frame containing the total number of animals of working species
+
 #' Using a tidy dataframe containing the number of live animals, this function
 #' restricts the species of animals to: Asses, Camels, Cattle, Horses, Mules,
 #' Buffaloes, and Camelids, other; then combines Camels and Camlelids, other
 #' into a combines "Camelids" species group.
-#'
+
 #' @param live_animals A tidy data frame containing the number of live animals by
 #'                     country over time. Usually supplied from the FAO through
 #'                     the functions `MWTools::down_fao_live_animals` and
@@ -114,12 +112,14 @@ tidy_fao_live_animals <- function(data_folder,
 #' @export
 #'
 #' @examples
-#' working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#' working_speies_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
 #'   MWTools::tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
-#'   MWTools::get_working_animals()
+#'   MWTools::get_working_species()
 #'
-get_working_animals <- function(live_animals,
+get_working_species <- function(live_animals,
                                 species = MWTools::mw_constants$species,
+                                country_name = MWTools::mw_constants$country_name,
+                                year = MWTools::mw_constants$year,
                                 value = MWTools::mw_constants$value,
                                 asses = MWTools::mw_species$asses,
                                 camels = MWTools::mw_species$camels,
@@ -128,10 +128,11 @@ get_working_animals <- function(live_animals,
                                 mules = MWTools::mw_species$mules,
                                 buffaloes = MWTools::mw_species$buffaloes,
                                 camelids_other = MWTools::mw_species$camelids_other,
-                                camelids = MWTools::mw_species$camelids){
+                                camelids = MWTools::mw_species$camelids,
+                                live_animals_col = MWTools::amw_analysis_constants$live_animals_col){
 
   # Filter data to only include working animal species
-  working_animals <- live_animals %>%
+  working_species <- live_animals %>%
     dplyr::filter(Species %in% c(asses,
                                  camels,
                                  cattle,
@@ -145,13 +146,15 @@ get_working_animals <- function(live_animals,
     replace(is.na(.), 0) %>%
     dplyr::mutate(
       "{camelids}" := .data[[camels]] + .data[[camelids_other]],
-                  .keep = "unused") %>%
+      .keep = "unused"
+      ) %>%
     tidyr::pivot_longer(cols = c(asses, buffaloes, camelids, cattle, horses, mules),
                         names_to = species,
-                        values_to = value)
+                        values_to = value) %>%
+    magrittr::set_colnames(c(country_name, year, species, live_animals_col))
 
   # Returns a tidy data frame containing the number of working animals
-  return(working_animals)
+  return(working_species)
 
 }
 
