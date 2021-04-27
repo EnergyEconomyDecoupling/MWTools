@@ -15,6 +15,7 @@ library(magrittr)
 #' @export
 #'
 #' @examples
+#' down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data"))
 #'
 down_fao_live_animals <- function(data_folder,
                                   live_animals_code = MWTools::fao_codes$live_animals_code){
@@ -40,6 +41,9 @@ down_fao_live_animals <- function(data_folder,
 #' @export
 #'
 #' @examples
+#' tidy_live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#'   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data"))
+#'
 tidy_fao_live_animals <- function(data_folder,
                                   country_name = MWTools::mw_constants$country_name,
                                   species = MWTools::mw_constants$species,
@@ -110,6 +114,10 @@ tidy_fao_live_animals <- function(data_folder,
 #' @export
 #'
 #' @examples
+#' working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#'   MWTools::tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#'   MWTools::get_working_animals()
+#'
 get_working_animals <- function(live_animals,
                                 species = MWTools::mw_constants$species,
                                 value = MWTools::mw_constants$value,
