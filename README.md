@@ -6,7 +6,9 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of MWTools is to …
+The `R` package `MWTools` provides functions for the calculation of
+human and animal muscle work for use in Societal Exergy Analysis (SEA)
+using the Physical Supply Use Table (PSUT) framework.
 
 ## Installation
 
@@ -18,35 +20,67 @@ You can install the development version from
 devtools::install_github("EnergyEconomyDecoupling/MWTools")
 ```
 
-## Example
+## Animal Muscle Work
 
-This is a basic example which shows you how to solve a common problem:
+Raw data for the calculation of animal muscle work is obtained from the
+Food and Agriculture Organisation of the United Nations Statistical
+Database (FAOSTAT), via the `R` package `FAOSTAT`. For the case of
+animal muscle work `MWTools` provides a wrapper function for downloading
+data for the number of live animals, `down_fao_live_animals`, which
+utilises the function `FAOSTAT::get_faostat_bulk()`. Once downloaded
+`MWTools` provides a number of functions for the calculation of the
+number of working animals by species, country, year and in agriculture,
+transport, and in total. The helper function `calc_amw_numbers` returns
+a tidy data frame containing
 
 ``` r
 library(MWTools)
-## basic example code
+
+amw_numbers_df <- calc_amw_numbers(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"),
+                                amw_analysis_path = file.path(PFUSetup::get_abs_paths()$project_path, "Muscle work\\amw_master_data.xlsx"))
+
+head(amw_numbers_df)
+#> # A tibble: 6 x 7
+#>   MW.Region.code Country.code  Year Species  Sector Live.animals Working.animals
+#>   <chr>          <chr>        <dbl> <chr>    <chr>         <dbl>           <dbl>
+#> 1 WAS            AFG           1961 Asses    Total       1300000        1154307.
+#> 2 WAS            AFG           1961 Asses    Agric~      1300000         173146.
+#> 3 WAS            AFG           1961 Asses    Trans~      1300000         981161.
+#> 4 WAS            AFG           1961 Buffalo~ Total             0              0 
+#> 5 WAS            AFG           1961 Buffalo~ Agric~            0              0 
+#> 6 WAS            AFG           1961 Buffalo~ Trans~            0              0
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+The helper function `calc_amw_pfu` returns a tidy data frame containing
+data for the primary, final, and useful energy by species, country, year
+and in agriculture, transport, and in total.
+
+``` r
+amw_pfu_df <- calc_amw_pfu(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"),
+                         amw_analysis_path = file.path(PFUSetup::get_abs_paths()$project_path, "Muscle work\\amw_master_data.xlsx"))
+
+head(amw_pfu_df)
+#> # A tibble: 6 x 7
+#>   MW.Region.code Country.code  Year Species Stage  Sector      `Energy [MJ/year~
+#>   <chr>          <chr>        <dbl> <chr>   <chr>  <chr>                   <dbl>
+#> 1 WAS            AFG           1961 Asses   Useful Total              831100990.
+#> 2 WAS            AFG           1961 Asses   Useful Agriculture        124665149.
+#> 3 WAS            AFG           1961 Asses   Useful Transport          706435842.
+#> 4 WAS            AFG           1961 Asses   Final  Total            12685716572.
+#> 5 WAS            AFG           1961 Asses   Final  Agriculture       1902857486.
+#> 6 WAS            AFG           1961 Asses   Final  Transport        10782859086.
+```
 
 Use the `plot_amw_summary` function to produce a plot summarising the
 animal muscle work data for a particular country and sector.
 
 ``` r
-plot_amw_summary(amw_pfu_df = all_data,
-                 amw_numbers_df = all_numbers,
+plot_amw_summary(amw_pfu_df = amw_pfu_df,
+                 amw_numbers_df = amw_numbers_df,
                  country = "CHN",
                  sector = "Total")
 ```
 
 <img src="man/figures/README-example_plot-1.png" width="100%" />
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+## Human Muscle Work

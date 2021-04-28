@@ -212,11 +212,13 @@ tidy_numbers_data <- function(.df,
                         names_to = sector_col,
                         names_prefix = stringr::fixed("Working.animals."),
                         values_to = working_animals_col) %>%
-  dplyr::mutate(
-    "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("total"), "Total"),
-    "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Ag"), "Agriculture"),
-    "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Tr"), "Transport")
-  )
+    dplyr::mutate(
+      "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("total"), "Total"),
+      "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Ag"), "Agriculture"),
+      "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Tr"), "Transport")
+      ) %>%
+
+    dplyr::relocate(.data[[sector_col]], .before = .data[[live_animals_col]])
 }
 
 

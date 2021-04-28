@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-The goal of MWTools is to ...
+The `R` package `MWTools` provides functions for the calculation of human and animal muscle work for use in Societal Exergy Analysis (SEA) using the Physical Supply Use Table (PSUT) framework.
 
 ## Installation
 
@@ -30,38 +30,39 @@ You can install the development version from [GitHub](https://github.com/) with:
 devtools::install_github("EnergyEconomyDecoupling/MWTools")
 ```
 
-## Example
+## Animal Muscle Work
 
-This is a basic example which shows you how to solve a common problem:
+Raw data for the calculation of animal muscle work is obtained from the Food and Agriculture Organisation of the United Nations Statistical Database (FAOSTAT), via the `R` package `FAOSTAT`. For the case of animal muscle work `MWTools` provides a wrapper function for downloading data for the number of live animals, `down_fao_live_animals`, which utilises the function `FAOSTAT::get_faostat_bulk()`. Once downloaded `MWTools` provides a number of functions for the calculation of the number of working animals by species, country, year and in agriculture, transport, and in total. The helper function `calc_amw_numbers` returns a tidy data frame containing
 
-```{r example}
+```{r example_numbers}
 library(MWTools)
-## basic example code
+
+amw_numbers_df <- calc_amw_numbers(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"),
+                                amw_analysis_path = file.path(PFUSetup::get_abs_paths()$project_path, "Muscle work\\amw_master_data.xlsx"))
+
+head(amw_numbers_df)
+
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+The helper function `calc_amw_pfu` returns a tidy data frame containing data for the primary, final, and useful energy by species, country, year and in agriculture, transport, and in total.
 
-```{r get_example_data, echo=FALSE}
-all_data <- calc_amw_pfu(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"),
+```{r get_example_data}
+amw_pfu_df <- calc_amw_pfu(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"),
                          amw_analysis_path = file.path(PFUSetup::get_abs_paths()$project_path, "Muscle work\\amw_master_data.xlsx"))
 
-all_numbers <- calc_amw_numbers(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"),
-                                amw_analysis_path = file.path(PFUSetup::get_abs_paths()$project_path, "Muscle work\\amw_master_data.xlsx"))
-                                
-                                
+head(amw_pfu_df)
+
 ```
 
 Use the `plot_amw_summary` function to produce a plot summarising the animal muscle work data for a particular country and sector.
 
 ```{r example_plot, echo=TRUE, fig.height=6, fig.width=7}
 
-plot_amw_summary(amw_pfu_df = all_data,
-                 amw_numbers_df = all_numbers,
+plot_amw_summary(amw_pfu_df = amw_pfu_df,
+                 amw_numbers_df = amw_numbers_df,
                  country = "CHN",
                  sector = "Total")
 
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>.
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+## Human Muscle Work
