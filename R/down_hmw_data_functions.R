@@ -1,5 +1,3 @@
-library(magrittr)
-
 ################################################################################
 ## ILO data ##
 ################################################################################
@@ -19,11 +17,11 @@ library(magrittr)
 #' ilo_hmw_data <- get_ilo_hmw_data()
 #'
 get_ilo_hmw_data <- function(country_name = MWTools::mw_constants$country_name,
-                             sex = MWTools::ilo_cols$sex,
-                             sector = MWTools::ilo_cols$sector,
+                             sex = MWTools::ilo_cols$sex_ilo_col,
+                             sector = MWTools::ilo_cols$sector_ilo_col,
                              year = MWTools::mw_constants$year,
-                             working_hours = MWTools::ilo_cols$working_hours,
-                             employed_persons = MWTools::ilo_cols$employed_persons,
+                             working_hours = MWTools::ilo_cols$working_hours_ilo_col,
+                             employed_persons = MWTools::ilo_cols$employed_persons_ilo_col,
                              working_hours_code = MWTools::ilo_codes$working_hours_code,
                              employment_code = MWTools::ilo_codes$employment_code
                              ){

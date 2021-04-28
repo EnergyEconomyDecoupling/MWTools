@@ -9,7 +9,10 @@ mw_constants <- list(country_name = "Country.name",
                      year = "Year",
                      species = "Species",
                      unit = "Unit",
-                     value = "Value")
+                     value = "Value",
+                     sector_col = "Sector",
+                     stage_col = "Stage",
+                     energy_mj_year = "Energy [MJ/year]")
 
 usethis::use_data(mw_constants, overwrite = TRUE)
 
@@ -18,7 +21,6 @@ usethis::use_data(mw_constants, overwrite = TRUE)
 # ILO data columns
 #
 ilo_cols <- list(sex_ilo_col = "Sex",
-                 sector_ilo_col = "Sector",
                  working_hours_ilo_col = "Working.hours",
                  employed_persons_ilo_col = "Employed.persons")
 
@@ -68,11 +70,53 @@ usethis::use_data(ilo_codes, overwrite = TRUE)
 #
 # Animal Muscle Work (amw) analysis data constants
 #
-amw_analysis_constants <- list(prop_working_animal = "Prop_Working_Animal",
-                               da_perc = "DA_perc",
+amw_analysis_constants <- list(prop_working_animals_col = "Prop.Working.animals",
+                               prop_working_animals_ag_col = "Prop.Working.animals.Ag",
+                               prop_working_animals_tr_col = "Prop.Working.animals.Tr",
+                               wa_perc_sheet = "WA_perc",
+                               wa_enduse_sheet = "WA_enduse",
+                               wa_feed_sheet = "WA_feed",
+                               wa_days_hours_sheet = "WA_days_hours",
+                               wa_power_sheet = "WA_power",
+                               working_seconds_col = "Working.seconds [seconds per animal]",
+                               working_hours_col = "Working.hours [hour per animal]",
+                               working_days_col = "Working.days [day per animal]",
+                               nonworking_days_col = "Non-Working days [day per animal]",
+                               power_per_animal = "Power.per.animal [W]",
+                               live_animals_col = "Live.animals",
                                working_animals_col = "Working.animals",
-                               live_animals_col = "Live.animals")
+                               working_animals_total_col = "Working.animals.total",
+                               working_animals_ag_col = "Working.animals.Ag",
+                               working_animals_tr_col = "Working.animals.Tr",
+                               working_day_feed_col = "Working.day.feed [MJ/day per animal]",
+                               nonworking_day_feed_col = "Non-Working.day.feed [MJ/day per animal]",
+                               working_yearly_feed_col = "Working.yearly.feed [MJ/year per animal]",
+                               nonworking_yearly_feed_col = "Non-Working.yearly.feed [MJ/year per animal]",
+                               total_yearly_feed_col = "Total.yearly.feed [MJ/year per animal]",
+                               useful_energy_total = "Useful.energy.total [MJ/year]",
+                               useful_energy_ag = "Useful.energy.Ag [MJ/year]",
+                               useful_energy_tr = "Useful.energy.Tr [MJ/year]",
+                               final_energy_total = "Final.energy.total [MJ/year]",
+                               final_energy_ag = "Final.energy.Ag [MJ/year]",
+                               final_energy_tr = "Final.energy.Tr [MJ/year]",
+                               primary_energy_total = "Primary.energy.total [MJ/year]",
+                               primary_energy_ag = "Primary.energy.Ag [MJ/year]",
+                               primary_energy_tr = "Primary.energy.Tr [MJ/year]",
+                               mw_region_code_col = "MW.Region.code",
+                               mw_region_col = "MW.Region",
+                               exemplar_method_col = "Exemplar/Method",
+                               method_source_col = "Method/Source",
+                               metric_col = "Metric")
 
 usethis::use_data(amw_analysis_constants, overwrite = TRUE)
+
+#
+# Concordance columns
+#
+conc_cols <- list(country_code_col = "Country.code",
+                  country_code_pfu_col = "Country.code_PFU",
+                  country_incl_col = "Country.incl.")
+
+usethis::use_data(conc_cols, overwrite = TRUE)
 
 

@@ -5,7 +5,7 @@
 \alias{mw_constants}
 \title{General MWTools constants}
 \format{
-A string list with 5 entries.
+A string list with 8 entries.
 \describe{
 \item{country_name}{The name of a metadata column containing full length country names.}
 \item{year}{The name of a metadata column containing values for the year of the observation.}

@@ -4,20 +4,25 @@
 \alias{calc_amw_pfu}
 \title{Calculate primary, final, and useful working animal energy}
 \usage{
-calc_amw_pfu(amw_data_path, mw_mapping_path, amw_path)
+calc_amw_pfu(data_folder, amw_analysis_path)
 }
 \arguments{
-\item{amw_path}{}
+\item{data_folder}{The file path to the FAO live animals data downloaded using
+the function \code{MWTools::down_fao_live_animals}.}
+
+\item{amw_analysis_path}{The file path to the analysis .xlsx file.}
 }
 \value{
 
 }
 \description{
 This function calculates the total number of working animals and primary,
-final, and useful working animal energy by country, and for six species:
-Asses, Buffaloes, Camelids, Cattle, Horses, and Mules.
+final, and useful working animal energy by country, for six species:
+Asses, Buffaloes, Camelids, Cattle, Horses, and Mules, and three sector categories:
+Total, Agriculture, and Transport.
 }
 \examples{
-data <- calc_amw_pfu(amw_data_path, mw_mapping_path, amw_path) # Add paths here.
+data <- calc_amw_pfu(data_folder = data_folder,
+                     amw_analysis_path = amw_analysis_path)
 
 }
