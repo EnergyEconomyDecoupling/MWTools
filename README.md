@@ -76,7 +76,7 @@ animal muscle work data for a particular country and sector.
 plot_amw_summary(amw_pfu_df = amw_pfu_df,
                  amw_numbers_df = amw_numbers_df,
                  country = "CHN",
-                 sector = "Total")
+                 sector = "Agriculture")
 ```
 
 <img src="man/figures/README-example_plot-1.png" width="100%" />
@@ -88,21 +88,21 @@ International Labor Organisation (ILO), via the `R` package `Rilostat`.
 The `MWTools` package provides a wrapper function for
 `Rilostat::get_ilostat` which returns a tidy data frame containing the
 number of employed persons by sector and sex, and the mean yearly
-working hours by sector and sex…
+working hours by sector and sex…..
 
 ``` r
 hmw_hours <- get_ilo_hmw_data()
-#> Table HOW_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpGeB7Lj/ilostat/indicator-HOW_TEMP_SEX_ECO_NB_A-code-raw-20210418T0651.rds
-#> Table EMP_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpGeB7Lj/ilostat/indicator-EMP_TEMP_SEX_ECO_NB_A-code-raw-20210418T0637.rds
+#> Table HOW_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\Rtmp8ILib4/ilostat/indicator-HOW_TEMP_SEX_ECO_NB_A-code-raw-20210418T0651.rds
+#> Table EMP_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\Rtmp8ILib4/ilostat/indicator-EMP_TEMP_SEX_ECO_NB_A-code-raw-20210418T0637.rds
 
 head(hmw_hours)
 #> # A tibble: 6 x 6
-#>   Country.code Sex    Sector           Year  `Employed.person~ `Working.hours [~
-#>   <chr>        <chr>  <chr>            <chr>             <dbl>             <dbl>
-#> 1 ABW          Sex: ~ Economic activi~ 1994              35940                NA
-#> 2 ABW          Sex: ~ Economic activi~ 1994                 30                NA
-#> 3 ABW          Sex: ~ Economic activi~ 1994                 10                NA
-#> 4 ABW          Sex: ~ Economic activi~ 1994                 30                NA
-#> 5 ABW          Sex: ~ Economic activi~ 1994               2170                NA
-#> 6 ABW          Sex: ~ Economic activi~ 1994                580                NA
+#>   Country.code Sex    Sector          Year  `Employed.persons~ `Working.hours [~
+#>   <chr>        <chr>  <chr>           <chr>              <dbl>             <dbl>
+#> 1 ABW          Sex: ~ Economic activ~ 1994               35940                NA
+#> 2 ABW          Sex: ~ Economic activ~ 1994                  30                NA
+#> 3 ABW          Sex: ~ Economic activ~ 1994                  10                NA
+#> 4 ABW          Sex: ~ Economic activ~ 1994                  30                NA
+#> 5 ABW          Sex: ~ Economic activ~ 1994                2170                NA
+#> 6 ABW          Sex: ~ Economic activ~ 1994                 580                NA
 ```
