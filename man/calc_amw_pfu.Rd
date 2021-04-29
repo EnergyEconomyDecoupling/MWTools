@@ -14,12 +14,15 @@ the function \code{MWTools::down_fao_live_animals}.}
 
 }
 \description{
-This function calculates the total number of working animals and primary,
-final, and useful working animal energy by country, for six species:
-Asses, Buffaloes, Camelids, Cattle, Horses, and Mules, and three sector categories:
-Total, Agriculture, and Transport.
+Calculate the total number of working animals and primary, final, and useful
+working animal energy by country, for six species: Asses, Buffaloes, Camelids,
+Cattle, Horses, and Mules, and three sector categories: Total, Agriculture,
+and Transport. This function acts as a helper function calling a number of functions
+in sequence to convert FAO data for live animals, usually downloaded with the function
+\code{down_fao_live_animals}, into a tidy data frame.
 }
 \examples{
-data <- calc_amw_pfu(data_folder = data_folder)
+tidy_amw_pfu_data <- <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  calc_amw_pfu(data_folder = file.path(fs::home_path(), "FAO_data")
 
 }

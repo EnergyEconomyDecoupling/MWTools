@@ -19,7 +19,14 @@ calc_working_animals(
 )
 }
 \arguments{
-\item{year, species}{See \code{MWTools::mw_constants}.}
+\item{.df}{A data frame ...}
+
+\item{amw_analysis_path}{The path to the animal muscle work analysis data,
+containing data for the proportion of working animals
+by species, country, and over time. Set to the function
+\code{MWTools::amw_analysis_data_path()}, by default,
+which returns the path the analysis data bundled
+with the \code{MWTools} package.}
 
 \item{prop_working_animal, da_perc, working_animals_total_col, live_animals_col, mw_region_code_col, mw_region_col, exemplar_method_col}{See \code{MWTools::amw_analysis_constants}.}
 }
@@ -30,4 +37,13 @@ calc_working_animals(
 Calculate the number of working animals using data for the number of live
 animals from the FAO, and user-supplied data for the proportion of working
 animals by region and year.
+}
+\examples{
+working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  add_concordance_codes() \%>\%
+  trim_fao_data() \%>\%
+  get_working_species() \%>\%
+  calc_working_animals()
+
 }

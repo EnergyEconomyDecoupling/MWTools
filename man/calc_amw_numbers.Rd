@@ -2,16 +2,25 @@
 % Please edit documentation in R/calc_amw_functions.R
 \name{calc_amw_numbers}
 \alias{calc_amw_numbers}
-\title{Title}
+\title{Calculate the number of live and working animals by country, species, and sector}
 \usage{
 calc_amw_numbers(data_folder)
 }
 \arguments{
-\item{data_folder}{}
+\item{data_folder}{The path to the folder containing data for the number of live
+animals. Usually downloaded with the function \code{down_fao_live_animals}.}
 }
 \value{
 
 }
 \description{
-Title
+Calculate the number of live and working animals by country, species, and sector
+and over time. This function acts as a helper function calling a number of functions
+in sequence to convert FAO data for live animals, usually downloaded with the function
+\code{down_fao_live_animals}, into a tidy data frame.
+}
+\examples{
+tidy_amw_numbers_data <- <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  calc_amw_numbers(data_folder = file.path(fs::home_path(), "FAO_data")
+
 }

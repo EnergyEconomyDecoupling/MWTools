@@ -40,11 +40,13 @@ the functions \code{MWTools::down_fao_live_animals} and
 Using a tidy dataframe containing the number of live animals, this function
 restricts the species of animals to: Asses, Camels, Cattle, Horses, Mules,
 Buffaloes, and Camelids, other; then combines Camels and Camlelids, other
-into a combines "Camelids" species group.
+into a combined "Camelids" species group.
 }
 \examples{
-working_species_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  MWTools::tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  MWTools::get_working_species()
+live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  add_concordance_codes() \%>\%
+  trim_fao_data() \%>\%
+  get_working_species()
 
 }

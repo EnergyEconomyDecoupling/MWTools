@@ -34,7 +34,7 @@ Create a tidy data frame using data supplied by the function
 \code{MWTools::down_fao_live_animals}.
 }
 \examples{
-tidy_live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data"))
 
 }

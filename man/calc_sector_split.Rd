@@ -24,6 +24,15 @@ calc_sector_split(
 )
 }
 \arguments{
+\item{.df}{A data frame containing live animals data...}
+
+\item{amw_analysis_path}{The path to the animal muscle work analysis data,
+containing data for the proportion of working animals
+in agriculture and transport, by species, country, and
+over time. Set to the function \code{MWTools::amw_analysis_data_path()},
+by default, which returns the path the analysis data
+bundled with the \code{MWTools} package.}
+
 \item{year, species}{See \code{MWTools::mw_constants}.}
 
 \item{method_source, metric, mw_region_col, mw_region_code_col, wa_enduse_sheet, working_animals_total_col, working_animals_ag_col, working_animals_tr_col, prop_working_animals_ag_col, prop_working_animals_tr_col}{See \code{MWTools::amw_analysis_constants}.}
@@ -35,4 +44,14 @@ calc_sector_split(
 Calculate the split of working animals performing muscle work in agriculture
 and transport using user-supplied data for the proportion of animals working
 in agriculture by region and year.
+}
+\examples{
+working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  add_concordance_codes() \%>\%
+  trim_fao_data() \%>\%
+  get_working_species() \%>\%
+  calc_working_animals() \%>\%
+  calc_sector_split()
+
 }

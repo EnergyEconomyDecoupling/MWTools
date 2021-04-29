@@ -23,7 +23,7 @@ usethis::use_data(mw_constants, overwrite = TRUE)
 ilo_cols <- list(ref_area_col = "ref_area",
                  sex_ilo_col = "Sex",
                  yearly_working_hours_ilo_col = "Working.hours [hours/year]",
-                 employed_persons_ilo_col = "Employed.persons [-]")
+                 employed_persons_ilo_col = "Employed.persons [persons]")
 
 usethis::use_data(ilo_cols, overwrite = TRUE)
 

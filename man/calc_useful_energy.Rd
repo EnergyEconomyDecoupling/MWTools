@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_amw_functions.R
 \name{calc_useful_energy}
 \alias{calc_useful_energy}
-\title{Title}
+\title{Calculate the useful energy produced by working animals performing muscle work}
 \usage{
 calc_useful_energy(
   .df,
@@ -25,11 +25,44 @@ calc_useful_energy(
 )
 }
 \arguments{
-\item{working_animals_tr_col}{}
+\item{.df}{A data frame containing ...}
+
+\item{amw_analysis_path}{The path to the animal muscle work analysis data,
+containing data for the number of working hours and
+power outputs of working animals. Set to the function
+\code{MWTools::amw_analysis_data_path()} by default,
+which returns the path the analysis data bundled with
+the \code{MWTools} package.}
+
+\item{species}{See \code{MWTools::mw_constants}.}
+
+\item{wa_power_sheet, wa_days_hours_sheet}{See \code{MWTools::amw_analysis_constants}.}
+
+\item{mw_region_code_col, method_source, power_per_animal}{See \code{MWTools::amw_analysis_constants}.}
+
+\item{useful_energy_total, useful_energy_ag, useful_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
+
+\item{working_animals_total_col, working_hours_col, working_seconds_col}{See \code{MWTools::amw_analysis_constants}.}
+
+\item{working_animals_total_col, working_animals_ag_col, working_animals_tr_col}{See \code{MWTools::amw_analysis_constants}.}
 }
 \value{
 
 }
 \description{
-Title
+Calculate the useful energy produced by working animals performing muscle work
+}
+\examples{
+working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  add_concordance_codes() \%>\%
+  trim_fao_data() \%>\%
+  get_working_species() \%>\%
+  calc_working_animals() \%>\%
+  calc_sector_split() \%>\%
+  calc_yearly_feed() \%>\%
+  calc_final_energy() \%>\%
+  calc_primary_energy() \%>\%
+  calc_useful_energy()
+
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_amw_functions.R
 \name{calc_primary_energy}
 \alias{calc_primary_energy}
-\title{Title}
+\title{Calculate the primary energy embodied in the feed supplied to working animals}
 \usage{
 calc_primary_energy(
   .df,
@@ -16,11 +16,29 @@ calc_primary_energy(
 )
 }
 \arguments{
-\item{primary_energy_tr}{}
+\item{.df}{A data frame containing ...}
+
+\item{harvest_waste}{The proportion of energy embidied in biomass wasted when
+animal feed is harvested.}
+
+\item{final_energy_total, final_energy_ag, final_energy_tr, primary_energy_total, primary_energy_ag, primary_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
 }
 \value{
 
 }
 \description{
-Title
+Calculate the primary energy embodied in the feed supplied to working animals
+}
+\examples{
+working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  add_concordance_codes() \%>\%
+  trim_fao_data() \%>\%
+  get_working_species() \%>\%
+  calc_working_animals() \%>\%
+  calc_sector_split() \%>\%
+  calc_yearly_feed() \%>\%
+  calc_final_energy() \%>\%
+  calc_primary_energy()
+
 }

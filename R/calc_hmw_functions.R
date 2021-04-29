@@ -1,10 +1,10 @@
-# ilo_data_rev.units <- get_ilo_hmw_data()
+# ilo_data <- get_ilo_hmw_data()
 #
 #
 # # Fills data for each Country, Sex, and Sector based on earliest year
 # ## Should we fill without grouping by country? (fills by nearest alphabetical country)?
-# ilo_data_filled <- ilo_data_rev.units %>%
-#   dplyr::group_by(Country.name, Sex, Sector) %>%
+# ilo_data_filled <- ilo_data %>%
+#   dplyr::group_by(Country.code, Sex, Sector) %>%
 #   dplyr::arrange(Year, .by_group = TRUE) %>%
 #   tidyr::fill(`Employed.persons [persons]`, .direction = "up") %>%
 #   tidyr::fill(`Working.hours [hours/year]`, .direction = "up") %>%

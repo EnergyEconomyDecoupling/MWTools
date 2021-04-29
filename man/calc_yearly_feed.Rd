@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_amw_functions.R
 \name{calc_yearly_feed}
 \alias{calc_yearly_feed}
-\title{Title}
+\title{Calculate the yearly feed requirements of working animals by species}
 \usage{
 calc_yearly_feed(
   .df,
@@ -24,11 +24,37 @@ calc_yearly_feed(
 )
 }
 \arguments{
-\item{method_source}{}
+\item{.df}{A data frame containing ...}
+
+\item{amw_analysis_path}{The path to the animal muscle work analysis data,
+containing feed requirements of working animals
+in agriculture and transport, by species, country, and
+over time. Set to the function \code{MWTools::amw_analysis_data_path()},
+by default, which returns the path the analysis data
+bundled with the \code{MWTools} package.}
+
+\item{species}{See \code{MWTools::mw_constants}.}
+
+\item{wa_feed_sheet, wa_days_hours_sheet, working_days_col, nonworking_days_col, working_hours_col, working_day_feed_col, nonworking_day_feed_col, working_yearly_feed_col, nonworking_yearly_feed_col, total_yearly_feed_col, mw_region_code_col, method_source}{See \code{MWTools::amw_analysis_constants}.}
 }
 \value{
 
 }
 \description{
-Title
+Calculate the yearly feed requirements of working animals by species and region.
+This function uses user-supplied data supplied via \code{amw_analysis_path} for daily
+feed requirements of working animals on working and non-working days by species
+and region, and user-supplied data for the number of working days by species
+and region to estimate the total yearly feed requirements.
+}
+\examples{
+working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  add_concordance_codes() \%>\%
+  trim_fao_data() \%>\%
+  get_working_species() \%>\%
+  calc_working_animals() \%>\%
+  calc_sector_split() \%>\%
+  calc_yearly_feed()
+
 }

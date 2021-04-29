@@ -5,10 +5,15 @@
 \title{Trim countries in FAO live animals data}
 \usage{
 trim_fao_data(
-  .live_animals_with_codes,
+  .df,
   country_incl_col = MWTools::conc_cols$country_incl_col,
   country_code_pfu_col = MWTools::conc_cols$country_code_pfu_col
 )
+}
+\arguments{
+\item{.df}{The data frame containing live animals data.}
+
+\item{country_incl_col, country_code_pfu_col}{See \code{MWTools::conc_cols}.}
 }
 \value{
 
@@ -16,6 +21,13 @@ trim_fao_data(
 \description{
 This function filters out countries which have more than one instance
 and aggregate regions from FAO live animals data. Data is usually downloaded
-through the \code{FAOSTAT} package, usually using the \code{MWTools::down_fao_live_animals}
+through the \code{FAOSTAT} package, using the \code{MWTools::down_fao_live_animals}
 function, and after applying the \code{MWTools::add_concordance_codes} function.
+}
+\examples{
+live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  add_concordance_codes() \%>\%
+  trim_fao_data()
+
 }

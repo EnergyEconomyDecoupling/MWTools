@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_amw_functions.R
 \name{calc_final_energy}
 \alias{calc_final_energy}
-\title{Title}
+\title{Calculate the final energy metabolised by working animals}
 \usage{
 calc_final_energy(
   .df,
@@ -18,11 +18,33 @@ calc_final_energy(
 )
 }
 \arguments{
-\item{final_energy_tr}{}
+\item{.df}{A data frame containing ...}
+
+\item{trough_waste}{The proportion of feed energy wasted when feeding working animals.}
+
+\item{ge_de_ratio}{The ratio between the gross energy content of the feed and
+digestible energy that is recovered from the feed.}
+
+\item{working_animals_total_col, working_animals_ag_col, working_animals_tr_col, total_yearly_feed_col, final_energy, final_energy_ag, final_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
 }
 \value{
 
 }
 \description{
-Title
+Calculate the final energy metabolised by working animals to perform muscle work.
+This function multiplies the number of working animals by sector, species,
+and country by their associated feed requirements, then corrects for feed
+wasted, and the gross energy to digestible energy ratio.
+}
+\examples{
+working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  add_concordance_codes() \%>\%
+  trim_fao_data() \%>\%
+  get_working_species() \%>\%
+  calc_working_animals() \%>\%
+  calc_sector_split() \%>\%
+  calc_yearly_feed() \%>\%
+  calc_final_energy()
+
 }

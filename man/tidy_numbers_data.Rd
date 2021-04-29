@@ -2,28 +2,47 @@
 % Please edit documentation in R/calc_amw_functions.R
 \name{tidy_numbers_data}
 \alias{tidy_numbers_data}
-\title{Title}
+\title{Tidy a data frame containing the number of live and working animals}
 \usage{
 tidy_numbers_data(
   .df,
   year = MWTools::mw_constants$year,
   species = MWTools::mw_constants$species,
-  mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+  sector_col = MWTools::mw_constants$sector_col,
   country_code_col = MWTools::conc_cols$country_code_col,
+  mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
   working_animals_col = MWTools::amw_analysis_constants$working_animals_col,
   working_animals_total_col = MWTools::amw_analysis_constants$working_animals_total_col,
   working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
   working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col,
-  live_animals_col = MWTools::amw_analysis_constants$live_animals_col,
-  sector_col = MWTools::mw_constants$sector_col
+  live_animals_col = MWTools::amw_analysis_constants$live_animals_col
 )
 }
 \arguments{
-\item{sector_col}{}
+\item{.df}{A data frame containing ...}
+
+\item{year, species, sector_col}{See \code{MWTools::mw_constants}}
+
+\item{country_code_col}{See \code{MWTools::conc_cols}}
+
+\item{mw_region_code_col, working_animals_col, working_animals_total_col, working_animals_ag_col, working_animals_tr_col, live_animals_col}{See \code{MWTools::amw_analysis_constants}}
 }
 \value{
 
 }
 \description{
-Applied to a data frame after calling the functions...
+Tidy a data frame containing the number of live and working animals by country,
+sector, species, and over time. This function is usually applied sequentially
+after the functions shown in the example.
+}
+\examples{
+working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  add_concordance_codes() \%>\%
+  trim_fao_data() \%>\%
+  get_working_species() \%>\%
+  calc_working_animals() \%>\%
+  calc_sector_split() \%>\%
+  tidy_numbers_data()
+
 }

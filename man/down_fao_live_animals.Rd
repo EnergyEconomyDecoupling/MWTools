@@ -2,7 +2,7 @@
 % Please edit documentation in R/down_amw_data_functions.R
 \name{down_fao_live_animals}
 \alias{down_fao_live_animals}
-\title{Download live animals data from FAO}
+\title{Download live animals data from FAOSTAT}
 \usage{
 down_fao_live_animals(
   data_folder = data_folder,
@@ -23,6 +23,6 @@ This function uses the bulk download facility function from the R package
 \code{FAOSTAT} to download data for the number of live animals by country over time.
 }
 \examples{
-down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data"))
+live_animals_data <- down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data"))
 
 }

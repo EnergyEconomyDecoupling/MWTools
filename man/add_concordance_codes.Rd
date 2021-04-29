@@ -5,7 +5,7 @@
 \title{Add 3 letter ISO codes and MWTools-specific region codes}
 \usage{
 add_concordance_codes(
-  .live_animals,
+  .df,
   concordance_path = MWTools::fao_concordance_path(),
   mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
   country_name = MWTools::mw_constants$country_name,
@@ -15,7 +15,20 @@ add_concordance_codes(
 )
 }
 \arguments{
-\item{country_code_pfu_col}{}
+\item{.df}{The data frame containing tidy live animals data, to which to add
+3 letter ISO codes.}
+
+\item{concordance_path}{The file path to concordance information mapping the
+FAO country names supplied in FAOSTAT to 3-letter ISO
+codes, and MWTools specific region codes. Set to
+\code{MWTools::fao_concordance_path()} by default, the path
+to the bundled concordance information in \code{MWTools}.}
+
+\item{mw_region_code_col}{See \code{MWTools::amw_analysis_constants}.}
+
+\item{country_name}{See \code{MWTools::mw_constants}.}
+
+\item{country_incl_col, country_code_col, country_code_pfu_col}{See \code{MWTools::conc_cols}.}
 }
 \value{
 
@@ -24,4 +37,10 @@ add_concordance_codes(
 Adds 3 letter ISO country codes and muscle work region codes for countries
 present in the FAO's Live animals data, downloaded through the \code{FAOSTAT} package,
 usually using the \code{MWTools::down_fao_live_animals} function.
+}
+\examples{
+live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  add_concordance_codes()
+
 }
