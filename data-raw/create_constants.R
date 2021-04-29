@@ -20,9 +20,10 @@ usethis::use_data(mw_constants, overwrite = TRUE)
 #
 # ILO data columns
 #
-ilo_cols <- list(sex_ilo_col = "Sex",
-                 working_hours_ilo_col = "Working.hours",
-                 employed_persons_ilo_col = "Employed.persons")
+ilo_cols <- list(ref_area_col = "ref_area",
+                 sex_ilo_col = "Sex",
+                 yearly_working_hours_ilo_col = "Working.hours [hours/year]",
+                 employed_persons_ilo_col = "Employed.persons [-]")
 
 usethis::use_data(ilo_cols, overwrite = TRUE)
 
@@ -102,6 +103,12 @@ amw_analysis_constants <- list(prop_working_animals_col = "Prop.Working.animals"
                                primary_energy_total = "Primary.energy.total [MJ/year]",
                                primary_energy_ag = "Primary.energy.Ag [MJ/year]",
                                primary_energy_tr = "Primary.energy.Tr [MJ/year]",
+                               # ag_string
+                               # tr_string
+                               # total_string
+                               # ag_full_string
+                               # tr_full_string
+                               # total_full_string
                                mw_region_code_col = "MW.Region.code",
                                mw_region_col = "MW.Region",
                                exemplar_method_col = "Exemplar/Method",

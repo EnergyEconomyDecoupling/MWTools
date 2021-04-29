@@ -1,17 +1,21 @@
-#' Title
+#' Create a summary plot for animal muscle work
 #'
-#' @param amw_pfu_df
-#' @param amw_numbers_df
-#' @param country
-#' @param sector
-#' @param year
-#' @param country_code_col
-#' @param species
-#' @param sector_col
-#' @param stage_col
-#' @param energy_mj_year
-#' @param working_animals_col
-#' @param live_animals_col
+#' Create a composite plot summarising animal muscle work for the selected sector and
+#' country. The composite plot contains two sub-plots: 1) the primary, final, and useful
+#' energy associated with animal muscle work by species, over time; and 2) the
+#' number of live, and working animals by species, over time.
+#'
+#' @param amw_pfu_df A data frame containing the primary, final, and useful energy
+#'                   associated with animal muscle work.Usually supplied by calling
+#'                   the function `calc_amw_numbers`.
+#' @param amw_numbers_df A data frame containing the total number of live animals,
+#'                       and working animals by sector. Usually supplied by calling
+#'                       the function `calc_amw_pfu`.
+#' @param country A 3 letter ISO code representing the country desired for analysis.
+#' @param sector The sector desired for analysis. One of "Total", "Agriculture, or
+#'               "Transport".
+#' @param year,country_code_col,species,sector_col,stage_col,energy_mj_year See `mw_constants`.
+#' @param working_animals_col,live_animals_col See `amw_analysis_constants`.
 #'
 #' @return
 #' @export

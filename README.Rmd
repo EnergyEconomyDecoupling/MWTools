@@ -32,7 +32,7 @@ devtools::install_github("EnergyEconomyDecoupling/MWTools")
 
 ## Animal Muscle Work
 
-Raw data for the calculation of animal muscle work is obtained from the Food and Agriculture Organisation of the United Nations Statistical Database (FAOSTAT), via the `R` package `FAOSTAT`. For the case of animal muscle work `MWTools` provides a wrapper function for downloading data for the number of live animals, `down_fao_live_animals`, which utilises the function `FAOSTAT::get_faostat_bulk()`. Once downloaded `MWTools` provides a number of functions for the calculation of the number of working animals by species, country, year and in agriculture, transport, and in total. The helper function `calc_amw_numbers` returns a tidy data frame containing
+Raw data for the calculation of animal muscle work is obtained from the Food and Agriculture Organisation of the United Nations Statistical Database (FAOSTAT), via the `R` package `FAOSTAT`. The `MWTools` package provides a wrapper function for downloading data for the number of live animals, `down_fao_live_animals`, which utilises the function `FAOSTAT::get_faostat_bulk()`. Once downloaded `MWTools` provides a number of functions for the calculation of the number of working animals by species, country, year and in agriculture, transport, and in total. The helper function `calc_amw_numbers` returns a tidy data frame containing
 
 ```{r example_numbers}
 library(MWTools)
@@ -66,3 +66,13 @@ plot_amw_summary(amw_pfu_df = amw_pfu_df,
 ```
 
 ## Human Muscle Work
+
+Raw data for the calculation of human muscle work is obtained from the International Labor Organisation (ILO), via the `R` package `Rilostat`. The `MWTools` package provides a wrapper function for `Rilostat::get_ilostat` which returns a tidy data frame containing the number of employed persons by sector and sex, and the mean yearly working hours by sector and sex.
+
+```{r example_hmw}
+
+hmw_hours <- get_ilo_hmw_data()
+
+head(hmw_hours)
+
+```

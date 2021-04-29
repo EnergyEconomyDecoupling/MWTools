@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_amw_functions.R
 \name{plot_amw_summary}
 \alias{plot_amw_summary}
-\title{Title}
+\title{Create a summary plot for animal muscle work}
 \usage{
 plot_amw_summary(
   amw_pfu_df,
@@ -20,11 +20,29 @@ plot_amw_summary(
 )
 }
 \arguments{
-\item{live_animals_col}{}
+\item{amw_pfu_df}{A data frame containing the primary, final, and useful energy
+associated with animal muscle work.Usually supplied by calling
+the function \code{calc_amw_numbers}.}
+
+\item{amw_numbers_df}{A data frame containing the total number of live animals,
+and working animals by sector. Usually supplied by calling
+the function \code{calc_amw_pfu}.}
+
+\item{country}{A 3 letter ISO code representing the country desired for analysis.}
+
+\item{sector}{The sector desired for analysis. One of "Total", "Agriculture, or
+"Transport".}
+
+\item{year, country_code_col, species, sector_col, stage_col, energy_mj_year}{See \code{mw_constants}.}
+
+\item{working_animals_col, live_animals_col}{See \code{amw_analysis_constants}.}
 }
 \value{
 
 }
 \description{
-Title
+Create a composite plot summarising animal muscle work for the selected sector and
+country. The composite plot contains two sub-plots: 1) the primary, final, and useful
+energy associated with animal muscle work by species, over time; and 2) the
+number of live, and working animals by species, over time.
 }

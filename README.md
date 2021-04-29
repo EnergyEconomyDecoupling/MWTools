@@ -24,14 +24,14 @@ devtools::install_github("EnergyEconomyDecoupling/MWTools")
 
 Raw data for the calculation of animal muscle work is obtained from the
 Food and Agriculture Organisation of the United Nations Statistical
-Database (FAOSTAT), via the `R` package `FAOSTAT`. For the case of
-animal muscle work `MWTools` provides a wrapper function for downloading
-data for the number of live animals, `down_fao_live_animals`, which
-utilises the function `FAOSTAT::get_faostat_bulk()`. Once downloaded
-`MWTools` provides a number of functions for the calculation of the
-number of working animals by species, country, year and in agriculture,
-transport, and in total. The helper function `calc_amw_numbers` returns
-a tidy data frame containing
+Database (FAOSTAT), via the `R` package `FAOSTAT`. The `MWTools` package
+provides a wrapper function for downloading data for the number of live
+animals, `down_fao_live_animals`, which utilises the function
+`FAOSTAT::get_faostat_bulk()`. Once downloaded `MWTools` provides a
+number of functions for the calculation of the number of working animals
+by species, country, year and in agriculture, transport, and in total.
+The helper function `calc_amw_numbers` returns a tidy data frame
+containing
 
 ``` r
 library(MWTools)
@@ -84,3 +84,27 @@ plot_amw_summary(amw_pfu_df = amw_pfu_df,
 <img src="man/figures/README-example_plot-1.png" width="100%" />
 
 ## Human Muscle Work
+
+Raw data for the calculation of human muscle work is obtained from the
+International Labor Organisation (ILO), via the `R` package `Rilostat`.
+The `MWTools` package provides a wrapper function for
+`Rilostat::get_ilostat` which returns a tidy data frame containing the
+number of employed persons by sector and sex, and the mean yearly
+working hours by sector and sex.
+
+``` r
+hmw_hours <- get_ilo_hmw_data()
+#> Table HOW_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpURw5tc/ilostat/indicator-HOW_TEMP_SEX_ECO_NB_A-code-raw-20210418T0651.rds
+#> Table EMP_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpURw5tc/ilostat/indicator-EMP_TEMP_SEX_ECO_NB_A-code-raw-20210418T0637.rds
+
+head(hmw_hours)
+#> # A tibble: 6 x 6
+#>   Country.code Sex    Sector           Year  `Employed.person~ `Working.hours [~
+#>   <chr>        <chr>  <chr>            <chr>             <dbl>             <dbl>
+#> 1 ABW          Sex: ~ Economic activi~ 1994              35940                NA
+#> 2 ABW          Sex: ~ Economic activi~ 1994                 30                NA
+#> 3 ABW          Sex: ~ Economic activi~ 1994                 10                NA
+#> 4 ABW          Sex: ~ Economic activi~ 1994                 30                NA
+#> 5 ABW          Sex: ~ Economic activi~ 1994               2170                NA
+#> 6 ABW          Sex: ~ Economic activi~ 1994                580                NA
+```

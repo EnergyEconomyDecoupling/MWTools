@@ -5,7 +5,7 @@
 \alias{ilo_cols}
 \title{ILO data column names}
 \format{
-A string list with 3 entries.
+A string list with 4 entries.
 \describe{
 \item{sex_ilo_col}{The string "Sex".}
 \item{sector_ilo_col}{The string "Sector".}

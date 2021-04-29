@@ -5,27 +5,29 @@
 \title{Retrieve ILO data for working hours and employed persons}
 \usage{
 get_ilo_hmw_data(
-  country_name = MWTools::mw_constants$country_name,
-  sex = MWTools::ilo_cols$sex_ilo_col,
-  sector = MWTools::ilo_cols$sector_ilo_col,
+  country_code_col = MWTools::conc_cols$country_code_col,
+  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
+  sector_col = MWTools::mw_constants$sector_col,
   year = MWTools::mw_constants$year,
-  working_hours = MWTools::ilo_cols$working_hours_ilo_col,
-  employed_persons = MWTools::ilo_cols$employed_persons_ilo_col,
+  ref_area_col = MWTools::ilo_cols$ref_area_col,
+  yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
+  employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
   working_hours_code = MWTools::ilo_codes$working_hours_code,
   employment_code = MWTools::ilo_codes$employment_code
 )
 }
 \arguments{
-\item{country_name, sex, sector, year, working_hours, employed_persons}{See \code{MWtools::mw_constants()}.}
-
 \item{working_hours_code, employment_code}{See \code{MWTools::ilo_codes}.}
+
+\item{country_name, sex_ilo_col, sector_col, year, yearly_working_hours_ilo_col, employed_persons_ilo_col}{See \code{MWtools::mw_constants()}.}
 }
 \value{
 
 }
 \description{
-Use the \code{Rilostat} package to create a data frame containing mean yearly
-working hours and number of employed persons by country, sex, sector, and year.
+Use the function \code{get_ilostat} function from the \code{Rilostat} package to create a
+tidy data frame containing mean yearly working hours and number of employed persons
+by country, sex, sector, and year.
 }
 \examples{
 ilo_hmw_data <- get_ilo_hmw_data()
