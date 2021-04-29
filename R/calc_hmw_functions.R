@@ -1,8 +1,10 @@
 # ilo_data <- get_ilo_hmw_data()
 #
+# # Inspect GBR data
+# GBR <- ilo_data %>%
+#   dplyr::filter(Country.code == "GBR")
 #
 # # Fills data for each Country, Sex, and Sector based on earliest year
-# ## Should we fill without grouping by country? (fills by nearest alphabetical country)?
 # ilo_data_filled <- ilo_data %>%
 #   dplyr::group_by(Country.code, Sex, Sector) %>%
 #   dplyr::arrange(Year, .by_group = TRUE) %>%
