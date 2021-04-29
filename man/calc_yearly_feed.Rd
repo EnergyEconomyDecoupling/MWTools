@@ -6,7 +6,7 @@
 \usage{
 calc_yearly_feed(
   .df,
-  amw_analysis_path,
+  amw_analysis_path = MWTools::amw_analysis_data_path(),
   species = MWTools::mw_constants$species,
   wa_feed_sheet = MWTools::amw_analysis_constants$wa_feed_sheet,
   wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,

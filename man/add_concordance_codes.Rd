@@ -6,7 +6,7 @@
 \usage{
 add_concordance_codes(
   .live_animals,
-  concordance_path,
+  concordance_path = MWTools::fao_concordance_path(),
   mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
   country_name = MWTools::mw_constants$country_name,
   country_incl_col = MWTools::conc_cols$country_incl_col,

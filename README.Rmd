@@ -37,8 +37,7 @@ Raw data for the calculation of animal muscle work is obtained from the Food and
 ```{r example_numbers}
 library(MWTools)
 
-amw_numbers_df <- calc_amw_numbers(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"),
-                                amw_analysis_path = file.path(PFUSetup::get_abs_paths()$project_path, "Muscle work\\amw_master_data.xlsx"))
+amw_numbers_df <- calc_amw_numbers(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"))
 
 head(amw_numbers_df)
 
@@ -47,8 +46,7 @@ head(amw_numbers_df)
 The helper function `calc_amw_pfu` returns a tidy data frame containing data for the primary, final, and useful energy by species, country, year and in agriculture, transport, and in total.
 
 ```{r get_example_data}
-amw_pfu_df <- calc_amw_pfu(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"),
-                         amw_analysis_path = file.path(PFUSetup::get_abs_paths()$project_path, "Muscle work\\amw_master_data.xlsx"))
+amw_pfu_df <- calc_amw_pfu(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"))
 
 head(amw_pfu_df)
 

@@ -2,6 +2,7 @@
 
 export("%>%")
 export(add_concordance_codes)
+export(amw_analysis_data_path)
 export(calc_amw_numbers)
 export(calc_amw_pfu)
 export(calc_final_energy)

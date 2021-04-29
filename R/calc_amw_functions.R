@@ -83,7 +83,7 @@ get_working_species <- function(.df,
 #'
 #' @examples
 calc_working_animals <- function(.df,
-                                 amw_analysis_path,
+                                 amw_analysis_path = MWTools::amw_analysis_data_path(),
                                  year = MWTools::mw_constants$year,
                                  species = MWTools::mw_constants$species,
                                  prop_working_animals_col = MWTools::amw_analysis_constants$prop_working_animals_col,
@@ -132,7 +132,7 @@ calc_working_animals <- function(.df,
 #'
 #' @examples
 calc_sector_split <- function(.df,
-                              amw_analysis_path,
+                              amw_analysis_path = MWTools::amw_analysis_data_path(),
                               year = MWTools::mw_constants$year,
                               species = MWTools::mw_constants$species,
                               method_source = MWTools::amw_analysis_constants$method_source,
@@ -176,7 +176,6 @@ calc_sector_split <- function(.df,
 #' Applied to a data frame after calling the functions...
 #'
 #' @param .df
-#' @param amw_analysis_path
 #' @param year
 #' @param species
 #' @param mw_region_code_col
@@ -192,7 +191,6 @@ calc_sector_split <- function(.df,
 #'
 #' @examples
 tidy_numbers_data <- function(.df,
-                              amw_analysis_path,
                               year = MWTools::mw_constants$year,
                               species = MWTools::mw_constants$species,
                               mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
@@ -225,21 +223,19 @@ tidy_numbers_data <- function(.df,
 #' Title
 #'
 #' @param data_folder
-#' @param amw_analysis_path
 #'
 #' @return
 #' @export
 #'
 #' @examples
-calc_amw_numbers <- function(data_folder,
-                             amw_analysis_path) {
+calc_amw_numbers <- function(data_folder) {
 
   amw_numbers_data <- tidy_fao_live_animals(data_folder = data_folder) %>%
-    add_concordance_codes(concordance_path = fao_concordance_path()) %>%
+    add_concordance_codes() %>%
     trim_fao_data() %>%
     get_working_species() %>%
-    calc_working_animals(amw_analysis_path = amw_analysis_path) %>%
-    calc_sector_split(amw_analysis_path = amw_analysis_path) %>%
+    calc_working_animals() %>%
+    calc_sector_split() %>%
     tidy_numbers_data()
 
   return(amw_numbers_data)
@@ -268,7 +264,7 @@ calc_amw_numbers <- function(data_folder,
 #'
 #' @examples
 calc_yearly_feed <- function(.df,
-                             amw_analysis_path,
+                             amw_analysis_path = MWTools::amw_analysis_data_path(),
                              species = MWTools::mw_constants$species,
                              wa_feed_sheet= MWTools::amw_analysis_constants$wa_feed_sheet,
                              wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,
@@ -416,7 +412,7 @@ calc_primary_energy <- function(.df,
 #'
 #' @examples
 calc_useful_energy <- function(.df,
-                               amw_analysis_path,
+                               amw_analysis_path = MWTools::amw_analysis_data_path(),
                                species = MWTools::mw_constants$species,
                                wa_power_sheet= MWTools::amw_analysis_constants$wa_power_sheet,
                                wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,
@@ -529,28 +525,25 @@ tidy_pfu_data <- function(.df,
 #'
 #' @param data_folder The file path to the FAO live animals data downloaded using
 #'                    the function `MWTools::down_fao_live_animals`.
-#' @param amw_analysis_path The file path to the analysis .xlsx file.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-#' data <- calc_amw_pfu(data_folder = data_folder,
-#'                      amw_analysis_path = amw_analysis_path)
+#' data <- calc_amw_pfu(data_folder = data_folder)
 #'
-calc_amw_pfu <- function(data_folder,
-                         amw_analysis_path) {
+calc_amw_pfu <- function(data_folder) {
 
   amw_pfu_data <- tidy_fao_live_animals(data_folder = data_folder) %>%
-    add_concordance_codes(concordance_path = fao_concordance_path()) %>%
+    add_concordance_codes() %>%
     trim_fao_data() %>%
     get_working_species() %>%
-    calc_working_animals(amw_analysis_path = amw_analysis_path) %>%
-    calc_sector_split(amw_analysis_path = amw_analysis_path) %>%
-    calc_yearly_feed(amw_analysis_path = amw_analysis_path) %>%
+    calc_working_animals() %>%
+    calc_sector_split() %>%
+    calc_yearly_feed() %>%
     calc_final_energy() %>%
     calc_primary_energy() %>%
-    calc_useful_energy(amw_analysis_path = amw_analysis_path) %>%
+    calc_useful_energy() %>%
     tidy_pfu_data()
 
   return(amw_pfu_data)

@@ -4,10 +4,10 @@
 \alias{calc_amw_numbers}
 \title{Title}
 \usage{
-calc_amw_numbers(data_folder, amw_analysis_path)
+calc_amw_numbers(data_folder)
 }
 \arguments{
-\item{amw_analysis_path}{}
+\item{data_folder}{}
 }
 \value{
 

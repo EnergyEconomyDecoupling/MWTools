@@ -6,7 +6,7 @@
 \usage{
 calc_working_animals(
   .df,
-  amw_analysis_path,
+  amw_analysis_path = MWTools::amw_analysis_data_path(),
   year = MWTools::mw_constants$year,
   species = MWTools::mw_constants$species,
   prop_working_animals_col = MWTools::amw_analysis_constants$prop_working_animals_col,

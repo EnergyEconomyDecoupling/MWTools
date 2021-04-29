@@ -36,8 +36,7 @@ containing
 ``` r
 library(MWTools)
 
-amw_numbers_df <- calc_amw_numbers(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"),
-                                amw_analysis_path = file.path(PFUSetup::get_abs_paths()$project_path, "Muscle work\\amw_master_data.xlsx"))
+amw_numbers_df <- calc_amw_numbers(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"))
 
 head(amw_numbers_df)
 #> # A tibble: 6 x 7
@@ -56,8 +55,7 @@ data for the primary, final, and useful energy by species, country, year
 and in agriculture, transport, and in total.
 
 ``` r
-amw_pfu_df <- calc_amw_pfu(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"),
-                         amw_analysis_path = file.path(PFUSetup::get_abs_paths()$project_path, "Muscle work\\amw_master_data.xlsx"))
+amw_pfu_df <- calc_amw_pfu(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"))
 
 head(amw_pfu_df)
 #> # A tibble: 6 x 7
@@ -94,8 +92,8 @@ working hours by sector and sex.
 
 ``` r
 hmw_hours <- get_ilo_hmw_data()
-#> Table HOW_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpURw5tc/ilostat/indicator-HOW_TEMP_SEX_ECO_NB_A-code-raw-20210418T0651.rds
-#> Table EMP_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpURw5tc/ilostat/indicator-EMP_TEMP_SEX_ECO_NB_A-code-raw-20210418T0637.rds
+#> Table HOW_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpoDb2iC/ilostat/indicator-HOW_TEMP_SEX_ECO_NB_A-code-raw-20210418T0651.rds
+#> Table EMP_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpoDb2iC/ilostat/indicator-EMP_TEMP_SEX_ECO_NB_A-code-raw-20210418T0637.rds
 
 head(hmw_hours)
 #> # A tibble: 6 x 6

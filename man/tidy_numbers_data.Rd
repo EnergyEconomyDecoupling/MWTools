@@ -6,7 +6,6 @@
 \usage{
 tidy_numbers_data(
   .df,
-  amw_analysis_path,
   year = MWTools::mw_constants$year,
   species = MWTools::mw_constants$species,
   mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
