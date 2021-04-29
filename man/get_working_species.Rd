@@ -43,7 +43,7 @@ Buffaloes, and Camelids, other; then combines Camels and Camlelids, other
 into a combines "Camelids" species group.
 }
 \examples{
-working_speies_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_species_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
   MWTools::tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
   MWTools::get_working_species()
 

@@ -5,7 +5,7 @@
 \title{Download live animals data from FAO}
 \usage{
 down_fao_live_animals(
-  data_folder,
+  data_folder = data_folder,
   live_animals_code = MWTools::fao_codes$live_animals_code
 )
 }

@@ -88,12 +88,12 @@ International Labor Organisation (ILO), via the `R` package `Rilostat`.
 The `MWTools` package provides a wrapper function for
 `Rilostat::get_ilostat` which returns a tidy data frame containing the
 number of employed persons by sector and sex, and the mean yearly
-working hours by sector and sex.
+working hours by sector and sex…
 
 ``` r
 hmw_hours <- get_ilo_hmw_data()
-#> Table HOW_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpoDb2iC/ilostat/indicator-HOW_TEMP_SEX_ECO_NB_A-code-raw-20210418T0651.rds
-#> Table EMP_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpoDb2iC/ilostat/indicator-EMP_TEMP_SEX_ECO_NB_A-code-raw-20210418T0637.rds
+#> Table HOW_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpGeB7Lj/ilostat/indicator-HOW_TEMP_SEX_ECO_NB_A-code-raw-20210418T0651.rds
+#> Table EMP_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpGeB7Lj/ilostat/indicator-EMP_TEMP_SEX_ECO_NB_A-code-raw-20210418T0637.rds
 
 head(hmw_hours)
 #> # A tibble: 6 x 6

@@ -1,4 +1,4 @@
-#' Download live animals data from FAO
+#' Download live animals data from FAOSTAT
 #'
 #' This function uses the bulk download facility function from the R package
 #' `FAOSTAT` to download data for the number of live animals by country over time.
@@ -11,9 +11,9 @@
 #' @export
 #'
 #' @examples
-#' down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data"))
+#' live_animals_data <- down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data"))
 #'
-down_fao_live_animals <- function(data_folder,
+down_fao_live_animals <- function(data_folder = data_folder,
                                   live_animals_code = MWTools::fao_codes$live_animals_code){
 
   # Download .zip file containing data for the number of live animals into a specified folder
@@ -36,7 +36,7 @@ down_fao_live_animals <- function(data_folder,
 #' @export
 #'
 #' @examples
-#' tidy_live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#' live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
 #'   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data"))
 #'
 tidy_fao_live_animals <- function(data_folder,
@@ -97,19 +97,26 @@ tidy_fao_live_animals <- function(data_folder,
 #' usually using the `MWTools::down_fao_live_animals` function.
 #'
 #'
-#' @param .live_animals
-#' @param concordance_path
-#' @param mw_region_code_col
-#' @param country_name
-#' @param country_incl_col
-#' @param country_code_col
-#' @param country_code_pfu_col
+#' @param .df The data frame containing tidy live animals data, to which to add
+#'            3 letter ISO codes.
+#' @param concordance_path The file path to concordance information mapping the
+#'                         FAO country names supplied in FAOSTAT to 3-letter ISO
+#'                         codes, and MWTools specific region codes. Set to
+#'                         `MWTools::fao_concordance_path()` by default, the path
+#'                         to the bundled concordance information in `MWTools`.
+#' @param mw_region_code_col See `MWTools::amw_analysis_constants`.
+#' @param country_name See `MWTools::mw_constants`.
+#' @param country_incl_col,country_code_col,country_code_pfu_col See `MWTools::conc_cols`.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-add_concordance_codes <- function(.live_animals,
+#' live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#'   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#'   add_concordance_codes()
+#'
+add_concordance_codes <- function(.df,
                                   concordance_path = MWTools::fao_concordance_path(),
                                   mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
                                   country_name = MWTools::mw_constants$country_name,
@@ -122,7 +129,7 @@ add_concordance_codes <- function(.live_animals,
                                         sheet = "Mapping") %>%
     magrittr::set_colnames(c(country_name, country_incl_col, country_code_col, country_code_pfu_col, mw_region_code_col))
 
-  .live_animals %>%
+  .df %>%
     dplyr::left_join(concordance_data, by = country_name) %>%
     dplyr::relocate(country_code_col, .before = country_name) %>%
     dplyr::relocate(mw_region_code_col, .before = country_name)
@@ -133,18 +140,26 @@ add_concordance_codes <- function(.live_animals,
 #'
 #' This function filters out countries which have more than one instance
 #' and aggregate regions from FAO live animals data. Data is usually downloaded
-#' through the `FAOSTAT` package, usually using the `MWTools::down_fao_live_animals`
+#' through the `FAOSTAT` package, using the `MWTools::down_fao_live_animals`
 #' function, and after applying the `MWTools::add_concordance_codes` function.
+#'
+#' @param .df The data frame containing live animals data.
+#' @param country_incl_col,country_code_pfu_col See `MWTools::conc_cols`.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-trim_fao_data <- function(.live_animals_with_codes,
+#' live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#'   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#'   add_concordance_codes() %>%
+#'   trim_fao_data()
+#'
+trim_fao_data <- function(.df,
                           country_incl_col = MWTools::conc_cols$country_incl_col,
                           country_code_pfu_col = MWTools::conc_cols$country_code_pfu_col){
 
-  .live_animals_with_codes %>%
+  .df %>%
     dplyr::filter(.data[[country_incl_col]] == "Yes") %>%
     dplyr::select(-country_incl_col, -country_code_pfu_col)
 
