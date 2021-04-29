@@ -10,11 +10,19 @@
 #   tidyr::fill(`Working.hours [hours/year]`, .direction = "up") %>%
 #   dplyr::ungroup()
 #
+# # Filter for GBR to check data has been filled
+# GBR_filled <- ilo_data_filled %>%
+#   dplyr::filter(Country.code == "GBR")
+#
 # # Calculates total number of hours worked per year
 # ilo_data_total.hours <- ilo_data_filled %>%
 #   dplyr::mutate("Total.hours [hours/year]" = `Employed.persons [persons]` * `Working.hours [hours/year]`)
 #
-# # Filters data to only include sector data by ISIC
+# # Identify all unique sectors
+# all_sectors <-unique(ilo_data$Sector) %>%
+#   as.data.frame()
+#
+# # Filters data to only include sector data by ISIC-Rev.4
 # ilo_data_total.hours_isic <- ilo_data_total.hours %>%
 #   dplyr::filter(stringr::str_detect(Sector, pattern = fixed("(ISIC-Rev.4):"))) %>%
 #   dplyr::mutate(Sector = stringr::str_replace(Sector, ".*?\\:\\s", ""))
