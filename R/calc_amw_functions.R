@@ -40,6 +40,10 @@ get_working_species <- function(.df,
                                 camelids = MWTools::mw_species$camelids,
                                 live_animals_col = MWTools::amw_analysis_constants$live_animals_col){
 
+  # This function assumes a specific set of animals are present.
+  # If the bundled mapping data restricts countries so that one of these animals,
+  # e.g. asses, does not exist the function will fail.
+
   # Filter data to only include working animal species
   working_species <- .df %>%
     dplyr::filter(Species %in% c(asses,
@@ -49,21 +53,32 @@ get_working_species <- function(.df,
                                  mules,
                                  buffaloes,
                                  camelids_other)) %>%
-    # Combine "Camels" and "Camelids, other" into "Camelids".
     tidyr::pivot_wider(names_from = species,
                        values_from = value) %>%
-    replace(is.na(.), 0) %>%
-    dplyr::mutate(
-      "{camelids}" := .data[[camels]] + .data[[camelids_other]],
-      .keep = "unused"
-    ) %>%
+    replace(is.na(.), 0)
+
+  if(camelids_other %in% colnames(working_species)){
+    working_species_w.camelids <- working_species %>%
+      dplyr::mutate(
+        "{camelids}" := .data[[camels]] + .data[[camelids_other]],
+        .keep = "unused"
+      )
+  } else {
+    working_species_w.camelids <- working_species %>%
+      dplyr::mutate(
+        "{camelids}" := .data[[camels]],
+        .keep = "unused"
+      )
+  }
+
+  working_species_final <-  working_species_w.camelids %>%
     tidyr::pivot_longer(cols = c(asses, buffaloes, camelids, cattle, horses, mules),
                         names_to = species,
                         values_to = value) %>%
     magrittr::set_colnames(c(country_code_col, mw_region_code_col, country_name, year, species, live_animals_col))
 
   # Returns a tidy data frame containing the number of working animals
-  return(working_species)
+  return(working_species_final)
 
 }
 
@@ -403,13 +418,13 @@ calc_final_energy <- function(.df,
 
   .df %>%
     dplyr::mutate(
-      "{final_energy_total}" := (.data[[working_animals_total_col]] * .data[[total_yearly_feed_col]]) * (ge_de_ratio) * (1/(1 - trough_waste))
+      "{final_energy_total}" := (.data[[working_animals_total_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
       ) %>%
     dplyr::mutate(
-      "{final_energy_ag}" := (.data[[working_animals_ag_col]] * .data[[total_yearly_feed_col]]) * (ge_de_ratio) * (1/(1 - trough_waste))
+      "{final_energy_ag}" := (.data[[working_animals_ag_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
       ) %>%
     dplyr::mutate(
-      "{final_energy_tr}" := (.data[[working_animals_tr_col]] * .data[[total_yearly_feed_col]]) * (ge_de_ratio) * (1/(1 - trough_waste))
+      "{final_energy_tr}" := (.data[[working_animals_tr_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
       )
 }
 

@@ -66,7 +66,7 @@ plot_amw_summary(amw_pfu_df = amw_pfu_df,
 
 ## Human Muscle Work
 
-Raw data for the calculation of human muscle work is obtained from the International Labor Organisation (ILO), via the `R` package `Rilostat`. The `MWTools` package provides a wrapper function for `Rilostat::get_ilostat` which returns a tidy data frame containing the number of employed persons by sector and sex, and the mean yearly working hours by sector and sex.....
+Raw data for the calculation of human muscle work is obtained from the International Labor Organisation (ILO), via the `R` package `Rilostat`. The `MWTools` package provides a wrapper function for `Rilostat::get_ilostat` which returns a tidy data frame containing the number of employed persons by sector and sex, and the mean yearly working hours by sector and sex......
 
 ```{r example_hmw}
 

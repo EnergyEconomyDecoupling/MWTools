@@ -29,13 +29,15 @@ get_ilo_hmw_data <- function(country_code_col = MWTools::conc_cols$country_code_
                              ){
 
   # Mean weekly hours actually worked per employed person by sex and economic activity: HOW_TEMP_SEX_ECO_NB_A
-  working_hours <- Rilostat::get_ilostat(id = working_hours_code) %>%
+  working_hours <- Rilostat::get_ilostat(id = working_hours_code,
+                                         quiet = TRUE) %>%
     Rilostat::label_ilostat(code = c(ref_area_col)) %>%
     dplyr::select(ref_area, sex.label, classif1.label, time, obs_value) %>% # Create constants
     magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year, yearly_working_hours_ilo_col))
 
   # Employment by sex and economic activity (thousands): EMP_TEMP_SEX_ECO_NB_A
-  employment <- Rilostat::get_ilostat(id = employment_code) %>%
+  employment <- Rilostat::get_ilostat(id = employment_code,
+                                      quiet = TRUE) %>%
     Rilostat::label_ilostat(code = c(ref_area_col)) %>%
     dplyr::select(ref_area, sex.label, classif1.label, time, obs_value) %>%
     magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year, employed_persons_ilo_col))
