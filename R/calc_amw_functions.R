@@ -260,11 +260,20 @@ tidy_numbers_data <- function(.df,
                         names_to = sector_col,
                         names_prefix = stringr::fixed("Working.animals."),
                         values_to = working_animals_col) %>%
+    # dplyr::mutate(
+    #   "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("total"), "Total"),
+    #   "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Ag"), "Agriculture"),
+    #   "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Tr"), "Transport")
+    #   ) %>%
+
     dplyr::mutate(
-      "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("total"), "Total"),
-      "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Ag"), "Agriculture"),
-      "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Tr"), "Transport")
-      ) %>%
+      "{sector_col}" := dplyr::case_when(
+        .data[[sector_col]] == "total" ~ "Total",
+        .data[[sector_col]] == "Ag" ~ "Agriculture",
+        .data[[sector_col]] == "Tr" ~ "Transport",
+        TRUE ~ "Unknown sector column value"
+      )
+    ) %>%
 
     dplyr::relocate(.data[[sector_col]], .before = .data[[live_animals_col]])
 }
@@ -417,15 +426,20 @@ calc_final_energy <- function(.df,
                               final_energy_tr = MWTools::amw_analysis_constants$final_energy_tr) {
 
   .df %>%
+    # dplyr::mutate(
+    #   "{final_energy_total}" := (.data[[working_animals_total_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
+    #   ) %>%
+    # dplyr::mutate(
+    #   "{final_energy_ag}" := (.data[[working_animals_ag_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
+    #   ) %>%
+    # dplyr::mutate(
+    #   "{final_energy_tr}" := (.data[[working_animals_tr_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
+    #   )
     dplyr::mutate(
-      "{final_energy_total}" := (.data[[working_animals_total_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
-      ) %>%
-    dplyr::mutate(
-      "{final_energy_ag}" := (.data[[working_animals_ag_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
-      ) %>%
-    dplyr::mutate(
+      "{final_energy_total}" := (.data[[working_animals_total_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste)),
+      "{final_energy_ag}" := (.data[[working_animals_ag_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste)),
       "{final_energy_tr}" := (.data[[working_animals_tr_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
-      )
+    )
 }
 
 
