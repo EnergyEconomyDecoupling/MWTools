@@ -5,7 +5,8 @@
 \title{Download live animals data from FAOSTAT}
 \usage{
 down_fao_live_animals(
-  data_folder = data_folder,
+  data_folder = tempdir(),
+  download_filename = "Production_Livestock_E_All_Data_(Normalized).zip",
   live_animals_code = MWTools::fao_codes$live_animals_code
 )
 }

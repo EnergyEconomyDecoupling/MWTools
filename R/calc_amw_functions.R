@@ -196,18 +196,14 @@ calc_sector_split <- function(.df,
                         names_to = year,
                         values_to = prop_working_animals_ag_col) %>%
     dplyr::mutate(
-      "{year}" := as.numeric(.data[[year]])
-    ) %>%
-    dplyr::mutate(
+      "{year}" := as.numeric(.data[[year]]),
       "{prop_working_animals_tr_col}" := 1 - .data[[prop_working_animals_ag_col]]
       )
 
   .df %>%
     dplyr::left_join(end_use, by = c(species, mw_region_code_col, year)) %>%
     dplyr::mutate(
-      "{working_animals_ag_col}" := .data[[working_animals_total_col]] * .data[[prop_working_animals_ag_col]]
-      ) %>%
-    dplyr::mutate(
+      "{working_animals_ag_col}" := .data[[working_animals_total_col]] * .data[[prop_working_animals_ag_col]],
       "{working_animals_tr_col}" := .data[[working_animals_total_col]] * .data[[prop_working_animals_tr_col]]
       )
 
@@ -260,11 +256,6 @@ tidy_numbers_data <- function(.df,
                         names_to = sector_col,
                         names_prefix = stringr::fixed("Working.animals."),
                         values_to = working_animals_col) %>%
-    # dplyr::mutate(
-    #   "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("total"), "Total"),
-    #   "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Ag"), "Agriculture"),
-    #   "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Tr"), "Transport")
-    #   ) %>%
 
     dplyr::mutate(
       "{sector_col}" := dplyr::case_when(
@@ -272,9 +263,8 @@ tidy_numbers_data <- function(.df,
         .data[[sector_col]] == "Ag" ~ "Agriculture",
         .data[[sector_col]] == "Tr" ~ "Transport",
         TRUE ~ "Unknown sector column value"
-      )
-    ) %>%
-
+        )
+      ) %>%
     dplyr::relocate(.data[[sector_col]], .before = .data[[live_animals_col]])
 }
 
@@ -371,15 +361,11 @@ calc_yearly_feed <- function(.df,
   yearly_feed <- feed %>%
     dplyr::left_join(working_days, by = c(species, mw_region_code_col)) %>%
     dplyr::mutate(
-      "{working_yearly_feed_col}" := .data[[working_day_feed_col]] * .data[[working_days_col]], .keep = "unused"
+      "{working_yearly_feed_col}" := .data[[working_day_feed_col]] * .data[[working_days_col]],
+      "{nonworking_yearly_feed_col}" := .data[[nonworking_day_feed_col]] * .data[[nonworking_days_col]],
+      "{total_yearly_feed_col}" := .data[[working_yearly_feed_col]] + .data[[nonworking_yearly_feed_col]]
       ) %>%
-    dplyr::mutate(
-      "{nonworking_yearly_feed_col}" := .data[[nonworking_day_feed_col]] * .data[[nonworking_days_col]], .keep = "unused"
-      ) %>%
-    dplyr::mutate(
-      "{total_yearly_feed_col}" := .data[[working_yearly_feed_col]] + .data[[nonworking_yearly_feed_col]], .keep = "unused"
-      ) %>%
-    magrittr::set_colnames(c(species, mw_region_code_col, total_yearly_feed_col))
+    dplyr::select(species, mw_region_code_col, total_yearly_feed_col)
 
   .df %>%
     dplyr::left_join(yearly_feed, by = c(species, mw_region_code_col))
@@ -426,15 +412,6 @@ calc_final_energy <- function(.df,
                               final_energy_tr = MWTools::amw_analysis_constants$final_energy_tr) {
 
   .df %>%
-    # dplyr::mutate(
-    #   "{final_energy_total}" := (.data[[working_animals_total_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
-    #   ) %>%
-    # dplyr::mutate(
-    #   "{final_energy_ag}" := (.data[[working_animals_ag_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
-    #   ) %>%
-    # dplyr::mutate(
-    #   "{final_energy_tr}" := (.data[[working_animals_tr_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste))
-    #   )
     dplyr::mutate(
       "{final_energy_total}" := (.data[[working_animals_total_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste)),
       "{final_energy_ag}" := (.data[[working_animals_ag_col]] * .data[[total_yearly_feed_col]]) * ge_de_ratio * (1/(1 - trough_waste)),
@@ -480,12 +457,8 @@ calc_primary_energy <- function(.df,
 
   .df %>%
     dplyr::mutate(
-      "{primary_energy_total}" := .data[[final_energy_total]] / harvest_waste
-      ) %>%
-    dplyr::mutate(
-      "{primary_energy_ag}" := .data[[final_energy_ag]] / harvest_waste
-      ) %>%
-    dplyr::mutate(
+      "{primary_energy_total}" := .data[[final_energy_total]] / harvest_waste,
+      "{primary_energy_ag}" := .data[[final_energy_ag]] / harvest_waste,
       "{primary_energy_tr}" := .data[[final_energy_tr]] / harvest_waste
       )
 }
@@ -559,12 +532,8 @@ calc_useful_energy <- function(.df,
     dplyr::left_join(power, by = c(species, mw_region_code_col)) %>%
     dplyr::left_join(working_time, by = c(species, mw_region_code_col)) %>%
     dplyr::mutate(
-      "{useful_energy_total}" := .data[[working_animals_total_col]] * .data[[power_per_animal]] * .data[[working_seconds_col]] / 1000000
-      ) %>%
-    dplyr::mutate(
-      "{useful_energy_ag}" := .data[[working_animals_ag_col]] * .data[[power_per_animal]] * .data[[working_seconds_col]] / 1000000
-      ) %>%
-    dplyr::mutate(
+      "{useful_energy_total}" := .data[[working_animals_total_col]] * .data[[power_per_animal]] * .data[[working_seconds_col]] / 1000000,
+      "{useful_energy_ag}" := .data[[working_animals_ag_col]] * .data[[power_per_animal]] * .data[[working_seconds_col]] / 1000000,
       "{useful_energy_tr}" := .data[[working_animals_tr_col]] * .data[[power_per_animal]] * .data[[working_seconds_col]] / 1000000
       )
 
@@ -630,11 +599,15 @@ tidy_pfu_data <- function(.df,
                         names_to = c(stage_col, sector_col),
                         names_sep = ".energy.",
                         values_to = energy_mj_year) %>%
+
     dplyr::mutate(
-      "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed(" [MJ/year]"), ""),
-      "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("total"), "Total"),
-      "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Ag"), "Agriculture"),
-      "{sector_col}" := stringr::str_replace(.data[[sector_col]], stringr::fixed("Tr"), "Transport")
+      "{sector_col}" := dplyr::case_when(
+        .data[[sector_col]] == " [MJ/year]" ~ "",
+        .data[[sector_col]] == "total" ~ "Total",
+        .data[[sector_col]] == "Ag" ~ "Agriculture",
+        .data[[sector_col]] == "Tr" ~ "Transport",
+        TRUE ~ "Unknown sector column value"
+        )
       )
 }
 

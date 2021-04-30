@@ -103,16 +103,23 @@ test_that("calc_yearly_feed works", {
 
   test_data_path <- amw_test_data_path()
 
-  working_animals_w.feed <- calc_amw_numbers(data_folder = test_data_path) %>%
+  working_animals_w.feed <- tidy_fao_live_animals(data_folder = test_data_path) %>%
+    add_concordance_codes() %>%
+    trim_fao_data() %>%
+    get_working_species() %>%
+    calc_working_animals() %>%
+    calc_sector_split() %>%
     calc_yearly_feed()
 
   expect_true(!is.null(working_animals_w.feed))
 
-  expect_equal(nrow(working_animals_w.feed), 1062)
+  expect_equal(nrow(working_animals_w.feed), 354)
 
-  expect_equal(colnames(working_animals_w.feed), c("MW.Region.code", "Country.code",
-                                                   "Year", "Species", "Sector",
-                                                   "Live.animals", "Working.animals",
+  expect_equal(colnames(working_animals_w.feed), c("Country.code", "MW.Region.code", "Country.name",
+                                                   "Year", "Species", "Live.animals",
+                                                   "Prop.Working.animals", "Working.animals.total",
+                                                   "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
+                                                   "Working.animals.Ag", "Working.animals.Tr",
                                                    "Total.yearly.feed [MJ/year per animal]"))
 })
 
@@ -120,37 +127,28 @@ test_that("calc_final_energy works", {
 
   test_data_path <- amw_test_data_path()
 
-  working_animals_w.finalenergy <- calc_amw_numbers(data_folder = test_data_path) %>%
+  working_animals_w.finalenergy <- tidy_fao_live_animals(data_folder = test_data_path) %>%
+    add_concordance_codes() %>%
+    trim_fao_data() %>%
+    get_working_species() %>%
+    calc_working_animals() %>%
+    calc_sector_split() %>%
     calc_yearly_feed() %>%
-    calc_final_energy() # Failing
-
+    calc_final_energy()
 
   expect_true(!is.null(working_animals_w.finalenergy))
 
-  expect_equal(nrow(working_animals_w.finalenergy), 1062)
+  expect_equal(nrow(working_animals_w.finalenergy), 354)
 
-  expect_equal(colnames(working_animals_w.feed), c("MW.Region.code", "Country.code",
-                                                   "Year", "Species", "Sector",
-                                                   "Live.animals", "Working.animals",
-                                                   "Total.yearly.feed [MJ/year per animal]"))
+  expect_equal(colnames(working_animals_w.finalenergy), c("Country.code", "MW.Region.code", "Country.name",
+                                                          "Year", "Species", "Live.animals",
+                                                          "Prop.Working.animals", "Working.animals.total",
+                                                          "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
+                                                          "Working.animals.Ag", "Working.animals.Tr",
+                                                          "Total.yearly.feed [MJ/year per animal]",
+                                                          "Final.energy.total [MJ/year]", "Final.energy.Ag [MJ/year]",
+                                                          "Final.energy.Tr [MJ/year]"))
 })
-
-
-
-
-# working_animals_w.finalenergy <- calc_amw_numbers(data_folder = test_data_path) %>%
-#   calc_yearly_feed() %>%
-#   dplyr::mutate(
-#     final_energy_total = (working_animals_total_col * total_yearly_feed_col) * as.numeric(ge_de_ratio) * (1/(1 - as.numeric(trough_waste)))
-#   ) %>%
-#   dplyr::mutate(
-#     final_energy_ag = (.data[[working_animals_ag_col]] * .data[[total_yearly_feed_col]]) * as.numeric(ge_de_ratio) * (1/(1 - as.numeric(trough_waste)))
-#   ) %>%
-#   dplyr::mutate(
-#     final_energy_tr = (.data[[working_animals_tr_col]] * .data[[total_yearly_feed_col]]) * as.numeric(ge_de_ratio) * (1/(1 - as.numeric(trough_waste)))
-#   )
-
-
 
 
 
