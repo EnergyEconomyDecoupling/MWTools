@@ -13,12 +13,14 @@
 #' @examples
 #' live_animals_data <- down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data"))
 #'
-down_fao_live_animals <- function(data_folder = data_folder,
+down_fao_live_animals <- function(data_folder = tempdir(),
+                                  download_filename = "Production_Livestock_E_All_Data_(Normalized).zip",
                                   live_animals_code = MWTools::fao_codes$live_animals_code){
 
   # Download .zip file containing data for the number of live animals into a specified folder
-  FAOSTAT::get_faostat_bulk(code = live_animals_code, data_folder = data_folder)
-
+  out <- FAOSTAT::get_faostat_bulk(code = live_animals_code, data_folder = data_folder)
+  file.remove(file.path(data_folder, download_filename))
+  return(out)
 }
 
 #' Tidy live animals data from the FAO
