@@ -4,6 +4,9 @@
 # MWTools
 
 <!-- badges: start -->
+
+[![Codecov test
+coverage](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools/branch/master/graph/badge.svg)](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools?branch=master)
 <!-- badges: end -->
 
 The `R` package `MWTools` provides functions for the calculation of
@@ -92,8 +95,8 @@ working hours by sector and sex…..
 
 ``` r
 hmw_hours <- get_ilo_hmw_data()
-#> Table HOW_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\Rtmp8ILib4/ilostat/indicator-HOW_TEMP_SEX_ECO_NB_A-code-raw-20210418T0651.rds
-#> Table EMP_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\Rtmp8ILib4/ilostat/indicator-EMP_TEMP_SEX_ECO_NB_A-code-raw-20210418T0637.rds
+#> Table HOW_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpQvAsRI/ilostat/indicator-HOW_TEMP_SEX_ECO_NB_A-code-raw-20210418T0651.rds
+#> Table EMP_TEMP_SEX_ECO_NB_A cached at C:\Users\earzm\AppData\Local\Temp\RtmpQvAsRI/ilostat/indicator-EMP_TEMP_SEX_ECO_NB_A-code-raw-20210418T0637.rds
 
 head(hmw_hours)
 #> # A tibble: 6 x 6

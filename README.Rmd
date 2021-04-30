@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
+[![Codecov test coverage](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools/branch/master/graph/badge.svg)](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools?branch=master)
 <!-- badges: end -->
 
 The `R` package `MWTools` provides functions for the calculation of human and animal muscle work for use in Societal Exergy Analysis (SEA) using the Physical Supply Use Table (PSUT) framework.

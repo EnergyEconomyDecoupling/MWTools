@@ -52,8 +52,8 @@ plot_amw_summary <- function(amw_pfu_df,
                                                                         y = .data[[energy_mj_year]],
                                                                         color = stringr::str_wrap(.data[[stage_col]], width = 10))) +
     ggplot2::facet_wrap(facets = species, scales = "free_y") +
-    ggplot2::labs(color = "ECC Stage") +
-    ggplot2::labs(title = as.character(country), subtitle = paste0(as.character(sector), " Working Animal Energy")) +
+    ggplot2::labs(color = "Stage") +
+    ggplot2::labs(title = as.character(country), subtitle = paste0(as.character(sector), " - Working Animal Energy")) +
     ggplot2::scale_y_continuous(labels = scales::label_scientific(digits = 1, scale = 1)) +
     ggplot2::theme_classic() +
     ggplot2::theme(legend.key.size = grid::unit(0.1, "cm"))
@@ -67,7 +67,7 @@ plot_amw_summary <- function(amw_pfu_df,
                                                                             color = "Total Live")) +
     ggplot2::facet_wrap(facets = species, scales = "free_y") +
     ggplot2::labs(y = "Number of Animals", color = "Metric") +
-    ggplot2::labs(title = as.character(country), subtitle = paste0(as.character(sector), " Number of Animals")) +
+    ggplot2::labs(title = as.character(country), subtitle = paste0(as.character(sector), " - Number of Animals")) +
     ggplot2::scale_y_continuous(labels = scales::label_scientific(digits = 1, scale = 1)) +
     ggplot2::theme_classic() +
     ggplot2::theme(legend.key.size = grid::unit(0.1, "cm"))
