@@ -36,3 +36,16 @@ amw_test_data_path <- function() {
   file.path("extdata", "test_data") %>%
     system.file(package = "MWTools")
 }
+
+#' Gives a file path to the human muscle work analysis excel workbook
+#'
+#' @return a path to to the human muscle work analysis excel workbook bundled with this package
+#'
+#' @export
+#'
+#' @examples
+#' hmw_analysis_data_path()
+hmw_analysis_data_path <- function() {
+  file.path("extdata", "hmw_analysis_data.xlsx") %>%
+    system.file(package = "MWTools")
+}

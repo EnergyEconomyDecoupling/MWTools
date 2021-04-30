@@ -22,3 +22,11 @@ test_that("amw_test_data_path works", {
 
 })
 
+test_that("hmw_analysis_data_path works", {
+
+  test_path <- hmw_analysis_data_path()
+  expect_true(endsWith(test_path, file.path("extdata",
+                                            "hmw_analysis_data.xlsx")))
+
+})
+

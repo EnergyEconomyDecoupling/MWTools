@@ -8,7 +8,7 @@ test_that("tidy_fao_live_animals works", {
 
   expect_equal(unique(live_animals$Country.name), c("China, mainland", "China"))
 
-  expect_equal(colnames(live_animals_w.codes), c("Country.name", "Species", "Year",
+  expect_equal(colnames(live_animals), c("Country.name", "Species", "Year",
                                                  "Value"))
 
   expect_equal(nrow(live_animals), 2184)
