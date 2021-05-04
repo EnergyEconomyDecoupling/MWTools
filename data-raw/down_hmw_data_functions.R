@@ -25,7 +25,8 @@ get_ilo_hmw_data <- function(country_code_col = MWTools::conc_cols$country_code_
                              yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
                              employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
                              working_hours_code = MWTools::ilo_codes$working_hours_code,
-                             employment_code = MWTools::ilo_codes$employment_code
+                             employment_code = MWTools::ilo_codes$employment_code,
+                             download_location = MWTools::extdata_path()
                              ){
 
   # Mean weekly hours actually worked per employed person by sex and economic activity: HOW_TEMP_SEX_ECO_NB_A
@@ -53,6 +54,9 @@ get_ilo_hmw_data <- function(country_code_col = MWTools::conc_cols$country_code_
       "{yearly_working_hours_ilo_col}" := .data[[yearly_working_hours_ilo_col]] * 52
     )
 
-  return(ilo_hmw_data)
+  write.csv(ilo_hmw_data, file = file.path(download_location, "ilo_hmw_data.csv"))
 
-  }
+}
+
+# Call get_ilo_hmw_data() function, activated when sourcing down_hmw_data_functions.R
+get_ilo_hmw_data()

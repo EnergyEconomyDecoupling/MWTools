@@ -1,3 +1,19 @@
+#' Gives a file path to the extdata directory
+#'
+#' @return a path to to the concordance data excel workbook bundled with this package
+#'
+#' @export
+#'
+#' @examples
+#' fao_concordance_path()
+extdata_path <- function() {
+  file.path("extdata") %>%
+    system.file(package = "MWTools")
+}
+
+
+
+
 #' Gives a file path to the concordance data excel workbook
 #'
 #' @return a path to to the concordance data excel workbook bundled with this package
