@@ -37,8 +37,7 @@ mw_species <- list(asses = "Asses",
                    mules = "Mules",
                    buffaloes = "Buffaloes",
                    camelids_other = "Camelids, other",
-                   camelids = "Camelids",
-                   humans = "Humans")
+                   camelids = "Camelids")
 
 usethis::use_data(mw_species, overwrite = TRUE)
 

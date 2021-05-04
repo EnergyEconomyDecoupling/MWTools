@@ -9,6 +9,9 @@
 #' \item{species}{The name of the metadata column representing a species of live animal from FAO data.}
 #' \item{unit}{The name of the metadata column containing the units associated with the `value` column}
 #' \item{value}{The name of the data column containing the values of a given observation.}
+#' \item{sector_col}{The name of the metadata column containing the sector associated with the `value`.}
+#' \item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the `value`. Usally one of "Primary", "Final", or "Useful".}
+#' \item{energy_mj_year}{The name of the data column containing muscle work energyg values in units of megajoules (MJ) per year.}
 #' }
 #'
 #' @examples
@@ -21,8 +24,8 @@
 #'
 #' @format A string list with `r length(ilo_cols)` entries.
 #' \describe{
+#' \item{ref_area_col}{The string "ref_area".}
 #' \item{sex_ilo_col}{The string "Sex".}
-#' \item{sector_ilo_col}{The string "Sector".}
 #' \item{working_hours_ilo_col}{The string "Working.hours".}
 #' \item{employed_persons_ilo_col}{The string "Employed.persons".}
 #' }
@@ -45,7 +48,6 @@
 #' \item{buffaloes}{The string "Buffaloes".}
 #' \item{camelids_other}{The string "Camelids, other".}
 #' \item{camelids}{The string "Camelids", representing the combined category of "Camels" and "Camelids, other".}
-#' \item{humans}{The string "Humans".}
 #' }
 #'
 #' @examples
@@ -98,6 +100,66 @@
 #' ilo_codes
 "ilo_codes"
 
-# amw_analysis_constants
+#' Animal muscle work (amw) analysis data constants
+#'
+#' A string list containing a selection of amw analysis constants, used in the "amw_analysis_data.R" excel file.
+#'
+#' @format A string list with `r length(amw_analysis_constants)` entries.
+#' \describe{
+#' \item{prop_working_animals_col}{The metadata column "Prop.Working.animals" representing the proportion of live animals that are working animals.}
+#' \item{prop_working_animals_ag_col}{The metadata column "Prop.Working.animals.Ag" representing the proportion of working animals that work in agriculture.}
+#' \item{prop_working_animals_tr_col}{The metadata column "Prop.Working.animals.Tr" representing the proportion of working animals that work transporting goods outside of agriculture.}
+#' \item{wa_perc_sheet}{The excel sheet name "WA_perc" representing the sheet containing information on the proportion of working animals.}
+#' \item{wa_enduse_sheet}{The excel sheet name "WA_enduse" representing the sheet containing information of the proportion of working animals in agriculture/transport.}
+#' \item{wa_feed_sheet}{The excel sheet name "WA_feed" representing the sheet containing information on the feed requirements of working animals.}
+#' \item{wa_days_hours_sheet}{The excel sheet name "WA_days_hours" representing the sheet containing information on the number of days and hours worked by working animals.}
+#' \item{wa_power_sheet}{The excel sheet name "WA_power" representing the sheet containing information on the power output of working animals.}
+#' \item{working_seconds_col}{The data column "Working.seconds [seconds per animal]" representing the number of seconds of work performed by working animals.}
+#' \item{working_hours_col}{The data column "Working.hours [hour per animal]" representing the number of hours of work performed by working animals.}
+#' \item{working_days_col}{The data column "Working.days [day per animal]" representing the number of days that working animals worked.}
+#' \item{nonworking_days_col}{The data column "Non-Working days [day per animal]" representing the number of days that working animals did not work.}
+#' \item{power_per_animal}{The data column "Power.per.animal [W]" representing the power output of working animals.}
+#' \item{live_animals_col}{The data column "Live.animals" representing the number of live animals.}
+#' \item{working_animals_col}{The data column "Working.animals" representing the number of working animals.}
+#' \item{working_animals_total_col}{The data column "Working.animals.total" representing the total number of working animals.}
+#' \item{working_animals_ag_col}{The data column "Working.animals.Ag" representing the number of working animals that work in agriculture.}
+#' \item{working_animals_tr_col}{The data column "Working.animals.Tr" representing the number of working animals that work transporting goods outside of agriculture.}
+#' \item{working_day_feed_col}{The data column "Working.day.feed [MJ/day per animal]" representing the quantity of feed required by working animals each working day.}
+#' \item{nonworking_day_feed_col}{The data column "Non-Working.day.feed [MJ/day per animal]" representing the quantity of feed required by working animals each non-working day. }
+#' \item{working_yearly_feed_col}{The data column "Working.yearly.feed [MJ/year per animal]" representing the quantity of feed required by working animals on working days each year.}
+#' \item{nonworking_yearly_feed_col}{The data column "Non-Working.yearly.feed [MJ/year per animal]" representing the quantity of feed required by working animals on non-working days each year.}
+#' \item{total_yearly_feed_col}{The data column "Total.yearly.feed [MJ/year per animal]" representing the quantity of feed required by working animals each year.}
+#' \item{useful_energy_total}{The data column "Useful.energy.total [MJ/year]" representing the total useful energy produced by working animals through muscle work.}
+#' \item{useful_energy_ag}{The data column "Useful.energy.Ag [MJ/year]" representing the useful energy produced by working animals through muscle work in agriculture.}
+#' \item{useful_energy_tr}{The data column "Useful.energy.Tr [MJ/year]" representing the useful energy produced by working animals through muscle work transporting goods outside of agriculture.}
+#' \item{final_energy_total}{The data column "Final.energy.total [MJ/year]" representing the total final energy (feed) required by working animals.}
+#' \item{final_energy_ag}{The data column "Final.energy.Ag [MJ/year]" representing the final energy (feed) required by working animals in agriculture.}
+#' \item{final_energy_tr}{The data column "Final.energy.Tr [MJ/year]" representing the final energy (feed) required by working animals working to transport goods outside of agriculture.}
+#' \item{primary_energy_total}{The data column "Primary.energy.total [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the total final energy required by working animals.}
+#' \item{primary_energy_ag}{The data column "Primary.energy.Ag [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals in agriculture.}
+#' \item{primary_energy_tr}{The data column "Primary.energy.Tr [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals transporting goods outside of agriculture.}
+#' \item{mw_region_code_col}{The metadata column "MW.Region.code" representing the codes associated with the aggregate regions used in this package.}
+#' \item{mw_region_col}{The metadata column "MW.Region" representing the a names associated with the aggregate regions used in this package.}
+#' \item{exemplar_method_col}{The metadata column "Exemplar/Method" representing the regional exemplar or method used for a particular data series.}
+#' \item{method_source_col}{The metadata column "Method/Source" representing the method or source of information use for a particular data series.}
+#' \item{metric_col}{The metadata column "Metric" representing the metric name associated with a particular data series.}
+#' }
+#'
+#' @examples
+#' amw_analysis_constants
+"amw_analysis_constants"
 
-
+#' Country concordance columns
+#'
+#' A string list containing the names of the columns containing country code information.
+#'
+#' @format A string list with `r length(conc_cols)` entries.
+#' \describe{
+#' \item{country_code_col}{The metadata column name "Country.code" containing three letter ISO 3166-1 country codes.}
+#' \item{country_code_pfu_col}{The metadata column name "Country.code_PFU" containing bespoke three letter country codes.}
+#' \item{country_incl_col}{The metadata column name "Country.incl." containing either "Yes" or "No" depending on whether a particulr region or country shoule be included for analysis in `MWTools`.}
+#' }
+#'
+#' @examples
+#' conc_cols
+"conc_cols"

@@ -7,8 +7,8 @@
 \format{
 A string list with 4 entries.
 \describe{
+\item{ref_area_col}{The string "ref_area".}
 \item{sex_ilo_col}{The string "Sex".}
-\item{sector_ilo_col}{The string "Sector".}
 \item{working_hours_ilo_col}{The string "Working.hours".}
 \item{employed_persons_ilo_col}{The string "Employed.persons".}
 }

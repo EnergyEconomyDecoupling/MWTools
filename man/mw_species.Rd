@@ -15,7 +15,6 @@ A string list with 9 entries.
 \item{buffaloes}{The string "Buffaloes".}
 \item{camelids_other}{The string "Camelids, other".}
 \item{camelids}{The string "Camelids", representing the combined category of "Camels" and "Camelids, other".}
-\item{humans}{The string "Humans".}
 }
 }
 \usage{

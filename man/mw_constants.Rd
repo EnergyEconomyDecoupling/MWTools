@@ -12,6 +12,9 @@ A string list with 8 entries.
 \item{species}{The name of the metadata column representing a species of live animal from FAO data.}
 \item{unit}{The name of the metadata column containing the units associated with the \code{value} column}
 \item{value}{The name of the data column containing the values of a given observation.}
+\item{sector_col}{The name of the metadata column containing the sector associated with the \code{value}.}
+\item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the \code{value}. Usally one of "Primary", "Final", or "Useful".}
+\item{energy_mj_year}{The name of the data column containing muscle work energyg values in units of megajoules (MJ) per year.}
 }
 }
 \usage{
