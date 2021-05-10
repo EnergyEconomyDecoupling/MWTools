@@ -10,7 +10,7 @@ tidy_numbers_data(
   species = MWTools::mw_constants$species,
   sector_col = MWTools::mw_constants$sector_col,
   country_code_col = MWTools::conc_cols$country_code_col,
-  mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
   working_animals_col = MWTools::amw_analysis_constants$working_animals_col,
   working_animals_total_col = MWTools::amw_analysis_constants$working_animals_total_col,
   working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
@@ -25,7 +25,7 @@ tidy_numbers_data(
 
 \item{country_code_col}{See \code{MWTools::conc_cols}}
 
-\item{mw_region_code_col, working_animals_col, working_animals_total_col, working_animals_ag_col, working_animals_tr_col, live_animals_col}{See \code{MWTools::amw_analysis_constants}}
+\item{amw_region_code_col, working_animals_col, working_animals_total_col, working_animals_ag_col, working_animals_tr_col, live_animals_col}{See \code{MWTools::amw_analysis_constants}}
 }
 \value{
 
@@ -36,8 +36,8 @@ sector, species, and over time. This function is usually applied sequentially
 after the functions shown in the example.
 }
 \examples{
-working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species() \%>\%

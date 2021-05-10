@@ -19,7 +19,7 @@ calc_yearly_feed(
  
     nonworking_yearly_feed_col = MWTools::amw_analysis_constants$nonworking_yearly_feed_col,
   total_yearly_feed_col = MWTools::amw_analysis_constants$total_yearly_feed_col,
-  mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
   method_source = MWTools::amw_analysis_constants$method_source
 )
 }
@@ -35,7 +35,7 @@ bundled with the \code{MWTools} package.}
 
 \item{species}{See \code{MWTools::mw_constants}.}
 
-\item{wa_feed_sheet, wa_days_hours_sheet, working_days_col, nonworking_days_col, working_hours_col, working_day_feed_col, nonworking_day_feed_col, working_yearly_feed_col, nonworking_yearly_feed_col, total_yearly_feed_col, mw_region_code_col, method_source}{See \code{MWTools::amw_analysis_constants}.}
+\item{wa_feed_sheet, wa_days_hours_sheet, working_days_col, nonworking_days_col, working_hours_col, working_day_feed_col, nonworking_day_feed_col, working_yearly_feed_col, nonworking_yearly_feed_col, total_yearly_feed_col, amw_region_code_col, method_source}{See \code{MWTools::amw_analysis_constants}.}
 }
 \value{
 

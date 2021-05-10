@@ -5,7 +5,7 @@
 \alias{mw_species}
 \title{Working animal species}
 \format{
-A string list with 9 entries.
+A string list with 8 entries.
 \describe{
 \item{asses}{The string "Asses".}
 \item{camels}{The string "Camels".}

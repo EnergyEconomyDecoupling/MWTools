@@ -3,8 +3,8 @@
 #' Create a tidy data frame using data supplied by the function
 #' `MWTools::down_fao_live_animals`.
 #'
-#' @param data_folder A user-specified file path to the directory in which to
-#'                    download the FAO live animals data.
+#' @param data_path A user-specified file path to the directory in which to
+#'                  download the FAO live animals data.
 #' @param country_name,species,year,unit,value See `MWTools::mw_constants`.
 #' @param area_fao_col,item_fao_col,year_fao_col,unit_fao_col,value_fao_col
 #'        See `MWTools::fao_cols`.
@@ -16,7 +16,7 @@
 #' live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
 #'   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data"))
 #'
-tidy_fao_live_animals <- function(data_folder,
+tidy_fao_live_animals <- function(.df,
                                   country_name = MWTools::mw_constants$country_name,
                                   species = MWTools::mw_constants$species,
                                   year = MWTools::mw_constants$year,
@@ -28,10 +28,8 @@ tidy_fao_live_animals <- function(data_folder,
                                   unit_fao_col = MWTools::fao_cols$unit_fao_col,
                                   value_fao_col = MWTools::fao_cols$value_fao_col){
 
-  # Read .zip file into a tidy data frame
-  live_animals <- FAOSTAT::read_faostat_bulk(zip_file_name = file.path(data_folder,
-                                                                       list.files(data_folder,
-                                                                                  pattern = ".zip"))) %>%
+  # Read file into a tidy data frame
+  live_animals <- .df %>%
     dplyr::select(area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col) %>% # Do I need to use the .data[[]] syntax here?
     magrittr::set_colnames(c(country_name, species, year, unit, value))
 
@@ -81,7 +79,7 @@ tidy_fao_live_animals <- function(data_folder,
 #'                         codes, and MWTools specific region codes. Set to
 #'                         `MWTools::fao_concordance_path()` by default, the path
 #'                         to the bundled concordance information in `MWTools`.
-#' @param mw_region_code_col See `MWTools::amw_analysis_constants`.
+#' @param amw_region_code_col See `MWTools::amw_analysis_constants`.
 #' @param country_name See `MWTools::mw_constants`.
 #' @param country_incl_col,country_code_col,country_code_pfu_col See `MWTools::conc_cols`.
 #'
@@ -89,13 +87,14 @@ tidy_fao_live_animals <- function(data_folder,
 #' @export
 #'
 #' @examples
-#' live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
-#'   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#' live_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
+#'   tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
 #'   add_concordance_codes()
 #'
 add_concordance_codes <- function(.df,
                                   concordance_path = MWTools::fao_concordance_path(),
-                                  mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+                                  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
+                                  hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
                                   country_name = MWTools::mw_constants$country_name,
                                   country_incl_col = MWTools::conc_cols$country_incl_col,
                                   country_code_col = MWTools::conc_cols$country_code_col,
@@ -104,12 +103,13 @@ add_concordance_codes <- function(.df,
   # Read bundled concordance data
   concordance_data <- readxl::read_xlsx(path = concordance_path,
                                         sheet = "Mapping") %>%
-    magrittr::set_colnames(c(country_name, country_incl_col, country_code_col, country_code_pfu_col, mw_region_code_col))
+    dplyr::select(-hmw_region_code_col) %>%
+    magrittr::set_colnames(c(country_name, country_incl_col, country_code_col, country_code_pfu_col, amw_region_code_col))
 
   .df %>%
     dplyr::left_join(concordance_data, by = country_name) %>%
     dplyr::relocate(country_code_col, .before = country_name) %>%
-    dplyr::relocate(mw_region_code_col, .before = country_name)
+    dplyr::relocate(amw_region_code_col, .before = country_name)
 }
 
 
@@ -127,8 +127,8 @@ add_concordance_codes <- function(.df,
 #' @export
 #'
 #' @examples
-#' live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
-#'   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#' live_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
+#'   tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
 #'   add_concordance_codes() %>%
 #'   trim_fao_data()
 #'
@@ -161,8 +161,8 @@ trim_fao_data <- function(.df,
 #' @export
 #'
 #' @examples
-#' live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
-#'   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#' live_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
+#'   tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
 #'   add_concordance_codes() %>%
 #'   trim_fao_data() %>%
 #'   get_working_species()
@@ -171,7 +171,7 @@ get_working_species <- function(.df,
                                 species = MWTools::mw_constants$species,
                                 country_name = MWTools::mw_constants$country_name,
                                 country_code_col = MWTools::conc_cols$country_code_col,
-                                mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+                                amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
                                 year = MWTools::mw_constants$year,
                                 value = MWTools::mw_constants$value,
                                 asses = MWTools::mw_species$asses,
@@ -219,7 +219,7 @@ get_working_species <- function(.df,
     tidyr::pivot_longer(cols = c(asses, buffaloes, camelids, cattle, horses, mules),
                         names_to = species,
                         values_to = value) %>%
-    magrittr::set_colnames(c(country_code_col, mw_region_code_col, country_name, year, species, live_animals_col))
+    magrittr::set_colnames(c(country_code_col, amw_region_code_col, country_name, year, species, live_animals_col))
 
   # Returns a tidy data frame containing the number of working animals
   return(working_species_final)
@@ -243,13 +243,14 @@ get_working_species <- function(.df,
 #'                          with the `MWTools` package.
 #' @param prop_working_animal,da_perc,working_animals_total_col,live_animals_col,mw_region_code_col,mw_region_col,exemplar_method_col
 #'        See `MWTools::amw_analysis_constants`.
+#' @param ...
 #'
 #' @return
 #' @export
 #'
 #' @examples
-#' working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
-#'   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#' working_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
+#'   tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
 #'   add_concordance_codes() %>%
 #'   trim_fao_data() %>%
 #'   get_working_species() %>%
@@ -263,8 +264,8 @@ calc_working_animals <- function(.df,
                                  wa_perc_sheet = MWTools::amw_analysis_constants$wa_perc_sheet,
                                  working_animals_total_col = MWTools::amw_analysis_constants$working_animals_total_col,
                                  live_animals_col = MWTools::amw_analysis_constants$live_animals_col,
-                                 mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
-                                 mw_region_col = MWTools::amw_analysis_constants$mw_region_col,
+                                 amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
+                                 amw_region_col = MWTools::amw_analysis_constants$amw_region_col,
                                  exemplar_method_col = MWTools::amw_analysis_constants$exemplar_method_col){
 
   # Reads the amw analysis excel file to determine the percentage of live animals
@@ -272,7 +273,7 @@ calc_working_animals <- function(.df,
   working_animals_prop <- readxl::read_excel(amw_analysis_path,
                                              sheet = wa_perc_sheet) %>%
     tibble::tibble() %>%
-    dplyr::select(-exemplar_method_col, -mw_region_col) %>% # .data[[]]
+    dplyr::select(-exemplar_method_col, -amw_region_col) %>% # .data[[]]
     tidyr::pivot_longer(cols = `1960`:`2019`, # Use IEATools::year_cols()?
                         names_to = year,
                         values_to = prop_working_animals_col) %>%
@@ -281,7 +282,7 @@ calc_working_animals <- function(.df,
     )
 
   .df %>%
-    dplyr::left_join(working_animals_prop, by = c(species, mw_region_code_col, year)) %>%
+    dplyr::left_join(working_animals_prop, by = c(species, amw_region_code_col, year)) %>%
     dplyr::mutate(
       "{working_animals_total_col}" := .data[[live_animals_col]] * .data[[prop_working_animals_col]]
       )
@@ -303,15 +304,15 @@ calc_working_animals <- function(.df,
 #'                          by default, which returns the path the analysis data
 #'                          bundled with the `MWTools` package.
 #' @param year,species See `MWTools::mw_constants`.
-#' @param method_source,metric,mw_region_col,mw_region_code_col,wa_enduse_sheet,working_animals_total_col,working_animals_ag_col,working_animals_tr_col,prop_working_animals_ag_col,prop_working_animals_tr_col
+#' @param method_source,metric,amw_region_col,amw_region_code_col,wa_enduse_sheet,working_animals_total_col,working_animals_ag_col,working_animals_tr_col,prop_working_animals_ag_col,prop_working_animals_tr_col
 #'        See `MWTools::amw_analysis_constants`.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-#' working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
-#'   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#' working_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
+#'   tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
 #'   add_concordance_codes() %>%
 #'   trim_fao_data() %>%
 #'   get_working_species() %>%
@@ -324,8 +325,8 @@ calc_sector_split <- function(.df,
                               species = MWTools::mw_constants$species,
                               method_source = MWTools::amw_analysis_constants$method_source,
                               metric = MWTools::amw_analysis_constants$metric,
-                              mw_region_col = MWTools::amw_analysis_constants$mw_region_col,
-                              mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+                              amw_region_col = MWTools::amw_analysis_constants$amw_region_col,
+                              amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
                               wa_enduse_sheet = MWTools::amw_analysis_constants$wa_enduse_sheet,
                               working_animals_total_col = MWTools::amw_analysis_constants$working_animals_total_col,
                               working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
@@ -335,7 +336,7 @@ calc_sector_split <- function(.df,
 
   end_use <- readxl::read_excel(amw_analysis_path,
                                 sheet = wa_enduse_sheet) %>%
-    dplyr::select(-method_source, -metric, -mw_region_col) %>% # .data[[]]
+    dplyr::select(-method_source, -metric, -amw_region_col) %>% # .data[[]]
     tidyr::pivot_longer(cols = `1960`:`2019`, # Use IEATools::year_cols()?
                         names_to = year,
                         values_to = prop_working_animals_ag_col) %>%
@@ -345,7 +346,7 @@ calc_sector_split <- function(.df,
       )
 
   .df %>%
-    dplyr::left_join(end_use, by = c(species, mw_region_code_col, year)) %>%
+    dplyr::left_join(end_use, by = c(species, amw_region_code_col, year)) %>%
     dplyr::mutate(
       "{working_animals_ag_col}" := .data[[working_animals_total_col]] * .data[[prop_working_animals_ag_col]],
       "{working_animals_tr_col}" := .data[[working_animals_total_col]] * .data[[prop_working_animals_tr_col]]
@@ -363,15 +364,15 @@ calc_sector_split <- function(.df,
 #' @param .df A data frame containing ...
 #' @param year,species,sector_col See `MWTools::mw_constants`
 #' @param country_code_col See `MWTools::conc_cols`
-#' @param mw_region_code_col,working_animals_col,working_animals_total_col,working_animals_ag_col,working_animals_tr_col,live_animals_col
+#' @param amw_region_code_col,working_animals_col,working_animals_total_col,working_animals_ag_col,working_animals_tr_col,live_animals_col
 #'        See `MWTools::amw_analysis_constants`
 #'
 #' @return
 #' @export
 #'
 #' @examples
-#' working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
-#'   tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#' working_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
+#'   tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
 #'   add_concordance_codes() %>%
 #'   trim_fao_data() %>%
 #'   get_working_species() %>%
@@ -384,7 +385,7 @@ tidy_numbers_data <- function(.df,
                               species = MWTools::mw_constants$species,
                               sector_col = MWTools::mw_constants$sector_col,
                               country_code_col = MWTools::conc_cols$country_code_col,
-                              mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+                              amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
                               working_animals_col = MWTools::amw_analysis_constants$working_animals_col,
                               working_animals_total_col = MWTools::amw_analysis_constants$working_animals_total_col,
                               working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
@@ -394,7 +395,7 @@ tidy_numbers_data <- function(.df,
 
 
   .df %>%
-    dplyr::select(mw_region_code_col, country_code_col, year, species, live_animals_col,
+    dplyr::select(amw_region_code_col, country_code_col, year, species, live_animals_col,
                   working_animals_total_col, working_animals_ag_col, working_animals_tr_col) %>%
     tidyr::pivot_longer(cols = c(working_animals_total_col, working_animals_ag_col, working_animals_tr_col),
                         names_to = sector_col,
@@ -420,19 +421,20 @@ tidy_numbers_data <- function(.df,
 #' in sequence to convert FAO data for live animals, usually downloaded with the function
 #' `down_fao_live_animals`, into a tidy data frame.
 #'
-#' @param data_folder The path to the folder containing data for the number of live
+#' @param data_path The path to the folder containing data for the number of live
 #'                    animals. Usually downloaded with the function `down_fao_live_animals`.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-#' tidy_amw_numbers_data <- <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
-#'   calc_amw_numbers(data_folder = file.path(fs::home_path(), "FAO_data")
+#' tidy_amw_numbers_data <- <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
+#'   calc_amw_numbers(data_path = file.path(fs::home_path(), "FAO_data")
 #'
-calc_amw_numbers <- function(data_folder) {
+calc_amw_numbers <- function(.df) {
 
-  amw_numbers_data <- tidy_fao_live_animals(data_folder = data_folder) %>%
+  amw_numbers_data <- .df %>%
+    tidy_fao_live_animals() %>%
     add_concordance_codes() %>%
     trim_fao_data() %>%
     get_working_species() %>%
@@ -459,7 +461,7 @@ calc_amw_numbers <- function(data_folder) {
 #'                          by default, which returns the path the analysis data
 #'                          bundled with the `MWTools` package.
 #' @param species See `MWTools::mw_constants`.
-#' @param wa_feed_sheet,wa_days_hours_sheet,working_days_col,nonworking_days_col,working_hours_col,working_day_feed_col,nonworking_day_feed_col,working_yearly_feed_col,nonworking_yearly_feed_col,total_yearly_feed_col,mw_region_code_col,method_source
+#' @param wa_feed_sheet,wa_days_hours_sheet,working_days_col,nonworking_days_col,working_hours_col,working_day_feed_col,nonworking_day_feed_col,working_yearly_feed_col,nonworking_yearly_feed_col,total_yearly_feed_col,amw_region_code_col,method_source
 #'        See `MWTools::amw_analysis_constants`.
 #'
 #' @return
@@ -488,7 +490,7 @@ calc_yearly_feed <- function(.df,
                              working_yearly_feed_col = MWTools::amw_analysis_constants$working_yearly_feed_col,
                              nonworking_yearly_feed_col = MWTools::amw_analysis_constants$nonworking_yearly_feed_col,
                              total_yearly_feed_col = MWTools::amw_analysis_constants$total_yearly_feed_col,
-                             mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+                             amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
                              method_source = MWTools::amw_analysis_constants$method_source) {
 
   feed <- readxl::read_excel(amw_analysis_path,
@@ -503,16 +505,16 @@ calc_yearly_feed <- function(.df,
       )
 
   yearly_feed <- feed %>%
-    dplyr::left_join(working_days, by = c(species, mw_region_code_col)) %>%
+    dplyr::left_join(working_days, by = c(species, amw_region_code_col)) %>%
     dplyr::mutate(
       "{working_yearly_feed_col}" := .data[[working_day_feed_col]] * .data[[working_days_col]],
       "{nonworking_yearly_feed_col}" := .data[[nonworking_day_feed_col]] * .data[[nonworking_days_col]],
       "{total_yearly_feed_col}" := .data[[working_yearly_feed_col]] + .data[[nonworking_yearly_feed_col]]
       ) %>%
-    dplyr::select(species, mw_region_code_col, total_yearly_feed_col)
+    dplyr::select(species, amw_region_code_col, total_yearly_feed_col)
 
   .df %>%
-    dplyr::left_join(yearly_feed, by = c(species, mw_region_code_col))
+    dplyr::left_join(yearly_feed, by = c(species, amw_region_code_col))
 }
 
 
@@ -621,7 +623,7 @@ calc_primary_energy <- function(.df,
 #' @param species See `MWTools::mw_constants`.
 #' @param wa_power_sheet,wa_days_hours_sheet See `MWTools::amw_analysis_constants`.
 #' @param working_animals_total_col,working_hours_col,working_seconds_col See `MWTools::amw_analysis_constants`.
-#' @param mw_region_code_col,method_source,power_per_animal See `MWTools::amw_analysis_constants`.
+#' @param amw_region_code_col,method_source,power_per_animal See `MWTools::amw_analysis_constants`.
 #' @param useful_energy_total,useful_energy_ag,useful_energy_tr See `MWTools::amw_analysis_constants`.
 #' @param working_animals_total_col,working_animals_ag_col,working_animals_tr_col See `MWTools::amw_analysis_constants`.
 #'
@@ -649,7 +651,7 @@ calc_useful_energy <- function(.df,
                                working_days_col = MWTools::amw_analysis_constants$working_days_col,
                                working_hours_col = MWTools::amw_analysis_constants$working_hours_col,
                                working_seconds_col = MWTools::amw_analysis_constants$working_seconds_col,
-                               mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+                               amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
                                method_source = MWTools::amw_analysis_constants$method_source,
                                power_per_animal = MWTools::amw_analysis_constants$power_per_animal,
                                useful_energy_total = MWTools::amw_analysis_constants$useful_energy_total,
@@ -662,19 +664,19 @@ calc_useful_energy <- function(.df,
   power <- readxl::read_excel(amw_analysis_path,
                               sheet = wa_power_sheet) %>%
     dplyr::select(-method_source) %>%
-    magrittr::set_colnames(c(species, mw_region_code_col, power_per_animal))
+    magrittr::set_colnames(c(species, amw_region_code_col, power_per_animal))
 
   working_time <- readxl::read_excel(amw_analysis_path,
                                      sheet = wa_days_hours_sheet) %>%
     dplyr::select(-method_source, -working_days_col) %>%
-    magrittr::set_colnames(c(species, mw_region_code_col, working_hours_col)) %>%
+    magrittr::set_colnames(c(species, amw_region_code_col, working_hours_col)) %>%
     dplyr::mutate(
       "{working_seconds_col}" := .data[[working_hours_col]] * 3600, .keep = "unused"
       )
 
   .df %>%
-    dplyr::left_join(power, by = c(species, mw_region_code_col)) %>%
-    dplyr::left_join(working_time, by = c(species, mw_region_code_col)) %>%
+    dplyr::left_join(power, by = c(species, amw_region_code_col)) %>%
+    dplyr::left_join(working_time, by = c(species, amw_region_code_col)) %>%
     dplyr::mutate(
       "{useful_energy_total}" := .data[[working_animals_total_col]] * .data[[power_per_animal]] * .data[[working_seconds_col]] / 1000000,
       "{useful_energy_ag}" := .data[[working_animals_ag_col]] * .data[[power_per_animal]] * .data[[working_seconds_col]] / 1000000,
@@ -690,7 +692,7 @@ calc_useful_energy <- function(.df,
 #' @param .df A data frame containing ...
 #' @param country_code_col See `MWTools::conc_cols`.
 #' @param year,species,sector_col,stage_col,energy_mj_year See `MWTools::mw_constants`.
-#' @param mw_region_code_col See `MWTools::amw_analysis_constants`.
+#' @param amw_region_code_col See `MWTools::amw_analysis_constants`.
 #' @param useful_energy_total,useful_energy_ag,useful_energy_tr See `MWTools::amw_analysis_constants`.
 #' @param final_energy_total,final_energy_ag,final_energy_tr See `MWTools::amw_analysis_constants`.
 #' @param primary_energy_total,primary_energy_ag,primary_energy_tr See `MWTools::amw_analysis_constants`.
@@ -719,7 +721,7 @@ tidy_pfu_data <- function(.df,
                           sector_col = MWTools::mw_constants$sector_col,
                           stage_col = MWTools::mw_constants$stage_col,
                           energy_mj_year = MWTools::mw_constants$energy_mj_year,
-                          mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+                          amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
                           useful_energy_total = MWTools::amw_analysis_constants$useful_energy_total,
                           useful_energy_ag = MWTools::amw_analysis_constants$useful_energy_ag,
                           useful_energy_tr = MWTools::amw_analysis_constants$useful_energy_tr,
@@ -733,7 +735,7 @@ tidy_pfu_data <- function(.df,
 
 
   .df %>%
-    dplyr::select(mw_region_code_col, country_code_col, year, species,
+    dplyr::select(amw_region_code_col, country_code_col, year, species,
                   useful_energy_total, useful_energy_ag, useful_energy_tr,
                   final_energy_total, final_energy_ag, final_energy_tr,
                   primary_energy_total, primary_energy_ag, primary_energy_tr) %>%
@@ -774,9 +776,10 @@ tidy_pfu_data <- function(.df,
 #' tidy_amw_pfu_data <- <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
 #'   calc_amw_pfu(data_folder = file.path(fs::home_path(), "FAO_data")
 #'
-calc_amw_pfu <- function(data_folder) {
+calc_amw_pfu <- function(.df) {
 
-  amw_pfu_data <- tidy_fao_live_animals(data_folder = data_folder) %>%
+  amw_pfu_data <- .df %>%
+    tidy_fao_live_animals() %>%
     add_concordance_codes() %>%
     trim_fao_data() %>%
     get_working_species() %>%

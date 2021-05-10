@@ -2,7 +2,10 @@ test_that("tidy_fao_live_animals works", {
 
   test_data_path <- amw_test_data_path()
 
-  live_animals <- tidy_fao_live_animals(data_folder = test_data_path)
+  test_data <- read.csv(test_data_path)
+
+  live_animals <- test_data %>%
+    tidy_fao_live_animals()
 
   expect_true(!is.null(live_animals))
 
@@ -20,14 +23,17 @@ test_that("add_concordance_codes works", {
 
   test_data_path <- amw_test_data_path()
 
-  live_animals_w.codes <- tidy_fao_live_animals(data_folder = test_data_path) %>%
+  test_data <- read.csv(test_data_path)
+
+  live_animals_w.codes <- test_data %>%
+    tidy_fao_live_animals() %>%
     add_concordance_codes()
 
   expect_true(!is.null(live_animals_w.codes))
 
   expect_equal(unique(live_animals_w.codes$Country.code), c("CHN", "-"))
 
-  expect_equal(colnames(live_animals_w.codes), c("Country.code", "MW.Region.code",
+  expect_equal(colnames(live_animals_w.codes), c("Country.code", "AMW.Region.code",
                                                  "Country.name", "Species", "Year",
                                                  "Value", "Country.incl.", "Country.code_PFU"))
 
@@ -40,7 +46,10 @@ test_that("trim_fao_data works", {
 
   test_data_path <- amw_test_data_path()
 
-  live_animals_trimmed <- tidy_fao_live_animals(data_folder = test_data_path) %>%
+  test_data <- read.csv(test_data_path)
+
+  live_animals_trimmed <- test_data %>%
+    tidy_fao_live_animals() %>%
     add_concordance_codes() %>%
     trim_fao_data()
 
@@ -58,7 +67,10 @@ test_that("get_working_species works", {
 
   test_data_path <- amw_test_data_path()
 
-  live_animals_w.species <- tidy_fao_live_animals(data_folder = test_data_path) %>%
+  test_data <- read.csv(test_data_path)
+
+  live_animals_w.species <- test_data %>%
+    tidy_fao_live_animals() %>%
     add_concordance_codes() %>%
     trim_fao_data() %>%
     get_working_species()
@@ -79,7 +91,10 @@ test_that("calc_working_animals works", {
 
   test_data_path <- amw_test_data_path()
 
-  working_animals <- tidy_fao_live_animals(data_folder = test_data_path) %>%
+  test_data <- read.csv(test_data_path)
+
+  working_animals <- test_data %>%
+    tidy_fao_live_animals() %>%
     add_concordance_codes() %>%
     trim_fao_data() %>%
     get_working_species() %>%
@@ -89,7 +104,7 @@ test_that("calc_working_animals works", {
 
   expect_equal(nrow(working_animals), 354)
 
-  expect_equal(colnames(working_animals), c("Country.code", "MW.Region.code",
+  expect_equal(colnames(working_animals), c("Country.code", "AMW.Region.code",
                                             "Country.name", "Year", "Species",
                                             "Live.animals", "Prop.Working.animals",
                                             "Working.animals.total"))
@@ -100,7 +115,10 @@ test_that("calc_sector_split works", {
 
   test_data_path <- amw_test_data_path()
 
-  working_animals_s.split <- tidy_fao_live_animals(data_folder = test_data_path) %>%
+  test_data <- read.csv(test_data_path)
+
+  working_animals_s.split <- test_data %>%
+    tidy_fao_live_animals() %>%
     add_concordance_codes() %>%
     trim_fao_data() %>%
     get_working_species() %>%
@@ -111,7 +129,7 @@ test_that("calc_sector_split works", {
 
   expect_equal(nrow(working_animals_s.split), 354)
 
-  expect_equal(colnames(working_animals_s.split), c("Country.code", "MW.Region.code",
+  expect_equal(colnames(working_animals_s.split), c("Country.code", "AMW.Region.code",
                                                     "Country.name", "Year", "Species",
                                                     "Live.animals", "Prop.Working.animals",
                                                     "Working.animals.total", "Prop.Working.animals.Ag",
@@ -123,7 +141,10 @@ test_that("tidy_numbers_data works", {
 
   test_data_path <- amw_test_data_path()
 
-  working_animals_tidy <- tidy_fao_live_animals(data_folder = test_data_path) %>%
+  test_data <- read.csv(test_data_path)
+
+  working_animals_tidy <- test_data %>%
+    tidy_fao_live_animals() %>%
     add_concordance_codes() %>%
     trim_fao_data() %>%
     get_working_species() %>%
@@ -135,31 +156,36 @@ test_that("tidy_numbers_data works", {
 
   expect_equal(nrow(working_animals_tidy), 1062)
 
-  expect_equal(colnames(working_animals_tidy), c("MW.Region.code", "Country.code",
-                                                    "Year", "Species", "Sector",
-                                                    "Live.animals", "Working.animals"))
+  expect_equal(colnames(working_animals_tidy), c("AMW.Region.code", "Country.code",
+                                                 "Year", "Species", "Sector",
+                                                 "Live.animals", "Working.animals"))
 })
 
 test_that("calc_amw_numbers works", {
 
   test_data_path <- amw_test_data_path()
 
-  working_animals_tidy <- calc_amw_numbers(data_folder = test_data_path)
+  test_data <- read.csv(test_data_path)
+
+  working_animals_tidy <- calc_amw_numbers(test_data)
 
   expect_true(!is.null(working_animals_tidy))
 
   expect_equal(nrow(working_animals_tidy), 1062)
 
-  expect_equal(colnames(working_animals_tidy), c("MW.Region.code", "Country.code",
-                                                    "Year", "Species", "Sector",
-                                                    "Live.animals", "Working.animals"))
+  expect_equal(colnames(working_animals_tidy), c("AMW.Region.code", "Country.code",
+                                                 "Year", "Species", "Sector",
+                                                 "Live.animals", "Working.animals"))
 })
 
 test_that("calc_yearly_feed works", {
 
   test_data_path <- amw_test_data_path()
 
-  working_animals_w.feed <- tidy_fao_live_animals(data_folder = test_data_path) %>%
+  test_data <- read.csv(test_data_path)
+
+  working_animals_w.feed <- test_data %>%
+    tidy_fao_live_animals() %>%
     add_concordance_codes() %>%
     trim_fao_data() %>%
     get_working_species() %>%
@@ -171,7 +197,7 @@ test_that("calc_yearly_feed works", {
 
   expect_equal(nrow(working_animals_w.feed), 354)
 
-  expect_equal(colnames(working_animals_w.feed), c("Country.code", "MW.Region.code", "Country.name",
+  expect_equal(colnames(working_animals_w.feed), c("Country.code", "AMW.Region.code", "Country.name",
                                                    "Year", "Species", "Live.animals",
                                                    "Prop.Working.animals", "Working.animals.total",
                                                    "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
@@ -183,7 +209,10 @@ test_that("calc_final_energy works", {
 
   test_data_path <- amw_test_data_path()
 
-  working_animals_w.finalenergy <- tidy_fao_live_animals(data_folder = test_data_path) %>%
+  test_data <- read.csv(test_data_path)
+
+  working_animals_w.finalenergy <- test_data %>%
+    tidy_fao_live_animals() %>%
     add_concordance_codes() %>%
     trim_fao_data() %>%
     get_working_species() %>%
@@ -196,7 +225,7 @@ test_that("calc_final_energy works", {
 
   expect_equal(nrow(working_animals_w.finalenergy), 354)
 
-  expect_equal(colnames(working_animals_w.finalenergy), c("Country.code", "MW.Region.code", "Country.name",
+  expect_equal(colnames(working_animals_w.finalenergy), c("Country.code", "AMW.Region.code", "Country.name",
                                                           "Year", "Species", "Live.animals",
                                                           "Prop.Working.animals", "Working.animals.total",
                                                           "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",

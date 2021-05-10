@@ -108,8 +108,7 @@ amw_analysis_constants <- list(prop_working_animals_col = "Prop.Working.animals"
                                # ag_full_string
                                # tr_full_string
                                # total_full_string
-                               mw_region_code_col = "MW.Region.code",
-                               mw_region_col = "MW.Region",
+                               amw_region_col = "AMW.Region",
                                exemplar_method_col = "Exemplar/Method",
                                method_source_col = "Method/Source",
                                metric_col = "Metric")
@@ -121,7 +120,9 @@ usethis::use_data(amw_analysis_constants, overwrite = TRUE)
 #
 conc_cols <- list(country_code_col = "Country.code",
                   country_code_pfu_col = "Country.code_PFU",
-                  country_incl_col = "Country.incl.")
+                  country_incl_col = "Country.incl.",
+                  amw_region_code_col = "AMW.Region.code",
+                  hmw_region_code_col = "HMW.Region.code")
 
 usethis::use_data(conc_cols, overwrite = TRUE)
 

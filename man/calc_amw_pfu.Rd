@@ -4,7 +4,7 @@
 \alias{calc_amw_pfu}
 \title{Calculate primary, final, and useful working animal energy}
 \usage{
-calc_amw_pfu(data_folder)
+calc_amw_pfu(.df)
 }
 \arguments{
 \item{data_folder}{The file path to the FAO live animals data downloaded using

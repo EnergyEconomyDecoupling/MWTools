@@ -5,7 +5,7 @@
 \alias{conc_cols}
 \title{Country concordance columns}
 \format{
-A string list with 3 entries.
+A string list with 5 entries.
 \describe{
 \item{country_code_col}{The metadata column name "Country.code" containing three letter ISO 3166-1 country codes.}
 \item{country_code_pfu_col}{The metadata column name "Country.code_PFU" containing bespoke three letter country codes.}

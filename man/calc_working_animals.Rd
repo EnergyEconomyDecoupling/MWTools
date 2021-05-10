@@ -13,8 +13,8 @@ calc_working_animals(
   wa_perc_sheet = MWTools::amw_analysis_constants$wa_perc_sheet,
   working_animals_total_col = MWTools::amw_analysis_constants$working_animals_total_col,
   live_animals_col = MWTools::amw_analysis_constants$live_animals_col,
-  mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
-  mw_region_col = MWTools::amw_analysis_constants$mw_region_col,
+  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
+  amw_region_col = MWTools::amw_analysis_constants$amw_region_col,
   exemplar_method_col = MWTools::amw_analysis_constants$exemplar_method_col
 )
 }
@@ -29,6 +29,8 @@ which returns the path the analysis data bundled
 with the \code{MWTools} package.}
 
 \item{prop_working_animal, da_perc, working_animals_total_col, live_animals_col, mw_region_code_col, mw_region_col, exemplar_method_col}{See \code{MWTools::amw_analysis_constants}.}
+
+\item{...}{}
 }
 \value{
 
@@ -39,8 +41,8 @@ animals from the FAO, and user-supplied data for the proportion of working
 animals by region and year.
 }
 \examples{
-working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species() \%>\%

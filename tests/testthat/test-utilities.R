@@ -30,3 +30,12 @@ test_that("hmw_analysis_data_path works", {
 
 })
 
+amw_data_path
+
+test_that("amw_data_path works", {
+
+  test_path <- amw_data_path()
+  expect_true(endsWith(test_path, file.path("data",
+                                            "fao_amw_data.rda")))
+
+})

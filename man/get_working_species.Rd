@@ -9,7 +9,7 @@ get_working_species(
   species = MWTools::mw_constants$species,
   country_name = MWTools::mw_constants$country_name,
   country_code_col = MWTools::conc_cols$country_code_col,
-  mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
   year = MWTools::mw_constants$year,
   value = MWTools::mw_constants$value,
   asses = MWTools::mw_species$asses,
@@ -43,8 +43,8 @@ Buffaloes, and Camelids, other; then combines Camels and Camlelids, other
 into a combined "Camelids" species group.
 }
 \examples{
-live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+live_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species()

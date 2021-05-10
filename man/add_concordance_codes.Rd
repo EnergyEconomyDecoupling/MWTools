@@ -7,7 +7,8 @@
 add_concordance_codes(
   .df,
   concordance_path = MWTools::fao_concordance_path(),
-  mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
+  hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
   country_name = MWTools::mw_constants$country_name,
   country_incl_col = MWTools::conc_cols$country_incl_col,
   country_code_col = MWTools::conc_cols$country_code_col,
@@ -24,7 +25,7 @@ codes, and MWTools specific region codes. Set to
 \code{MWTools::fao_concordance_path()} by default, the path
 to the bundled concordance information in \code{MWTools}.}
 
-\item{mw_region_code_col}{See \code{MWTools::amw_analysis_constants}.}
+\item{amw_region_code_col}{See \code{MWTools::amw_analysis_constants}.}
 
 \item{country_name}{See \code{MWTools::mw_constants}.}
 
@@ -39,8 +40,8 @@ present in the FAO's Live animals data, downloaded through the \code{FAOSTAT} pa
 usually using the \code{MWTools::down_fao_live_animals} function.
 }
 \examples{
-live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+live_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
   add_concordance_codes()
 
 }

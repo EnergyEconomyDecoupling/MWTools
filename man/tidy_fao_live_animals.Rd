@@ -5,7 +5,7 @@
 \title{Tidy live animals data from the FAO}
 \usage{
 tidy_fao_live_animals(
-  data_folder,
+  .df,
   country_name = MWTools::mw_constants$country_name,
   species = MWTools::mw_constants$species,
   year = MWTools::mw_constants$year,
@@ -19,12 +19,12 @@ tidy_fao_live_animals(
 )
 }
 \arguments{
-\item{data_folder}{A user-specified file path to the directory in which to
-download the FAO live animals data.}
-
 \item{country_name, species, year, unit, value}{See \code{MWTools::mw_constants}.}
 
 \item{area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col}{See \code{MWTools::fao_cols}.}
+
+\item{data_path}{A user-specified file path to the directory in which to
+download the FAO live animals data.}
 }
 \value{
 

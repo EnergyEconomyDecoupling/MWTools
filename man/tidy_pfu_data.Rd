@@ -12,7 +12,7 @@ tidy_pfu_data(
   sector_col = MWTools::mw_constants$sector_col,
   stage_col = MWTools::mw_constants$stage_col,
   energy_mj_year = MWTools::mw_constants$energy_mj_year,
-  mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
   useful_energy_total = MWTools::amw_analysis_constants$useful_energy_total,
   useful_energy_ag = MWTools::amw_analysis_constants$useful_energy_ag,
   useful_energy_tr = MWTools::amw_analysis_constants$useful_energy_tr,
@@ -31,7 +31,7 @@ tidy_pfu_data(
 
 \item{year, species, sector_col, stage_col, energy_mj_year}{See \code{MWTools::mw_constants}.}
 
-\item{mw_region_code_col}{See \code{MWTools::amw_analysis_constants}.}
+\item{amw_region_code_col}{See \code{MWTools::amw_analysis_constants}.}
 
 \item{useful_energy_total, useful_energy_ag, useful_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
 

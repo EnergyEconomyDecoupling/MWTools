@@ -4,10 +4,10 @@
 \alias{calc_amw_numbers}
 \title{Calculate the number of live and working animals by country, species, and sector}
 \usage{
-calc_amw_numbers(data_folder)
+calc_amw_numbers(.df)
 }
 \arguments{
-\item{data_folder}{The path to the folder containing data for the number of live
+\item{data_path}{The path to the folder containing data for the number of live
 animals. Usually downloaded with the function \code{down_fao_live_animals}.}
 }
 \value{
@@ -20,7 +20,7 @@ in sequence to convert FAO data for live animals, usually downloaded with the fu
 \code{down_fao_live_animals}, into a tidy data frame.
 }
 \examples{
-tidy_amw_numbers_data <- <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  calc_amw_numbers(data_folder = file.path(fs::home_path(), "FAO_data")
+tidy_amw_numbers_data <- <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+  calc_amw_numbers(data_path = file.path(fs::home_path(), "FAO_data")
 
 }

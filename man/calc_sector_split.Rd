@@ -11,8 +11,8 @@ calc_sector_split(
   species = MWTools::mw_constants$species,
   method_source = MWTools::amw_analysis_constants$method_source,
   metric = MWTools::amw_analysis_constants$metric,
-  mw_region_col = MWTools::amw_analysis_constants$mw_region_col,
-  mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+  amw_region_col = MWTools::amw_analysis_constants$amw_region_col,
+  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
   wa_enduse_sheet = MWTools::amw_analysis_constants$wa_enduse_sheet,
   working_animals_total_col = MWTools::amw_analysis_constants$working_animals_total_col,
   working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
@@ -35,7 +35,7 @@ bundled with the \code{MWTools} package.}
 
 \item{year, species}{See \code{MWTools::mw_constants}.}
 
-\item{method_source, metric, mw_region_col, mw_region_code_col, wa_enduse_sheet, working_animals_total_col, working_animals_ag_col, working_animals_tr_col, prop_working_animals_ag_col, prop_working_animals_tr_col}{See \code{MWTools::amw_analysis_constants}.}
+\item{method_source, metric, amw_region_col, amw_region_code_col, wa_enduse_sheet, working_animals_total_col, working_animals_ag_col, working_animals_tr_col, prop_working_animals_ag_col, prop_working_animals_tr_col}{See \code{MWTools::amw_analysis_constants}.}
 }
 \value{
 
@@ -46,8 +46,8 @@ and transport using user-supplied data for the proportion of animals working
 in agriculture by region and year.
 }
 \examples{
-working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species() \%>\%

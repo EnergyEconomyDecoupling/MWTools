@@ -13,7 +13,7 @@ calc_useful_energy(
   working_days_col = MWTools::amw_analysis_constants$working_days_col,
   working_hours_col = MWTools::amw_analysis_constants$working_hours_col,
   working_seconds_col = MWTools::amw_analysis_constants$working_seconds_col,
-  mw_region_code_col = MWTools::amw_analysis_constants$mw_region_code_col,
+  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
   method_source = MWTools::amw_analysis_constants$method_source,
   power_per_animal = MWTools::amw_analysis_constants$power_per_animal,
   useful_energy_total = MWTools::amw_analysis_constants$useful_energy_total,
@@ -38,7 +38,7 @@ the \code{MWTools} package.}
 
 \item{wa_power_sheet, wa_days_hours_sheet}{See \code{MWTools::amw_analysis_constants}.}
 
-\item{mw_region_code_col, method_source, power_per_animal}{See \code{MWTools::amw_analysis_constants}.}
+\item{amw_region_code_col, method_source, power_per_animal}{See \code{MWTools::amw_analysis_constants}.}
 
 \item{useful_energy_total, useful_energy_ag, useful_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
 

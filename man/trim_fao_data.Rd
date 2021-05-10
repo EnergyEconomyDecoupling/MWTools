@@ -25,8 +25,8 @@ through the \code{FAOSTAT} package, using the \code{MWTools::down_fao_live_anima
 function, and after applying the \code{MWTools::add_concordance_codes} function.
 }
 \examples{
-live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+live_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+  tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data()
 
