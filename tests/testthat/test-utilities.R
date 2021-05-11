@@ -18,7 +18,8 @@ test_that("amw_test_data_path works", {
 
   test_path <- amw_test_data_path()
   expect_true(endsWith(test_path, file.path("extdata",
-                                            "test_data")))
+                                            "test_data",
+                                            "test_amw_data.csv")))
 
 })
 
@@ -39,3 +40,13 @@ test_that("amw_data_path works", {
                                             "fao_amw_data.rda")))
 
 })
+
+test_that("hmw_test_data_path works", {
+
+  test_path <- hmw_test_data_path()
+  expect_true(endsWith(test_path, file.path("extdata",
+                                            "test_data",
+                                            "test_hmw_data.csv")))
+
+})
+
