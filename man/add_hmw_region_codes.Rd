@@ -27,5 +27,5 @@ retrieved using the \code{fao_concordance_path} function.}
 
 }
 \description{
-Add the regional codes used on analysis of human muscle work.
+...
 }

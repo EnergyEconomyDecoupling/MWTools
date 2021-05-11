@@ -27,6 +27,15 @@ ilo_cols <- list(ref_area_col = "ref_area",
 
 usethis::use_data(ilo_cols, overwrite = TRUE)
 
+
+#
+# Human Muscle Work (hmw) analysis data constants
+#
+hmw_analysis_constants <- list(total_working_hours_ilo_col = "Total.hours [hours/year]")
+
+usethis::use_data(hmw_analysis_constants, overwrite = TRUE)
+
+
 #
 # Working animal species
 #

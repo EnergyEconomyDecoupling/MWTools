@@ -38,6 +38,22 @@ add_hmw_region_codes <- function(.df,
 }
 
 
+#' Fill missing data for the number of hours worked and employed persons based on the earliest value
+#'
+#'
+#'
+#' @param .df
+#' @param country_code_col
+#' @param sex_ilo_col
+#' @param sector_col
+#' @param year
+#' @param yearly_working_hours_ilo_col
+#' @param employed_persons_ilo_col
+#'
+#' @return
+#' @export
+#'
+#' @examples
 fill_ilo_data <- function(.df,
                           country_code_col = MWTools::conc_cols$country_code_col,
                           sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
@@ -48,26 +64,43 @@ fill_ilo_data <- function(.df,
 
   # Fills data for each Country, Sex, and Sector based on earliest year
   .df %>%
-    dplyr::group_by(country_code_col, sex_ilo_col, sector_col) %>%
-    dplyr::arrange(year, .by_group = TRUE) %>%
-    tidyr::fill(employed_persons_ilo_col, .direction = "up") %>%
-    tidyr::fill(yearly_working_hours_ilo_col, .direction = "up") %>%
+    dplyr::group_by(.data[[country_code_col]], .data[[sex_ilo_col]], .data[[sector_col]]) %>%
+    dplyr::arrange(.data[[year]], .by_group = TRUE) %>%
+    tidyr::fill(.data[[employed_persons_ilo_col]], .direction = "up") %>%
+    tidyr::fill(.data[[yearly_working_hours_ilo_col]], .direction = "up") %>%
     dplyr::ungroup()
 
 }
 
-# # Filter for GBR to check data has been filled
-# GBR_filled <- ilo_data_filled %>%
-#   dplyr::filter(Country.code == "GBR")
-#
-# # Calculates total number of hours worked per year
-# ilo_data_total.hours <- ilo_data_filled %>%
-#   dplyr::mutate("Total.hours [hours/year]" = `Employed.persons [persons]` * `Working.hours [hours/year]`)
-#
-# # Identify all unique sectors
-# all_sectors <-unique(ilo_data$Sector) %>%
-#   as.data.frame()
-#
+
+#' Calculate the total number of hours worked each year
+#'
+#' Calc...
+#'
+#' @param .df
+#' @param yearly_working_hours_ilo_col,employed_persons_ilo_col See `MWTools::ilo_cols`.
+#' @param total_working_hours_ilo_col See `MWTools::hmw_analysis_constants`
+#'
+#' @return
+#' @export
+#'
+#' @examples
+calc_total_hours_worked <- function(.df,
+                                     yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
+                                     employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
+                                     total_working_hours_ilo_col = MWTools::hmw_analysis_constants$total_working_hours_ilo_col){
+
+  .df %>%
+    dplyr::mutate(
+      "{total_working_hours_ilo_col}" := .data[[employed_persons_ilo_col]] * .data[[yearly_working_hours_ilo_col]]
+    )
+
+}
+
+
+
+
+
 # # Filters data to only include sector data by ISIC-Rev.4
 # ilo_data_total.hours_isic <- ilo_data_total.hours %>%
 #   dplyr::filter(stringr::str_detect(Sector, pattern = fixed("(ISIC-Rev.4):"))) %>%

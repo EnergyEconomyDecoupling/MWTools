@@ -100,6 +100,19 @@
 #' ilo_codes
 "ilo_codes"
 
+#' Human muscle work (hmw) analysis data constants
+#'
+#' A string list containing a selection of hmw analysis constants.
+#'
+#' @format A string list with `r length(hmw_analysis_constants)` entries.
+#' \describe{
+#' \item{total_working_hours_ilo_col}{The data column "Total.hours [hours/year]" containing the number of hours worked yearly by all humans for a given country, sex, sector, and year.}
+#' }
+#'
+#' @examples
+#' hmw_analysis_constants
+"hmw_analysis_constants"
+
 #' Animal muscle work (amw) analysis data constants
 #'
 #' A string list containing a selection of amw analysis constants, used in the "amw_analysis_data.R" excel file.
