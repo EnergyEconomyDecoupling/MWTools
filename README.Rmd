@@ -38,7 +38,9 @@ Raw data for the calculation of animal muscle work is obtained from the Food and
 ```{r example_numbers}
 library(MWTools)
 
-amw_numbers_df <- calc_amw_numbers(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"))
+data <- MWTools::fao_amw_data
+
+amw_numbers_df <- calc_amw_numbers(data)
 
 head(amw_numbers_df)
 
@@ -47,7 +49,11 @@ head(amw_numbers_df)
 The helper function `calc_amw_pfu` returns a tidy data frame containing data for the primary, final, and useful energy by species, country, year and in agriculture, transport, and in total.
 
 ```{r get_example_data}
-amw_pfu_df <- calc_amw_pfu(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"))
+library(MWTools)
+
+data <- MWTools::fao_amw_data
+
+amw_pfu_df <- calc_amw_pfu(data)
 
 head(amw_pfu_df)
 
@@ -66,12 +72,9 @@ plot_amw_summary(amw_pfu_df = amw_pfu_df,
 
 ## Human Muscle Work
 
-Raw data for the calculation of human muscle work is obtained from the International Labor Organisation (ILO), via the `R` package `Rilostat`. The `MWTools` package provides a wrapper function for `Rilostat::get_ilostat` which returns a tidy data frame containing the number of employed persons by sector and sex, and the mean yearly working hours by sector and sex......
+Raw data for the calculation of human muscle work is obtained from the International Labor Organisation (ILO), via the `R` package `Rilostat`. The `MWTools` package provides a wrapper function for `Rilostat::get_ilostat` which returns a tidy data frame containing the number of employed persons by sector and sex, and the mean yearly working hours by sector and sex.......
 
 ```{r example_hmw}
 
-hmw_hours <- get_ilo_hmw_data()
-
-head(hmw_hours)
 
 ```

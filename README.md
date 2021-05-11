@@ -39,18 +39,20 @@ containing
 ``` r
 library(MWTools)
 
-amw_numbers_df <- calc_amw_numbers(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"))
+data <- MWTools::fao_amw_data
+
+amw_numbers_df <- calc_amw_numbers(data)
 
 head(amw_numbers_df)
 #> # A tibble: 6 x 7
-#>   MW.Region.code Country.code  Year Species  Sector Live.animals Working.animals
-#>   <chr>          <chr>        <dbl> <chr>    <chr>         <dbl>           <dbl>
-#> 1 WAS            AFG           1961 Asses    Total       1300000        1154307.
-#> 2 WAS            AFG           1961 Asses    Agric~      1300000         173146.
-#> 3 WAS            AFG           1961 Asses    Trans~      1300000         981161.
-#> 4 WAS            AFG           1961 Buffalo~ Total             0              0 
-#> 5 WAS            AFG           1961 Buffalo~ Agric~            0              0 
-#> 6 WAS            AFG           1961 Buffalo~ Trans~            0              0
+#>   AMW.Region.code Country.code  Year Species Sector Live.animals Working.animals
+#>   <chr>           <chr>        <dbl> <chr>   <chr>         <dbl>           <dbl>
+#> 1 WAS             AFG           1961 Asses   Total       1300000        1154307.
+#> 2 WAS             AFG           1961 Asses   Agric~      1300000         173146.
+#> 3 WAS             AFG           1961 Asses   Trans~      1300000         981161.
+#> 4 WAS             AFG           1961 Buffal~ Total             0              0 
+#> 5 WAS             AFG           1961 Buffal~ Agric~            0              0 
+#> 6 WAS             AFG           1961 Buffal~ Trans~            0              0
 ```
 
 The helper function `calc_amw_pfu` returns a tidy data frame containing
@@ -58,18 +60,22 @@ data for the primary, final, and useful energy by species, country, year
 and in agriculture, transport, and in total.
 
 ``` r
-amw_pfu_df <- calc_amw_pfu(data_folder = file.path(PFUSetup::get_abs_paths()$project_path, "Data", "FAO Data"))
+library(MWTools)
+
+data <- MWTools::fao_amw_data
+
+amw_pfu_df <- calc_amw_pfu(data)
 
 head(amw_pfu_df)
 #> # A tibble: 6 x 7
-#>   MW.Region.code Country.code  Year Species Stage  Sector      `Energy [MJ/year~
-#>   <chr>          <chr>        <dbl> <chr>   <chr>  <chr>                   <dbl>
-#> 1 WAS            AFG           1961 Asses   Useful Total              831100990.
-#> 2 WAS            AFG           1961 Asses   Useful Agriculture        124665149.
-#> 3 WAS            AFG           1961 Asses   Useful Transport          706435842.
-#> 4 WAS            AFG           1961 Asses   Final  Total            12685716572.
-#> 5 WAS            AFG           1961 Asses   Final  Agriculture       1902857486.
-#> 6 WAS            AFG           1961 Asses   Final  Transport        10782859086.
+#>   AMW.Region.code Country.code  Year Species Stage  Sector     `Energy [MJ/year~
+#>   <chr>           <chr>        <dbl> <chr>   <chr>  <chr>                  <dbl>
+#> 1 WAS             AFG           1961 Asses   Useful Total             831100990.
+#> 2 WAS             AFG           1961 Asses   Useful Agricultu~        124665149.
+#> 3 WAS             AFG           1961 Asses   Useful Transport         706435842.
+#> 4 WAS             AFG           1961 Asses   Final  Total           12685716572.
+#> 5 WAS             AFG           1961 Asses   Final  Agricultu~       1902857486.
+#> 6 WAS             AFG           1961 Asses   Final  Transport       10782859086.
 ```
 
 Use the `plot_amw_summary` function to produce a plot summarising the
@@ -91,19 +97,4 @@ International Labor Organisation (ILO), via the `R` package `Rilostat`.
 The `MWTools` package provides a wrapper function for
 `Rilostat::get_ilostat` which returns a tidy data frame containing the
 number of employed persons by sector and sex, and the mean yearly
-working hours by sector and sex……
-
-``` r
-hmw_hours <- get_ilo_hmw_data()
-
-head(hmw_hours)
-#> # A tibble: 6 x 6
-#>   Country.code Sex    Sector          Year  `Employed.persons~ `Working.hours [~
-#>   <chr>        <chr>  <chr>           <chr>              <dbl>             <dbl>
-#> 1 ABW          Sex: ~ Economic activ~ 1994               35940                NA
-#> 2 ABW          Sex: ~ Economic activ~ 1994                  30                NA
-#> 3 ABW          Sex: ~ Economic activ~ 1994                  10                NA
-#> 4 ABW          Sex: ~ Economic activ~ 1994                  30                NA
-#> 5 ABW          Sex: ~ Economic activ~ 1994                2170                NA
-#> 6 ABW          Sex: ~ Economic activ~ 1994                 580                NA
-```
+working hours by sector and sex…….

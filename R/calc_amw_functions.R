@@ -745,10 +745,9 @@ tidy_pfu_data <- function(.df,
                         names_to = c(stage_col, sector_col),
                         names_sep = ".energy.",
                         values_to = energy_mj_year) %>%
-
     dplyr::mutate(
+      "{sector_col}" := stringr::str_replace_all(.data[[sector_col]], stringr::fixed(" [MJ/year]"), ""),
       "{sector_col}" := dplyr::case_when(
-        .data[[sector_col]] == " [MJ/year]" ~ "",
         .data[[sector_col]] == "total" ~ "Total",
         .data[[sector_col]] == "Ag" ~ "Agriculture",
         .data[[sector_col]] == "Tr" ~ "Transport",

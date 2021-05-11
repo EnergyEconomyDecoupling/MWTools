@@ -235,10 +235,126 @@ test_that("calc_final_energy works", {
                                                           "Final.energy.Tr [MJ/year]"))
 })
 
+test_that("calc_primary_energy",{
+
+  test_data_path <- amw_test_data_path()
+
+  test_data <- read.csv(test_data_path)
+
+  working_animals_w.primaryenergy <- test_data %>%
+    tidy_fao_live_animals() %>%
+    add_concordance_codes() %>%
+    trim_fao_data() %>%
+    get_working_species() %>%
+    calc_working_animals() %>%
+    calc_sector_split() %>%
+    calc_yearly_feed() %>%
+    calc_final_energy() %>%
+    calc_primary_energy()
+
+  expect_true(!is.null(working_animals_w.primaryenergy))
+
+  expect_equal(nrow(working_animals_w.primaryenergy), 354)
+
+  expect_equal(colnames(working_animals_w.primaryenergy), c("Country.code", "AMW.Region.code", "Country.name",
+                                                            "Year", "Species", "Live.animals",
+                                                            "Prop.Working.animals", "Working.animals.total",
+                                                            "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
+                                                            "Working.animals.Ag", "Working.animals.Tr",
+                                                            "Total.yearly.feed [MJ/year per animal]",
+                                                            "Final.energy.total [MJ/year]", "Final.energy.Ag [MJ/year]",
+                                                            "Final.energy.Tr [MJ/year]", "Primary.energy.total [MJ/year]",
+                                                            "Primary.energy.Ag [MJ/year]", "Primary.energy.Tr [MJ/year]"))
+})
 
 
 
+test_that("calc_useful_energy",{
 
+  test_data_path <- amw_test_data_path()
+
+  test_data <- read.csv(test_data_path)
+
+  working_animals_w.usefulenergy <- test_data %>%
+    tidy_fao_live_animals() %>%
+    add_concordance_codes() %>%
+    trim_fao_data() %>%
+    get_working_species() %>%
+    calc_working_animals() %>%
+    calc_sector_split() %>%
+    calc_yearly_feed() %>%
+    calc_final_energy() %>%
+    calc_primary_energy() %>%
+    calc_useful_energy()
+
+  expect_true(!is.null(working_animals_w.usefulenergy))
+
+  expect_equal(nrow(working_animals_w.usefulenergy), 354)
+
+  expect_equal(colnames(working_animals_w.usefulenergy), c("Country.code", "AMW.Region.code", "Country.name",
+                                                           "Year", "Species", "Live.animals",
+                                                           "Prop.Working.animals", "Working.animals.total",
+                                                           "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
+                                                           "Working.animals.Ag", "Working.animals.Tr",
+                                                           "Total.yearly.feed [MJ/year per animal]",
+                                                           "Final.energy.total [MJ/year]", "Final.energy.Ag [MJ/year]",
+                                                           "Final.energy.Tr [MJ/year]", "Primary.energy.total [MJ/year]",
+                                                           "Primary.energy.Ag [MJ/year]", "Primary.energy.Tr [MJ/year]",
+                                                           "Power.per.animal [W]", "Working.seconds [seconds per animal]",
+                                                           "Useful.energy.total [MJ/year]", "Useful.energy.Ag [MJ/year]",
+                                                           "Useful.energy.Tr [MJ/year]"))
+})
+
+
+
+test_that("tidy_pfu_data works", {
+
+  test_data_path <- amw_test_data_path()
+
+  test_data <- read.csv(test_data_path)
+
+  tidy_pfu_data <- test_data %>%
+    tidy_fao_live_animals() %>%
+    add_concordance_codes() %>%
+    trim_fao_data() %>%
+    get_working_species() %>%
+    calc_working_animals() %>%
+    calc_sector_split() %>%
+    calc_yearly_feed() %>%
+    calc_final_energy() %>%
+    calc_primary_energy() %>%
+    calc_useful_energy() %>%
+    tidy_pfu_data()
+
+  expect_true(!is.null(tidy_pfu_data))
+
+  expect_equal(nrow(tidy_pfu_data), 3186)
+
+  expect_equal(colnames(tidy_pfu_data), c("AMW.Region.code", "Country.code", "Year", "Species",
+                                          "Stage", "Sector", "Energy [MJ/year]"))
+
+})
+
+
+test_that("calc_amw_pfu", {
+
+  test_data_path <- amw_test_data_path()
+
+  test_data <- read.csv(test_data_path)
+
+  tidy_pfu_data <- test_data %>%
+    calc_amw_pfu()
+
+  expect_true(!is.null(tidy_pfu_data))
+
+  expect_equal(nrow(tidy_pfu_data), 3186)
+
+  expect_equal(colnames(tidy_pfu_data), c("AMW.Region.code", "Country.code",
+                                          "Year", "Species", "Stage",
+                                          "Sector", "Energy [MJ/year]"))
+
+
+})
 
 
 
