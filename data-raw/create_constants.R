@@ -18,7 +18,7 @@ usethis::use_data(mw_constants, overwrite = TRUE)
 
 
 #
-# ILO data columns
+# ILO bundled data columns
 #
 ilo_cols <- list(ref_area_col = "ref_area",
                  sex_ilo_col = "Sex",
@@ -44,7 +44,11 @@ hmw_analysis_constants <- list(total_working_hours_ilo_col = "Total.hours [hours
                                not_classified_broad.sector = "Not classified",
                                non_agriculture_broad.sector = "Non-agriculture",
                                total_sector = "Total",
-                               food_consumption_col = "Food consumption [kcal/day]")
+                               food_consumption_col = "Food consumption [kcal/day per person]",
+                               yearly_energy_consumption_pp_col = "Energy consumption [MJ/year per person]",
+                               final_energy_col = "Final energy [MJ/year]",
+                               useful_energy_hmw_col = "Useful energy [MJ/year]",
+                               power_col = "Power [W]")
 
 usethis::use_data(hmw_analysis_constants, overwrite = TRUE)
 
@@ -148,4 +152,12 @@ conc_cols <- list(country_code_col = "Country.code",
 
 usethis::use_data(conc_cols, overwrite = TRUE)
 
+#
+# Unit conversion constants
+#
+unit_constants <- list(kcal_to_mj = 0.0041858,
+                       hours_to_seconds = 3600,
+                       joules_to_megajoules = 0.000001)
+
+usethis::use_data(unit_constants, overwrite = TRUE)
 

@@ -119,7 +119,11 @@
 #' \item{not_classified_broad.sector}{The string "Not classfied" representing unclassified labor data. One of the ILO's "Broad sectors".}
 #' \item{non_agriculture_broad.sector}{The string "Non-agriculture" representing all sectors outside of agriculture. One of the ILO's "Broad sectors".}
 #' \item{total_sector}{The string "Total" representing the entire economy. One of the ILO's "Broad sectors".}
-#' \item{food_consumption_col}{The data column "Food consumption [kcal/day]", which contains information on the daily food consumption of humans in kilocalories.}
+#' \item{food_consumption_col}{The data column "Food consumption [kcal/day per person]", which contains information on the daily food consumption of humans in kilocalories (kcal).}
+#' \item{yearly_energy_consumption_pp_col}{The data column "Energy consumption [MJ/year per person]", which contains information on the yearly food consumption per working person in megajoules (MJ).}
+#' \item{final_energy_col}{The data column "Final energy [MJ/year]", which contains data on the yearly food consumption of all working persons in megajoules (MJ).}
+#' \item{useful_energy_hmw_col}{The data column "Useful energy [MJ/year]", which contains data on the yearly useful work performed by all working persons in megajoules (MJ).}
+#' \item{power_col}{The data column "Power [W]", which contains data on the power output of humans performing muscle work.}
 #' }
 #'
 #' @examples
@@ -189,3 +193,18 @@
 #' @examples
 #' conc_cols
 "conc_cols"
+
+#' Unit constants
+#'
+#' A list containing data values for converting between different units of measurement.
+#'
+#' @format A string list with `r length(unit_constants)` entries.
+#' \describe{
+#' \item{kcal_to_mj}{The value 0.0041858, representing the conversion factor between kilocalories (kcal) and megajoules (MJ)}
+#' \item{hours_to_seconds}{The value 3600, representing the conversion factor between hours and seconds.}
+#' \item{joules_to_megajoules}{The value 0.000001, representing the conversion factor between joules (J) and megajoules (MJ)}
+#' }
+#'
+#' @examples
+#' unit_constants
+"unit_constants"

@@ -12,7 +12,6 @@ yearly_working_hours_ilo_col <- MWTools::ilo_cols$yearly_working_hours_ilo_col
 employed_persons_ilo_col <- MWTools::ilo_cols$employed_persons_ilo_col
 working_hours_code <- MWTools::ilo_codes$working_hours_code
 employment_code <- MWTools::ilo_codes$employment_code
-download_location <- MWTools::extdata_path()
 
 # Mean weekly hours actually worked per employed person by sex and economic activity:
 # HOW_TEMP_SEX_ECO_NB_A
@@ -38,6 +37,10 @@ ilo_hmw_data <- employment %>%
   ) %>%
   dplyr::mutate(
     "{yearly_working_hours_ilo_col}" := .data[[yearly_working_hours_ilo_col]] * 52
+  ) %>%
+  # Removes leading string "Sex: " from Sex data
+  dplyr::mutate(
+    "{sex_ilo_col}" := stringr::str_replace(.data[[sex_ilo_col]], stringr::fixed("Sex: "), "")
   )
 
 # Use hmw data in package

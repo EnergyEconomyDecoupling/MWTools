@@ -4,7 +4,7 @@
 \alias{get_broad.sector_data}
 \title{Retrieve data with sectors organised by "Broad sector"}
 \usage{
-get_broad.sector_data(.df)
+get_broad.sector_data(.df, sector_col = MWTools::mw_constants$sector_col)
 }
 \arguments{
 \item{.df}{}

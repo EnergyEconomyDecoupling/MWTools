@@ -12,13 +12,14 @@ calc_hmw_final_energy(
   unit = MWTools::mw_constants$unit,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
-  hmw_sector_map_sheet = MWTools::hmw_analysis_constants$hmw_sector_map_sheet,
   hmw_food_sheet = MWTools::hmw_analysis_constants$hmw_food_sheet,
-  agriculture = MWTools::hmw_analysis_constants$agriculture_broad.sector,
-  industry = MWTools::hmw_analysis_constants$industry_broad.sector,
-  services = MWTools::hmw_analysis_constants$services_broad.sector,
   food_consumption_col = MWTools::hmw_analysis_constants$food_consumption_col,
-  hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col
+ 
+    yearly_energy_consumption_pp_col = MWTools::hmw_analysis_constants$yearly_energy_consumption_pp_col,
+  final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
+  hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
+  kcal_to_mj = MWTools::unit_constants$kcal_to_mj,
+  employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col
 )
 }
 \arguments{
@@ -28,7 +29,7 @@ calc_hmw_final_energy(
 
 \item{sex_ilo_col}{See \code{MWTools::ilo_cols}}
 
-\item{hmw_analysis_sector_col, hmw_sector_map_sheet, hmw_food_sheet, agriculture, industry, services, food_consumption_col}{See \code{MWTools::hmw_analysis_constants}.}
+\item{hmw_analysis_sector_col, hmw_food_sheet, food_consumption_col}{See \code{MWTools::hmw_analysis_constants}.}
 
 \item{hmw_region_code_col}{See \code{MWTools::conc_cols}.}
 }
