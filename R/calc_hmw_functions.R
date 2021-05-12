@@ -158,6 +158,28 @@ add_hmw_analysis_sectors <- function(.df,
 
 }
 
+#' Get tidy employment and working hours data for agriculture, industry, and services
+#'
+#' Wrangle the bundled ILO data into a tidy format. This helper function...
+#'
+#' @param .df
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
+tidy_ilo_data <- function(.df){
+
+  .df %>%
+    add_hmw_region_codes() %>%
+    fill_ilo_data() %>%
+    calc_total_hours_worked() %>%
+    get_broad.sector_data() %>%
+    add_hmw_analysis_sectors()
+
+}
+
 
 #' Calculate the final energy consumed by human workers
 #'

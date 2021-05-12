@@ -94,6 +94,17 @@ test_that("add_hmw_analysis_sectors works",{
 
 })
 
+test_that("tidy_ilo_data works",{
+
+  hmw_data <- read.csv(file = hmw_test_data_path())
+
+  tidy_hmw_data <- hmw_data %>%
+    tidy_ilo_data()
+
+  expect_true(!is.null(tidy_hmw_data))
+
+})
+
 
 test_that("calc_hmw_final_energy works",{
 

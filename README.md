@@ -9,8 +9,8 @@
 coverage](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools/branch/master/graph/badge.svg)](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools?branch=master)
 <!-- badges: end -->
 
-The `R` package `MWTools` provides functions for the calculation of
-human and animal muscle work for use in Societal Exergy Analysis (SEA)
+The `R` package `MWTools` provides functions for the estimation of human
+and animal muscle work for use in Societal Exergy Analysis (SEA), and
 using the Physical Supply Use Table (PSUT) framework.
 
 ## Installation
@@ -25,7 +25,7 @@ devtools::install_github("EnergyEconomyDecoupling/MWTools")
 
 ## Animal Muscle Work
 
-Raw data for the calculation of animal muscle work is obtained from the
+Raw data for the estimation of animal muscle work is obtained from the
 Food and Agriculture Organisation of the United Nations Statistical
 Database (FAOSTAT), via the `R` package `FAOSTAT`. The `MWTools` package
 provides a wrapper function for downloading data for the number of live
@@ -39,9 +39,9 @@ containing
 ``` r
 library(MWTools)
 
-data <- MWTools::fao_amw_data
+fao_data <- MWTools::fao_amw_data
 
-amw_numbers_df <- calc_amw_numbers(data)
+amw_numbers_df <- calc_amw_numbers(fao_data)
 
 head(amw_numbers_df)
 #> # A tibble: 6 x 7
@@ -62,9 +62,9 @@ and in agriculture, transport, and in total.
 ``` r
 library(MWTools)
 
-data <- MWTools::fao_amw_data
+fao_data <- MWTools::fao_amw_data
 
-amw_pfu_df <- calc_amw_pfu(data)
+amw_pfu_df <- calc_amw_pfu(fao_data)
 
 head(amw_pfu_df)
 #> # A tibble: 6 x 7
@@ -92,9 +92,28 @@ plot_amw_summary(amw_pfu_df = amw_pfu_df,
 
 ## Human Muscle Work
 
-Raw data for the calculation of human muscle work is obtained from the
+Raw data for the estimation of human muscle work is obtained from the
 International Labor Organisation (ILO), via the `R` package `Rilostat`.
-The `MWTools` package provides a wrapper function for
-`Rilostat::get_ilostat` which returns a tidy data frame containing the
-number of employed persons by sector and sex, and the mean yearly
-working hours by sector and sex…….
+The `MWTools` package includes bundled ILO data for the employed persons
+by sector and mean working hours by sector, retrieved by calling
+`MWTools::ilo_hmw_data`. This data is tidied with the function
+`MWTools::tidy_ilo_data`.
+
+``` r
+ilo_data <- MWTools::ilo_hmw_data
+
+tidy_ilo_data <- ilo_data %>% 
+  MWTools::tidy_ilo_data()
+
+head(tidy_ilo_data)
+#> # A tibble: 6 x 8
+#>   Country.code HMW.Region.code Sex    Sector Sector.hmw Year  `Employed.persons~
+#>   <chr>        <chr>           <chr>  <chr>  <chr>      <chr>              <dbl>
+#> 1 ABW          <NA>            Female Agric~ Primary    1994                  10
+#> 2 ABW          <NA>            Female Agric~ Primary    1997                  49
+#> 3 ABW          <NA>            Female Agric~ Primary    2000                  37
+#> 4 ABW          <NA>            Female Agric~ Primary    2007                  96
+#> 5 ABW          <NA>            Female Agric~ Primary    2010                  74
+#> 6 ABW          <NA>            Female Agric~ Primary    2011                  90
+#> # ... with 1 more variable: Total.hours [hours/year] <dbl>
+```

@@ -112,7 +112,7 @@
 #' \item{hmw_food_sheet}{The excel sheet name "hmw_food", which contains information on the food consumption of humans.}
 #' \item{hmw_sector_map_sheet}{The excel sheet name "hmw_sector_map", which contains information on the mapping the sector names used in the hmw analysis data excel file bundled with this package with the sector names in the ILO data.}
 #' \item{broad_sector_col}{The column name "broad_sector", which contains the "Broad sector" sector names used by the ILO.}
-#' \item{hmw_analysis_sector_col}{The column name "hmw_analysis_sector", which contains the sector names used in the hmw analysis data excel file bundled with this package.}
+#' \item{hmw_analysis_sector_col}{The column name "Sector.hmw", which contains the sector names used in the hmw analysis data excel file bundled with this package.}
 #' \item{agriculture_broad.sector}{The string "Agriculture" representing the agriculture sector. One of the ILO's "Broad sectors".}
 #' \item{industry_broad.sector}{The string "Industry" representing the industry sector. One of the ILO's "Broad sectors".}
 #' \item{services_broad.sector}{The string "Services" representing the services sector. One of the ILO's "Broad sectors".}
