@@ -107,6 +107,9 @@
 #' @format A string list with `r length(hmw_analysis_constants)` entries.
 #' \describe{
 #' \item{total_working_hours_ilo_col}{The data column "Total.hours [hours/year]" containing the number of hours worked yearly by all humans for a given country, sex, sector, and year.}
+#' \item{industry_activity_col}{The data column "Industry/Activity" containing information on the industry or activity of human workers. Usually one of "Sedentary", "Primary", or "Secondary".}
+#' \item{hmw_power_sheet}{The excel sheet name "hmw_power" containing information on the power output of humans performing muscle work.}
+#' \item{hmw_food_sheet}{The excel sheet name "hmw_food" containing information on the food consumption of humans.}
 #' }
 #'
 #' @examples

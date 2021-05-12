@@ -31,7 +31,10 @@ usethis::use_data(ilo_cols, overwrite = TRUE)
 #
 # Human Muscle Work (hmw) analysis data constants
 #
-hmw_analysis_constants <- list(total_working_hours_ilo_col = "Total.hours [hours/year]")
+hmw_analysis_constants <- list(total_working_hours_ilo_col = "Total.hours [hours/year]",
+                               industry_activity_col = "Industry/Activity",
+                               hmw_power_sheet = "hmw_power",
+                               hmw_food_sheet = "hmw_food")
 
 usethis::use_data(hmw_analysis_constants, overwrite = TRUE)
 
