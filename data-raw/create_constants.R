@@ -34,7 +34,17 @@ usethis::use_data(ilo_cols, overwrite = TRUE)
 hmw_analysis_constants <- list(total_working_hours_ilo_col = "Total.hours [hours/year]",
                                industry_activity_col = "Industry/Activity",
                                hmw_power_sheet = "hmw_power",
-                               hmw_food_sheet = "hmw_food")
+                               hmw_food_sheet = "hmw_food",
+                               hmw_sector_map_sheet = "hmw_sector_map",
+                               broad_sector_col = "broad_sector",
+                               hmw_analysis_sector_col = "hmw_analysis_sector",
+                               agriculture_broad.sector = "Agriculture",
+                               industry_broad.sector = "Industry",
+                               services_broad.sector = "Services",
+                               not_classified_broad.sector = "Not classified",
+                               non_agriculture_broad.sector = "Non-agriculture",
+                               total_sector = "Total",
+                               food_consumption_col = "Food consumption [kcal/day]")
 
 usethis::use_data(hmw_analysis_constants, overwrite = TRUE)
 

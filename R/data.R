@@ -108,8 +108,18 @@
 #' \describe{
 #' \item{total_working_hours_ilo_col}{The data column "Total.hours [hours/year]" containing the number of hours worked yearly by all humans for a given country, sex, sector, and year.}
 #' \item{industry_activity_col}{The data column "Industry/Activity" containing information on the industry or activity of human workers. Usually one of "Sedentary", "Primary", or "Secondary".}
-#' \item{hmw_power_sheet}{The excel sheet name "hmw_power" containing information on the power output of humans performing muscle work.}
-#' \item{hmw_food_sheet}{The excel sheet name "hmw_food" containing information on the food consumption of humans.}
+#' \item{hmw_power_sheet}{The excel sheet name "hmw_power", which contains information on the power output of humans performing muscle work.}
+#' \item{hmw_food_sheet}{The excel sheet name "hmw_food", which contains information on the food consumption of humans.}
+#' \item{hmw_sector_map_sheet}{The excel sheet name "hmw_sector_map", which contains information on the mapping the sector names used in the hmw analysis data excel file bundled with this package with the sector names in the ILO data.}
+#' \item{broad_sector_col}{The column name "broad_sector", which contains the "Broad sector" sector names used by the ILO.}
+#' \item{hmw_analysis_sector_col}{The column name "hmw_analysis_sector", which contains the sector names used in the hmw analysis data excel file bundled with this package.}
+#' \item{agriculture_broad.sector}{The string "Agriculture" representing the agriculture sector. One of the ILO's "Broad sectors".}
+#' \item{industry_broad.sector}{The string "Industry" representing the industry sector. One of the ILO's "Broad sectors".}
+#' \item{services_broad.sector}{The string "Services" representing the services sector. One of the ILO's "Broad sectors".}
+#' \item{not_classified_broad.sector}{The string "Not classfied" representing unclassified labor data. One of the ILO's "Broad sectors".}
+#' \item{non_agriculture_broad.sector}{The string "Non-agriculture" representing all sectors outside of agriculture. One of the ILO's "Broad sectors".}
+#' \item{total_sector}{The string "Total" representing the entire economy. One of the ILO's "Broad sectors".}
+#' \item{food_consumption_col}{The data column "Food consumption [kcal/day]", which contains information on the daily food consumption of humans in kilocalories.}
 #' }
 #'
 #' @examples

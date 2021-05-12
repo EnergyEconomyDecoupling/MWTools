@@ -98,20 +98,120 @@ calc_total_hours_worked <- function(.df,
 }
 
 
+#' Retrieve data with sectors organised by "Broad sector"
+#'
+#'
+#'
+#' @param .df
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
+get_broad.sector_data <- function(.df){
+
+  .df %>%
+    dplyr::filter(stringr::str_detect(Sector, pattern = stringr::fixed("(Broad sector):"))) %>%
+    dplyr::mutate(Sector = stringr::str_replace(Sector, ".*?\\:\\s", ""))
+
+}
 
 
+#' Retrieve data with sectors organised by "Aggregate"
+#'
+#'
+#'
+#' @param .df
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
+get_aggregate_data <- function(.df){
 
-# # Filters data to only include sector data by ISIC-Rev.4
-# ilo_data_total.hours_isic <- ilo_data_total.hours %>%
-#   dplyr::filter(stringr::str_detect(Sector, pattern = fixed("(ISIC-Rev.4):"))) %>%
-#   dplyr::mutate(Sector = stringr::str_replace(Sector, ".*?\\:\\s", ""))
+  .df %>%
+    dplyr::filter(stringr::str_detect(Sector, pattern = stringr::fixed("(Aggregate):"))) %>%
+    dplyr::mutate(Sector = stringr::str_replace(Sector, ".*?\\:\\s", ""))
+
+}
+
+
+#' Calculate the final energy consumed by human workers
+#'
+#' ...
+#'
+#' @param .df
+#' @param hmw_analysis_data_path See `MWTools::hmw_analysis_data_path()`.
+#' @param sector_col,year,unit See `MWTools::mw_constants`.
+#' @param hmw_analysis_sector_col,hmw_sector_map_sheet,hmw_food_sheet,agriculture,industry,services,food_consumption_col See `MWTools::hmw_analysis_constants`.
+#' @param sex_ilo_col See `MWTools::ilo_cols`
+#' @param hmw_region_code_col See `MWTools::conc_cols`.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+calc_hmw_final_energy <- function(.df,
+                                  hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
+                                  sector_col = MWTools::mw_constants$sector_col,
+                                  year = MWTools::mw_constants$year,
+                                  unit = MWTools::mw_constants$unit,
+                                  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
+                                  hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
+                                  hmw_sector_map_sheet = MWTools::hmw_analysis_constants$hmw_sector_map_sheet,
+                                  hmw_food_sheet = MWTools::hmw_analysis_constants$hmw_food_sheet,
+                                  agriculture = MWTools::hmw_analysis_constants$agriculture_broad.sector,
+                                  industry = MWTools::hmw_analysis_constants$industry_broad.sector,
+                                  services = MWTools::hmw_analysis_constants$services_broad.sector,
+                                  food_consumption_col = MWTools::hmw_analysis_constants$food_consumption_col,
+                                  hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col){
+
+  # Reads sheet in hmw_analysis_data which maps ILO broad sectors to sectors used in the analysis
+  sector_mapping_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
+                                           sheet = hmw_sector_map_sheet) %>%
+    magrittr::set_colnames(c(sector_col, hmw_analysis_sector_col))
+
+  # Reads food consumption data
+  food_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
+                                 sheet = hmw_food_sheet) %>%
+    dplyr::select(-.data[[unit]]) %>%
+    tidyr::pivot_longer(cols = "1960":"2020",
+                        names_to = year,
+                        values_to = food_consumption_col) %>%
+    dplyr::mutate(
+      "{year}" := as.numeric(.data[[year]])
+    ) %>%
+    magrittr::set_colnames(c(sex_ilo_col, hmw_analysis_sector_col, hmw_region_code_col, year, food_consumption_col))
+
+  # Removes leading string "Sex: " from Sex data
+  .df %>%
+    dplyr::mutate(
+      "{sex_ilo_col}" := stringr::str_replace(.data[[sex_ilo_col]], stringr::fixed("Sex: "), "")
+      ) %>%
+
+    # Filters a data frame containing ILO data to only include agriculture, industry, and services.
+    dplyr::filter(.data[[sector_col]] %in% c(agriculture, industry, services)) %>%
+
+    # Adds hmw analysis sectors
+    dplyr::left_join(sector_mapping_data, by = sector_col) %>%
+    dplyr::relocate(hmw_analysis_sector_col, .after = sector_col) %>%
+
+    # Adds daily food consumption
+    dplyr::left_join(food_data, by = c(sex_ilo_col, hmw_analysis_sector_col, hmw_region_code_col, year))
+
+
+}
+
+
+# calc_hmw_useful_energy <- function(.df){
 #
-# # Filters data to only include sector data by aggregate
-# ilo_data_total.hours_agg <- ilo_data_total.hours %>%
-#   dplyr::filter(stringr::str_detect(Sector, pattern = fixed("(Aggregate):"))) %>%
-#   dplyr::mutate(Sector = stringr::str_replace(Sector, ".*?\\:\\s", ""))
 #
-# # Filters data to only include sector data by broad
-# ilo_data_total.hours_broad <- ilo_data_total.hours %>%
-#   dplyr::filter(stringr::str_detect(Sector, pattern = fixed("(Broad sector):"))) %>%
-#   dplyr::mutate(Sector = stringr::str_replace(Sector, ".*?\\:\\s", ""))
+#
+# }
+
+
+
+
+
