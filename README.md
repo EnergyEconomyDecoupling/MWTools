@@ -94,10 +94,10 @@ plot_amw_summary(amw_pfu_df = amw_pfu_df,
 
 Raw data for the estimation of human muscle work is obtained from the
 International Labor Organisation (ILO), via the `R` package `Rilostat`.
-The `MWTools` package includes bundled ILO data for the employed persons
-by sector and mean working hours by sector, retrieved by calling
-`MWTools::ilo_hmw_data`. This data is tidied with the function
-`MWTools::tidy_ilo_data`.
+The `MWTools` package includes bundled ILO data for the number of
+employed persons by sector and mean number of working hours by sector,
+retrieved by calling `MWTools::ilo_hmw_data`. This data is tidied with
+the helper function `MWTools::tidy_ilo_data`.
 
 ``` r
 ilo_data <- MWTools::ilo_hmw_data
@@ -107,13 +107,36 @@ tidy_ilo_data <- ilo_data %>%
 
 head(tidy_ilo_data)
 #> # A tibble: 6 x 8
-#>   Country.code HMW.Region.code Sex    Sector Sector.hmw Year  `Employed.persons~
-#>   <chr>        <chr>           <chr>  <chr>  <chr>      <chr>              <dbl>
-#> 1 ABW          <NA>            Female Agric~ Primary    1994                  10
-#> 2 ABW          <NA>            Female Agric~ Primary    1997                  49
-#> 3 ABW          <NA>            Female Agric~ Primary    2000                  37
-#> 4 ABW          <NA>            Female Agric~ Primary    2007                  96
-#> 5 ABW          <NA>            Female Agric~ Primary    2010                  74
-#> 6 ABW          <NA>            Female Agric~ Primary    2011                  90
+#>   Country.code HMW.Region.code Sex    Sector Sector.hmw  Year `Employed.persons~
+#>   <chr>        <chr>           <chr>  <chr>  <chr>      <dbl>              <dbl>
+#> 1 ABW          <NA>            Female Agric~ Primary     1994                 10
+#> 2 ABW          <NA>            Female Agric~ Primary     1997                 49
+#> 3 ABW          <NA>            Female Agric~ Primary     2000                 37
+#> 4 ABW          <NA>            Female Agric~ Primary     2007                 96
+#> 5 ABW          <NA>            Female Agric~ Primary     2010                 74
+#> 6 ABW          <NA>            Female Agric~ Primary     2011                 90
 #> # ... with 1 more variable: Total.hours [hours/year] <dbl>
+```
+
+Using data for the number of employed persons and mean yearly working
+hours the primary, final, and useful energy associated with human muscle
+work can be estimated using the helper function `MWTools::calc_hmw_pfu`.
+
+``` r
+hmw_pfu_data <- MWTools::ilo_hmw_data %>%
+  calc_hmw_pfu()
+
+head(hmw_pfu_data)
+#> # A tibble: 6 x 11
+#>   Country.code HMW.Region.code Sex    Sector Sector.hmw  Year `Employed.persons~
+#>   <chr>        <chr>           <chr>  <chr>  <chr>      <dbl>              <dbl>
+#> 1 ABW          <NA>            Female Agric~ Primary     1994                 10
+#> 2 ABW          <NA>            Female Agric~ Primary     1997                 49
+#> 3 ABW          <NA>            Female Agric~ Primary     2000                 37
+#> 4 ABW          <NA>            Female Agric~ Primary     2007                 96
+#> 5 ABW          <NA>            Female Agric~ Primary     2010                 74
+#> 6 ABW          <NA>            Female Agric~ Primary     2011                 90
+#> # ... with 4 more variables: Total.hours [hours/year] <dbl>,
+#> #   Final energy [MJ/year] <dbl>, Primary energy [MJ/year] <dbl>,
+#> #   Useful energy [MJ/year] <dbl>
 ```

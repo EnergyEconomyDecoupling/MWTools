@@ -41,6 +41,9 @@ ilo_hmw_data <- employment %>%
   # Removes leading string "Sex: " from Sex data
   dplyr::mutate(
     "{sex_ilo_col}" := stringr::str_replace(.data[[sex_ilo_col]], stringr::fixed("Sex: "), "")
+  ) %>%
+  dplyr::mutate(
+    "{year}" := as.numeric(.data[[year]])
   )
 
 # Use hmw data in package

@@ -352,10 +352,26 @@ calc_hmw_useful_energy <- function(.df,
     ) %>%
     dplyr::select(-.data[[power_col]])
 
-
-
 }
 
+
+#' Title
+#'
+#' @param .df
+#'
+#' @return
+#' @export
+#'
+#' @examples
+calc_hmw_pfu <- function(.df){
+
+  .df %>%
+    tidy_ilo_data() %>%
+    calc_hmw_final_energy() %>%
+    calc_hmw_primary_energy() %>%
+    calc_hmw_useful_energy()
+
+}
 
 
 
