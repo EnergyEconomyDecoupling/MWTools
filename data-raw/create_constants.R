@@ -12,7 +12,9 @@ mw_constants <- list(country_name = "Country.name",
                      value = "Value",
                      sector_col = "Sector",
                      stage_col = "Stage",
-                     energy_mj_year = "Energy [MJ/year]")
+                     energy_mj_year = "Energy [MJ/year]",
+                     exemplar_method_col = "Exemplar/Method",
+                     method_source_col = "Method/Source")
 
 usethis::use_data(mw_constants, overwrite = TRUE)
 
@@ -135,8 +137,6 @@ amw_analysis_constants <- list(prop_working_animals_col = "Prop.Working.animals"
                                # tr_full_string
                                # total_full_string
                                amw_region_col = "AMW.Region",
-                               exemplar_method_col = "Exemplar/Method",
-                               method_source_col = "Method/Source",
                                metric_col = "Metric")
 
 usethis::use_data(amw_analysis_constants, overwrite = TRUE)
