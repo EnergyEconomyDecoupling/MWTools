@@ -5,7 +5,7 @@
 \alias{hmw_analysis_constants}
 \title{Human muscle work (hmw) analysis data constants}
 \format{
-A string list with 22 entries.
+A string list with 23 entries.
 \describe{
 \item{total_working_hours_ilo_col}{The data column "Total.hours \link{hours/year}" containing the number of hours worked yearly by all humans for a given country, sex, sector, and year.}
 \item{industry_activity_col}{The data column "Industry/Activity" containing information on the industry or activity of human workers. Usually one of "Sedentary", "Primary", or "Secondary".}
@@ -25,6 +25,7 @@ A string list with 22 entries.
 \item{food_consumption_col}{The data column "Food consumption \link{kcal/day per person}", which contains information on the daily food consumption of humans in kilocalories (kcal).}
 \item{yearly_energy_consumption_pp_col}{The data column "Energy consumption \link{MJ/year per person}", which contains information on the yearly food consumption per working person in megajoules (MJ).}
 \item{final_energy_col}{The data column "Final energy \link{MJ/year}", which contains data on the yearly food consumption of all working persons in megajoules (MJ).}
+\item{primary_energy_col}{The data column "Primary energy \link{MJ/year}", which contains data on the yearly quantity of biomass required to meet the food requirements of all working persons in megajoules (MJ).}
 \item{useful_energy_hmw_col}{The data column "Useful energy \link{MJ/year}", which contains data on the yearly useful work performed by all working persons in megajoules (MJ).}
 \item{power_col}{The data column "Power \link{W}", which contains data on the power output of humans performing muscle work.}
 \item{plate_waste_col}{The data column "Plate waste \link{-}", which contains data on the proportion of food waste by region.}

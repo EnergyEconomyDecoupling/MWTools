@@ -111,13 +111,15 @@ calc_total_hours_worked <- function(.df,
 #' @examples
 #'
 get_broad.sector_data <- function(.df,
+                                  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
                                   sector_col = MWTools::mw_constants$sector_col){
 
   .df %>%
     dplyr::filter(stringr::str_detect(.data[[sector_col]], pattern = stringr::fixed("(Broad sector):"))) %>%
     dplyr::mutate(
       "{sector_col}" := stringr::str_replace(.data[[sector_col]], ".*?\\:\\s", "")
-      )
+      ) %>%
+    dplyr::filter(.data[[sex_ilo_col]] != "Total")
 
 }
 
@@ -253,6 +255,57 @@ calc_hmw_final_energy <- function(.df,
     dplyr::select(-.data[[yearly_energy_consumption_pp_col]],-.data[[food_consumption_col]], -.data[[plate_waste_col]])
 
 }
+
+
+#' Title
+#'
+#' @param .df
+#' @param hmw_analysis_data_path
+#' @param year
+#' @param unit
+#' @param exemplar_method_col
+#' @param hmw_harvest_waste_sheet
+#' @param final_energy_col
+#' @param primary_energy_col
+#' @param hmw_harvest_waste_col
+#'
+#' @return
+#' @export
+#'
+#' @examples
+calc_hmw_primary_energy <- function(.df,
+                                    hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
+                                    year = MWTools::mw_constants$year,
+                                    unit = MWTools::mw_constants$unit,
+                                    exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
+                                    hmw_harvest_waste_sheet = MWTools::hmw_analysis_constants$hmw_harvest_waste_sheet,
+                                    final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
+                                    primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
+                                    hmw_harvest_waste_col = MWTools::hmw_analysis_constants$hmw_harvest_waste_col,
+                                    hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col){
+
+  # Read harvest waste data
+  harvest_waste_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
+                                        sheet = hmw_harvest_waste_sheet) %>%
+    dplyr::select(-.data[[unit]], -.data[[exemplar_method_col]]) %>%
+    tidyr::pivot_longer(cols = "1960":"2020",
+                        names_to = year,
+                        values_to = hmw_harvest_waste_col) %>%
+    dplyr::mutate(
+      "{year}" := as.numeric(.data[[year]])
+    )
+
+  # Add harvest waste data and calculate primary energy
+  .df %>%
+    dplyr::left_join(harvest_waste_data, by = c(year, hmw_region_code_col)) %>%
+    dplyr::mutate(
+      "{primary_energy_col}" := .data[[final_energy_col]] / (1 - .data[[hmw_harvest_waste_col]])
+    ) %>%
+    dplyr::select(-.data[[hmw_harvest_waste_col]])
+
+
+}
+
 
 
 #' Title

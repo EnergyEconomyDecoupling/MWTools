@@ -123,6 +123,24 @@ test_that("calc_hmw_final_energy works",{
 
 })
 
+test_that("calc_hmw_primary_energy works",{
+
+  hmw_data <- read.csv(file = hmw_test_data_path())
+
+  hmw_data_primaryenergy <- hmw_data %>%
+    add_hmw_region_codes() %>%
+    fill_ilo_data() %>%
+    calc_total_hours_worked() %>%
+    get_broad.sector_data() %>%
+    add_hmw_analysis_sectors() %>%
+    calc_hmw_final_energy() %>%
+    calc_hmw_primary_energy()
+
+  expect_true(!is.null(hmw_data_primaryenergy))
+
+
+})
+
 
 test_that("calc_hmw_useful_energy works",{
 
@@ -135,6 +153,7 @@ test_that("calc_hmw_useful_energy works",{
     get_broad.sector_data() %>%
     add_hmw_analysis_sectors() %>%
     calc_hmw_final_energy() %>%
+    calc_hmw_primary_energy() %>%
     calc_hmw_useful_energy()
 
   expect_true(!is.null(hmw_data_usefulenergy))

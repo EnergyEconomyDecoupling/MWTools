@@ -51,6 +51,7 @@ hmw_analysis_constants <- list(total_working_hours_ilo_col = "Total.hours [hours
                                food_consumption_col = "Food consumption [kcal/day per person]",
                                yearly_energy_consumption_pp_col = "Energy consumption [MJ/year per person]",
                                final_energy_col = "Final energy [MJ/year]",
+                               primary_energy_col = "Primary energy [MJ/year]",
                                useful_energy_hmw_col = "Useful energy [MJ/year]",
                                power_col = "Power [W]",
                                plate_waste_col = "Plate waste [-]",
