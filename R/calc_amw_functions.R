@@ -241,7 +241,8 @@ get_working_species <- function(.df,
 #'                          `MWTools::amw_analysis_data_path()`, by default,
 #'                          which returns the path the analysis data bundled
 #'                          with the `MWTools` package.
-#' @param prop_working_animal,da_perc,working_animals_total_col,live_animals_col,mw_region_code_col,mw_region_col,exemplar_method_col
+#' @param year,species,exemplar_method_col See `MWTools::mw_constants`.
+#' @param prop_working_animal,da_perc,working_animals_total_col,live_animals_col,mw_region_code_col,mw_region_col
 #'        See `MWTools::amw_analysis_constants`.
 #' @param ...
 #'
@@ -260,13 +261,13 @@ calc_working_animals <- function(.df,
                                  amw_analysis_path = MWTools::amw_analysis_data_path(),
                                  year = MWTools::mw_constants$year,
                                  species = MWTools::mw_constants$species,
+                                 exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
                                  prop_working_animals_col = MWTools::amw_analysis_constants$prop_working_animals_col,
                                  wa_perc_sheet = MWTools::amw_analysis_constants$wa_perc_sheet,
                                  working_animals_total_col = MWTools::amw_analysis_constants$working_animals_total_col,
                                  live_animals_col = MWTools::amw_analysis_constants$live_animals_col,
                                  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
-                                 amw_region_col = MWTools::amw_analysis_constants$amw_region_col,
-                                 exemplar_method_col = MWTools::amw_analysis_constants$exemplar_method_col){
+                                 amw_region_col = MWTools::amw_analysis_constants$amw_region_col){
 
   # Reads the amw analysis excel file to determine the percentage of live animals
   # that are working animals.
@@ -460,8 +461,8 @@ calc_amw_numbers <- function(.df) {
 #'                          over time. Set to the function `MWTools::amw_analysis_data_path()`,
 #'                          by default, which returns the path the analysis data
 #'                          bundled with the `MWTools` package.
-#' @param species See `MWTools::mw_constants`.
-#' @param wa_feed_sheet,wa_days_hours_sheet,working_days_col,nonworking_days_col,working_hours_col,working_day_feed_col,nonworking_day_feed_col,working_yearly_feed_col,nonworking_yearly_feed_col,total_yearly_feed_col,amw_region_code_col,method_source
+#' @param species,method_source See `MWTools::mw_constants`.
+#' @param wa_feed_sheet,wa_days_hours_sheet,working_days_col,nonworking_days_col,working_hours_col,working_day_feed_col,nonworking_day_feed_col,working_yearly_feed_col,nonworking_yearly_feed_col,total_yearly_feed_col,amw_region_code_col
 #'        See `MWTools::amw_analysis_constants`.
 #'
 #' @return
@@ -480,6 +481,7 @@ calc_amw_numbers <- function(.df) {
 calc_yearly_feed <- function(.df,
                              amw_analysis_path = MWTools::amw_analysis_data_path(),
                              species = MWTools::mw_constants$species,
+                             method_source = MWTools::mw_constants$method_source,
                              wa_feed_sheet= MWTools::amw_analysis_constants$wa_feed_sheet,
                              wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,
                              working_days_col = MWTools::amw_analysis_constants$working_days_col,
@@ -490,8 +492,7 @@ calc_yearly_feed <- function(.df,
                              working_yearly_feed_col = MWTools::amw_analysis_constants$working_yearly_feed_col,
                              nonworking_yearly_feed_col = MWTools::amw_analysis_constants$nonworking_yearly_feed_col,
                              total_yearly_feed_col = MWTools::amw_analysis_constants$total_yearly_feed_col,
-                             amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
-                             method_source = MWTools::amw_analysis_constants$method_source) {
+                             amw_region_code_col = MWTools::conc_cols$amw_region_code_col) {
 
   feed <- readxl::read_excel(amw_analysis_path,
                              sheet = wa_feed_sheet) %>%
@@ -620,10 +621,10 @@ calc_primary_energy <- function(.df,
 #'                          `MWTools::amw_analysis_data_path()` by default,
 #'                          which returns the path the analysis data bundled with
 #'                          the `MWTools` package.
-#' @param species See `MWTools::mw_constants`.
+#' @param species,method_source See `MWTools::mw_constants`.
 #' @param wa_power_sheet,wa_days_hours_sheet See `MWTools::amw_analysis_constants`.
 #' @param working_animals_total_col,working_hours_col,working_seconds_col See `MWTools::amw_analysis_constants`.
-#' @param amw_region_code_col,method_source,power_per_animal See `MWTools::amw_analysis_constants`.
+#' @param amw_region_code_col,power_per_animal See `MWTools::amw_analysis_constants`.
 #' @param useful_energy_total,useful_energy_ag,useful_energy_tr See `MWTools::amw_analysis_constants`.
 #' @param working_animals_total_col,working_animals_ag_col,working_animals_tr_col See `MWTools::amw_analysis_constants`.
 #'
@@ -646,13 +647,13 @@ calc_primary_energy <- function(.df,
 calc_useful_energy <- function(.df,
                                amw_analysis_path = MWTools::amw_analysis_data_path(),
                                species = MWTools::mw_constants$species,
+                               method_source = MWTools::mw_constants$method_source,
                                wa_power_sheet= MWTools::amw_analysis_constants$wa_power_sheet,
                                wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,
                                working_days_col = MWTools::amw_analysis_constants$working_days_col,
                                working_hours_col = MWTools::amw_analysis_constants$working_hours_col,
                                working_seconds_col = MWTools::amw_analysis_constants$working_seconds_col,
                                amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
-                               method_source = MWTools::amw_analysis_constants$method_source,
                                power_per_animal = MWTools::amw_analysis_constants$power_per_animal,
                                useful_energy_total = MWTools::amw_analysis_constants$useful_energy_total,
                                useful_energy_ag = MWTools::amw_analysis_constants$useful_energy_ag,
