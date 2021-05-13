@@ -5,7 +5,7 @@
 \alias{amw_analysis_constants}
 \title{Animal muscle work (amw) analysis data constants}
 \format{
-A string list with 36 entries.
+A string list with 34 entries.
 \describe{
 \item{prop_working_animals_col}{The metadata column "Prop.Working.animals" representing the proportion of live animals that are working animals.}
 \item{prop_working_animals_ag_col}{The metadata column "Prop.Working.animals.Ag" representing the proportion of working animals that work in agriculture.}
@@ -41,8 +41,6 @@ A string list with 36 entries.
 \item{primary_energy_tr}{The data column "Primary.energy.Tr \link{MJ/year}" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals transporting goods outside of agriculture.}
 \item{mw_region_code_col}{The metadata column "MW.Region.code" representing the codes associated with the aggregate regions used in this package.}
 \item{mw_region_col}{The metadata column "MW.Region" representing the a names associated with the aggregate regions used in this package.}
-\item{exemplar_method_col}{The metadata column "Exemplar/Method" representing the regional exemplar or method used for a particular data series.}
-\item{method_source_col}{The metadata column "Method/Source" representing the method or source of information use for a particular data series.}
 \item{metric_col}{The metadata column "Metric" representing the metric name associated with a particular data series.}
 }
 }

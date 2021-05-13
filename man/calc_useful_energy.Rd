@@ -8,13 +8,13 @@ calc_useful_energy(
   .df,
   amw_analysis_path = MWTools::amw_analysis_data_path(),
   species = MWTools::mw_constants$species,
+  method_source = MWTools::mw_constants$method_source,
   wa_power_sheet = MWTools::amw_analysis_constants$wa_power_sheet,
   wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,
   working_days_col = MWTools::amw_analysis_constants$working_days_col,
   working_hours_col = MWTools::amw_analysis_constants$working_hours_col,
   working_seconds_col = MWTools::amw_analysis_constants$working_seconds_col,
   amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
-  method_source = MWTools::amw_analysis_constants$method_source,
   power_per_animal = MWTools::amw_analysis_constants$power_per_animal,
   useful_energy_total = MWTools::amw_analysis_constants$useful_energy_total,
   useful_energy_ag = MWTools::amw_analysis_constants$useful_energy_ag,
@@ -34,11 +34,11 @@ power outputs of working animals. Set to the function
 which returns the path the analysis data bundled with
 the \code{MWTools} package.}
 
-\item{species}{See \code{MWTools::mw_constants}.}
+\item{species, method_source}{See \code{MWTools::mw_constants}.}
 
 \item{wa_power_sheet, wa_days_hours_sheet}{See \code{MWTools::amw_analysis_constants}.}
 
-\item{amw_region_code_col, method_source, power_per_animal}{See \code{MWTools::amw_analysis_constants}.}
+\item{amw_region_code_col, power_per_animal}{See \code{MWTools::amw_analysis_constants}.}
 
 \item{useful_energy_total, useful_energy_ag, useful_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
 

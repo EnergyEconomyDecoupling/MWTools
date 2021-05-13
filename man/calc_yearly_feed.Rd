@@ -8,6 +8,7 @@ calc_yearly_feed(
   .df,
   amw_analysis_path = MWTools::amw_analysis_data_path(),
   species = MWTools::mw_constants$species,
+  method_source = MWTools::mw_constants$method_source,
   wa_feed_sheet = MWTools::amw_analysis_constants$wa_feed_sheet,
   wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,
   working_days_col = MWTools::amw_analysis_constants$working_days_col,
@@ -19,8 +20,7 @@ calc_yearly_feed(
  
     nonworking_yearly_feed_col = MWTools::amw_analysis_constants$nonworking_yearly_feed_col,
   total_yearly_feed_col = MWTools::amw_analysis_constants$total_yearly_feed_col,
-  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
-  method_source = MWTools::amw_analysis_constants$method_source
+  amw_region_code_col = MWTools::conc_cols$amw_region_code_col
 )
 }
 \arguments{
@@ -33,9 +33,9 @@ over time. Set to the function \code{MWTools::amw_analysis_data_path()},
 by default, which returns the path the analysis data
 bundled with the \code{MWTools} package.}
 
-\item{species}{See \code{MWTools::mw_constants}.}
+\item{species, method_source}{See \code{MWTools::mw_constants}.}
 
-\item{wa_feed_sheet, wa_days_hours_sheet, working_days_col, nonworking_days_col, working_hours_col, working_day_feed_col, nonworking_day_feed_col, working_yearly_feed_col, nonworking_yearly_feed_col, total_yearly_feed_col, amw_region_code_col, method_source}{See \code{MWTools::amw_analysis_constants}.}
+\item{wa_feed_sheet, wa_days_hours_sheet, working_days_col, nonworking_days_col, working_hours_col, working_day_feed_col, nonworking_day_feed_col, working_yearly_feed_col, nonworking_yearly_feed_col, total_yearly_feed_col, amw_region_code_col}{See \code{MWTools::amw_analysis_constants}.}
 }
 \value{
 

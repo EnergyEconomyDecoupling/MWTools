@@ -38,6 +38,8 @@ hmw_analysis_constants <- list(total_working_hours_ilo_col = "Total.hours [hours
                                hmw_power_sheet = "hmw_power",
                                hmw_food_sheet = "hmw_food",
                                hmw_sector_map_sheet = "hmw_sector_map",
+                               hmw_plate_waste_sheet = "hmw_plate_waste",
+                               hmw_harvest_waste_sheet = "hmw_harvest_waste",
                                broad_sector_col = "broad_sector",
                                hmw_analysis_sector_col = "Sector.hmw",
                                agriculture_broad.sector = "Agriculture",
@@ -50,7 +52,9 @@ hmw_analysis_constants <- list(total_working_hours_ilo_col = "Total.hours [hours
                                yearly_energy_consumption_pp_col = "Energy consumption [MJ/year per person]",
                                final_energy_col = "Final energy [MJ/year]",
                                useful_energy_hmw_col = "Useful energy [MJ/year]",
-                               power_col = "Power [W]")
+                               power_col = "Power [W]",
+                               plate_waste_col = "Plate waste [-]",
+                               hmw_harvest_waste_col = "Harvest waste [-]")
 
 usethis::use_data(hmw_analysis_constants, overwrite = TRUE)
 

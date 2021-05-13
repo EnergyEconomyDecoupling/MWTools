@@ -13,7 +13,7 @@ tidy_ilo_data(.df)
 
 }
 \description{
-Get tidy employment and working hours data for agriculture, industry, and services
+Wrangle the bundled ILO data into a tidy format. This helper function...
 }
 \examples{
 
