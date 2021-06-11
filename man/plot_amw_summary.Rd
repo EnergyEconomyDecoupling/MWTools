@@ -21,7 +21,7 @@ plot_amw_summary(
 }
 \arguments{
 \item{amw_pfu_df}{A data frame containing the primary, final, and useful energy
-associated with animal muscle work.Usually supplied by calling
+associated with animal muscle work. Usually supplied by calling
 the function \code{calc_amw_numbers}.}
 
 \item{amw_numbers_df}{A data frame containing the total number of live animals,

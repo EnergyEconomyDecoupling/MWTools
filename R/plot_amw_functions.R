@@ -6,13 +6,13 @@
 #' number of live, and working animals by species, over time.
 #'
 #' @param amw_pfu_df A data frame containing the primary, final, and useful energy
-#'                   associated with animal muscle work.Usually supplied by calling
+#'                   associated with animal muscle work. Usually supplied by calling
 #'                   the function `calc_amw_numbers`.
 #' @param amw_numbers_df A data frame containing the total number of live animals,
 #'                       and working animals by sector. Usually supplied by calling
 #'                       the function `calc_amw_pfu`.
 #' @param country A 3 letter ISO code representing the country desired for analysis.
-#' @param sector The sector desired for analysis. One of "Total", "Agriculture, or
+#' @param sector The sector desired for analysis. One of "Total", "Agriculture", or
 #'               "Transport".
 #' @param year,country_code_col,species,sector_col,stage_col,energy_mj_year See `mw_constants`.
 #' @param working_animals_col,live_animals_col See `amw_analysis_constants`.
@@ -57,7 +57,7 @@ plot_amw_summary <- function(amw_pfu_df,
     ggplot2::scale_y_continuous(labels = scales::label_scientific(digits = 1, scale = 1)) +
     ggplot2::theme_classic() +
     ggplot2::theme(legend.key.size = grid::unit(0.1, "cm"))
-
+plot
   numbers_plot <- ggplot2::ggplot() +
     ggplot2::geom_line(data = amw_numbers_plot_data, mapping = ggplot2::aes(x = .data[[year]],
                                                                             y = .data[[working_animals_col]],

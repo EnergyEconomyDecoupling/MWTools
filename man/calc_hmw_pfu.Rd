@@ -4,10 +4,17 @@
 \alias{calc_hmw_pfu}
 \title{Title}
 \usage{
-calc_hmw_pfu(.df)
+calc_hmw_pfu(
+  .df,
+  final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
+  primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
+  useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
+  energy_mj_year = MWTools::mw_constants$energy_mj_year,
+  stage_col = MWTools::mw_constants$stage_col
+)
 }
 \arguments{
-\item{.df}{}
+\item{stage_col}{}
 }
 \value{
 

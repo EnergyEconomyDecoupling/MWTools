@@ -61,7 +61,7 @@ head(amw_pfu_df)
 
 Use the `plot_amw_summary` function to produce a plot summarising the animal muscle work data for a particular country and sector.
 
-```{r example_plot, echo=TRUE, fig.height=6, fig.width=7}
+```{r amw_plot, echo=TRUE, fig.height=6, fig.width=7}
 
 plot_amw_summary(amw_pfu_df = amw_pfu_df,
                  amw_numbers_df = amw_numbers_df,
@@ -72,7 +72,7 @@ plot_amw_summary(amw_pfu_df = amw_pfu_df,
 
 ## Human Muscle Work
 
-Raw data for the estimation of human muscle work is obtained from the International Labor Organisation (ILO), via the `R` package `Rilostat`. The `MWTools` package includes bundled ILO data for the number of employed persons by sector and mean number of working hours by sector, retrieved by calling `MWTools::ilo_hmw_data`. This data is tidied with the helper function `MWTools::tidy_ilo_data`.
+Raw data for the estimation of human muscle work is obtained from the International Labor Organisation (ILO), via the `R` package `Rilostat`. The `MWTools` package includes bundled ILO data for the number of employed persons by sector and mean number of working hours by sector, retrieved by calling `MWTools::ilo_hmw_data`. This data is tidied with the helper function `MWTools::tidy_ilo_data`..
 
 ```{r hmw_data}
 
@@ -93,5 +93,15 @@ hmw_pfu_data <- MWTools::ilo_hmw_data %>%
   calc_hmw_pfu()
 
 head(hmw_pfu_data)
+
+```
+
+Use the `plot_hmw_summary` function to produce a plot summarising the human muscle work data for a particular country and sector.
+
+```{r hmw_plot, echo=TRUE, fig.height=6, fig.width=7}
+
+plot_hmw_summary(hmw_pfu_df = hmw_pfu_data,
+                 country = "USA",
+                 sector = "Agriculture")
 
 ```

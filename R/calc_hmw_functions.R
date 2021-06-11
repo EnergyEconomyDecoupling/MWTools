@@ -355,21 +355,38 @@ calc_hmw_useful_energy <- function(.df,
 }
 
 
+
 #' Title
 #'
 #' @param .df
+#' @param final_energy_col
+#' @param primary_energy_col
+#' @param useful_energy_hmw_col
+#' @param energy_mj_year
+#' @param stage_col
 #'
 #' @return
 #' @export
 #'
 #' @examples
-calc_hmw_pfu <- function(.df){
+calc_hmw_pfu <- function(.df,
+                         final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
+                         primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
+                         useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
+                         energy_mj_year = MWTools::mw_constants$energy_mj_year,
+                         stage_col = MWTools::mw_constants$stage_col){
 
   .df %>%
     tidy_ilo_data() %>%
     calc_hmw_final_energy() %>%
     calc_hmw_primary_energy() %>%
-    calc_hmw_useful_energy()
+    calc_hmw_useful_energy() %>%
+    tidyr::pivot_longer(cols = c(final_energy_col, primary_energy_col, useful_energy_hmw_col),
+                        names_to = stage_col,
+                        values_to = energy_mj_year) %>%
+    dplyr::mutate(
+      "{stage_col}" := stringr::str_replace(.data[[stage_col]], stringr::fixed(" energy [MJ/year]"), "")
+    )
 
 }
 

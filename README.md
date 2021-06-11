@@ -88,7 +88,7 @@ plot_amw_summary(amw_pfu_df = amw_pfu_df,
                  sector = "Agriculture")
 ```
 
-<img src="man/figures/README-example_plot-1.png" width="100%" />
+<img src="man/figures/README-amw_plot-1.png" width="100%" />
 
 ## Human Muscle Work
 
@@ -97,7 +97,7 @@ International Labor Organisation (ILO), via the `R` package `Rilostat`.
 The `MWTools` package includes bundled ILO data for the number of
 employed persons by sector and mean number of working hours by sector,
 retrieved by calling `MWTools::ilo_hmw_data`. This data is tidied with
-the helper function `MWTools::tidy_ilo_data`.
+the helper function `MWTools::tidy_ilo_data`..
 
 ``` r
 ilo_data <- MWTools::ilo_hmw_data
@@ -127,16 +127,29 @@ hmw_pfu_data <- MWTools::ilo_hmw_data %>%
   calc_hmw_pfu()
 
 head(hmw_pfu_data)
-#> # A tibble: 6 x 11
+#> # A tibble: 6 x 10
 #>   Country.code HMW.Region.code Sex    Sector Sector.hmw  Year `Employed.persons~
 #>   <chr>        <chr>           <chr>  <chr>  <chr>      <dbl>              <dbl>
 #> 1 ABW          <NA>            Female Agric~ Primary     1994                 10
-#> 2 ABW          <NA>            Female Agric~ Primary     1997                 49
-#> 3 ABW          <NA>            Female Agric~ Primary     2000                 37
-#> 4 ABW          <NA>            Female Agric~ Primary     2007                 96
-#> 5 ABW          <NA>            Female Agric~ Primary     2010                 74
-#> 6 ABW          <NA>            Female Agric~ Primary     2011                 90
-#> # ... with 4 more variables: Total.hours [hours/year] <dbl>,
-#> #   Final energy [MJ/year] <dbl>, Primary energy [MJ/year] <dbl>,
-#> #   Useful energy [MJ/year] <dbl>
+#> 2 ABW          <NA>            Female Agric~ Primary     1994                 10
+#> 3 ABW          <NA>            Female Agric~ Primary     1994                 10
+#> 4 ABW          <NA>            Female Agric~ Primary     1997                 49
+#> 5 ABW          <NA>            Female Agric~ Primary     1997                 49
+#> 6 ABW          <NA>            Female Agric~ Primary     1997                 49
+#> # ... with 3 more variables: Total.hours [hours/year] <dbl>, Stage <chr>,
+#> #   Energy [MJ/year] <dbl>
 ```
+
+Use the `plot_hmw_summary` function to produce a plot summarising the
+human muscle work data for a particular country and sector.
+
+``` r
+plot_hmw_summary(hmw_pfu_df = hmw_pfu_data,
+                 country = "USA",
+                 sector = "Agriculture")
+#> Warning: Removed 36 row(s) containing missing values (geom_path).
+
+#> Warning: Removed 36 row(s) containing missing values (geom_path).
+```
+
+<img src="man/figures/README-hmw_plot-1.png" width="100%" />
