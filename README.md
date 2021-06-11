@@ -127,15 +127,15 @@ hmw_pfu_data <- MWTools::ilo_hmw_data %>%
   calc_hmw_pfu()
 
 head(hmw_pfu_data)
-#> # A tibble: 6 x 10
-#>   Country.code HMW.Region.code Sex    Sector Sector.hmw  Year `Employed.persons~
-#>   <chr>        <chr>           <chr>  <chr>  <chr>      <dbl>              <dbl>
-#> 1 ABW          <NA>            Female Agric~ Primary     1994                 10
-#> 2 ABW          <NA>            Female Agric~ Primary     1994                 10
-#> 3 ABW          <NA>            Female Agric~ Primary     1994                 10
-#> 4 ABW          <NA>            Female Agric~ Primary     1997                 49
-#> 5 ABW          <NA>            Female Agric~ Primary     1997                 49
-#> 6 ABW          <NA>            Female Agric~ Primary     1997                 49
+#> # A tibble: 6 x 9
+#>   Country.code HMW.Region.code Sex    Sector      Year `Employed.persons [perso~
+#>   <chr>        <chr>           <chr>  <chr>      <dbl>                     <dbl>
+#> 1 ABW          <NA>            Female Agricultu~  1994                        10
+#> 2 ABW          <NA>            Female Agricultu~  1994                        10
+#> 3 ABW          <NA>            Female Agricultu~  1994                        10
+#> 4 ABW          <NA>            Female Agricultu~  1997                        49
+#> 5 ABW          <NA>            Female Agricultu~  1997                        49
+#> 6 ABW          <NA>            Female Agricultu~  1997                        49
 #> # ... with 3 more variables: Total.hours [hours/year] <dbl>, Stage <chr>,
 #> #   Energy [MJ/year] <dbl>
 ```
@@ -150,4 +150,4 @@ plot_hmw_summary(hmw_pfu_df = hmw_pfu_data,
 #> Warning: Removed 36 row(s) containing missing values (geom_path).
 ```
 
-<img src="man/figures/README-hmw_plot-1.png" width="100%" /> Lastly…
+<img src="man/figures/README-hmw_plot-1.png" width="100%" /> Lastly….

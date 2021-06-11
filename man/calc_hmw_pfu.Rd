@@ -9,6 +9,7 @@ calc_hmw_pfu(
   final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
   primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
   useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
+  hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
   energy_mj_year = MWTools::mw_constants$energy_mj_year,
   stage_col = MWTools::mw_constants$stage_col
 )
