@@ -12,31 +12,27 @@ plot_hmw_summary(
   country_code_col = MWTools::conc_cols$country_code_col,
   stage_col = MWTools::mw_constants$stage_col,
   sector_col = MWTools::mw_constants$sector_col,
-  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   energy_mj_year = MWTools::mw_constants$energy_mj_year,
+  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col
 )
 }
 \arguments{
-\item{hmw_pfu_df}{A data frame containing the primary, final, and useful energy
-associated with human muscle work. Usually supplied by calling
-the function \code{calc_hmw_pfu}.}
-
 \item{country}{A 3 letter ISO code representing the country desired for analysis.}
 
-\item{year, country_code_col, species, sector_col, stage_col, energy_mj_year}{See \code{mw_constants}.}
+\item{sector}{The sector desired for analysis. One of "Agriculture", "Industry", or
+"Services".}
 
-\item{working_animals_col, live_animals_col}{See \code{amw_analysis_constants}.}
+\item{year, country_code_col, sector_col, stage_col, energy_mj_year}{See \code{mw_constants}.}
+
+\item{sex_ilo_col, employed_persons_ilo_col}{See \code{ilo_cols}.}
 }
 \value{
 
 }
 \description{
-Create a composite plot summarising human muscle work for the selected sector and
-country.
-}
-\details{
+Create a composite plot summarising human muscle work for the selected sector and country.
 The composite plot contains two sub-plots: 1) the primary, final, and useful
-energy associated with animal muscle work by species, over time; and 2) the
-number of live, and working animals by species, over time.
+energy associated with human muscle work by sex, over time; and 2) the
+number of humans, and working humans by sex, over time.
 }

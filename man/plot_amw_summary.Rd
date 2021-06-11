@@ -30,7 +30,7 @@ the function \code{calc_amw_pfu}.}
 
 \item{country}{A 3 letter ISO code representing the country desired for analysis.}
 
-\item{sector}{The sector desired for analysis. One of "Total", "Agriculture, or
+\item{sector}{The sector desired for analysis. One of "Total", "Agriculture", or
 "Transport".}
 
 \item{year, country_code_col, species, sector_col, stage_col, energy_mj_year}{See \code{mw_constants}.}
