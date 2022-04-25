@@ -14,7 +14,7 @@ test_that("tidy_fao_live_animals works", {
   expect_equal(colnames(live_animals), c("Country.name", "Species", "Year",
                                          "Value"))
 
-  expect_equal(nrow(live_animals), 2184)
+  expect_equal(nrow(live_animals), 708)
 
 })
 
@@ -37,7 +37,7 @@ test_that("add_concordance_codes works", {
                                                  "Country.name", "Species", "Year",
                                                  "Value", "Country.incl.", "Country.code_PFU"))
 
-  expect_equal(nrow(live_animals_w.codes), 2184)
+  expect_equal(nrow(live_animals_w.codes), 708)
 
 })
 
@@ -57,7 +57,7 @@ test_that("trim_fao_data works", {
 
   expect_equal(unique(live_animals_trimmed$Country.code), "CHN")
 
-  expect_equal(nrow(live_animals_trimmed), 1092)
+  expect_equal(nrow(live_animals_trimmed), 354)
 
 })
 
@@ -132,7 +132,8 @@ test_that("calc_sector_split works", {
   expect_equal(colnames(working_animals_s.split), c("Country.code", "AMW.Region.code",
                                                     "Country.name", "Year", "Species",
                                                     "Live.animals", "Prop.Working.animals",
-                                                    "Working.animals.total", "Prop.Working.animals.Ag",
+                                                    "Working.animals.total",
+                                                    "Method/Source", "Prop.Working.animals.Ag",
                                                     "Prop.Working.animals.Tr", "Working.animals.Ag",
                                                     "Working.animals.Tr"))
 })
@@ -200,6 +201,7 @@ test_that("calc_yearly_feed works", {
   expect_equal(colnames(working_animals_w.feed), c("Country.code", "AMW.Region.code", "Country.name",
                                                    "Year", "Species", "Live.animals",
                                                    "Prop.Working.animals", "Working.animals.total",
+                                                   "Method/Source",
                                                    "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
                                                    "Working.animals.Ag", "Working.animals.Tr",
                                                    "Total.yearly.feed [MJ/year per animal]"))
@@ -228,6 +230,7 @@ test_that("calc_final_energy works", {
   expect_equal(colnames(working_animals_w.finalenergy), c("Country.code", "AMW.Region.code", "Country.name",
                                                           "Year", "Species", "Live.animals",
                                                           "Prop.Working.animals", "Working.animals.total",
+                                                          "Method/Source",
                                                           "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
                                                           "Working.animals.Ag", "Working.animals.Tr",
                                                           "Total.yearly.feed [MJ/year per animal]",
@@ -259,6 +262,7 @@ test_that("calc_primary_energy",{
   expect_equal(colnames(working_animals_w.primaryenergy), c("Country.code", "AMW.Region.code", "Country.name",
                                                             "Year", "Species", "Live.animals",
                                                             "Prop.Working.animals", "Working.animals.total",
+                                                            "Method/Source",
                                                             "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
                                                             "Working.animals.Ag", "Working.animals.Tr",
                                                             "Total.yearly.feed [MJ/year per animal]",
@@ -294,6 +298,7 @@ test_that("calc_useful_energy",{
   expect_equal(colnames(working_animals_w.usefulenergy), c("Country.code", "AMW.Region.code", "Country.name",
                                                            "Year", "Species", "Live.animals",
                                                            "Prop.Working.animals", "Working.animals.total",
+                                                           "Method/Source",
                                                            "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
                                                            "Working.animals.Ag", "Working.animals.Tr",
                                                            "Total.yearly.feed [MJ/year per animal]",

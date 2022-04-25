@@ -53,9 +53,9 @@ library(MWTools)
 
 fao_data <- MWTools::fao_amw_data
 
-amw_pfu_df <- calc_amw_pfu(fao_data)
+amw_pfu_data <- calc_amw_pfu(fao_data)
 
-head(amw_pfu_df)
+head(amw_pfu_data)
 
 ```
 
@@ -63,7 +63,7 @@ Use the `plot_amw_summary` function to produce a plot summarising the animal mus
 
 ```{r amw_plot, echo=TRUE, fig.height=6, fig.width=7}
 
-plot_amw_summary(amw_pfu_df = amw_pfu_df,
+plot_amw_summary(amw_pfu_df = amw_pfu_data,
                  amw_numbers_df = amw_numbers_df,
                  country = "CHN",
                  sector = "Agriculture")

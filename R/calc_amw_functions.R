@@ -30,6 +30,7 @@ tidy_fao_live_animals <- function(.df,
 
   # Read file into a tidy data frame
   live_animals <- .df %>%
+    dplyr::filter(item %in% MWTools::mw_species) %>%
     dplyr::select(area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col) %>% # Do I need to use the .data[[]] syntax here?
     magrittr::set_colnames(c(country_name, species, year, unit, value))
 
@@ -766,15 +767,15 @@ tidy_pfu_data <- function(.df,
 #' in sequence to convert FAO data for live animals, usually downloaded with the function
 #' `down_fao_live_animals`, into a tidy data frame.
 #'
-#' @param data_folder The file path to the FAO live animals data downloaded using
-#'                    the function `MWTools::down_fao_live_animals`.
+#' @param .df The FAO live animals data downloaded using
+#'            the function `MWTools::down_fao_live_animals`.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-#' tidy_amw_pfu_data <- <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
-#'   calc_amw_pfu(data_folder = file.path(fs::home_path(), "FAO_data")
+#' tidy_amw_pfu_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
+#'   calc_amw_pfu()
 #'
 calc_amw_pfu <- function(.df) {
 

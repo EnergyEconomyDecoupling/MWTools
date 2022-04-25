@@ -64,17 +64,17 @@ library(MWTools)
 
 fao_data <- MWTools::fao_amw_data
 
-amw_pfu_df <- calc_amw_pfu(fao_data)
+amw_pfu_data <- calc_amw_pfu(fao_data)
 
-head(amw_pfu_df)
+head(amw_pfu_data)
 #> # A tibble: 6 x 7
-#>   AMW.Region.code Country.code  Year Species Stage  Sector     `Energy [MJ/year~
+#>   AMW.Region.code Country.code  Year Species Stage  Sector      `Energy [MJ/ye~`
 #>   <chr>           <chr>        <dbl> <chr>   <chr>  <chr>                  <dbl>
 #> 1 WAS             AFG           1961 Asses   Useful Total             831100990.
-#> 2 WAS             AFG           1961 Asses   Useful Agricultu~        124665149.
+#> 2 WAS             AFG           1961 Asses   Useful Agriculture       124665149.
 #> 3 WAS             AFG           1961 Asses   Useful Transport         706435842.
 #> 4 WAS             AFG           1961 Asses   Final  Total           12685716572.
-#> 5 WAS             AFG           1961 Asses   Final  Agricultu~       1902857486.
+#> 5 WAS             AFG           1961 Asses   Final  Agriculture      1902857486.
 #> 6 WAS             AFG           1961 Asses   Final  Transport       10782859086.
 ```
 
@@ -82,7 +82,7 @@ Use the `plot_amw_summary` function to produce a plot summarising the
 animal muscle work data for a particular country and sector.
 
 ``` r
-plot_amw_summary(amw_pfu_df = amw_pfu_df,
+plot_amw_summary(amw_pfu_df = amw_pfu_data,
                  amw_numbers_df = amw_numbers_df,
                  country = "CHN",
                  sector = "Agriculture")
@@ -107,15 +107,15 @@ tidy_ilo_data <- ilo_data %>%
 
 head(tidy_ilo_data)
 #> # A tibble: 6 x 8
-#>   Country.code HMW.Region.code Sex    Sector Sector.hmw  Year `Employed.persons~
-#>   <chr>        <chr>           <chr>  <chr>  <chr>      <dbl>              <dbl>
-#> 1 ABW          <NA>            Female Agric~ Primary     1994                 10
-#> 2 ABW          <NA>            Female Agric~ Primary     1997                 49
-#> 3 ABW          <NA>            Female Agric~ Primary     2000                 37
-#> 4 ABW          <NA>            Female Agric~ Primary     2007                 96
-#> 5 ABW          <NA>            Female Agric~ Primary     2010                 74
-#> 6 ABW          <NA>            Female Agric~ Primary     2011                 90
-#> # ... with 1 more variable: Total.hours [hours/year] <dbl>
+#>   Country.code HMW.Region.code Sex    Sector   Sector.hmw  Year `Employed.pers~`
+#>   <chr>        <chr>           <chr>  <chr>    <chr>      <dbl>            <dbl>
+#> 1 ABW          <NA>            Female Agricul~ Primary     1994               10
+#> 2 ABW          <NA>            Female Agricul~ Primary     1997               49
+#> 3 ABW          <NA>            Female Agricul~ Primary     2000               37
+#> 4 ABW          <NA>            Female Agricul~ Primary     2007               96
+#> 5 ABW          <NA>            Female Agricul~ Primary     2010               74
+#> 6 ABW          <NA>            Female Agricul~ Primary     2011               90
+#> # ... with 1 more variable: `Total.hours [hours/year]` <dbl>
 ```
 
 Using data for the number of employed persons and mean yearly working
@@ -128,16 +128,16 @@ hmw_pfu_data <- MWTools::ilo_hmw_data %>%
 
 head(hmw_pfu_data)
 #> # A tibble: 6 x 9
-#>   Country.code HMW.Region.code Sex    Sector      Year `Employed.persons [perso~
-#>   <chr>        <chr>           <chr>  <chr>      <dbl>                     <dbl>
-#> 1 ABW          <NA>            Female Agricultu~  1994                        10
-#> 2 ABW          <NA>            Female Agricultu~  1994                        10
-#> 3 ABW          <NA>            Female Agricultu~  1994                        10
-#> 4 ABW          <NA>            Female Agricultu~  1997                        49
-#> 5 ABW          <NA>            Female Agricultu~  1997                        49
-#> 6 ABW          <NA>            Female Agricultu~  1997                        49
-#> # ... with 3 more variables: Total.hours [hours/year] <dbl>, Stage <chr>,
-#> #   Energy [MJ/year] <dbl>
+#>   Country.code HMW.Region.code Sex    Sector       Year `Employed.persons [per~`
+#>   <chr>        <chr>           <chr>  <chr>       <dbl>                    <dbl>
+#> 1 ABW          <NA>            Female Agriculture  1994                       10
+#> 2 ABW          <NA>            Female Agriculture  1994                       10
+#> 3 ABW          <NA>            Female Agriculture  1994                       10
+#> 4 ABW          <NA>            Female Agriculture  1997                       49
+#> 5 ABW          <NA>            Female Agriculture  1997                       49
+#> 6 ABW          <NA>            Female Agriculture  1997                       49
+#> # ... with 3 more variables: `Total.hours [hours/year]` <dbl>, Stage <chr>,
+#> #   `Energy [MJ/year]` <dbl>
 ```
 
 Use the `plot_hmw_summary` function to produce a plot summarising the
