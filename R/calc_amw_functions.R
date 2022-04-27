@@ -415,38 +415,6 @@ tidy_numbers_data <- function(.df,
     dplyr::relocate(.data[[sector_col]], .before = .data[[live_animals_col]])
 }
 
-
-#' Calculate the number of live and working animals by country, species, and sector
-#'
-#' Calculate the number of live and working animals by country, species, and sector
-#' and over time. This function acts as a helper function calling a number of functions
-#' in sequence to convert FAO data for live animals, usually downloaded with the function
-#' `down_fao_live_animals`, into a tidy data frame.
-#'
-#' @param data_path The path to the folder containing data for the number of live
-#'                    animals. Usually downloaded with the function `down_fao_live_animals`.
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' tidy_amw_numbers_data <- <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
-#'   calc_amw_numbers(data_path = file.path(fs::home_path(), "FAO_data")
-#'
-calc_amw_numbers <- function(.df) {
-
-  amw_numbers_data <- .df %>%
-    tidy_fao_live_animals() %>%
-    add_concordance_codes() %>%
-    trim_fao_data() %>%
-    get_working_species() %>%
-    calc_working_animals() %>%
-    calc_sector_split() %>%
-    tidy_numbers_data()
-
-  return(amw_numbers_data)
-}
-
 #' Calculate the yearly feed requirements of working animals by species
 #'
 #' Calculate the yearly feed requirements of working animals by species and region.
@@ -777,19 +745,22 @@ tidy_pfu_data <- function(.df,
 #' tidy_amw_pfu_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
 #'   calc_amw_pfu()
 #'
-calc_amw_pfu <- function(.df) {
+calc_amw_pfu <- function(.df,
+                         concordance_path = MWTools::fao_concordance_path(),
+                         amw_analysis_path = MWTools::amw_analysis_data_path()
+                         ){
 
   amw_pfu_data <- .df %>%
     tidy_fao_live_animals() %>%
-    add_concordance_codes() %>%
+    add_concordance_codes(concordance_path = concordance_path) %>%
     trim_fao_data() %>%
     get_working_species() %>%
-    calc_working_animals() %>%
-    calc_sector_split() %>%
-    calc_yearly_feed() %>%
+    calc_working_animals(amw_analysis_path = amw_analysis_path) %>%
+    calc_sector_split(amw_analysis_path) %>%
+    calc_yearly_feed(amw_analysis_path) %>%
     calc_final_energy() %>%
     calc_primary_energy() %>%
-    calc_useful_energy() %>%
+    calc_useful_energy(amw_analysis_path) %>%
     tidy_pfu_data()
 
   return(amw_pfu_data)

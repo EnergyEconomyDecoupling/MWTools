@@ -147,7 +147,7 @@ human muscle work data for a particular country and sector.
 plot_hmw_summary(hmw_pfu_df = hmw_pfu_data,
                  country = "USA",
                  sector = "Agriculture")
-#> Warning: Removed 36 row(s) containing missing values (geom_path).
+#> Warning: Removed 39 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-hmw_plot-1.png" width="100%" /> Lastly….

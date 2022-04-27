@@ -1,19 +1,3 @@
-#' Gives a file path to the FAO live animals data
-#'
-#' @return a path to the bundled FAO data for the number of live animals
-#'
-#' @export
-#'
-#' @examples
-#' amw_data_path()
-amw_data_path <- function() {
-  file.path("data", "fao_amw_data.rda") %>%
-    system.file(package = "MWTools")
-}
-
-
-
-
 #' Gives a file path to the concordance data excel workbook
 #'
 #' @return a path to to the concordance data excel workbook bundled with this package
@@ -23,7 +7,7 @@ amw_data_path <- function() {
 #' @examples
 #' fao_concordance_path()
 fao_concordance_path <- function() {
-  file.path("extdata", "FAO_ISO_MW_Mapping.xlsx") %>%
+  file.path("extdata", "test_data",  "FAO_ISO_MW_Mapping.xlsx") %>%
     system.file(package = "MWTools")
 }
 
@@ -36,7 +20,7 @@ fao_concordance_path <- function() {
 #' @examples
 #' amw_analysis_data_path()
 amw_analysis_data_path <- function() {
-  file.path("extdata", "amw_analysis_data.xlsx") %>%
+  file.path("extdata", "test_data",  "amw_analysis_data.xlsx") %>%
     system.file(package = "MWTools")
 }
 
@@ -62,7 +46,7 @@ amw_test_data_path <- function() {
 #' @examples
 #' hmw_analysis_data_path()
 hmw_analysis_data_path <- function() {
-  file.path("extdata", "hmw_analysis_data.xlsx") %>%
+  file.path("extdata", "test_data",  "hmw_analysis_data.xlsx") %>%
     system.file(package = "MWTools")
 }
 

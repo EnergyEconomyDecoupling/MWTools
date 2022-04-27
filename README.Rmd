@@ -33,27 +33,20 @@ devtools::install_github("EnergyEconomyDecoupling/MWTools")
 
 ## Animal Muscle Work
 
-Raw data for the estimation of animal muscle work is obtained from the Food and Agriculture Organisation of the United Nations Statistical Database (FAOSTAT), via the `R` package `FAOSTAT`. The `MWTools` package provides a wrapper function for downloading data for the number of live animals, `down_fao_live_animals`, which utilises the function `FAOSTAT::get_faostat_bulk()`. Once downloaded `MWTools` provides a number of functions for the calculation of the number of working animals by species, country, year and in agriculture, transport, and in total. The helper function `calc_amw_numbers` returns a tidy data frame containing
-
-```{r example_numbers}
-library(MWTools)
-
-fao_data <- MWTools::fao_amw_data
-
-amw_numbers_df <- calc_amw_numbers(fao_data)
-
-head(amw_numbers_df)
-
-```
+Raw data for the estimation of animal muscle work is obtained from the Food and Agriculture Organisation of the United Nations Statistical Database (FAOSTAT), via the `R` package `FAOSTAT`. The `MWTools` package provides a wrapper function for downloading data for the number of live animals, `down_fao_live_animals`, which utilises the function `FAOSTAT::get_faostat_bulk()`. Once downloaded `MWTools` provides a number of functions for the calculation of the number of working animals by species, country, year and in agriculture, transport, and in total.
 
 The helper function `calc_amw_pfu` returns a tidy data frame containing data for the primary, final, and useful energy by species, country, year and in agriculture, transport, and in total.
 
 ```{r get_example_data}
 library(MWTools)
 
-fao_data <- MWTools::fao_amw_data
+fao_fp <- file.path("C:/Users/Zeke Marshall/Dropbox/Fellowship 1960-2015 PFU database",
+                    "Data/Muscle Work - Data",
+                    "fao_qcl_data.rds")
 
-amw_pfu_data <- calc_amw_pfu(fao_data)
+fao_raw_rds <- readr::read_rds(file = fao_fp)
+
+amw_pfu_data <- calc_amw_pfu(.df = fao_raw_rds)
 
 head(amw_pfu_data)
 
@@ -72,25 +65,19 @@ plot_amw_summary(amw_pfu_df = amw_pfu_data,
 
 ## Human Muscle Work
 
-Raw data for the estimation of human muscle work is obtained from the International Labor Organisation (ILO), via the `R` package `Rilostat`. The `MWTools` package includes bundled ILO data for the number of employed persons by sector and mean number of working hours by sector, retrieved by calling `MWTools::ilo_hmw_data`. This data is tidied with the helper function `MWTools::tidy_ilo_data`..
-
-```{r hmw_data}
-
-ilo_data <- MWTools::ilo_hmw_data
-
-tidy_ilo_data <- ilo_data %>% 
-  MWTools::tidy_ilo_data()
-
-head(tidy_ilo_data)
-
-```
+Raw data for the estimation of human muscle work is obtained from the International Labor Organisation (ILO), via the `R` package `Rilostat`. The `MWTools` package includes bundled ILO data for the number of employed persons by sector and mean number of working hours by sector.
 
 Using data for the number of employed persons and mean yearly working hours the primary, final, and useful energy associated with human muscle work can be estimated using the helper function `MWTools::calc_hmw_pfu`.
 
 ``` {r hmw_pfu}
 
-hmw_pfu_data <- MWTools::ilo_hmw_data %>%
-  calc_hmw_pfu()
+ilo_fp <- file.path("C:/Users/Zeke Marshall/Dropbox/Fellowship 1960-2015 PFU database",
+                    "Data/Muscle Work - Data",
+                    "ilo_hmw_data.rds")
+
+ilo_raw_rds <- readr::read_rds(file = ilo_fp)
+
+hmw_pfu_data <- calc_hmw_pfu(.df = ilo_raw_rds)
 
 head(hmw_pfu_data)
 
