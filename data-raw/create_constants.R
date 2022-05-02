@@ -9,6 +9,7 @@ mw_constants <- list(country_name = "Country.name",
                      year = "Year",
                      species = "Species",
                      unit = "Unit",
+                     units_col = "Units",
                      value = "Value",
                      sector_col = "Sector",
                      stage_col = "Stage",
@@ -150,7 +151,8 @@ usethis::use_data(amw_analysis_constants, overwrite = TRUE)
 # Concordance columns
 #
 conc_cols <- list(country_code_col = "Country.code",
-                  country_code_pfu_col = "Country.code_PFU",
+                  country_col = "Country",
+                  country_code_pfu_col = "Country_PFU",
                   country_incl_col = "Country.incl.",
                   amw_region_code_col = "AMW.Region.code",
                   hmw_region_code_col = "HMW.Region.code")

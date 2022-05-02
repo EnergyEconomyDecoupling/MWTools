@@ -51,14 +51,14 @@ amw_pfu_data <- calc_amw_pfu(.df = fao_raw_rds,
 
 head(amw_pfu_data)
 #> # A tibble: 6 x 7
-#>   AMW.Region.code Country.code  Year Species Stage   Sector             E.dot
-#>   <chr>           <chr>        <dbl> <chr>   <chr>   <chr>              <dbl>
-#> 1 WAS             AFG           1961 Asses   Useful  Agriculture   124665149.
-#> 2 WAS             AFG           1961 Asses   Useful  Transport     706435842.
-#> 3 WAS             AFG           1961 Asses   Final   Agriculture  1902857486.
-#> 4 WAS             AFG           1961 Asses   Final   Transport   10782859086.
-#> 5 WAS             AFG           1961 Asses   Primary Agriculture  4228572191.
-#> 6 WAS             AFG           1961 Asses   Primary Transport   23961909080.
+#>   Country  Year Species Stage   Sector      Units    E.dot
+#>   <chr>   <dbl> <chr>   <chr>   <chr>       <chr>    <dbl>
+#> 1 AFG      1961 Asses   Useful  Agriculture EJ    0.000125
+#> 2 AFG      1961 Asses   Useful  Transport   EJ    0.000706
+#> 3 AFG      1961 Asses   Final   Agriculture EJ    0.00190 
+#> 4 AFG      1961 Asses   Final   Transport   EJ    0.0108  
+#> 5 AFG      1961 Asses   Primary Agriculture EJ    0.00423 
+#> 6 AFG      1961 Asses   Primary Transport   EJ    0.0240
 ```
 
 ## Human Muscle Work
@@ -83,12 +83,12 @@ hmw_pfu_data <- calc_hmw_pfu(.df = ilo_raw_rds,
 
 head(hmw_pfu_data)
 #> # A tibble: 6 x 7
-#>   HMW.Region.code Country.code  Year Sex    Stage   Sector      E.dot
-#>   <chr>           <chr>        <dbl> <chr>  <chr>   <chr>       <dbl>
-#> 1 <NA>            ABW           1994 Female Final   Agriculture    NA
-#> 2 <NA>            ABW           1994 Female Primary Agriculture    NA
-#> 3 <NA>            ABW           1994 Female Useful  Agriculture    NA
-#> 4 <NA>            ABW           1997 Female Final   Agriculture    NA
-#> 5 <NA>            ABW           1997 Female Primary Agriculture    NA
-#> 6 <NA>            ABW           1997 Female Useful  Agriculture    NA
+#>   Country  Year Species       Stage   Sector      Units E.dot
+#>   <chr>   <dbl> <chr>         <chr>   <chr>       <chr> <dbl>
+#> 1 ABW      1994 Human Females Final   Agriculture EJ       NA
+#> 2 ABW      1994 Human Females Primary Agriculture EJ       NA
+#> 3 ABW      1994 Human Females Useful  Agriculture EJ       NA
+#> 4 ABW      1997 Human Females Final   Agriculture EJ       NA
+#> 5 ABW      1997 Human Females Primary Agriculture EJ       NA
+#> 6 ABW      1997 Human Females Useful  Agriculture EJ       NA
 ```

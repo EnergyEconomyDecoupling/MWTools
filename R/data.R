@@ -7,7 +7,8 @@
 #' \item{country_name}{The name of a metadata column containing full length country names.}
 #' \item{year}{The name of a metadata column containing values for the year of the observation.}
 #' \item{species}{The name of the metadata column representing a species of live animal from FAO data.}
-#' \item{unit}{The name of the metadata column containing the units associated with the `value` column}
+#' \item{unit}{The name of the metadata column containing the units associated with the `value` column.}
+#' \item{units_col}{The name of the metadata column containing the units associated with the `energy_col` column.}
 #' \item{value}{The name of the data column containing the values of a given observation.}
 #' \item{sector_col}{The name of the metadata column containing the sector associated with the `value`.}
 #' \item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the `value`. Usally one of "Primary", "Final", or "Useful".}
@@ -190,8 +191,8 @@
 #'
 #' @format A string list with `r length(conc_cols)` entries.
 #' \describe{
-#' \item{country_code_col}{The metadata column name "Country.code" containing three letter ISO 3166-1 country codes.}
-#' \item{country_code_pfu_col}{The metadata column name "Country.code_PFU" containing bespoke three letter country codes.}
+#' \item{country_code_col}{The metadata column name "Country" containing three letter ISO 3166-1 country codes.}
+#' \item{country_code_pfu_col}{The metadata column name "Country_PFU" containing bespoke three letter country codes.}
 #' \item{country_incl_col}{The metadata column name "Country.incl." containing either "Yes" or "No" depending on whether a particulr region or country shoule be included for analysis in `MWTools`.}
 #' }
 #'
