@@ -139,8 +139,8 @@ get_broad.sector_data <- function(.df,
 #' @examples
 #'
 add_hmw_analysis_sectors <- function(.df,
-                                     sector_col = MWTools::mw_constants$sector_col,
                                      hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
+                                     sector_col = MWTools::mw_constants$sector_col,
                                      hmw_sector_map_sheet = MWTools::hmw_analysis_constants$hmw_sector_map_sheet,
                                      hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
                                      agriculture = MWTools::hmw_analysis_constants$agriculture_broad.sector,
@@ -159,29 +159,6 @@ add_hmw_analysis_sectors <- function(.df,
     dplyr::relocate(hmw_analysis_sector_col, .after = sector_col)
 
 }
-
-#' Get tidy employment and working hours data for agriculture, industry, and services
-#'
-#' Wrangle the bundled ILO data into a tidy format. This helper function...
-#'
-#' @param .df
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#'
-tidy_ilo_data <- function(.df){
-
-  .df %>%
-    add_hmw_region_codes() %>%
-    fill_ilo_data() %>%
-    calc_total_hours_worked() %>%
-    get_broad.sector_data() %>%
-    add_hmw_analysis_sectors()
-
-}
-
 
 #' Calculate the final energy consumed by human workers
 #'
@@ -354,6 +331,44 @@ calc_hmw_useful_energy <- function(.df,
 
 }
 
+#' Title
+#'
+#' @param .df
+#' @param final_energy_col
+#' @param primary_energy_col
+#' @param useful_energy_hmw_col
+#' @param hmw_analysis_sector_col
+#' @param energy_mj_year
+#' @param stage_col
+#'
+#' @return
+#' @export
+#'
+#' @examples
+tidy_hmw_pfu <- function(.df,
+                         year = MWTools::mw_constants$year,
+                         sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
+                         sector_col = MWTools::mw_constants$sector_col,
+                         country_code_col = MWTools::conc_cols$country_code_col,
+                         hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
+                         final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
+                         primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
+                         useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
+                         hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
+                         energy_col = MWTools::mw_constants$energy_col,
+                         stage_col = MWTools::mw_constants$stage_col){
+
+  .df %>%
+    tidyr::pivot_longer(cols = c(final_energy_col, primary_energy_col, useful_energy_hmw_col),
+                        names_to = stage_col,
+                        values_to = energy_col) %>%
+    dplyr::select(hmw_region_code_col, country_code_col, year, sex_ilo_col,
+                  stage_col, sector_col, energy_col) %>%
+    dplyr::mutate(
+      "{stage_col}" := stringr::str_replace(.data[[stage_col]], stringr::fixed(" energy [MJ/year]"), "")
+    )
+}
+
 
 
 #' Title
@@ -370,25 +385,19 @@ calc_hmw_useful_energy <- function(.df,
 #'
 #' @examples
 calc_hmw_pfu <- function(.df,
-                         final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
-                         primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
-                         useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
-                         hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
-                         energy_mj_year = MWTools::mw_constants$energy_mj_year,
-                         stage_col = MWTools::mw_constants$stage_col){
+                         concordance_path = MWTools::fao_concordance_path(),
+                         hmw_analysis_data_path = MWTools::hmw_analysis_data_path()){
 
   .df %>%
-    tidy_ilo_data() %>%
-    calc_hmw_final_energy() %>%
-    calc_hmw_primary_energy() %>%
-    calc_hmw_useful_energy() %>%
-    tidyr::pivot_longer(cols = c(final_energy_col, primary_energy_col, useful_energy_hmw_col),
-                        names_to = stage_col,
-                        values_to = energy_mj_year) %>%
-    dplyr::mutate(
-      "{stage_col}" := stringr::str_replace(.data[[stage_col]], stringr::fixed(" energy [MJ/year]"), "")
-    ) %>%
-    dplyr::select(-.data[[hmw_analysis_sector_col]])
+    add_hmw_region_codes(concordance_path = concordance_path) %>%
+    fill_ilo_data() %>%
+    calc_total_hours_worked() %>%
+    get_broad.sector_data() %>%
+    add_hmw_analysis_sectors(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+    calc_hmw_final_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+    calc_hmw_primary_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+    calc_hmw_useful_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+    tidy_hmw_pfu()
 
 }
 

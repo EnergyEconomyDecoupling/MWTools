@@ -12,7 +12,7 @@ mw_constants <- list(country_name = "Country.name",
                      value = "Value",
                      sector_col = "Sector",
                      stage_col = "Stage",
-                     energy_mj_year = "Energy [MJ/year]",
+                     energy_col = "E.dot",
                      exemplar_method_col = "Exemplar/Method",
                      method_source_col = "Method/Source")
 

@@ -33,27 +33,6 @@ animals, `down_fao_live_animals`, which utilises the function
 `FAOSTAT::get_faostat_bulk()`. Once downloaded `MWTools` provides a
 number of functions for the calculation of the number of working animals
 by species, country, year and in agriculture, transport, and in total.
-The helper function `calc_amw_numbers` returns a tidy data frame
-containing
-
-``` r
-library(MWTools)
-
-fao_data <- MWTools::fao_amw_data
-
-amw_numbers_df <- calc_amw_numbers(fao_data)
-
-head(amw_numbers_df)
-#> # A tibble: 6 x 7
-#>   AMW.Region.code Country.code  Year Species Sector Live.animals Working.animals
-#>   <chr>           <chr>        <dbl> <chr>   <chr>         <dbl>           <dbl>
-#> 1 WAS             AFG           1961 Asses   Total       1300000        1154307.
-#> 2 WAS             AFG           1961 Asses   Agric~      1300000         173146.
-#> 3 WAS             AFG           1961 Asses   Trans~      1300000         981161.
-#> 4 WAS             AFG           1961 Buffal~ Total             0              0 
-#> 5 WAS             AFG           1961 Buffal~ Agric~            0              0 
-#> 6 WAS             AFG           1961 Buffal~ Trans~            0              0
-```
 
 The helper function `calc_amw_pfu` returns a tidy data frame containing
 data for the primary, final, and useful energy by species, country, year
@@ -62,92 +41,54 @@ and in agriculture, transport, and in total.
 ``` r
 library(MWTools)
 
-fao_data <- MWTools::fao_amw_data
+fao_fp <- PFUSetup::get_abs_paths()$fao_data_path
 
-amw_pfu_data <- calc_amw_pfu(fao_data)
+fao_raw_rds <- readr::read_rds(file = fao_fp)
+
+amw_pfu_data <- calc_amw_pfu(.df = fao_raw_rds,
+                             concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
+                             amw_analysis_path = PFUSetup::get_abs_paths()$amw_analysis_data_path)
 
 head(amw_pfu_data)
 #> # A tibble: 6 x 7
-#>   AMW.Region.code Country.code  Year Species Stage  Sector      `Energy [MJ/ye~`
-#>   <chr>           <chr>        <dbl> <chr>   <chr>  <chr>                  <dbl>
-#> 1 WAS             AFG           1961 Asses   Useful Total             831100990.
-#> 2 WAS             AFG           1961 Asses   Useful Agriculture       124665149.
-#> 3 WAS             AFG           1961 Asses   Useful Transport         706435842.
-#> 4 WAS             AFG           1961 Asses   Final  Total           12685716572.
-#> 5 WAS             AFG           1961 Asses   Final  Agriculture      1902857486.
-#> 6 WAS             AFG           1961 Asses   Final  Transport       10782859086.
+#>   AMW.Region.code Country.code  Year Species Stage   Sector             E.dot
+#>   <chr>           <chr>        <dbl> <chr>   <chr>   <chr>              <dbl>
+#> 1 WAS             AFG           1961 Asses   Useful  Agriculture   124665149.
+#> 2 WAS             AFG           1961 Asses   Useful  Transport     706435842.
+#> 3 WAS             AFG           1961 Asses   Final   Agriculture  1902857486.
+#> 4 WAS             AFG           1961 Asses   Final   Transport   10782859086.
+#> 5 WAS             AFG           1961 Asses   Primary Agriculture  4228572191.
+#> 6 WAS             AFG           1961 Asses   Primary Transport   23961909080.
 ```
-
-Use the `plot_amw_summary` function to produce a plot summarising the
-animal muscle work data for a particular country and sector.
-
-``` r
-plot_amw_summary(amw_pfu_df = amw_pfu_data,
-                 amw_numbers_df = amw_numbers_df,
-                 country = "CHN",
-                 sector = "Agriculture")
-```
-
-<img src="man/figures/README-amw_plot-1.png" width="100%" />
 
 ## Human Muscle Work
 
 Raw data for the estimation of human muscle work is obtained from the
 International Labor Organisation (ILO), via the `R` package `Rilostat`.
 The `MWTools` package includes bundled ILO data for the number of
-employed persons by sector and mean number of working hours by sector,
-retrieved by calling `MWTools::ilo_hmw_data`. This data is tidied with
-the helper function `MWTools::tidy_ilo_data`..
-
-``` r
-ilo_data <- MWTools::ilo_hmw_data
-
-tidy_ilo_data <- ilo_data %>% 
-  MWTools::tidy_ilo_data()
-
-head(tidy_ilo_data)
-#> # A tibble: 6 x 8
-#>   Country.code HMW.Region.code Sex    Sector   Sector.hmw  Year `Employed.pers~`
-#>   <chr>        <chr>           <chr>  <chr>    <chr>      <dbl>            <dbl>
-#> 1 ABW          <NA>            Female Agricul~ Primary     1994               10
-#> 2 ABW          <NA>            Female Agricul~ Primary     1997               49
-#> 3 ABW          <NA>            Female Agricul~ Primary     2000               37
-#> 4 ABW          <NA>            Female Agricul~ Primary     2007               96
-#> 5 ABW          <NA>            Female Agricul~ Primary     2010               74
-#> 6 ABW          <NA>            Female Agricul~ Primary     2011               90
-#> # ... with 1 more variable: `Total.hours [hours/year]` <dbl>
-```
+employed persons by sector and mean number of working hours by sector.
 
 Using data for the number of employed persons and mean yearly working
 hours the primary, final, and useful energy associated with human muscle
 work can be estimated using the helper function `MWTools::calc_hmw_pfu`.
 
 ``` r
-hmw_pfu_data <- MWTools::ilo_hmw_data %>%
-  calc_hmw_pfu()
+ilo_fp <- PFUSetup::get_abs_paths()$ilo_data_path
+
+ilo_raw_rds <- readr::read_rds(file = ilo_fp)
+
+hmw_pfu_data <- calc_hmw_pfu(.df = ilo_raw_rds,
+                             concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
+                             hmw_analysis_data_path = PFUSetup::get_abs_paths()$hmw_analysis_data_path)
 
 head(hmw_pfu_data)
-#> # A tibble: 6 x 9
-#>   Country.code HMW.Region.code Sex    Sector       Year `Employed.persons [per~`
-#>   <chr>        <chr>           <chr>  <chr>       <dbl>                    <dbl>
-#> 1 ABW          <NA>            Female Agriculture  1994                       10
-#> 2 ABW          <NA>            Female Agriculture  1994                       10
-#> 3 ABW          <NA>            Female Agriculture  1994                       10
-#> 4 ABW          <NA>            Female Agriculture  1997                       49
-#> 5 ABW          <NA>            Female Agriculture  1997                       49
-#> 6 ABW          <NA>            Female Agriculture  1997                       49
-#> # ... with 3 more variables: `Total.hours [hours/year]` <dbl>, Stage <chr>,
-#> #   `Energy [MJ/year]` <dbl>
+#> # A tibble: 6 x 7
+#>   HMW.Region.code Country.code  Year Sex    Stage   Sector      E.dot
+#>   <chr>           <chr>        <dbl> <chr>  <chr>   <chr>       <dbl>
+#> 1 <NA>            ABW           1994 Female Final   Agriculture    NA
+#> 2 <NA>            ABW           1994 Female Primary Agriculture    NA
+#> 3 <NA>            ABW           1994 Female Useful  Agriculture    NA
+#> 4 <NA>            ABW           1997 Female Final   Agriculture    NA
+#> 5 <NA>            ABW           1997 Female Primary Agriculture    NA
+#> 6 <NA>            ABW           1997 Female Useful  Agriculture    NA
 ```
-
-Use the `plot_hmw_summary` function to produce a plot summarising the
-human muscle work data for a particular country and sector.
-
-``` r
-plot_hmw_summary(hmw_pfu_df = hmw_pfu_data,
-                 country = "USA",
-                 sector = "Agriculture")
-#> Warning: Removed 36 row(s) containing missing values (geom_path).
-```
-
-<img src="man/figures/README-hmw_plot-1.png" width="100%" /> Lastly….

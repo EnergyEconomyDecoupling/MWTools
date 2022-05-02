@@ -11,7 +11,7 @@
 #' \item{value}{The name of the data column containing the values of a given observation.}
 #' \item{sector_col}{The name of the metadata column containing the sector associated with the `value`.}
 #' \item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the `value`. Usally one of "Primary", "Final", or "Useful".}
-#' \item{energy_mj_year}{The name of the data column containing muscle work energyg values in units of megajoules (MJ) per year.}
+#' \item{energy_col}{The name of the data column containing muscle work energy values.}
 #' \item{exemplar_method_col}{The metadata column "Exemplar/Method" representing the regional exemplar or method used for a particular data series.}
 #' \item{method_source_col}{The metadata column "Method/Source" representing the method or source of information use for a particular data series.}
 #' }

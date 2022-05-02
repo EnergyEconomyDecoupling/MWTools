@@ -415,38 +415,6 @@ tidy_numbers_data <- function(.df,
     dplyr::relocate(.data[[sector_col]], .before = .data[[live_animals_col]])
 }
 
-
-#' Calculate the number of live and working animals by country, species, and sector
-#'
-#' Calculate the number of live and working animals by country, species, and sector
-#' and over time. This function acts as a helper function calling a number of functions
-#' in sequence to convert FAO data for live animals, usually downloaded with the function
-#' `down_fao_live_animals`, into a tidy data frame.
-#'
-#' @param data_path The path to the folder containing data for the number of live
-#'                    animals. Usually downloaded with the function `down_fao_live_animals`.
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' tidy_amw_numbers_data <- <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) %>%
-#'   calc_amw_numbers(data_path = file.path(fs::home_path(), "FAO_data")
-#'
-calc_amw_numbers <- function(.df) {
-
-  amw_numbers_data <- .df %>%
-    tidy_fao_live_animals() %>%
-    add_concordance_codes() %>%
-    trim_fao_data() %>%
-    get_working_species() %>%
-    calc_working_animals() %>%
-    calc_sector_split() %>%
-    tidy_numbers_data()
-
-  return(amw_numbers_data)
-}
-
 #' Calculate the yearly feed requirements of working animals by species
 #'
 #' Calculate the yearly feed requirements of working animals by species and region.
@@ -722,35 +690,33 @@ tidy_pfu_data <- function(.df,
                           species = MWTools::mw_constants$species,
                           sector_col = MWTools::mw_constants$sector_col,
                           stage_col = MWTools::mw_constants$stage_col,
-                          energy_mj_year = MWTools::mw_constants$energy_mj_year,
+                          energy_col = MWTools::mw_constants$energy_col,
                           amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
-                          useful_energy_total = MWTools::amw_analysis_constants$useful_energy_total,
                           useful_energy_ag = MWTools::amw_analysis_constants$useful_energy_ag,
                           useful_energy_tr = MWTools::amw_analysis_constants$useful_energy_tr,
-                          final_energy_total = MWTools::amw_analysis_constants$final_energy_total,
                           final_energy_ag = MWTools::amw_analysis_constants$final_energy_ag,
                           final_energy_tr = MWTools::amw_analysis_constants$final_energy_tr,
-                          primary_energy_total = MWTools::amw_analysis_constants$primary_energy_total,
                           primary_energy_ag = MWTools::amw_analysis_constants$primary_energy_ag,
-                          primary_energy_tr = MWTools::amw_analysis_constants$primary_energy_tr
+                          primary_energy_tr = MWTools::amw_analysis_constants$primary_energy_tr,
+                          working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
+                          working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col
                           ) {
 
 
   .df %>%
     dplyr::select(amw_region_code_col, country_code_col, year, species,
-                  useful_energy_total, useful_energy_ag, useful_energy_tr,
-                  final_energy_total, final_energy_ag, final_energy_tr,
-                  primary_energy_total, primary_energy_ag, primary_energy_tr) %>%
-    tidyr::pivot_longer(cols = c(useful_energy_total, useful_energy_ag, useful_energy_tr,
-                                 final_energy_total, final_energy_ag, final_energy_tr,
-                                 primary_energy_total, primary_energy_ag, primary_energy_tr),
+                  useful_energy_ag, useful_energy_tr,
+                  final_energy_ag, final_energy_tr,
+                  primary_energy_ag, primary_energy_tr) %>%
+    tidyr::pivot_longer(cols = c(useful_energy_ag, useful_energy_tr,
+                                 final_energy_ag, final_energy_tr,
+                                 primary_energy_ag, primary_energy_tr),
                         names_to = c(stage_col, sector_col),
                         names_sep = ".energy.",
-                        values_to = energy_mj_year) %>%
+                        values_to = energy_col) %>%
     dplyr::mutate(
       "{sector_col}" := stringr::str_replace_all(.data[[sector_col]], stringr::fixed(" [MJ/year]"), ""),
       "{sector_col}" := dplyr::case_when(
-        .data[[sector_col]] == "total" ~ "Total",
         .data[[sector_col]] == "Ag" ~ "Agriculture",
         .data[[sector_col]] == "Tr" ~ "Transport",
         TRUE ~ "Unknown sector column value"
@@ -777,19 +743,22 @@ tidy_pfu_data <- function(.df,
 #' tidy_amw_pfu_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) %>%
 #'   calc_amw_pfu()
 #'
-calc_amw_pfu <- function(.df) {
+calc_amw_pfu <- function(.df,
+                         concordance_path = MWTools::fao_concordance_path(),
+                         amw_analysis_path = MWTools::amw_analysis_data_path()
+                         ){
 
   amw_pfu_data <- .df %>%
     tidy_fao_live_animals() %>%
-    add_concordance_codes() %>%
+    add_concordance_codes(concordance_path = concordance_path) %>%
     trim_fao_data() %>%
     get_working_species() %>%
-    calc_working_animals() %>%
-    calc_sector_split() %>%
-    calc_yearly_feed() %>%
+    calc_working_animals(amw_analysis_path = amw_analysis_path) %>%
+    calc_sector_split(amw_analysis_path) %>%
+    calc_yearly_feed(amw_analysis_path) %>%
     calc_final_energy() %>%
     calc_primary_energy() %>%
-    calc_useful_energy() %>%
+    calc_useful_energy(amw_analysis_path) %>%
     tidy_pfu_data()
 
   return(amw_pfu_data)
