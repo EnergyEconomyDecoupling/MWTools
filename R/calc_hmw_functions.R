@@ -6,7 +6,7 @@
 #' @param concordance_path The path to the country code concordance information.
 #'                         Set to the bundled information by default,
 #'                         retrieved using the `fao_concordance_path` function.
-#' @param country_code_col,hmw_region_code_col See `MWTools::conc_cols`.
+#' @param country_col,hmw_region_code_col See `MWTools::conc_cols`.
 #'
 #' @return
 #' @export
@@ -14,6 +14,7 @@
 #' @examples
 add_hmw_region_codes <- function(.df,
                                  concordance_path = MWTools::fao_concordance_path(),
+                                 country_col = MWTools::conc_cols$country_col,
                                  country_code_col = MWTools::conc_cols$country_code_col,
                                  hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
                                  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
@@ -30,7 +31,7 @@ add_hmw_region_codes <- function(.df,
   .df %>%
     dplyr::left_join(hmw_region_codes, by = country_code_col) %>%
     dplyr::relocate(hmw_region_code_col, .after = country_code_col) %>%
-    magrittr::set_colnames(c(country_code_col, hmw_region_code_col, sex_ilo_col,
+    magrittr::set_colnames(c(country_col, hmw_region_code_col, sex_ilo_col,
                              sector_col, year, employed_persons_ilo_col,
                              yearly_working_hours_ilo_col))
 
@@ -43,7 +44,7 @@ add_hmw_region_codes <- function(.df,
 #'
 #'
 #' @param .df
-#' @param country_code_col
+#' @param country_col
 #' @param sex_ilo_col
 #' @param sector_col
 #' @param year
@@ -55,7 +56,7 @@ add_hmw_region_codes <- function(.df,
 #'
 #' @examples
 fill_ilo_data <- function(.df,
-                          country_code_col = MWTools::conc_cols$country_code_col,
+                          country_col = MWTools::conc_cols$country_col,
                           sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
                           sector_col = MWTools::mw_constants$sector_col,
                           year = MWTools::mw_constants$year,
@@ -64,7 +65,7 @@ fill_ilo_data <- function(.df,
 
   # Fills data for each Country, Sex, and Sector based on earliest year
   .df %>%
-    dplyr::group_by(.data[[country_code_col]], .data[[sex_ilo_col]], .data[[sector_col]]) %>%
+    dplyr::group_by(.data[[country_col]], .data[[sex_ilo_col]], .data[[sector_col]]) %>%
     dplyr::arrange(.data[[year]], .by_group = TRUE) %>%
     tidyr::fill(.data[[employed_persons_ilo_col]], .direction = "up") %>%
     tidyr::fill(.data[[yearly_working_hours_ilo_col]], .direction = "up") %>%
@@ -349,24 +350,36 @@ tidy_hmw_pfu <- function(.df,
                          year = MWTools::mw_constants$year,
                          sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
                          sector_col = MWTools::mw_constants$sector_col,
-                         country_code_col = MWTools::conc_cols$country_code_col,
+                         species = MWTools::mw_constants$species,
+                         country_col = MWTools::conc_cols$country_col,
                          hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
                          final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
                          primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
                          useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
                          hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
                          energy_col = MWTools::mw_constants$energy_col,
-                         stage_col = MWTools::mw_constants$stage_col){
+                         stage_col = MWTools::mw_constants$stage_col,
+                         units_col = MWTools::mw_constants$units_col){
 
   .df %>%
     tidyr::pivot_longer(cols = c(final_energy_col, primary_energy_col, useful_energy_hmw_col),
                         names_to = stage_col,
                         values_to = energy_col) %>%
-    dplyr::select(hmw_region_code_col, country_code_col, year, sex_ilo_col,
+    dplyr::select(country_col, year, sex_ilo_col,
                   stage_col, sector_col, energy_col) %>%
     dplyr::mutate(
       "{stage_col}" := stringr::str_replace(.data[[stage_col]], stringr::fixed(" energy [MJ/year]"), "")
-    )
+    ) %>%
+    dplyr::mutate(
+      "{sex_ilo_col}" := dplyr::case_when(
+        .data[[sex_ilo_col]] == "Male" ~ "Human Males",
+        .data[[sex_ilo_col]] == "Female" ~ "Human Females",
+        TRUE ~ "Unknown sector column value"
+      )
+    ) %>%
+    dplyr::rename("Species" = sex_ilo_col) %>%
+    dplyr::mutate("{energy_col}" := .data[[energy_col]] * 0.000000000001) %>%
+    dplyr::mutate("{units_col}" := "EJ", .before = energy_col)
 }
 
 

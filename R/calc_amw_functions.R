@@ -686,6 +686,7 @@ calc_useful_energy <- function(.df,
 #'
 tidy_pfu_data <- function(.df,
                           country_code_col = MWTools::conc_cols$country_code_col,
+                          country_col = MWTools::conc_cols$country_col,
                           year = MWTools::mw_constants$year,
                           species = MWTools::mw_constants$species,
                           sector_col = MWTools::mw_constants$sector_col,
@@ -699,12 +700,13 @@ tidy_pfu_data <- function(.df,
                           primary_energy_ag = MWTools::amw_analysis_constants$primary_energy_ag,
                           primary_energy_tr = MWTools::amw_analysis_constants$primary_energy_tr,
                           working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
-                          working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col
+                          working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col,
+                          units_col = MWTools::mw_constants$units_col
                           ) {
 
 
   .df %>%
-    dplyr::select(amw_region_code_col, country_code_col, year, species,
+    dplyr::select(country_code_col, year, species,
                   useful_energy_ag, useful_energy_tr,
                   final_energy_ag, final_energy_tr,
                   primary_energy_ag, primary_energy_tr) %>%
@@ -721,7 +723,11 @@ tidy_pfu_data <- function(.df,
         .data[[sector_col]] == "Tr" ~ "Transport",
         TRUE ~ "Unknown sector column value"
         )
-      )
+      ) %>%
+    dplyr::mutate("{energy_col}" := .data[[energy_col]] * 0.000000000001) %>%
+    dplyr::mutate("{units_col}" := "EJ", .before = energy_col) %>%
+    magrittr::set_colnames(c(country_col, year, species,
+                             stage_col, sector_col, units_col, energy_col))
 }
 
 #' Calculate primary, final, and useful working animal energy
