@@ -690,35 +690,33 @@ tidy_pfu_data <- function(.df,
                           species = MWTools::mw_constants$species,
                           sector_col = MWTools::mw_constants$sector_col,
                           stage_col = MWTools::mw_constants$stage_col,
-                          energy_mj_year = MWTools::mw_constants$energy_mj_year,
+                          energy_col = MWTools::mw_constants$energy_col,
                           amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
-                          useful_energy_total = MWTools::amw_analysis_constants$useful_energy_total,
                           useful_energy_ag = MWTools::amw_analysis_constants$useful_energy_ag,
                           useful_energy_tr = MWTools::amw_analysis_constants$useful_energy_tr,
-                          final_energy_total = MWTools::amw_analysis_constants$final_energy_total,
                           final_energy_ag = MWTools::amw_analysis_constants$final_energy_ag,
                           final_energy_tr = MWTools::amw_analysis_constants$final_energy_tr,
-                          primary_energy_total = MWTools::amw_analysis_constants$primary_energy_total,
                           primary_energy_ag = MWTools::amw_analysis_constants$primary_energy_ag,
-                          primary_energy_tr = MWTools::amw_analysis_constants$primary_energy_tr
+                          primary_energy_tr = MWTools::amw_analysis_constants$primary_energy_tr,
+                          working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
+                          working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col
                           ) {
 
 
   .df %>%
     dplyr::select(amw_region_code_col, country_code_col, year, species,
-                  useful_energy_total, useful_energy_ag, useful_energy_tr,
-                  final_energy_total, final_energy_ag, final_energy_tr,
-                  primary_energy_total, primary_energy_ag, primary_energy_tr) %>%
-    tidyr::pivot_longer(cols = c(useful_energy_total, useful_energy_ag, useful_energy_tr,
-                                 final_energy_total, final_energy_ag, final_energy_tr,
-                                 primary_energy_total, primary_energy_ag, primary_energy_tr),
+                  useful_energy_ag, useful_energy_tr,
+                  final_energy_ag, final_energy_tr,
+                  primary_energy_ag, primary_energy_tr) %>%
+    tidyr::pivot_longer(cols = c(useful_energy_ag, useful_energy_tr,
+                                 final_energy_ag, final_energy_tr,
+                                 primary_energy_ag, primary_energy_tr),
                         names_to = c(stage_col, sector_col),
                         names_sep = ".energy.",
-                        values_to = energy_mj_year) %>%
+                        values_to = energy_col) %>%
     dplyr::mutate(
       "{sector_col}" := stringr::str_replace_all(.data[[sector_col]], stringr::fixed(" [MJ/year]"), ""),
       "{sector_col}" := dplyr::case_when(
-        .data[[sector_col]] == "total" ~ "Total",
         .data[[sector_col]] == "Ag" ~ "Agriculture",
         .data[[sector_col]] == "Tr" ~ "Transport",
         TRUE ~ "Unknown sector column value"

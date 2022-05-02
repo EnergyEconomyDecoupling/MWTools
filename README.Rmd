@@ -40,26 +40,15 @@ The helper function `calc_amw_pfu` returns a tidy data frame containing data for
 ```{r get_example_data}
 library(MWTools)
 
-fao_fp <- file.path("C:/Users/Zeke Marshall/Dropbox/Fellowship 1960-2015 PFU database",
-                    "Data/Muscle Work - Data",
-                    "fao_qcl_data.rds")
+fao_fp <- PFUSetup::get_abs_paths()$fao_data_path
 
 fao_raw_rds <- readr::read_rds(file = fao_fp)
 
-amw_pfu_data <- calc_amw_pfu(.df = fao_raw_rds)
+amw_pfu_data <- calc_amw_pfu(.df = fao_raw_rds,
+                             concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
+                             amw_analysis_path = PFUSetup::get_abs_paths()$amw_analysis_data_path)
 
 head(amw_pfu_data)
-
-```
-
-Use the `plot_amw_summary` function to produce a plot summarising the animal muscle work data for a particular country and sector.
-
-```{r amw_plot, echo=TRUE, fig.height=6, fig.width=7}
-
-plot_amw_summary(amw_pfu_df = amw_pfu_data,
-                 amw_numbers_df = amw_numbers_df,
-                 country = "CHN",
-                 sector = "Agriculture")
 
 ```
 
@@ -71,25 +60,16 @@ Using data for the number of employed persons and mean yearly working hours the 
 
 ``` {r hmw_pfu}
 
-ilo_fp <- file.path("C:/Users/Zeke Marshall/Dropbox/Fellowship 1960-2015 PFU database",
-                    "Data/Muscle Work - Data",
-                    "ilo_hmw_data.rds")
+ilo_fp <- PFUSetup::get_abs_paths()$ilo_data_path
 
 ilo_raw_rds <- readr::read_rds(file = ilo_fp)
 
-hmw_pfu_data <- calc_hmw_pfu(.df = ilo_raw_rds)
+hmw_pfu_data <- calc_hmw_pfu(.df = ilo_raw_rds,
+                             concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
+                             hmw_analysis_data_path = PFUSetup::get_abs_paths()$hmw_analysis_data_path)
 
 head(hmw_pfu_data)
 
 ```
 
-Use the `plot_hmw_summary` function to produce a plot summarising the human muscle work data for a particular country and sector.
 
-```{r hmw_plot, echo=TRUE, fig.height=6, fig.width=7}
-
-plot_hmw_summary(hmw_pfu_df = hmw_pfu_data,
-                 country = "USA",
-                 sector = "Agriculture")
-
-```
-Lastly....

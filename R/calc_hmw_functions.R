@@ -346,21 +346,27 @@ calc_hmw_useful_energy <- function(.df,
 #'
 #' @examples
 tidy_hmw_pfu <- function(.df,
+                         year = MWTools::mw_constants$year,
+                         sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
+                         sector_col = MWTools::mw_constants$sector_col,
+                         country_code_col = MWTools::conc_cols$country_code_col,
+                         hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
                          final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
                          primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
                          useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
                          hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
-                         energy_mj_year = MWTools::mw_constants$energy_mj_year,
+                         energy_col = MWTools::mw_constants$energy_col,
                          stage_col = MWTools::mw_constants$stage_col){
 
   .df %>%
     tidyr::pivot_longer(cols = c(final_energy_col, primary_energy_col, useful_energy_hmw_col),
                         names_to = stage_col,
-                        values_to = energy_mj_year) %>%
+                        values_to = energy_col) %>%
+    dplyr::select(hmw_region_code_col, country_code_col, year, sex_ilo_col,
+                  stage_col, sector_col, energy_col) %>%
     dplyr::mutate(
       "{stage_col}" := stringr::str_replace(.data[[stage_col]], stringr::fixed(" energy [MJ/year]"), "")
-    ) %>%
-    dplyr::select(-.data[[hmw_analysis_sector_col]])
+    )
 }
 
 
