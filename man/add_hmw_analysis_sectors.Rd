@@ -6,8 +6,8 @@
 \usage{
 add_hmw_analysis_sectors(
   .df,
-  sector_col = MWTools::mw_constants$sector_col,
   hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
+  sector_col = MWTools::mw_constants$sector_col,
   hmw_sector_map_sheet = MWTools::hmw_analysis_constants$hmw_sector_map_sheet,
   hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
   agriculture = MWTools::hmw_analysis_constants$agriculture_broad.sector,
@@ -16,9 +16,9 @@ add_hmw_analysis_sectors(
 )
 }
 \arguments{
-\item{sector_col}{See \code{MWTools::mw_constants}.}
-
 \item{hmw_analysis_data_path}{See \code{MWTools::hmw_analysis_data_path()}.}
+
+\item{sector_col}{See \code{MWTools::mw_constants}.}
 
 \item{hmw_sector_map_sheet, hmw_analysis_sector_col, agriculture, industry, services}{See \code{MWTools::hmw_analysis_constants}.}
 }

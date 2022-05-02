@@ -4,10 +4,14 @@
 \alias{calc_amw_pfu}
 \title{Calculate primary, final, and useful working animal energy}
 \usage{
-calc_amw_pfu(.df)
+calc_amw_pfu(
+  .df,
+  concordance_path = MWTools::fao_concordance_path(),
+  amw_analysis_path = MWTools::amw_analysis_data_path()
+)
 }
 \arguments{
-\item{data_folder}{The file path to the FAO live animals data downloaded using
+\item{.df}{The FAO live animals data downloaded using
 the function \code{MWTools::down_fao_live_animals}.}
 }
 \value{
@@ -22,7 +26,7 @@ in sequence to convert FAO data for live animals, usually downloaded with the fu
 \code{down_fao_live_animals}, into a tidy data frame.
 }
 \examples{
-tidy_amw_pfu_data <- <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  calc_amw_pfu(data_folder = file.path(fs::home_path(), "FAO_data")
+tidy_amw_pfu_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+  calc_amw_pfu()
 
 }

@@ -6,7 +6,7 @@
 \usage{
 fill_ilo_data(
   .df,
-  country_code_col = MWTools::conc_cols$country_code_col,
+  country_col = MWTools::conc_cols$country_col,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   sector_col = MWTools::mw_constants$sector_col,
   year = MWTools::mw_constants$year,

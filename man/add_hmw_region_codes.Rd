@@ -7,6 +7,7 @@
 add_hmw_region_codes(
   .df,
   concordance_path = MWTools::fao_concordance_path(),
+  country_col = MWTools::conc_cols$country_col,
   country_code_col = MWTools::conc_cols$country_code_col,
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
@@ -21,7 +22,7 @@ add_hmw_region_codes(
 Set to the bundled information by default,
 retrieved using the \code{fao_concordance_path} function.}
 
-\item{country_code_col, hmw_region_code_col}{See \code{MWTools::conc_cols}.}
+\item{country_col, hmw_region_code_col}{See \code{MWTools::conc_cols}.}
 }
 \value{
 

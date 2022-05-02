@@ -7,21 +7,22 @@
 tidy_pfu_data(
   .df,
   country_code_col = MWTools::conc_cols$country_code_col,
+  country_col = MWTools::conc_cols$country_col,
   year = MWTools::mw_constants$year,
   species = MWTools::mw_constants$species,
   sector_col = MWTools::mw_constants$sector_col,
   stage_col = MWTools::mw_constants$stage_col,
-  energy_mj_year = MWTools::mw_constants$energy_mj_year,
+  energy_col = MWTools::mw_constants$energy_col,
   amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
-  useful_energy_total = MWTools::amw_analysis_constants$useful_energy_total,
   useful_energy_ag = MWTools::amw_analysis_constants$useful_energy_ag,
   useful_energy_tr = MWTools::amw_analysis_constants$useful_energy_tr,
-  final_energy_total = MWTools::amw_analysis_constants$final_energy_total,
   final_energy_ag = MWTools::amw_analysis_constants$final_energy_ag,
   final_energy_tr = MWTools::amw_analysis_constants$final_energy_tr,
-  primary_energy_total = MWTools::amw_analysis_constants$primary_energy_total,
   primary_energy_ag = MWTools::amw_analysis_constants$primary_energy_ag,
-  primary_energy_tr = MWTools::amw_analysis_constants$primary_energy_tr
+  primary_energy_tr = MWTools::amw_analysis_constants$primary_energy_tr,
+  working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
+  working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col,
+  units_col = MWTools::mw_constants$units_col
 )
 }
 \arguments{
