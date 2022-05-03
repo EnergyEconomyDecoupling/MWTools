@@ -332,15 +332,23 @@ calc_hmw_useful_energy <- function(.df,
 
 }
 
+
 #' Title
 #'
 #' @param .df
+#' @param year
+#' @param sex_ilo_col
+#' @param sector_col
+#' @param species
+#' @param country_col
+#' @param hmw_region_code_col
 #' @param final_energy_col
 #' @param primary_energy_col
 #' @param useful_energy_hmw_col
 #' @param hmw_analysis_sector_col
-#' @param energy_mj_year
+#' @param energy_col
 #' @param stage_col
+#' @param units_col
 #'
 #' @return
 #' @export

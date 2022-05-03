@@ -9,9 +9,9 @@ test_that("add_hmw_region_codes works", {
 
   expect_true(unique(hmw_data_w.codes$HMW.Region.code) == "WE")
 
-  expect_equal(colnames(hmw_data_w.codes), c("Country.code", "HMW.Region.code", "Sex",
-                                              "Sector", "Year", "Employed.persons [persons]",
-                                              "Working.hours [hours/year]"))
+  expect_equal(colnames(hmw_data_w.codes), c("Country", "HMW.Region.code", "Sex",
+                                             "Sector", "Year", "Employed.persons [persons]",
+                                             "Working.hours [hours/year]"))
 
 
 })
@@ -27,7 +27,7 @@ test_that("fill_ilo_data works", {
 
   expect_true(!is.null(hmw_data_filled))
 
-  expect_equal(colnames(hmw_data_filled), c("Country.code", "HMW.Region.code", "Sex",
+  expect_equal(colnames(hmw_data_filled), c("Country", "HMW.Region.code", "Sex",
                                             "Sector", "Year", "Employed.persons [persons]",
                                             "Working.hours [hours/year]"))
 
@@ -50,7 +50,7 @@ test_that("calc_total_hours_worked works", {
 
   expect_true(!is.null(hmw_data_totalhours))
 
-  expect_equal(colnames(hmw_data_totalhours), c("Country.code", "HMW.Region.code", "Sex",
+  expect_equal(colnames(hmw_data_totalhours), c("Country", "HMW.Region.code", "Sex",
                                                 "Sector", "Year", "Employed.persons [persons]",
                                                 "Total.hours [hours/year]"))
 
@@ -94,24 +94,17 @@ test_that("add_hmw_analysis_sectors works",{
 
 })
 
-test_that("tidy_ilo_data works",{
-
-  hmw_data <- read.csv(file = hmw_test_data_path())
-
-  tidy_hmw_data <- hmw_data %>%
-    tidy_ilo_data()
-
-  expect_true(!is.null(tidy_hmw_data))
-
-})
-
 
 test_that("calc_hmw_final_energy works",{
 
   hmw_data <- read.csv(file = hmw_test_data_path())
 
   hmw_data_finalenergy <- hmw_data %>%
-    tidy_ilo_data() %>%
+    add_hmw_region_codes() %>%
+    fill_ilo_data() %>%
+    calc_total_hours_worked() %>%
+    get_broad.sector_data() %>%
+    add_hmw_analysis_sectors() %>%
     calc_hmw_final_energy()
 
   expect_true(!is.null(hmw_data_finalenergy))
@@ -124,7 +117,11 @@ test_that("calc_hmw_primary_energy works",{
   hmw_data <- read.csv(file = hmw_test_data_path())
 
   hmw_data_primaryenergy <- hmw_data %>%
-    tidy_ilo_data() %>%
+    add_hmw_region_codes() %>%
+    fill_ilo_data() %>%
+    calc_total_hours_worked() %>%
+    get_broad.sector_data() %>%
+    add_hmw_analysis_sectors() %>%
     calc_hmw_final_energy() %>%
     calc_hmw_primary_energy()
 
@@ -139,12 +136,35 @@ test_that("calc_hmw_useful_energy works",{
   hmw_data <- read.csv(file = hmw_test_data_path())
 
   hmw_data_usefulenergy <- hmw_data %>%
-    tidy_ilo_data() %>%
+    add_hmw_region_codes() %>%
+    fill_ilo_data() %>%
+    calc_total_hours_worked() %>%
+    get_broad.sector_data() %>%
+    add_hmw_analysis_sectors() %>%
     calc_hmw_final_energy() %>%
     calc_hmw_primary_energy() %>%
     calc_hmw_useful_energy()
 
   expect_true(!is.null(hmw_data_usefulenergy))
+
+})
+
+test_that("tidy_hmw_data works",{
+
+  hmw_data <- read.csv(file = hmw_test_data_path())
+
+  tidy_hmw_data <- hmw_data %>%
+    add_hmw_region_codes() %>%
+    fill_ilo_data() %>%
+    calc_total_hours_worked() %>%
+    get_broad.sector_data() %>%
+    add_hmw_analysis_sectors() %>%
+    calc_hmw_final_energy %>%
+    calc_hmw_primary_energy %>%
+    calc_hmw_useful_energy %>%
+    tidy_hmw_pfu()
+
+  expect_true(!is.null(tidy_hmw_data))
 
 })
 
