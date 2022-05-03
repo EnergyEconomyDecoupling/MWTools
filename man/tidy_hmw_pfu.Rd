@@ -22,7 +22,11 @@ tidy_hmw_pfu(
 )
 }
 \arguments{
+<<<<<<< HEAD
 \item{units_col}{}
+=======
+\item{stage_col}{}
+>>>>>>> 196a2f443cb566804ef3da45783f9aaced514ec0
 }
 \value{
 

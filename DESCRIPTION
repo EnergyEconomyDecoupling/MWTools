@@ -8,6 +8,7 @@ Author:
            role = c("aut", "cre"),
            email = "marshall_zeke@outlook.com",
            comment = c(ORCID = "0000-0001-9260-7827"))
+Maintainer: Zeke Marshall <marshall_zeke@outlook.com>
 Description: MWTools provides functions for retrieving and wrangling data for the
              calculation of human and animal muscle work dat, and conversion into
              the PSUT format.
@@ -16,7 +17,7 @@ Language: en-US
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Imports:
     cowplot,
     FAOSTAT,

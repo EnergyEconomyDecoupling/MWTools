@@ -50,7 +50,7 @@ amw_pfu_data <- calc_amw_pfu(.df = fao_raw_rds,
                              amw_analysis_path = PFUSetup::get_abs_paths()$amw_analysis_data_path)
 
 head(amw_pfu_data)
-#> # A tibble: 6 x 7
+#> # A tibble: 6 × 7
 #>   Country  Year Species Stage   Sector      Units    E.dot
 #>   <chr>   <dbl> <chr>   <chr>   <chr>       <chr>    <dbl>
 #> 1 AFG      1961 Asses   Useful  Agriculture EJ    0.000125
@@ -82,7 +82,7 @@ hmw_pfu_data <- calc_hmw_pfu(.df = ilo_raw_rds,
                              hmw_analysis_data_path = PFUSetup::get_abs_paths()$hmw_analysis_data_path)
 
 head(hmw_pfu_data)
-#> # A tibble: 6 x 7
+#> # A tibble: 6 × 7
 #>   Country  Year Species       Stage   Sector      Units E.dot
 #>   <chr>   <dbl> <chr>         <chr>   <chr>       <chr> <dbl>
 #> 1 ABW      1994 Human Females Final   Agriculture EJ       NA
