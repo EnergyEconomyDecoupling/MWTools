@@ -31,7 +31,7 @@ tidy_fao_live_animals <- function(.df,
   # Read file into a tidy data frame
   live_animals <- .df %>%
     dplyr::filter(.data[[item_fao_col]] %in% MWTools::mw_species) %>%
-    dplyr::select(dplyr::all_of(area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col)) %>%
+    dplyr::select(dplyr::all_of(c(area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col))) %>%
     magrittr::set_colnames(c(country_name, species, year, unit, value))
 
   # Replaces unit designations with name "Number" or "1000 Number"
@@ -275,7 +275,7 @@ calc_working_animals <- function(.df,
   working_animals_prop <- readxl::read_excel(amw_analysis_path,
                                              sheet = wa_perc_sheet) %>%
     tibble::tibble() %>%
-    dplyr::select(-dplyr::all_of(exemplar_method_col, amw_region_col)) %>%
+    dplyr::select(-dplyr::all_of(c(exemplar_method_col, amw_region_col))) %>%
     tidyr::pivot_longer(cols = `1960`:`2019`, # Use IEATools::year_cols()?
                         names_to = year,
                         values_to = prop_working_animals_col) %>%
@@ -338,7 +338,7 @@ calc_sector_split <- function(.df,
 
   end_use <- readxl::read_excel(amw_analysis_path,
                                 sheet = wa_enduse_sheet) %>%
-    dplyr::select(-dplyr::all_of(method_source, metric, amw_region_col)) %>%
+    dplyr::select(-dplyr::all_of(c(method_source, metric, amw_region_col))) %>%
     tidyr::pivot_longer(cols = `1960`:`2019`, # Use IEATools::year_cols()?
                         names_to = year,
                         values_to = prop_working_animals_ag_col) %>%
@@ -469,7 +469,7 @@ calc_yearly_feed <- function(.df,
 
   working_days <- readxl::read_excel(amw_analysis_path,
                                      sheet = wa_days_hours_sheet) %>%
-    dplyr::select(-dplyr::all_of(method_source, working_hours_col)) %>%
+    dplyr::select(-dplyr::all_of(c(method_source, working_hours_col))) %>%
     dplyr::mutate(
       "{nonworking_days_col}" := 365 - .data[[working_days_col]]
       )
@@ -638,7 +638,7 @@ calc_useful_energy <- function(.df,
 
   working_time <- readxl::read_excel(amw_analysis_path,
                                      sheet = wa_days_hours_sheet) %>%
-    dplyr::select(-dplyr::all_of(method_source, working_days_col)) %>%
+    dplyr::select(-dplyr::all_of(c(method_source, working_days_col))) %>%
     magrittr::set_colnames(c(species, amw_region_code_col, working_hours_col)) %>%
     dplyr::mutate(
       "{working_seconds_col}" := .data[[working_hours_col]] * 3600, .keep = "unused"
@@ -754,7 +754,7 @@ calc_amw_pfu <- function(.df,
                          amw_analysis_path = MWTools::amw_analysis_data_path()
                          ){
 
-  amw_pfu_data <- .df %>%
+  .df %>%
     tidy_fao_live_animals() %>%
     add_concordance_codes(concordance_path = concordance_path) %>%
     trim_fao_data() %>%
@@ -766,7 +766,4 @@ calc_amw_pfu <- function(.df,
     calc_primary_energy() %>%
     calc_useful_energy(amw_analysis_path) %>%
     tidy_pfu_data()
-
-  return(amw_pfu_data)
-
 }
