@@ -380,8 +380,8 @@ tidy_hmw_pfu <- function(.df,
     ) %>%
     dplyr::mutate(
       "{sex_ilo_col}" := dplyr::case_when(
-        .data[[sex_ilo_col]] == "Male" ~ "Human Males",
-        .data[[sex_ilo_col]] == "Female" ~ "Human Females",
+        .data[[sex_ilo_col]] == "Male" ~ "Human males",
+        .data[[sex_ilo_col]] == "Female" ~ "Human females",
         TRUE ~ "Unknown sector column value"
       )
     ) %>%
