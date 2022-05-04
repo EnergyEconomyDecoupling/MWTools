@@ -46,7 +46,7 @@ fao_raw_rds <- readr::read_rds(file = fao_fp)
 
 amw_pfu_data <- calc_amw_pfu(.df = fao_raw_rds,
                              concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
-                             amw_analysis_path = PFUSetup::get_abs_paths()$amw_analysis_data_path)
+                             amw_analysis_data_path = PFUSetup::get_abs_paths()$amw_analysis_data_path)
 
 head(amw_pfu_data)
 

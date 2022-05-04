@@ -236,12 +236,12 @@ get_working_species <- function(.df,
 #' animals by region and year.
 #'
 #' @param .df A data frame ...
-#' @param amw_analysis_path The path to the animal muscle work analysis data,
-#'                          containing data for the proportion of working animals
-#'                          by species, country, and over time. Set to the function
-#'                          `MWTools::amw_analysis_data_path()`, by default,
-#'                          which returns the path the analysis data bundled
-#'                          with the `MWTools` package.
+#' @param amw_analysis_data_path The path to the animal muscle work analysis data,
+#'                               containing data for the proportion of working animals
+#'                               by species, country, and over time. Set to the function
+#'                               `MWTools::amw_analysis_data_path()`, by default,
+#'                               which returns the path the analysis data bundled
+#'                               with the `MWTools` package.
 #' @param year,species,exemplar_method_col See `MWTools::mw_constants`.
 #' @param prop_working_animal,da_perc,working_animals_total_col,live_animals_col,mw_region_code_col,mw_region_col
 #'        See `MWTools::amw_analysis_constants`.
@@ -259,7 +259,7 @@ get_working_species <- function(.df,
 #'   calc_working_animals()
 #'
 calc_working_animals <- function(.df,
-                                 amw_analysis_path = MWTools::amw_analysis_data_path(),
+                                 amw_analysis_data_path = MWTools::amw_analysis_data_path(),
                                  year = MWTools::mw_constants$year,
                                  species = MWTools::mw_constants$species,
                                  exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
@@ -272,7 +272,7 @@ calc_working_animals <- function(.df,
 
   # Reads the amw analysis excel file to determine the percentage of live animals
   # that are working animals.
-  working_animals_prop <- readxl::read_excel(amw_analysis_path,
+  working_animals_prop <- readxl::read_excel(amw_analysis_data_path,
                                              sheet = wa_perc_sheet) %>%
     tibble::tibble() %>%
     dplyr::select(-dplyr::all_of(c(exemplar_method_col, amw_region_col))) %>%
@@ -299,12 +299,12 @@ calc_working_animals <- function(.df,
 #' in agriculture by region and year.
 #'
 #' @param .df A data frame containing live animals data...
-#' @param amw_analysis_path The path to the animal muscle work analysis data,
-#'                          containing data for the proportion of working animals
-#'                          in agriculture and transport, by species, country, and
-#'                          over time. Set to the function `MWTools::amw_analysis_data_path()`,
-#'                          by default, which returns the path the analysis data
-#'                          bundled with the `MWTools` package.
+#' @param amw_analysis_data_path The path to the animal muscle work analysis data,
+#'                               containing data for the proportion of working animals
+#'                               in agriculture and transport, by species, country, and
+#'                               over time. Set to the function `MWTools::amw_analysis_data_path()`,
+#'                               by default, which returns the path the analysis data
+#'                               bundled with the `MWTools` package.
 #' @param year,species See `MWTools::mw_constants`.
 #' @param method_source,metric,amw_region_col,amw_region_code_col,wa_enduse_sheet,working_animals_total_col,working_animals_ag_col,working_animals_tr_col,prop_working_animals_ag_col,prop_working_animals_tr_col
 #'        See `MWTools::amw_analysis_constants`.
@@ -322,7 +322,7 @@ calc_working_animals <- function(.df,
 #'   calc_sector_split()
 #'
 calc_sector_split <- function(.df,
-                              amw_analysis_path = MWTools::amw_analysis_data_path(),
+                              amw_analysis_data_path = MWTools::amw_analysis_data_path(),
                               year = MWTools::mw_constants$year,
                               species = MWTools::mw_constants$species,
                               method_source = MWTools::amw_analysis_constants$method_source,
@@ -336,7 +336,7 @@ calc_sector_split <- function(.df,
                               prop_working_animals_ag_col = MWTools::amw_analysis_constants$prop_working_animals_ag_col,
                               prop_working_animals_tr_col = MWTools::amw_analysis_constants$prop_working_animals_tr_col) {
 
-  end_use <- readxl::read_excel(amw_analysis_path,
+  end_use <- readxl::read_excel(amw_analysis_data_path,
                                 sheet = wa_enduse_sheet) %>%
     dplyr::select(-dplyr::all_of(c(method_source, metric, amw_region_col))) %>%
     tidyr::pivot_longer(cols = `1960`:`2019`, # Use IEATools::year_cols()?
@@ -418,18 +418,18 @@ tidy_numbers_data <- function(.df,
 #' Calculate the yearly feed requirements of working animals by species
 #'
 #' Calculate the yearly feed requirements of working animals by species and region.
-#' This function uses user-supplied data supplied via `amw_analysis_path` for daily
+#' This function uses user-supplied data supplied via `amw_analysis_data_path` for daily
 #' feed requirements of working animals on working and non-working days by species
 #' and region, and user-supplied data for the number of working days by species
 #' and region to estimate the total yearly feed requirements.
 #'
 #' @param .df A data frame containing ...
-#' @param amw_analysis_path The path to the animal muscle work analysis data,
-#'                          containing feed requirements of working animals
-#'                          in agriculture and transport, by species, country, and
-#'                          over time. Set to the function `MWTools::amw_analysis_data_path()`,
-#'                          by default, which returns the path the analysis data
-#'                          bundled with the `MWTools` package.
+#' @param amw_analysis_data_path The path to the animal muscle work analysis data,
+#'                               containing feed requirements of working animals
+#'                               in agriculture and transport, by species, country, and
+#'                               over time. Set to the function `MWTools::amw_analysis_data_path()`,
+#'                               by default, which returns the path the analysis data
+#'                               bundled with the `MWTools` package.
 #' @param species,method_source See `MWTools::mw_constants`.
 #' @param wa_feed_sheet,wa_days_hours_sheet,working_days_col,nonworking_days_col,working_hours_col,working_day_feed_col,nonworking_day_feed_col,working_yearly_feed_col,nonworking_yearly_feed_col,total_yearly_feed_col,amw_region_code_col
 #'        See `MWTools::amw_analysis_constants`.
@@ -448,7 +448,7 @@ tidy_numbers_data <- function(.df,
 #'   calc_yearly_feed()
 #'
 calc_yearly_feed <- function(.df,
-                             amw_analysis_path = MWTools::amw_analysis_data_path(),
+                             amw_analysis_data_path = MWTools::amw_analysis_data_path(),
                              species = MWTools::mw_constants$species,
                              method_source = MWTools::mw_constants$method_source,
                              wa_feed_sheet= MWTools::amw_analysis_constants$wa_feed_sheet,
@@ -463,11 +463,11 @@ calc_yearly_feed <- function(.df,
                              total_yearly_feed_col = MWTools::amw_analysis_constants$total_yearly_feed_col,
                              amw_region_code_col = MWTools::conc_cols$amw_region_code_col) {
 
-  feed <- readxl::read_excel(amw_analysis_path,
+  feed <- readxl::read_excel(amw_analysis_data_path,
                              sheet = wa_feed_sheet) %>%
     dplyr::select(-dplyr::all_of(method_source))
 
-  working_days <- readxl::read_excel(amw_analysis_path,
+  working_days <- readxl::read_excel(amw_analysis_data_path,
                                      sheet = wa_days_hours_sheet) %>%
     dplyr::select(-dplyr::all_of(c(method_source, working_hours_col))) %>%
     dplyr::mutate(
@@ -584,12 +584,12 @@ calc_primary_energy <- function(.df,
 #' Calculate the useful energy produced by working animals performing muscle work
 #'
 #' @param .df A data frame containing ...
-#' @param amw_analysis_path The path to the animal muscle work analysis data,
-#'                          containing data for the number of working hours and
-#'                          power outputs of working animals. Set to the function
-#'                          `MWTools::amw_analysis_data_path()` by default,
-#'                          which returns the path the analysis data bundled with
-#'                          the `MWTools` package.
+#' @param amw_analysis_data_path The path to the animal muscle work analysis data,
+#'                               containing data for the number of working hours and
+#'                               power outputs of working animals. Set to the function
+#'                               `MWTools::amw_analysis_data_path()` by default,
+#'                               which returns the path the analysis data bundled with
+#'                               the `MWTools` package.
 #' @param species,method_source See `MWTools::mw_constants`.
 #' @param wa_power_sheet,wa_days_hours_sheet See `MWTools::amw_analysis_constants`.
 #' @param working_animals_total_col,working_hours_col,working_seconds_col See `MWTools::amw_analysis_constants`.
@@ -614,7 +614,7 @@ calc_primary_energy <- function(.df,
 #'   calc_useful_energy()
 #'
 calc_useful_energy <- function(.df,
-                               amw_analysis_path = MWTools::amw_analysis_data_path(),
+                               amw_analysis_data_path = MWTools::amw_analysis_data_path(),
                                species = MWTools::mw_constants$species,
                                method_source = MWTools::mw_constants$method_source,
                                wa_power_sheet= MWTools::amw_analysis_constants$wa_power_sheet,
@@ -631,12 +631,12 @@ calc_useful_energy <- function(.df,
                                working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
                                working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col) {
 
-  power <- readxl::read_excel(amw_analysis_path,
+  power <- readxl::read_excel(amw_analysis_data_path,
                               sheet = wa_power_sheet) %>%
     dplyr::select(-dplyr::all_of(method_source)) %>%
     magrittr::set_colnames(c(species, amw_region_code_col, power_per_animal))
 
-  working_time <- readxl::read_excel(amw_analysis_path,
+  working_time <- readxl::read_excel(amw_analysis_data_path,
                                      sheet = wa_days_hours_sheet) %>%
     dplyr::select(-dplyr::all_of(c(method_source, working_days_col))) %>%
     magrittr::set_colnames(c(species, amw_region_code_col, working_hours_col)) %>%
@@ -751,7 +751,7 @@ tidy_pfu_data <- function(.df,
 #'
 calc_amw_pfu <- function(.df,
                          concordance_path = MWTools::fao_concordance_path(),
-                         amw_analysis_path = MWTools::amw_analysis_data_path()
+                         amw_analysis_data_path = MWTools::amw_analysis_data_path()
                          ){
 
   .df %>%
@@ -759,11 +759,11 @@ calc_amw_pfu <- function(.df,
     add_concordance_codes(concordance_path = concordance_path) %>%
     trim_fao_data() %>%
     get_working_species() %>%
-    calc_working_animals(amw_analysis_path = amw_analysis_path) %>%
-    calc_sector_split(amw_analysis_path) %>%
-    calc_yearly_feed(amw_analysis_path) %>%
+    calc_working_animals(amw_analysis_data_path = amw_analysis_data_path) %>%
+    calc_sector_split(amw_analysis_data_path) %>%
+    calc_yearly_feed(amw_analysis_data_path) %>%
     calc_final_energy() %>%
     calc_primary_energy() %>%
-    calc_useful_energy(amw_analysis_path) %>%
+    calc_useful_energy(amw_analysis_data_path) %>%
     tidy_pfu_data()
 }

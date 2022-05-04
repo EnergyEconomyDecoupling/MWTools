@@ -6,7 +6,7 @@
 \usage{
 calc_useful_energy(
   .df,
-  amw_analysis_path = MWTools::amw_analysis_data_path(),
+  amw_analysis_data_path = MWTools::amw_analysis_data_path(),
   species = MWTools::mw_constants$species,
   method_source = MWTools::mw_constants$method_source,
   wa_power_sheet = MWTools::amw_analysis_constants$wa_power_sheet,
@@ -27,7 +27,7 @@ calc_useful_energy(
 \arguments{
 \item{.df}{A data frame containing ...}
 
-\item{amw_analysis_path}{The path to the animal muscle work analysis data,
+\item{amw_analysis_data_path}{The path to the animal muscle work analysis data,
 containing data for the number of working hours and
 power outputs of working animals. Set to the function
 \code{MWTools::amw_analysis_data_path()} by default,

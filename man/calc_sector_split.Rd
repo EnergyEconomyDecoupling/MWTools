@@ -6,7 +6,7 @@
 \usage{
 calc_sector_split(
   .df,
-  amw_analysis_path = MWTools::amw_analysis_data_path(),
+  amw_analysis_data_path = MWTools::amw_analysis_data_path(),
   year = MWTools::mw_constants$year,
   species = MWTools::mw_constants$species,
   method_source = MWTools::amw_analysis_constants$method_source,
@@ -26,7 +26,7 @@ calc_sector_split(
 \arguments{
 \item{.df}{A data frame containing live animals data...}
 
-\item{amw_analysis_path}{The path to the animal muscle work analysis data,
+\item{amw_analysis_data_path}{The path to the animal muscle work analysis data,
 containing data for the proportion of working animals
 in agriculture and transport, by species, country, and
 over time. Set to the function \code{MWTools::amw_analysis_data_path()},

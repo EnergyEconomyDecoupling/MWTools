@@ -85,10 +85,10 @@ head(hmw_pfu_data)
 #> # A tibble: 6 × 7
 #>   Country  Year Species       Stage   Sector      Units E.dot
 #>   <chr>   <dbl> <chr>         <chr>   <chr>       <chr> <dbl>
-#> 1 ABW      1994 Human Females Final   Agriculture EJ       NA
-#> 2 ABW      1994 Human Females Primary Agriculture EJ       NA
-#> 3 ABW      1994 Human Females Useful  Agriculture EJ       NA
-#> 4 ABW      1997 Human Females Final   Agriculture EJ       NA
-#> 5 ABW      1997 Human Females Primary Agriculture EJ       NA
-#> 6 ABW      1997 Human Females Useful  Agriculture EJ       NA
+#> 1 ABW      1994 Human females Final   Agriculture EJ       NA
+#> 2 ABW      1994 Human females Primary Agriculture EJ       NA
+#> 3 ABW      1994 Human females Useful  Agriculture EJ       NA
+#> 4 ABW      1997 Human females Final   Agriculture EJ       NA
+#> 5 ABW      1997 Human females Primary Agriculture EJ       NA
+#> 6 ABW      1997 Human females Useful  Agriculture EJ       NA
 ```

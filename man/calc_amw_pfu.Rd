@@ -7,7 +7,7 @@
 calc_amw_pfu(
   .df,
   concordance_path = MWTools::fao_concordance_path(),
-  amw_analysis_path = MWTools::amw_analysis_data_path()
+  amw_analysis_data_path = MWTools::amw_analysis_data_path()
 )
 }
 \arguments{
