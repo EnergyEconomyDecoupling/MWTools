@@ -12,7 +12,14 @@
 #' @export
 #'
 #' @examples
-#'
+#' hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu() %>%
+#'   specify_product()
+#' amw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_amw_pfu() %>%
+#'   specify_product()
 specify_product <- function(.df,
                             product = IEATools::iea_cols$product,
                             primary = IEATools::all_stages$primary,
@@ -46,4 +53,21 @@ specify_product <- function(.df,
         TRUE ~ NA_character_
       )
     )
+}
+
+
+#' Add primary production to a data frame of PFU muscle work data
+#'
+#' Adds rows for biomass from resources
+#'
+#' @param .df A muscle work data frame with products already specified,
+#'            usually by `specify_product()`.
+#'
+#' @return A data frame with
+#'
+#' @export
+#'
+#' @examples
+specify_primary_production <- function(.df) {
+
 }

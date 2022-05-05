@@ -34,5 +34,12 @@ The specification process adds entries (rows)
 needed for conversion to PSUT matrices.
 }
 \examples{
-
+hmw_test_data_path() \%>\%
+  read.csv() \%>\%
+  calc_hmw_pfu() \%>\%
+  specify_product()
+amw_test_data_path() \%>\%
+  read.csv() \%>\%
+  calc_amw_pfu() \%>\%
+  specify_product()
 }

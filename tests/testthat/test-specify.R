@@ -16,5 +16,6 @@ test_that("specify_product() works as expected", {
                c("Food", "Biomass", "HuMech"))
   expect_equal(unique(specified_hmw[[IEATools::iea_cols$product]]),
                c("Food", "Biomass", "HuMech"))
-
 })
+
+
