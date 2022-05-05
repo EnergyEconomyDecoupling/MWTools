@@ -6,7 +6,7 @@
 \usage{
 calc_yearly_feed(
   .df,
-  amw_analysis_path = MWTools::amw_analysis_data_path(),
+  amw_analysis_data_path = MWTools::amw_analysis_data_path(),
   species = MWTools::mw_constants$species,
   method_source = MWTools::mw_constants$method_source,
   wa_feed_sheet = MWTools::amw_analysis_constants$wa_feed_sheet,
@@ -26,7 +26,7 @@ calc_yearly_feed(
 \arguments{
 \item{.df}{A data frame containing ...}
 
-\item{amw_analysis_path}{The path to the animal muscle work analysis data,
+\item{amw_analysis_data_path}{The path to the animal muscle work analysis data,
 containing feed requirements of working animals
 in agriculture and transport, by species, country, and
 over time. Set to the function \code{MWTools::amw_analysis_data_path()},
@@ -42,7 +42,7 @@ bundled with the \code{MWTools} package.}
 }
 \description{
 Calculate the yearly feed requirements of working animals by species and region.
-This function uses user-supplied data supplied via \code{amw_analysis_path} for daily
+This function uses user-supplied data supplied via \code{amw_analysis_data_path} for daily
 feed requirements of working animals on working and non-working days by species
 and region, and user-supplied data for the number of working days by species
 and region to estimate the total yearly feed requirements.
