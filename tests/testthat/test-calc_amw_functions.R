@@ -35,7 +35,7 @@ test_that("add_concordance_codes works", {
 
   expect_equal(colnames(live_animals_w.codes), c("Country.code", "AMW.Region.code",
                                                  "Country.name", "Species", "Year",
-                                                 "Value", "Country.incl.", "Country.code_PFU"))
+                                                 "Value", "Country.incl.", "Country_PFU"))
 
   expect_equal(nrow(live_animals_w.codes), 708)
 
@@ -152,23 +152,6 @@ test_that("tidy_numbers_data works", {
     calc_working_animals() %>%
     calc_sector_split() %>%
     tidy_numbers_data()
-
-  expect_true(!is.null(working_animals_tidy))
-
-  expect_equal(nrow(working_animals_tidy), 1062)
-
-  expect_equal(colnames(working_animals_tidy), c("AMW.Region.code", "Country.code",
-                                                 "Year", "Species", "Sector",
-                                                 "Live.animals", "Working.animals"))
-})
-
-test_that("calc_amw_numbers works", {
-
-  test_data_path <- amw_test_data_path()
-
-  test_data <- read.csv(test_data_path)
-
-  working_animals_tidy <- calc_amw_numbers(test_data)
 
   expect_true(!is.null(working_animals_tidy))
 
@@ -333,10 +316,11 @@ test_that("tidy_pfu_data works", {
 
   expect_true(!is.null(tidy_pfu_data))
 
-  expect_equal(nrow(tidy_pfu_data), 3186)
+  expect_equal(nrow(tidy_pfu_data), 2124)
 
-  expect_equal(colnames(tidy_pfu_data), c("AMW.Region.code", "Country.code", "Year", "Species",
-                                          "Stage", "Sector", "Energy [MJ/year]"))
+  expect_equal(colnames(tidy_pfu_data), c("Country", "Year", "Species",
+                                          "Stage", "Sector", "Units",
+                                          "E.dot"))
 
 })
 
@@ -352,11 +336,11 @@ test_that("calc_amw_pfu", {
 
   expect_true(!is.null(tidy_pfu_data))
 
-  expect_equal(nrow(tidy_pfu_data), 3186)
+  expect_equal(nrow(tidy_pfu_data), 2124)
 
-  expect_equal(colnames(tidy_pfu_data), c("AMW.Region.code", "Country.code",
-                                          "Year", "Species", "Stage",
-                                          "Sector", "Energy [MJ/year]"))
+  expect_equal(colnames(tidy_pfu_data), c("Country", "Year", "Species",
+                                          "Stage", "Sector", "Units",
+                                          "E.dot"))
 
 
 })

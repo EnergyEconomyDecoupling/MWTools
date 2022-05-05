@@ -191,7 +191,8 @@
 #'
 #' @format A string list with `r length(conc_cols)` entries.
 #' \describe{
-#' \item{country_code_col}{The metadata column name "Country" containing three letter ISO 3166-1 country codes.}
+#' \item{country_col}{The metadata column name "Country" containing three letter ISO 3166-1 country codes.}
+#' \item{country_code_col}{The metadata column name "Country.code" containing three letter ISO 3166-1 country codes.}
 #' \item{country_code_pfu_col}{The metadata column name "Country_PFU" containing bespoke three letter country codes.}
 #' \item{country_incl_col}{The metadata column name "Country.incl." containing either "Yes" or "No" depending on whether a particulr region or country shoule be included for analysis in `MWTools`.}
 #' }

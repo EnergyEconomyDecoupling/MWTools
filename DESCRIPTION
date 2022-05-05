@@ -21,8 +21,10 @@ RoxygenNote: 7.1.2
 Imports:
     cowplot,
     FAOSTAT,
-    grid,
     fs,
+    grid,
+    knitr,
+    magrittr,
     Rilostat,
     scales,
     tidyverse
