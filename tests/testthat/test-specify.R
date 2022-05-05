@@ -13,9 +13,14 @@ test_that("specify_product() works as expected", {
     specify_product()
 
   expect_equal(unique(specified_hmw[[IEATools::iea_cols$product]]),
-               c("Food", "Biomass", "HuMech"))
-  expect_equal(unique(specified_hmw[[IEATools::iea_cols$product]]),
-               c("Food", "Biomass", "HuMech"))
+               c(MWTools::mw_products$food,
+                 MWTools::mw_products$biomass,
+                 MWTools::mw_products$hu_mech))
+  expect_equal(unique(specified_amw[[IEATools::iea_cols$product]]),
+               c(MWTools::mw_products$an_mech,
+                 MWTools::mw_products$an_p,
+                 MWTools::mw_products$feed,
+                 MWTools::mw_products$biomass))
 })
 
 
