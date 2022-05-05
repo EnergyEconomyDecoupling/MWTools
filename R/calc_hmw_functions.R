@@ -132,7 +132,8 @@ get_broad.sector_data <- function(.df,
 #' @param .df
 #' @param sector_col See `MWTools::mw_constants`.
 #' @param hmw_analysis_data_path See `MWTools::hmw_analysis_data_path()`.
-#' @param hmw_sector_map_sheet,hmw_analysis_sector_col,agriculture,industry,services See `MWTools::hmw_analysis_constants`.
+#' @param hmw_sector_map_sheet See `MWTools::hmw_analysis_constants`.
+#' @param hmw_analysis_sector_col,agriculture,industry,services See `MWTools::mw_sectors`.
 #'
 #' @return
 #' @export
@@ -143,10 +144,10 @@ add_hmw_analysis_sectors <- function(.df,
                                      hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
                                      sector_col = MWTools::mw_constants$sector_col,
                                      hmw_sector_map_sheet = MWTools::hmw_analysis_constants$hmw_sector_map_sheet,
-                                     hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
-                                     agriculture = MWTools::hmw_analysis_constants$agriculture_broad.sector,
-                                     industry = MWTools::hmw_analysis_constants$industry_broad.sector,
-                                     services = MWTools::hmw_analysis_constants$services_broad.sector){
+                                     agriculture = MWTools::mw_sectors$agriculture_broad.sector,
+                                     hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
+                                     industry = MWTools::mw_sectors$industry_broad.sector,
+                                     services = MWTools::mw_sectors$services_broad.sector){
 
   # Reads sheet in hmw_analysis_data which maps ILO broad sectors to sectors used in the analysis
   sector_mapping_data <- readxl::read_xlsx(path = hmw_analysis_data_path,

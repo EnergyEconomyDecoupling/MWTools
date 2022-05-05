@@ -3,7 +3,7 @@
 \docType{data}
 \name{mw_products}
 \alias{mw_products}
-\title{Muscel work products}
+\title{Muscle work products}
 \format{
 A string list with 6 entries.
 \describe{

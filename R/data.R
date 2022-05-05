@@ -119,14 +119,6 @@
 #' \item{hmw_sector_map_sheet}{The excel sheet name "hmw_sector_map", which contains information on the mapping the sector names used in the hmw analysis data excel file bundled with this package with the sector names in the ILO data.}
 #' \item{hmw_plate_waste_sheet}{The excel sheet name "hmw_plate_waste", which contains information on proportion of food waste by region.}
 #' \item{hmw_harvest_waste_sheet}{The excel sheet name "hmw_harvest_waste", which contains information on the proportion of phytomass lost at the harvest stage by region.}
-#' \item{broad_sector_col}{The column name "broad_sector", which contains the "Broad sector" sector names used by the ILO.}
-#' \item{hmw_analysis_sector_col}{The column name "Sector.hmw", which contains the sector names used in the hmw analysis data excel file bundled with this package.}
-#' \item{agriculture_broad.sector}{The string "Agriculture" representing the agriculture sector. One of the ILO's "Broad sectors".}
-#' \item{industry_broad.sector}{The string "Industry" representing the industry sector. One of the ILO's "Broad sectors".}
-#' \item{services_broad.sector}{The string "Services" representing the services sector. One of the ILO's "Broad sectors".}
-#' \item{not_classified_broad.sector}{The string "Not classfied" representing unclassified labor data. One of the ILO's "Broad sectors".}
-#' \item{non_agriculture_broad.sector}{The string "Non-agriculture" representing all sectors outside of agriculture. One of the ILO's "Broad sectors".}
-#' \item{total_sector}{The string "Total" representing the entire economy. One of the ILO's "Broad sectors".}
 #' \item{food_consumption_col}{The data column "Food consumption [kcal/day per person]", which contains information on the daily food consumption of humans in kilocalories (kcal).}
 #' \item{yearly_energy_consumption_pp_col}{The data column "Energy consumption [MJ/year per person]", which contains information on the yearly food consumption per working person in megajoules (MJ).}
 #' \item{final_energy_col}{The data column "Final energy [MJ/year]", which contains data on the yearly food consumption of all working persons in megajoules (MJ).}
@@ -182,7 +174,7 @@
 #' \item{mw_region_code_col}{The metadata column "MW.Region.code" representing the codes associated with the aggregate regions used in this package.}
 #' \item{mw_region_col}{The metadata column "MW.Region" representing the a names associated with the aggregate regions used in this package.}
 #' \item{metric_col}{The metadata column "Metric" representing the metric name associated with a particular data series.}
-#' \item{transport_sector}{The strong "Transport" representing the transportation sector of final demand.}
+#' \item{transport_sector}{The string "Transport" representing the transportation sector of final demand.}
 #' }
 #'
 #' @examples
@@ -222,7 +214,7 @@
 "unit_constants"
 
 
-#' Muscel work products
+#' Muscle work products
 #'
 #' A list containing names of muscle work products (energy carriers).
 #'
@@ -239,3 +231,26 @@
 #' @examples
 #' mw_products
 "mw_products"
+
+
+#' Economic sectors for muscle work
+#'
+#' A list containing names of economic sectors for muscle work.
+#'
+#' @format A string list with `r length(mw_sectors)` entries.
+#' \describe{
+#' \item{broad_sector_col}{The column name "broad_sector", which contains the "Broad sector" sector names used by the ILO.}
+#' \item{hmw_analysis_sector_col}{The column name "Sector.hmw", which contains the sector names used in the hmw analysis data excel file bundled with this package.}
+#' \item{agriculture_broad.sector}{The string "Agriculture" representing the agriculture sector. One of the ILO's "Broad sectors".}
+#' \item{industry_broad.sector}{The string "Industry" representing the industry sector. One of the ILO's "Broad sectors".}
+#' \item{services_broad.sector}{The string "Services" representing the services sector. One of the ILO's "Broad sectors".}
+#' \item{not_classified_broad.sector}{The string "Not classfied" representing unclassified labor data. One of the ILO's "Broad sectors".}
+#' \item{non_agriculture_broad.sector}{The string "Non-agriculture" representing all sectors outside of agriculture. One of the ILO's "Broad sectors".}
+#' \item{total_sector}{The string "Total" representing the entire economy. One of the ILO's "Broad sectors".}
+#' \item{resources_sectors}{The string "Resources" representing resouce sectors.}
+#' }
+#'
+#' @examples
+#' mw_sectors
+"mw_sectors"
+

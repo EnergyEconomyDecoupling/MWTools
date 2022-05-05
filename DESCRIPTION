@@ -25,6 +25,7 @@ Imports:
     grid,
     knitr,
     magrittr,
+    RCLabels,
     Rilostat,
     scales,
     tidyverse

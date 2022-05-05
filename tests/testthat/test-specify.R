@@ -24,3 +24,32 @@ test_that("specify_product() works as expected", {
 })
 
 
+test_that("specify_primary_production() works as expected", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    specify_product()
+
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu() %>%
+    specify_product()
+
+  specified_hmw <- hmw_df %>%
+    specify_primary_production()
+
+  specified_amw <- amw_df %>%
+    specify_primary_production()
+
+  nrow_primary_hmw_biomass <- specified_hmw %>%
+    dplyr::filter(.data[[IEATools::iea_cols$product]] == MWTools::mw_products$biomass) %>%
+    nrow()
+  nrow_primary_hmw_biomass_from_resources <- specified_hmw %>%
+    dplyr::filter(.data[[IEATools::iea_cols$product]] == RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
+                                                                                   suff = "Resources",
+                                                                                   notation = RCLabels::from_notation)) %>%
+    nrow()
+  # We should make 1 row of Biomass [from Resources] for every row of biomass.
+  expect_equal(nrow_primary_hmw_biomass, nrow_primary_hmw_biomass_from_resources)
+})
+

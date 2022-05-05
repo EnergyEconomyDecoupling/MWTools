@@ -32,7 +32,7 @@ specify_product <- function(.df,
                             biomass = MWTools::mw_products$biomass,
                             food = MWTools::mw_products$food,
                             feed = MWTools::mw_products$feed,
-                            transport = MWTools::amw_analysis_constants$transport_sector,
+                            transport = MWTools::mw_sectors$transport_sector,
                             hu_mech = MWTools::mw_products$hu_mech,
                             an_mech = MWTools::mw_products$an_mech,
                             an_p = MWTools::mw_products$an_p) {
@@ -68,6 +68,20 @@ specify_product <- function(.df,
 #' @export
 #'
 #' @examples
-specify_primary_production <- function(.df) {
+specify_primary_production <- function(.df,
+                                       product = IEATools::iea_cols$product,
+                                       primary = IEATools::all_stages$primary,
+                                       stage = MWTools::mw_constants$stage_col,
+                                       notation = RCLabels::from_notation,
+                                       resources = MWTools::mw_sectors$resources_sector) {
 
+  # Find all primary rows
+  primary_rows <- .df %>%
+    dplyr::filter(.data[[stage]] == primary)
+  # Modify the product
+  primary_rows <- primary_rows %>%
+    dplyr::mutate(
+      "{product}" := RCLabels::paste_pref_suff(pref = .data[[product]], suff = resources, notation = notation)
+    )
+  dplyr::bind_rows(.df, primary_rows)
 }

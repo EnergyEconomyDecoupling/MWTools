@@ -39,14 +39,6 @@ hmw_analysis_constants <- list(total_working_hours_ilo_col = "Total.hours [hours
                                hmw_sector_map_sheet = "hmw_sector_map",
                                hmw_plate_waste_sheet = "hmw_plate_waste",
                                hmw_harvest_waste_sheet = "hmw_harvest_waste",
-                               broad_sector_col = "broad_sector",
-                               hmw_analysis_sector_col = "Sector.hmw",
-                               agriculture_broad.sector = "Agriculture",
-                               industry_broad.sector = "Industry",
-                               services_broad.sector = "Services",
-                               not_classified_broad.sector = "Not classified",
-                               non_agriculture_broad.sector = "Non-agriculture",
-                               total_sector = "Total",
                                food_consumption_col = "Food consumption [kcal/day per person]",
                                yearly_energy_consumption_pp_col = "Energy consumption [MJ/year per person]",
                                final_energy_col = "Final energy [MJ/year]",
@@ -133,8 +125,7 @@ amw_analysis_constants <- list(prop_working_animals_col = "Prop.Working.animals"
                                primary_energy_ag = "Primary.energy.Ag [MJ/year]",
                                primary_energy_tr = "Primary.energy.Tr [MJ/year]",
                                amw_region_col = "AMW.Region",
-                               metric_col = "Metric",
-                               transport_sector = "Transport")
+                               metric_col = "Metric")
 usethis::use_data(amw_analysis_constants, overwrite = TRUE)
 
 #
@@ -169,4 +160,18 @@ mw_products <- list(food = "Food",
 usethis::use_data(mw_products, overwrite = TRUE)
 
 
+#
+# Economic sectors
+#
+mw_sectors <- list(broad_sector_col = "broad_sector",
+                   hmw_analysis_sector_col = "Sector.hmw",
+                   agriculture_broad.sector = "Agriculture",
+                   industry_broad.sector = "Industry",
+                   services_broad.sector = "Services",
+                   transport_sector = "Transport",
+                   not_classified_broad.sector = "Not classified",
+                   non_agriculture_broad.sector = "Non-agriculture",
+                   total_sector = "Total",
+                   resources_sector = "Resources")
+usethis::use_data(mw_sectors, overwrite = TRUE)
 

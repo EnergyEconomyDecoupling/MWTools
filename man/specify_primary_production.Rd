@@ -4,7 +4,14 @@
 \alias{specify_primary_production}
 \title{Add primary production to a data frame of PFU muscle work data}
 \usage{
-specify_primary_production(.df)
+specify_primary_production(
+  .df,
+  product = IEATools::iea_cols$product,
+  primary = IEATools::all_stages$primary,
+  stage = MWTools::mw_constants$stage_col,
+  notation = RCLabels::from_notation,
+  resources = MWTools::mw_sectors$resources_sector
+)
 }
 \arguments{
 \item{.df}{A muscle work data frame with products already specified,

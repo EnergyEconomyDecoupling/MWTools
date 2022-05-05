@@ -17,7 +17,7 @@ specify_product(
   biomass = MWTools::mw_products$biomass,
   food = MWTools::mw_products$food,
   feed = MWTools::mw_products$feed,
-  transport = MWTools::amw_analysis_constants$transport_sector,
+  transport = MWTools::mw_sectors$transport_sector,
   hu_mech = MWTools::mw_products$hu_mech,
   an_mech = MWTools::mw_products$an_mech,
   an_p = MWTools::mw_products$an_p
