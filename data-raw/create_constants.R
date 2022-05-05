@@ -16,7 +16,6 @@ mw_constants <- list(country_name = "Country.name",
                      energy_col = "E.dot",
                      exemplar_method_col = "Exemplar/Method",
                      method_source_col = "Method/Source")
-
 usethis::use_data(mw_constants, overwrite = TRUE)
 
 
@@ -27,7 +26,6 @@ ilo_cols <- list(ref_area_col = "ref_area",
                  sex_ilo_col = "Sex",
                  yearly_working_hours_ilo_col = "Working.hours [hours/year]",
                  employed_persons_ilo_col = "Employed.persons [persons]")
-
 usethis::use_data(ilo_cols, overwrite = TRUE)
 
 
@@ -57,7 +55,6 @@ hmw_analysis_constants <- list(total_working_hours_ilo_col = "Total.hours [hours
                                power_col = "Power [W]",
                                plate_waste_col = "Plate waste [-]",
                                hmw_harvest_waste_col = "Harvest waste [-]")
-
 usethis::use_data(hmw_analysis_constants, overwrite = TRUE)
 
 
@@ -71,8 +68,10 @@ mw_species <- list(asses = "Asses",
                    mules = "Mules",
                    buffaloes = "Buffaloes",
                    camelids_other = "Camelids, other",
-                   camelids = "Camelids")
-
+                   camelids = "Camelids",
+                   human_females = "Human females",
+                   human_males = "Human males",
+                   human = "Human")
 usethis::use_data(mw_species, overwrite = TRUE)
 
 #
@@ -83,14 +82,12 @@ fao_cols <- list(area_fao_col = "area",
                  year_fao_col = "year",
                  unit_fao_col = "unit",
                  value_fao_col = "value")
-
 usethis::use_data(fao_cols, overwrite = TRUE)
 
 #
 # FAO data codes
 #
 fao_codes <- list(live_animals_code = "QA")
-
 usethis::use_data(fao_codes, overwrite = TRUE)
 
 #
@@ -98,7 +95,6 @@ usethis::use_data(fao_codes, overwrite = TRUE)
 #
 ilo_codes <- list(working_hours_code = "HOW_TEMP_SEX_ECO_NB_A",
                   employment_code = "EMP_TEMP_SEX_ECO_NB_A")
-
 usethis::use_data(ilo_codes, overwrite = TRUE)
 
 #
@@ -136,15 +132,9 @@ amw_analysis_constants <- list(prop_working_animals_col = "Prop.Working.animals"
                                primary_energy_total = "Primary.energy.total [MJ/year]",
                                primary_energy_ag = "Primary.energy.Ag [MJ/year]",
                                primary_energy_tr = "Primary.energy.Tr [MJ/year]",
-                               # ag_string
-                               # tr_string
-                               # total_string
-                               # ag_full_string
-                               # tr_full_string
-                               # total_full_string
                                amw_region_col = "AMW.Region",
-                               metric_col = "Metric")
-
+                               metric_col = "Metric",
+                               transport_sector = "Transport")
 usethis::use_data(amw_analysis_constants, overwrite = TRUE)
 
 #
@@ -156,7 +146,6 @@ conc_cols <- list(country_code_col = "Country.code",
                   country_incl_col = "Country.incl.",
                   amw_region_code_col = "AMW.Region.code",
                   hmw_region_code_col = "HMW.Region.code")
-
 usethis::use_data(conc_cols, overwrite = TRUE)
 
 #
@@ -165,6 +154,19 @@ usethis::use_data(conc_cols, overwrite = TRUE)
 unit_constants <- list(kcal_to_mj = 0.0041858,
                        hours_to_seconds = 3600,
                        joules_to_megajoules = 0.000001)
-
 usethis::use_data(unit_constants, overwrite = TRUE)
+
+
+#
+# Products
+#
+mw_products <- list(food = "Food",
+                    feed = "Feed",
+                    biomass = "Biomass",
+                    hu_mech = "HuMech",
+                    an_mech = "AnMech",
+                    an_p = "AnP")
+usethis::use_data(mw_products, overwrite = TRUE)
+
+
 

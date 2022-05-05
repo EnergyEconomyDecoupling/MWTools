@@ -51,6 +51,9 @@
 #' \item{buffaloes}{The string "Buffaloes".}
 #' \item{camelids_other}{The string "Camelids, other".}
 #' \item{camelids}{The string "Camelids", representing the combined category of "Camels" and "Camelids, other".}
+#' \item{human_females}{The string "Human females", representing human females.}
+#' \item{human_males}{The string "Human males", representing human males.}
+#' \item{human}{The string "Human", representing all humans.}
 #' }
 #'
 #' @examples
@@ -179,6 +182,7 @@
 #' \item{mw_region_code_col}{The metadata column "MW.Region.code" representing the codes associated with the aggregate regions used in this package.}
 #' \item{mw_region_col}{The metadata column "MW.Region" representing the a names associated with the aggregate regions used in this package.}
 #' \item{metric_col}{The metadata column "Metric" representing the metric name associated with a particular data series.}
+#' \item{transport_sector}{The strong "Transport" representing the transportation sector of final demand.}
 #' }
 #'
 #' @examples
@@ -201,6 +205,7 @@
 #' conc_cols
 "conc_cols"
 
+
 #' Unit constants
 #'
 #' A list containing data values for converting between different units of measurement.
@@ -215,3 +220,22 @@
 #' @examples
 #' unit_constants
 "unit_constants"
+
+
+#' Muscel work products
+#'
+#' A list containing names of muscle work products (energy carriers).
+#'
+#' @format A string list with `r length(mw_products)` entries.
+#' \describe{
+#' \item{food}{The name for food final energy.}
+#' \item{feed}{The name for feed final energy.}
+#' \item{biomass}{The name for biomass primary energy.}
+#' \item{hu_mech}{The name for human mechanical work final energy.}
+#' \item{an_mech}{The name for animal mechanical work useful energy.}
+#' \item{an_p}{The name for animal propulsion work useful energy.}
+#' }
+#'
+#' @examples
+#' mw_products
+"mw_products"
