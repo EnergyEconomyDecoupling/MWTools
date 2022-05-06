@@ -208,8 +208,8 @@ get_working_species <- function(.df,
                                           buffaloes,
                                           camelids_other)) %>%
     tidyr::pivot_wider(names_from = dplyr::all_of(species),
-                       values_from = dplyr::all_of(value)) %>%
-    replace(is.na(.), 0)
+                       values_from = dplyr::all_of(value))
+  working_species <- replace(working_species, is.na(working_species), 0)
 
   if(camelids_other %in% colnames(working_species)){
     working_species_w.camelids <- working_species %>%
