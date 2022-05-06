@@ -2,6 +2,8 @@
 # employed persons and number of working hours, and then forms a data frame to
 # to bundle in this package.
 
+library(Rilostat)
+
 # Establish constants
 country_code_col <- MWTools::conc_cols$country_code_col
 sex_ilo_col <- MWTools::ilo_cols$sex_ilo_col

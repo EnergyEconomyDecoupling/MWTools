@@ -19,24 +19,17 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports:
-    cowplot,
     dplyr,
-    FAOSTAT,
-    fs,
-    grid,
-    knitr,
     magrittr,
     RCLabels,
-    Rilostat,
     readxl,
     rlang,
-    scales,
     stringr,
     tibble,
-    tidyr,
-    tidyverse
+    tidyr
 Suggests: 
     covr,
+    knitr,
     testthat (>= 3.0.0)
 Depends: 
     R (>= 2.10)

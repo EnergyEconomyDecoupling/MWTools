@@ -1,6 +1,8 @@
 # This script uses the R package FAOSTAT to download data for the number of live
 # animals in the form of a
 
+library(FAOSTAT)
+
 # Establish constants
 download_location <- tempdir()
 # live_animals_code <- MWTools::fao_codes$live_animals_code
