@@ -208,7 +208,7 @@ get_working_species <- function(.df,
                                           buffaloes,
                                           camelids_other)) %>%
     tidyr::pivot_wider(names_from = species,
-                       values_from = value) %>%
+                       values_from = dplyr::all_of(value)) %>%
     replace(is.na(.), 0)
 
   if(camelids_other %in% colnames(working_species)){
@@ -728,7 +728,7 @@ tidy_pfu_data <- function(.df,
         )
       ) %>%
     dplyr::mutate("{energy_col}" := .data[[energy_col]] * 0.000000000001) %>%
-    dplyr::mutate("{units_col}" := "EJ", .before = energy_col) %>%
+    dplyr::mutate("{units_col}" := "EJ", .before = dplyr::all_of(energy_col)) %>%
     magrittr::set_colnames(c(country_col, year, species,
                              stage_col, sector_col, units_col, energy_col))
 }

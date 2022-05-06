@@ -484,7 +484,7 @@ tidy_hmw_pfu <- function(.df,
     ) %>%
     dplyr::rename("{species}" := .data[[sex_ilo_col]]) %>%
     dplyr::mutate("{energy_col}" := .data[[energy_col]] * 0.000000000001) %>%
-    dplyr::mutate("{units_col}" := "EJ", .before = energy_col)
+    dplyr::mutate("{units_col}" := "EJ", .before = dplyr::all_of(energy_col))
 }
 
 
