@@ -36,7 +36,7 @@ add_hmw_region_codes <- function(.df,
 
   .df %>%
     dplyr::left_join(hmw_region_codes, by = country_code_col) %>%
-    dplyr::relocate(hmw_region_code_col, .after = country_code_col) %>%
+    dplyr::relocate(dplyr::all_of(hmw_region_code_col), .after = dplyr::all_of(country_code_col)) %>%
     magrittr::set_colnames(c(country_col, hmw_region_code_col, sex_ilo_col,
                              sector_col, year, employed_persons_ilo_col,
                              yearly_working_hours_ilo_col))
@@ -195,7 +195,7 @@ add_hmw_analysis_sectors <- function(.df,
   .df %>%
     dplyr::filter(.data[[sector_col]] %in% c(agriculture, industry, services)) %>%
     dplyr::left_join(sector_mapping_data, by = sector_col) %>%
-    dplyr::relocate(hmw_analysis_sector_col, .after = sector_col)
+    dplyr::relocate(dplyr::all_of(hmw_analysis_sector_col), .after = dplyr::all_of(sector_col))
 
 }
 
@@ -486,7 +486,7 @@ tidy_hmw_pfu <- function(.df,
         TRUE ~ "Unknown sector column value"
       )
     ) %>%
-    dplyr::rename("Species" = sex_ilo_col) %>%
+    dplyr::rename("{species}" := .data[[sex_ilo_col]]) %>%
     dplyr::mutate("{energy_col}" := .data[[energy_col]] * 0.000000000001) %>%
     dplyr::mutate("{units_col}" := "EJ", .before = energy_col)
 }

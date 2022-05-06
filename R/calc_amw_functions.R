@@ -110,8 +110,8 @@ add_concordance_codes <- function(.df,
 
   .df %>%
     dplyr::left_join(concordance_data, by = country_name) %>%
-    dplyr::relocate(country_code_col, .before = country_name) %>%
-    dplyr::relocate(amw_region_code_col, .before = country_name)
+    dplyr::relocate(dplyr::all_of(country_code_col), .before = dplyr::all_of(country_name)) %>%
+    dplyr::relocate(dplyr::all_of(amw_region_code_col), .before = dplyr::all_of(country_name))
 }
 
 
@@ -448,7 +448,7 @@ calc_yearly_feed <- function(.df,
       "{nonworking_yearly_feed_col}" := .data[[nonworking_day_feed_col]] * .data[[nonworking_days_col]],
       "{total_yearly_feed_col}" := .data[[working_yearly_feed_col]] + .data[[nonworking_yearly_feed_col]]
       ) %>%
-    dplyr::select(species, amw_region_code_col, total_yearly_feed_col)
+    dplyr::select(dplyr::all_of(c(species, amw_region_code_col, total_yearly_feed_col)))
 
   .df %>%
     dplyr::left_join(yearly_feed, by = c(species, amw_region_code_col))
