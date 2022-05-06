@@ -2,19 +2,20 @@
 % Please edit documentation in R/calc_hmw_functions.R
 \name{calc_hmw_useful_energy}
 \alias{calc_hmw_useful_energy}
-\title{Title}
+\title{Calculate the useful energy produced by human workers}
 \usage{
 calc_hmw_useful_energy(
   .df,
-  hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
   sector_col = MWTools::mw_constants$sector_col,
   year = MWTools::mw_constants$year,
   unit = MWTools::mw_constants$unit,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
-  hmw_power_sheet = MWTools::hmw_analysis_constants$hmw_power_sheet,
-  hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
-  power_col = MWTools::hmw_analysis_constants$power_col,
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
+  hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
+  hmw_power_sheet = MWTools::hmw_analysis_constants$hmw_power_sheet,
+  industry_activity_col = MWTools::hmw_analysis_constants$industry_activity_col,
+  hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
+  power_col = MWTools::hmw_analysis_constants$power_col,
  
     total_working_hours_ilo_col = MWTools::hmw_analysis_constants$total_working_hours_ilo_col,
   useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
@@ -23,11 +24,38 @@ calc_hmw_useful_energy(
 )
 }
 \arguments{
-\item{.df}{}
-}
-\value{
+\item{.df}{A data frame containing the final and useful energy consumed
+by human workers.
+Usually produced by calling the
+\code{add_hmw_region_codes},
+\code{fill_ilo_data},
+\code{calc_total_hours_worked},
+\code{get_broad.sector_data},
+\code{add_hmw_analysis_sectors},
+\code{calc_hmw_final_energy}, and
+\code{calc_hmw_primary_energy} functions in sequence on the raw FAO data.}
 
+\item{sector_col, year, unit}{See \code{MWTools::mw_constants}.}
+
+\item{sex_ilo_col}{See \code{MWTools::ilo_cols}.}
+
+\item{hmw_region_code_col}{See \code{MWTools::conc_cols}.}
+
+\item{hmw_analysis_data_path, hmw_power_sheet, power_col, total_working_hours_ilo_col, useful_energy_hmw_col, hours_to_seconds, joules_to_megajoules, industry_activity_col}{See \code{MWTools::hmw_analysis_constants}.}
+
+\item{hmw_analysis_sector_col}{See \code{MWTools::mw_sectors$hmw_analysis_sector_col}.}
 }
 \description{
-Title
+Calculate the useful energy produced by human workers
+}
+\examples{
+useful_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
+  add_hmw_region_codes() \%>\%
+  fill_ilo_data() \%>\%
+  calc_total_hours_worked() \%>\%
+  get_broad.sector_data() \%>\%
+  add_hmw_analysis_sectors() \%>\%
+  calc_hmw_final_energy() \%>\%
+  calc_hmw_primary_energy() \%>\%
+  calc_hmw_useful_energy()
 }

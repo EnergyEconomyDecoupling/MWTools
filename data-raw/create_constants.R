@@ -33,6 +33,8 @@ usethis::use_data(ilo_cols, overwrite = TRUE)
 # Human Muscle Work (hmw) analysis data constants
 #
 hmw_analysis_constants <- list(total_working_hours_ilo_col = "Total.hours [hours/year]",
+                               col_1960 = "1960",
+                               col_2020 = "2020",
                                industry_activity_col = "Industry/Activity",
                                hmw_power_sheet = "hmw_power",
                                hmw_food_sheet = "hmw_food",
@@ -125,7 +127,8 @@ amw_analysis_constants <- list(prop_working_animals_col = "Prop.Working.animals"
                                primary_energy_ag = "Primary.energy.Ag [MJ/year]",
                                primary_energy_tr = "Primary.energy.Tr [MJ/year]",
                                amw_region_col = "AMW.Region",
-                               metric_col = "Metric")
+                               metric_col = "Metric",
+                               yes_const = "Yes")
 usethis::use_data(amw_analysis_constants, overwrite = TRUE)
 
 #
@@ -135,8 +138,10 @@ conc_cols <- list(country_code_col = "Country.code",
                   country_col = "Country",
                   country_code_pfu_col = "Country_PFU",
                   country_incl_col = "Country.incl.",
+                  country_code_iso3_col = "Country.code_ISO3",
                   amw_region_code_col = "AMW.Region.code",
-                  hmw_region_code_col = "HMW.Region.code")
+                  hmw_region_code_col = "HMW.Region.code",
+                  mapping_sheet = "Mapping")
 usethis::use_data(conc_cols, overwrite = TRUE)
 
 #

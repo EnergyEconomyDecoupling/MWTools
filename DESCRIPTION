@@ -27,6 +27,7 @@ Imports:
     magrittr,
     RCLabels,
     Rilostat,
+    rlang,
     scales,
     tidyverse
 Suggests: 

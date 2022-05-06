@@ -7,9 +7,11 @@
 add_hmw_region_codes(
   .df,
   concordance_path = MWTools::fao_concordance_path(),
+  mapping_sheet = MWTools::conc_cols$mapping_sheet,
   country_col = MWTools::conc_cols$country_col,
   country_code_col = MWTools::conc_cols$country_code_col,
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
+  country_code_iso3_col = MWTools::conc_cols$country_code_iso3_col,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   sector_col = MWTools::mw_constants$sector_col,
   year = MWTools::mw_constants$year,
@@ -18,15 +20,22 @@ add_hmw_region_codes(
 )
 }
 \arguments{
+\item{.df}{The raw ILO data, retrieved from ILOSTAT.}
+
 \item{concordance_path}{The path to the country code concordance information.
 Set to the bundled information by default,
 retrieved using the \code{fao_concordance_path} function.}
 
-\item{country_col, hmw_region_code_col}{See \code{MWTools::conc_cols}.}
-}
-\value{
+\item{country_col, country_code_col, hmw_region_code_col, mapping_sheet, country_code_iso3_col}{See \code{MWTools::conc_cols}.}
 
+\item{sex_ilo_col, yearly_working_hours_ilo_col, employed_persons_ilo_col}{See \code{MWTools::ilo_cols}.}
+
+\item{sector_col, year}{See \code{MWTools::mw_constants}.}
 }
 \description{
 ...
+}
+\examples{
+working_humans_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
+  add_hmw_region_codes()
 }

@@ -5,7 +5,7 @@
 \alias{amw_analysis_constants}
 \title{Animal muscle work (amw) analysis data constants}
 \format{
-A string list with 34 entries.
+A string list with 35 entries.
 \describe{
 \item{prop_working_animals_col}{The metadata column "Prop.Working.animals" representing the proportion of live animals that are working animals.}
 \item{prop_working_animals_ag_col}{The metadata column "Prop.Working.animals.Ag" representing the proportion of working animals that work in agriculture.}

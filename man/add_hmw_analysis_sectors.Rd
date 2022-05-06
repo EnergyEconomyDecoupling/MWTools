@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_hmw_functions.R
 \name{add_hmw_analysis_sectors}
 \alias{add_hmw_analysis_sectors}
-\title{Add the human muscle work sectors used in the bundled analysis data}
+\title{Map ILO broad sectors HMW analysis sector categories}
 \usage{
 add_hmw_analysis_sectors(
   .df,
@@ -16,6 +16,14 @@ add_hmw_analysis_sectors(
 )
 }
 \arguments{
+\item{.df}{A data frame containing the number of hours worked by broad sector
+(Agriculture, Industry, and Services).
+Usually produced by calling the
+\code{add_hmw_region_codes},
+\code{fill_ilo_data},
+\code{calc_total_hours_worked}, and
+\code{get_broad.sector_data} functions in sequence on the raw FAO data.}
+
 \item{hmw_analysis_data_path}{See \code{MWTools::hmw_analysis_data_path()}.}
 
 \item{sector_col}{See \code{MWTools::mw_constants}.}
@@ -24,12 +32,15 @@ add_hmw_analysis_sectors(
 
 \item{hmw_analysis_sector_col, agriculture, industry, services}{See \code{MWTools::mw_sectors}.}
 }
-\value{
-
-}
 \description{
-...
+Map ILO broad sectors HMW analysis sector categories, which correspond to
+activity levels (Primary, Secondary, and Sedentary).
 }
 \examples{
-
+working_hours_activity_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
+  add_hmw_region_codes() \%>\%
+  fill_ilo_data() \%>\%
+  calc_total_hours_worked() \%>\%
+  get_broad.sector_data() \%>\%
+  add_hmw_analysis_sectors()
 }

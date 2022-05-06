@@ -25,7 +25,17 @@ calc_useful_energy(
 )
 }
 \arguments{
-\item{.df}{A data frame containing ...}
+\item{.df}{A data frame containing the primary and final energy consumed by
+working animals. Usually produced by calling the
+\code{tidy_fao_live_animals},
+\code{add_concordance_codes},
+\code{trim_fao_data},
+\code{get_working_species},
+\code{calc_working_animals},
+\code{calc_sector_split},
+\code{calc_yearly_feed},
+\code{calc_final_energy}, and
+\code{calc_primary_energy} functions in sequence on the raw FAO data.}
 
 \item{amw_analysis_data_path}{The path to the animal muscle work analysis data,
 containing data for the number of working hours and
@@ -44,17 +54,14 @@ the \code{MWTools} package.}
 
 \item{working_animals_total_col, working_hours_col, working_seconds_col}{See \code{MWTools::amw_analysis_constants}.}
 
-\item{working_animals_total_col, working_animals_ag_col, working_animals_tr_col}{See \code{MWTools::amw_analysis_constants}.}
-}
-\value{
-
+\item{working_animals_total_col, working_animals_ag_col, working_animals_tr_col, working_days_col}{See \code{MWTools::amw_analysis_constants}.}
 }
 \description{
 Calculate the useful energy produced by working animals performing muscle work
 }
 \examples{
-working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals() \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species() \%>\%

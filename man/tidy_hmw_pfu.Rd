@@ -2,31 +2,58 @@
 % Please edit documentation in R/calc_hmw_functions.R
 \name{tidy_hmw_pfu}
 \alias{tidy_hmw_pfu}
-\title{Title}
+\title{Tidy}
 \usage{
 tidy_hmw_pfu(
   .df,
   year = MWTools::mw_constants$year,
-  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   sector_col = MWTools::mw_constants$sector_col,
   species = MWTools::mw_constants$species,
+  energy_col = MWTools::mw_constants$energy_col,
+  stage_col = MWTools::mw_constants$stage_col,
+  units_col = MWTools::mw_constants$units_col,
+  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   country_col = MWTools::conc_cols$country_col,
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
   final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
   primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
   useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
-  hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
-  energy_col = MWTools::mw_constants$energy_col,
-  stage_col = MWTools::mw_constants$stage_col,
-  units_col = MWTools::mw_constants$units_col
+  hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col
 )
 }
 \arguments{
-\item{units_col}{}
-}
-\value{
+\item{.df}{A data frame containing the final and useful energy consumed
+by human workers.
+Usually produced by calling the
+\code{add_hmw_region_codes},
+\code{fill_ilo_data},
+\code{calc_total_hours_worked},
+\code{get_broad.sector_data},
+\code{add_hmw_analysis_sectors},
+\code{calc_hmw_final_energy},
+\code{calc_hmw_primary_energy}, and
+\code{calc_hmw_useful_energy} functions in sequence on the raw FAO data.}
 
+\item{year, sector_col, species, energy_col, stage_col, units_col}{See \code{MWTools::mw_constants}.}
+
+\item{sex_ilo_col}{See \code{MWTools::ilo_cols}.}
+
+\item{country_col, hmw_region_code_col}{See \code{MWTools::conc_cols}.}
+
+\item{final_energy_col, primary_energy_col, useful_energy_hmw_col, hmw_analysis_sector_col}{See \code{MWTools::hmw_analysis_constants}.}
 }
 \description{
-Title
+Tidy
+}
+\examples{
+tidied_pfu_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
+  add_hmw_region_codes() \%>\%
+  fill_ilo_data() \%>\%
+  calc_total_hours_worked() \%>\%
+  get_broad.sector_data() \%>\%
+  add_hmw_analysis_sectors() \%>\%
+  calc_hmw_final_energy() \%>\%
+  calc_hmw_primary_energy() \%>\%
+  calc_hmw_useful_energy() \%>\%
+  tidy_hmw_pfu()
 }

@@ -11,14 +11,23 @@ get_broad.sector_data(
 )
 }
 \arguments{
-\item{.df}{}
-}
-\value{
+\item{.df}{A data frame containing the number of hours worked.
+Usually produced by calling the
+\code{add_hmw_region_codes},
+\code{fill_ilo_data}, and
+\code{calc_total_hours_worked} functions in sequence on the raw FAO data.}
 
+\item{sex_ilo_col}{See \code{MWTools::ilo_cols}.}
+
+\item{sector_col}{See \code{mWTools::mw_constants}.}
 }
 \description{
 Retrieve data with sectors organised by "Broad sector"
 }
 \examples{
-
+working_hours_sector_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
+  add_hmw_region_codes() \%>\%
+  fill_ilo_data() \%>\%
+  calc_total_hours_worked() \%>\%
+  get_broad.sector_data()
 }

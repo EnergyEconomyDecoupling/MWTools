@@ -59,6 +59,7 @@ Raw data for the estimation of human muscle work is obtained from the Internatio
 Using data for the number of employed persons and mean yearly working hours the primary, final, and useful energy associated with human muscle work can be estimated using the helper function `MWTools::calc_hmw_pfu`.
 
 ``` {r hmw_pfu}
+library(MWTools)
 
 ilo_fp <- PFUSetup::get_abs_paths()$ilo_data_path
 

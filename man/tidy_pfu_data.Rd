@@ -26,7 +26,19 @@ tidy_pfu_data(
 )
 }
 \arguments{
-\item{.df}{A data frame containing ...}
+\item{.df}{A data frame containing the primary, final, and useful energy
+associated with each working animal species.
+Usually produced by calling the
+\code{tidy_fao_live_animals},
+\code{add_concordance_codes},
+\code{trim_fao_data},
+\code{get_working_species},
+\code{calc_working_animals},
+\code{calc_sector_split},
+\code{calc_yearly_feed},
+\code{calc_final_energy},
+\code{calc_primary_energy}, and
+\code{calc_useful_energy} functions in sequence on the raw FAO data.}
 
 \item{country_code_col}{See \code{MWTools::conc_cols}.}
 
@@ -40,15 +52,12 @@ tidy_pfu_data(
 
 \item{primary_energy_total, primary_energy_ag, primary_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
 }
-\value{
-
-}
 \description{
 Tidy a data frame containg primary, final, and useful energy data for working animals
 }
 \examples{
-working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals() \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species() \%>\%

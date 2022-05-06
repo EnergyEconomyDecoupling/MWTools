@@ -15,11 +15,21 @@ fill_ilo_data(
 )
 }
 \arguments{
-\item{employed_persons_ilo_col}{}
-}
-\value{
+\item{.df}{The ILO labor data with added region codes.
+Usually produced by calling the
+\code{add_hmw_region_codes} function in sequence on the raw FAO data.}
 
+\item{country_col}{See \code{MWTools::conc_cols}.}
+
+\item{sex_ilo_col, yearly_working_hours_ilo_col, employed_persons_ilo_col}{See \code{MWTools::ilo_cols}.}
+
+\item{sector_col, year}{See \code{MWTools::mw_constants}.}
 }
 \description{
 Fill missing data for the number of hours worked and employed persons based on the earliest value
+}
+\examples{
+working_humans_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
+  add_hmw_region_codes() \%>\%
+  fill_ilo_data()
 }

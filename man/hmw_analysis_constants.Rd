@@ -5,7 +5,7 @@
 \alias{hmw_analysis_constants}
 \title{Human muscle work (hmw) analysis data constants}
 \format{
-A string list with 15 entries.
+A string list with 17 entries.
 \describe{
 \item{total_working_hours_ilo_col}{The data column "Total.hours \link{hours/year}" containing the number of hours worked yearly by all humans for a given country, sex, sector, and year.}
 \item{industry_activity_col}{The data column "Industry/Activity" containing information on the industry or activity of human workers. Usually one of "Sedentary", "Primary", or "Secondary".}
