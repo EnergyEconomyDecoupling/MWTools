@@ -207,7 +207,7 @@ get_working_species <- function(.df,
                                           mules,
                                           buffaloes,
                                           camelids_other)) %>%
-    tidyr::pivot_wider(names_from = species,
+    tidyr::pivot_wider(names_from = dplyr::all_of(species),
                        values_from = dplyr::all_of(value)) %>%
     replace(is.na(.), 0)
 
