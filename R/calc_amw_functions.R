@@ -200,13 +200,13 @@ get_working_species <- function(.df,
 
   # Filter data to only include working animal species
   working_species <- .df %>%
-    dplyr::filter(Species %in% c(asses,
-                                 camels,
-                                 cattle,
-                                 horses,
-                                 mules,
-                                 buffaloes,
-                                 camelids_other)) %>%
+    dplyr::filter(.data[[species]] %in% c(asses,
+                                          camels,
+                                          cattle,
+                                          horses,
+                                          mules,
+                                          buffaloes,
+                                          camelids_other)) %>%
     tidyr::pivot_wider(names_from = species,
                        values_from = value) %>%
     replace(is.na(.), 0)

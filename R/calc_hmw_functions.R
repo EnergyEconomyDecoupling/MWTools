@@ -110,7 +110,7 @@ calc_total_hours_worked <- function(.df,
     dplyr::mutate(
       "{total_working_hours_ilo_col}" := .data[[employed_persons_ilo_col]] * .data[[yearly_working_hours_ilo_col]]
     ) %>%
-    dplyr::select(-.data[[yearly_working_hours_ilo_col]])
+    dplyr::select(-dplyr::all_of(yearly_working_hours_ilo_col))
 
 }
 
@@ -253,7 +253,7 @@ calc_hmw_final_energy <- function(.df,
   # Reads food consumption data
   food_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
                                  sheet = hmw_food_sheet) %>%
-    dplyr::select(-.data[[unit]]) %>%
+    dplyr::select(-dplyr::all_of(unit)) %>%
     tidyr::pivot_longer(cols = -dplyr::all_of(c(sex_ilo_col, hmw_region_code_col, industry_activity_col)),
                         names_to = year,
                         values_to = food_consumption_col) %>%
@@ -265,7 +265,7 @@ calc_hmw_final_energy <- function(.df,
   # Reads plate waste data
   plate_waste_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
                                         sheet = hmw_plate_waste_sheet) %>%
-    dplyr::select(-.data[[unit]], -.data[[exemplar_method_col]]) %>%
+    dplyr::select(-dplyr::all_of(c(unit, exemplar_method_col))) %>%
     tidyr::pivot_longer(cols = -dplyr::all_of(c(hmw_region_code_col)),
                         names_to = year,
                         values_to = plate_waste_col) %>%
@@ -285,7 +285,7 @@ calc_hmw_final_energy <- function(.df,
       "{yearly_energy_consumption_pp_col}" := .data[[food_consumption_col]] * kcal_to_mj * 365,
       "{final_energy_col}" := (.data[[employed_persons_ilo_col]] * .data[[yearly_energy_consumption_pp_col]]) / (1 - .data[[plate_waste_col]])
     ) %>%
-    dplyr::select(-.data[[yearly_energy_consumption_pp_col]],-.data[[food_consumption_col]], -.data[[plate_waste_col]])
+    dplyr::select(-dplyr::all_of(c(yearly_energy_consumption_pp_col, food_consumption_col, plate_waste_col)))
 
 }
 
@@ -331,7 +331,7 @@ calc_hmw_primary_energy <- function(.df,
   # Read harvest waste data
   harvest_waste_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
                                           sheet = hmw_harvest_waste_sheet) %>%
-    dplyr::select(-.data[[unit]], -.data[[exemplar_method_col]]) %>%
+    dplyr::select(-dplyr::all_of(c(unit, exemplar_method_col))) %>%
     tidyr::pivot_longer(cols = -dplyr::all_of(c(hmw_region_code_col)),
                         names_to = year,
                         values_to = hmw_harvest_waste_col) %>%
