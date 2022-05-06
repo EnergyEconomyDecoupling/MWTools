@@ -68,6 +68,16 @@ specify_product <- function(.df,
 #' @export
 #'
 #' @examples
+#' hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu() %>%
+#'   specify_product() %>%
+#'   specify_primary_production()
+#' amw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_amw_pfu() %>%
+#'   specify_product() %>%
+#'   specify_primary_production()
 specify_primary_production <- function(.df,
                                        product = IEATools::iea_cols$product,
                                        primary = IEATools::all_stages$primary,
