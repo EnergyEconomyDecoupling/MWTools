@@ -345,11 +345,8 @@ calc_hmw_primary_energy <- function(.df,
     dplyr::mutate(
       "{primary_energy_col}" := .data[[final_energy_col]] / (1 - .data[[hmw_harvest_waste_col]])
     ) %>%
-    dplyr::select(-.data[[hmw_harvest_waste_col]])
-
-
+    dplyr::select(-dplyr::all_of(hmw_harvest_waste_col))
 }
-
 
 
 #' Calculate the useful energy produced by human workers
@@ -403,7 +400,7 @@ calc_hmw_useful_energy <- function(.df,
   # Reads power data
   power_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
                                   sheet = hmw_power_sheet) %>%
-    dplyr::select(-.data[[unit]]) %>%
+    dplyr::select(-dplyr::all_of(unit)) %>%
     tidyr::pivot_longer(cols = -dplyr::all_of(c(sex_ilo_col, hmw_region_code_col, industry_activity_col)),
                         names_to = year,
                         values_to = power_col) %>%
@@ -418,8 +415,7 @@ calc_hmw_useful_energy <- function(.df,
     dplyr::mutate(
       "{useful_energy_hmw_col}" := .data[[power_col]] * .data[[total_working_hours_ilo_col]] * hours_to_seconds * joules_to_megajoules
     ) %>%
-    dplyr::select(-.data[[power_col]])
-
+    dplyr::select(-dplyr::all_of(power_col))
 }
 
 
