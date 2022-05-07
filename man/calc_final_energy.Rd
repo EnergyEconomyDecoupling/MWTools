@@ -33,7 +33,7 @@ animals. Usually produced by calling the
 \item{ge_de_ratio}{The ratio between the gross energy content of the feed and
 digestible energy that is recovered from the feed.}
 
-\item{working_animals_total_col, working_animals_ag_col, working_animals_tr_col, total_yearly_feed_col, final_energy, final_energy_ag, final_energy_tr, final_energy_total}{See \code{MWTools::amw_analysis_constants}.}
+\item{working_animals_total_col, working_animals_ag_col, working_animals_tr_col, total_yearly_feed_col, final_energy_ag, final_energy_tr, final_energy_total}{See \code{MWTools::amw_analysis_constants}.}
 }
 \description{
 Calculate the final energy metabolised by working animals to perform muscle work.

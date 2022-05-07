@@ -161,7 +161,7 @@ trim_fao_data <- function(.df,
 #'            `tidy_fao_live_animals`,
 #'            `add_concordance_codes`, and
 #'            `trim_fao_data` functions in sequence on the raw FAO data.
-#' @param species,value,year See `MWTools::mw_constants`.
+#' @param species,country_name,value,year See `MWTools::mw_constants`.
 #' @param live_animals_col See `MWtools::amw_analysis_constants`.
 #' @param country_code_col,amw_region_code_col See `MWtools::conc_cols`.
 #' @param asses,camels,cattle,horses,mules,buffaloes,camelids_other,camelids
@@ -474,7 +474,7 @@ calc_yearly_feed <- function(.df,
 #' @param trough_waste The proportion of feed energy wasted when feeding working animals.
 #' @param ge_de_ratio The ratio between the gross energy content of the feed and
 #'                    digestible energy that is recovered from the feed.
-#' @param working_animals_total_col,working_animals_ag_col,working_animals_tr_col,total_yearly_feed_col,final_energy,final_energy_ag,final_energy_tr,final_energy_total
+#' @param working_animals_total_col,working_animals_ag_col,working_animals_tr_col,total_yearly_feed_col,final_energy_ag,final_energy_tr,final_energy_total
 #'        See `MWTools::amw_analysis_constants`.
 #'
 #'
@@ -585,16 +585,16 @@ calc_primary_energy <- function(.df,
 #'                               the `MWTools` package.
 #' @param species,method_source See `MWTools::mw_constants`.
 #' @param wa_power_sheet,wa_days_hours_sheet See `MWTools::amw_analysis_constants`.
-#' @param working_animals_total_col,working_hours_col,working_seconds_col See `MWTools::amw_analysis_constants`.
+#' @param working_hours_col,working_seconds_col See `MWTools::amw_analysis_constants`.
 #' @param amw_region_code_col,power_per_animal See `MWTools::amw_analysis_constants`.
 #' @param useful_energy_total,useful_energy_ag,useful_energy_tr See `MWTools::amw_analysis_constants`.
 #' @param working_animals_total_col,working_animals_ag_col,working_animals_tr_col,working_days_col See `MWTools::amw_analysis_constants`.
 #'
-#'
 #' @export
 #'
 #' @examples
-#' working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) %>%
+#' MWTools::amw_test_data_path() %>%
+#'   read.csv() %>%
 #'   tidy_fao_live_animals() %>%
 #'   add_concordance_codes() %>%
 #'   trim_fao_data() %>%
@@ -605,7 +605,6 @@ calc_primary_energy <- function(.df,
 #'   calc_final_energy() %>%
 #'   calc_primary_energy() %>%
 #'   calc_useful_energy()
-#'
 calc_useful_energy <- function(.df,
                                amw_analysis_data_path = MWTools::amw_analysis_data_path(),
                                species = MWTools::mw_constants$species,

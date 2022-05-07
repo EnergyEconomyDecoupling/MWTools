@@ -48,11 +48,11 @@ the \code{MWTools} package.}
 
 \item{wa_power_sheet, wa_days_hours_sheet}{See \code{MWTools::amw_analysis_constants}.}
 
+\item{working_hours_col, working_seconds_col}{See \code{MWTools::amw_analysis_constants}.}
+
 \item{amw_region_code_col, power_per_animal}{See \code{MWTools::amw_analysis_constants}.}
 
 \item{useful_energy_total, useful_energy_ag, useful_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
-
-\item{working_animals_total_col, working_hours_col, working_seconds_col}{See \code{MWTools::amw_analysis_constants}.}
 
 \item{working_animals_total_col, working_animals_ag_col, working_animals_tr_col, working_days_col}{See \code{MWTools::amw_analysis_constants}.}
 }
@@ -60,7 +60,8 @@ the \code{MWTools} package.}
 Calculate the useful energy produced by working animals performing muscle work
 }
 \examples{
-working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+MWTools::amw_test_data_path() \%>\%
+  read.csv() \%>\%
   tidy_fao_live_animals() \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
@@ -71,5 +72,4 @@ working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
   calc_final_energy() \%>\%
   calc_primary_energy() \%>\%
   calc_useful_energy()
-
 }

@@ -30,7 +30,7 @@ country over time. Usually produced by calling the
 \code{add_concordance_codes}, and
 \code{trim_fao_data} functions in sequence on the raw FAO data.}
 
-\item{species, value, year}{See \code{MWTools::mw_constants}.}
+\item{species, country_name, value, year}{See \code{MWTools::mw_constants}.}
 
 \item{country_code_col, amw_region_code_col}{See \code{MWtools::conc_cols}.}
 

@@ -230,24 +230,25 @@ add_hmw_analysis_sectors <- function(.df,
 #'   get_broad.sector_data() %>%
 #'   add_hmw_analysis_sectors() %>%
 #'   calc_hmw_final_energy()
-calc_hmw_final_energy <- function(.df,
-                                  hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
-                                  sector_col = MWTools::mw_constants$sector_col,
-                                  year = MWTools::mw_constants$year,
-                                  unit = MWTools::mw_constants$unit,
-                                  exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
-                                  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
-                                  hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
-                                  hmw_food_sheet = MWTools::hmw_analysis_constants$hmw_food_sheet,
-                                  hmw_plate_waste_sheet = MWTools::hmw_analysis_constants$hmw_plate_waste_sheet,
-                                  food_consumption_col = MWTools::hmw_analysis_constants$food_consumption_col,
-                                  yearly_energy_consumption_pp_col = MWTools::hmw_analysis_constants$yearly_energy_consumption_pp_col,
-                                  final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
-                                  plate_waste_col = MWTools::hmw_analysis_constants$plate_waste_col,
-                                  hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
-                                  kcal_to_mj = MWTools::unit_constants$kcal_to_mj,
-                                  employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
-                                  industry_activity_col = MWTools::hmw_analysis_constants$industry_activity_col){
+calc_hmw_final_energy <- function(
+    .df,
+    hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
+    sector_col = MWTools::mw_constants$sector_col,
+    year = MWTools::mw_constants$year,
+    unit = MWTools::mw_constants$unit,
+    exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
+    sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
+    hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
+    hmw_food_sheet = MWTools::hmw_analysis_constants$hmw_food_sheet,
+    hmw_plate_waste_sheet = MWTools::hmw_analysis_constants$hmw_plate_waste_sheet,
+    food_consumption_col = MWTools::hmw_analysis_constants$food_consumption_col,
+    yearly_energy_consumption_pp_col = MWTools::hmw_analysis_constants$yearly_energy_consumption_pp_col,
+    final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
+    plate_waste_col = MWTools::hmw_analysis_constants$plate_waste_col,
+    hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
+    kcal_to_mj = MWTools::unit_constants$kcal_to_mj,
+    employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
+    industry_activity_col = MWTools::hmw_analysis_constants$industry_activity_col){
 
 
   # Reads food consumption data
