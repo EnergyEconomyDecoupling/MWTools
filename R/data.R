@@ -21,6 +21,7 @@
 #' mw_constants
 "mw_constants"
 
+
 #' ILO data column names
 #'
 #' A string list containing a selection of ILO data column names. For data retrieved by the package `Rilostat`.
@@ -36,6 +37,7 @@
 #' @examples
 #' ilo_cols
 "ilo_cols"
+
 
 #' Working animal species
 #'
@@ -60,6 +62,7 @@
 #' mw_species
 "mw_species"
 
+
 #' FAO data column names
 #'
 #' A string list containing a selection of FAO data column names. For data retrieved by the package `FAOSTAT`.
@@ -77,6 +80,7 @@
 #' fao_cols
 "fao_cols"
 
+
 #' FAO data item code names
 #'
 #' A string list containing a selection of FAO data code names. See `FAOSTAT::FAOsearch()`
@@ -90,6 +94,7 @@
 #' @examples
 #' fao_codes
 "fao_codes"
+
 
 #' ILO data item code names
 #'
@@ -106,32 +111,34 @@
 #' ilo_codes
 "ilo_codes"
 
+
 #' Human muscle work (hmw) analysis data constants
 #'
 #' A string list containing a selection of hmw analysis constants.
 #'
 #' @format A string list with `r length(hmw_analysis_constants)` entries.
 #' \describe{
-#' \item{total_working_hours_ilo_col}{The data column "Total.hours [hours/year]" containing the number of hours worked yearly by all humans for a given country, sex, sector, and year.}
+#' \item{total_working_hours_ilo_col}{The data column "Total.hours \[hours/year\]" containing the number of hours worked yearly by all humans for a given country, sex, sector, and year.}
 #' \item{industry_activity_col}{The data column "Industry/Activity" containing information on the industry or activity of human workers. Usually one of "Sedentary", "Primary", or "Secondary".}
 #' \item{hmw_power_sheet}{The excel sheet name "hmw_power", which contains information on the power output of humans performing muscle work.}
 #' \item{hmw_food_sheet}{The excel sheet name "hmw_food", which contains information on the food consumption of humans.}
 #' \item{hmw_sector_map_sheet}{The excel sheet name "hmw_sector_map", which contains information on the mapping the sector names used in the hmw analysis data excel file bundled with this package with the sector names in the ILO data.}
 #' \item{hmw_plate_waste_sheet}{The excel sheet name "hmw_plate_waste", which contains information on proportion of food waste by region.}
 #' \item{hmw_harvest_waste_sheet}{The excel sheet name "hmw_harvest_waste", which contains information on the proportion of phytomass lost at the harvest stage by region.}
-#' \item{food_consumption_col}{The data column "Food consumption [kcal/day per person]", which contains information on the daily food consumption of humans in kilocalories (kcal).}
-#' \item{yearly_energy_consumption_pp_col}{The data column "Energy consumption [MJ/year per person]", which contains information on the yearly food consumption per working person in megajoules (MJ).}
-#' \item{final_energy_col}{The data column "Final energy [MJ/year]", which contains data on the yearly food consumption of all working persons in megajoules (MJ).}
-#' \item{primary_energy_col}{The data column "Primary energy [MJ/year]", which contains data on the yearly quantity of biomass required to meet the food requirements of all working persons in megajoules (MJ).}
-#' \item{useful_energy_hmw_col}{The data column "Useful energy [MJ/year]", which contains data on the yearly useful work performed by all working persons in megajoules (MJ).}
-#' \item{power_col}{The data column "Power [W]", which contains data on the power output of humans performing muscle work.}
-#' \item{plate_waste_col}{The data column "Plate waste [-]", which contains data on the proportion of food waste by region.}
-#' \item{hmw_harvest_waste_col}{The data column "arvest waste [-]", which contains data on the proportion of phytomass lost at the harvest stage by region.}
+#' \item{food_consumption_col}{The data column "Food consumption \[kcal/day per person\]", which contains information on the daily food consumption of humans in kilocalories (kcal).}
+#' \item{yearly_energy_consumption_pp_col}{The data column "Energy consumption \[MJ/year per person\]", which contains information on the yearly food consumption per working person in megajoules (MJ).}
+#' \item{final_energy_col}{The data column "Final energy \[MJ/year\]", which contains data on the yearly food consumption of all working persons in megajoules (MJ).}
+#' \item{primary_energy_col}{The data column "Primary energy \[MJ/year\]", which contains data on the yearly quantity of biomass required to meet the food requirements of all working persons in megajoules (MJ).}
+#' \item{useful_energy_hmw_col}{The data column "Useful energy \[MJ/year\]", which contains data on the yearly useful work performed by all working persons in megajoules (MJ).}
+#' \item{power_col}{The data column "Power \[W\]", which contains data on the power output of humans performing muscle work.}
+#' \item{plate_waste_col}{The data column "Plate waste \[-\]", which contains data on the proportion of food waste by region.}
+#' \item{hmw_harvest_waste_col}{The data column "arvest waste \[-\]", which contains data on the proportion of phytomass lost at the harvest stage by region.}
 #' }
 #'
 #' @examples
 #' hmw_analysis_constants
 "hmw_analysis_constants"
+
 
 #' Animal muscle work (amw) analysis data constants
 #'
@@ -147,30 +154,30 @@
 #' \item{wa_feed_sheet}{The excel sheet name "WA_feed" representing the sheet containing information on the feed requirements of working animals.}
 #' \item{wa_days_hours_sheet}{The excel sheet name "WA_days_hours" representing the sheet containing information on the number of days and hours worked by working animals.}
 #' \item{wa_power_sheet}{The excel sheet name "WA_power" representing the sheet containing information on the power output of working animals.}
-#' \item{working_seconds_col}{The data column "Working.seconds [seconds per animal]" representing the number of seconds of work performed by working animals.}
-#' \item{working_hours_col}{The data column "Working.hours [hour per animal]" representing the number of hours of work performed by working animals.}
-#' \item{working_days_col}{The data column "Working.days [day per animal]" representing the number of days that working animals worked.}
-#' \item{nonworking_days_col}{The data column "Non-Working days [day per animal]" representing the number of days that working animals did not work.}
-#' \item{power_per_animal}{The data column "Power.per.animal [W]" representing the power output of working animals.}
+#' \item{working_seconds_col}{The data column "Working.seconds \[seconds per animal\]" representing the number of seconds of work performed by working animals.}
+#' \item{working_hours_col}{The data column "Working.hours \[hour per animal\]" representing the number of hours of work performed by working animals.}
+#' \item{working_days_col}{The data column "Working.days \[day per animal\]" representing the number of days that working animals worked.}
+#' \item{nonworking_days_col}{The data column "Non-Working days \[day per animal\]" representing the number of days that working animals did not work.}
+#' \item{power_per_animal}{The data column "Power.per.animal \[W\]" representing the power output of working animals.}
 #' \item{live_animals_col}{The data column "Live.animals" representing the number of live animals.}
 #' \item{working_animals_col}{The data column "Working.animals" representing the number of working animals.}
 #' \item{working_animals_total_col}{The data column "Working.animals.total" representing the total number of working animals.}
 #' \item{working_animals_ag_col}{The data column "Working.animals.Ag" representing the number of working animals that work in agriculture.}
 #' \item{working_animals_tr_col}{The data column "Working.animals.Tr" representing the number of working animals that work transporting goods outside of agriculture.}
-#' \item{working_day_feed_col}{The data column "Working.day.feed [MJ/day per animal]" representing the quantity of feed required by working animals each working day.}
-#' \item{nonworking_day_feed_col}{The data column "Non-Working.day.feed [MJ/day per animal]" representing the quantity of feed required by working animals each non-working day. }
-#' \item{working_yearly_feed_col}{The data column "Working.yearly.feed [MJ/year per animal]" representing the quantity of feed required by working animals on working days each year.}
-#' \item{nonworking_yearly_feed_col}{The data column "Non-Working.yearly.feed [MJ/year per animal]" representing the quantity of feed required by working animals on non-working days each year.}
-#' \item{total_yearly_feed_col}{The data column "Total.yearly.feed [MJ/year per animal]" representing the quantity of feed required by working animals each year.}
-#' \item{useful_energy_total}{The data column "Useful.energy.total [MJ/year]" representing the total useful energy produced by working animals through muscle work.}
-#' \item{useful_energy_ag}{The data column "Useful.energy.Ag [MJ/year]" representing the useful energy produced by working animals through muscle work in agriculture.}
-#' \item{useful_energy_tr}{The data column "Useful.energy.Tr [MJ/year]" representing the useful energy produced by working animals through muscle work transporting goods outside of agriculture.}
-#' \item{final_energy_total}{The data column "Final.energy.total [MJ/year]" representing the total final energy (feed) required by working animals.}
-#' \item{final_energy_ag}{The data column "Final.energy.Ag [MJ/year]" representing the final energy (feed) required by working animals in agriculture.}
-#' \item{final_energy_tr}{The data column "Final.energy.Tr [MJ/year]" representing the final energy (feed) required by working animals working to transport goods outside of agriculture.}
-#' \item{primary_energy_total}{The data column "Primary.energy.total [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the total final energy required by working animals.}
-#' \item{primary_energy_ag}{The data column "Primary.energy.Ag [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals in agriculture.}
-#' \item{primary_energy_tr}{The data column "Primary.energy.Tr [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals transporting goods outside of agriculture.}
+#' \item{working_day_feed_col}{The data column "Working.day.feed \[MJ/day per animal\]" representing the quantity of feed required by working animals each working day.}
+#' \item{nonworking_day_feed_col}{The data column "Non-Working.day.feed \[MJ/day per animal\]" representing the quantity of feed required by working animals each non-working day. }
+#' \item{working_yearly_feed_col}{The data column "Working.yearly.feed \[MJ/year per animal\]" representing the quantity of feed required by working animals on working days each year.}
+#' \item{nonworking_yearly_feed_col}{The data column "Non-Working.yearly.feed \[MJ/year per animal\]" representing the quantity of feed required by working animals on non-working days each year.}
+#' \item{total_yearly_feed_col}{The data column "Total.yearly.feed \[MJ/year per animal\]" representing the quantity of feed required by working animals each year.}
+#' \item{useful_energy_total}{The data column "Useful.energy.total \[MJ/year\]" representing the total useful energy produced by working animals through muscle work.}
+#' \item{useful_energy_ag}{The data column "Useful.energy.Ag \[MJ/year\]" representing the useful energy produced by working animals through muscle work in agriculture.}
+#' \item{useful_energy_tr}{The data column "Useful.energy.Tr \[MJ/year\]" representing the useful energy produced by working animals through muscle work transporting goods outside of agriculture.}
+#' \item{final_energy_total}{The data column "Final.energy.total \[MJ/year\]" representing the total final energy (feed) required by working animals.}
+#' \item{final_energy_ag}{The data column "Final.energy.Ag \[MJ/year\]" representing the final energy (feed) required by working animals in agriculture.}
+#' \item{final_energy_tr}{The data column "Final.energy.Tr \[MJ/year\]" representing the final energy (feed) required by working animals working to transport goods outside of agriculture.}
+#' \item{primary_energy_total}{The data column "Primary.energy.total \[MJ/year\]" representing the primary energy (total feed crop biomass) embodied in the total final energy required by working animals.}
+#' \item{primary_energy_ag}{The data column "Primary.energy.Ag \[MJ/year\]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals in agriculture.}
+#' \item{primary_energy_tr}{The data column "Primary.energy.Tr \[MJ/year\]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals transporting goods outside of agriculture.}
 #' \item{mw_region_code_col}{The metadata column "MW.Region.code" representing the codes associated with the aggregate regions used in this package.}
 #' \item{mw_region_col}{The metadata column "MW.Region" representing the a names associated with the aggregate regions used in this package.}
 #' \item{metric_col}{The metadata column "Metric" representing the metric name associated with a particular data series.}
@@ -180,6 +187,7 @@
 #' @examples
 #' amw_analysis_constants
 "amw_analysis_constants"
+
 
 #' Country concordance columns
 #'

@@ -6,6 +6,13 @@
 #' needed for conversion to PSUT matrices.
 #'
 #' @param .df A data frame, likely produced by `calc_amw_pfu()` or `calc_hmw_pfu()`.
+#' @param product See `IEATools::iea_cols`.
+#' @param product,primary,final,useful See `IEATools::all_stages`.
+#' @param species See `MWTools::mw_constants`.
+#' @param human See `MWTools::mw_species`.
+#' @param stage,sector See `MWTools::mw_constants`.
+#' @param biomass,food,feed,hu_mech,an_mech,an_p See `MWTools::mw_products`.
+#' @param transport See `MWTools::sectors`.
 #'
 #' @return A data frame with additional rows needed for converting to PSUT matrices.
 #'
@@ -32,13 +39,10 @@ specify_product <- function(.df,
                             biomass = MWTools::mw_products$biomass,
                             food = MWTools::mw_products$food,
                             feed = MWTools::mw_products$feed,
-                            transport = MWTools::mw_sectors$transport_sector,
                             hu_mech = MWTools::mw_products$hu_mech,
                             an_mech = MWTools::mw_products$an_mech,
-                            an_p = MWTools::mw_products$an_p) {
-
-  # Go through each row of .df to create the specified data frame.
-
+                            an_p = MWTools::mw_products$an_p,
+                            transport = MWTools::mw_sectors$transport_sector) {
 
   # Add a Product column
   .df %>%

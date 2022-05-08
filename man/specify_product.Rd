@@ -17,14 +17,28 @@ specify_product(
   biomass = MWTools::mw_products$biomass,
   food = MWTools::mw_products$food,
   feed = MWTools::mw_products$feed,
-  transport = MWTools::mw_sectors$transport_sector,
   hu_mech = MWTools::mw_products$hu_mech,
   an_mech = MWTools::mw_products$an_mech,
-  an_p = MWTools::mw_products$an_p
+  an_p = MWTools::mw_products$an_p,
+  transport = MWTools::mw_sectors$transport_sector
 )
 }
 \arguments{
 \item{.df}{A data frame, likely produced by \code{calc_amw_pfu()} or \code{calc_hmw_pfu()}.}
+
+\item{product}{See \code{IEATools::iea_cols}.}
+
+\item{species}{See \code{MWTools::mw_constants}.}
+
+\item{human}{See \code{MWTools::mw_species}.}
+
+\item{stage, sector}{See \code{MWTools::mw_constants}.}
+
+\item{biomass, food, feed, hu_mech, an_mech, an_p}{See \code{MWTools::mw_products}.}
+
+\item{transport}{See \code{MWTools::sectors}.}
+
+\item{product, primary, final, useful}{See \code{IEATools::all_stages}.}
 }
 \value{
 A data frame with additional rows needed for converting to PSUT matrices.
