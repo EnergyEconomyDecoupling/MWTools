@@ -28,6 +28,8 @@ specify_product(
 
 \item{product}{See \code{IEATools::iea_cols}.}
 
+\item{primary, final, useful}{See \code{IEATools::all_stages}.}
+
 \item{species}{See \code{MWTools::mw_constants}.}
 
 \item{human}{See \code{MWTools::mw_species}.}
@@ -37,8 +39,6 @@ specify_product(
 \item{biomass, food, feed, hu_mech, an_mech, an_p}{See \code{MWTools::mw_products}.}
 
 \item{transport}{See \code{MWTools::sectors}.}
-
-\item{product, primary, final, useful}{See \code{IEATools::all_stages}.}
 }
 \value{
 A data frame with additional rows needed for converting to PSUT matrices.

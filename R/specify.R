@@ -7,7 +7,7 @@
 #'
 #' @param .df A data frame, likely produced by `calc_amw_pfu()` or `calc_hmw_pfu()`.
 #' @param product See `IEATools::iea_cols`.
-#' @param product,primary,final,useful See `IEATools::all_stages`.
+#' @param primary,final,useful See `IEATools::all_stages`.
 #' @param species See `MWTools::mw_constants`.
 #' @param human See `MWTools::mw_species`.
 #' @param stage,sector See `MWTools::mw_constants`.
@@ -66,6 +66,12 @@ specify_product <- function(.df,
 #'
 #' @param .df A muscle work data frame with products already specified,
 #'            usually by `specify_product()`.
+#' @param product See `IEATools::iea_cols`.
+#' @param primary See `IEATools::all_stages`.
+#' @param stage See `MWTools::mw_constants`.
+#' @param notation The notation to be used for primary energy product specification.
+#'                 Default is `IEATools::from_notation`.
+#' @param resources See `MWTools::mw_sectors`.
 #'
 #' @return A data frame with
 #'
