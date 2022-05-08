@@ -6,8 +6,8 @@
 #' needed for conversion to PSUT matrices.
 #'
 #' @param .df A data frame, likely produced by `calc_amw_pfu()` or `calc_hmw_pfu()`.
-#' @param product See `IEATools::iea_cols`.
-#' @param primary,final,useful See `IEATools::all_stages`.
+#' @param product See `MWTools::mw_constants`.
+#' @param primary,final,useful See `MWTools::all_stages`.
 #' @param species See `MWTools::mw_constants`.
 #' @param human See `MWTools::mw_species`.
 #' @param stage,sector See `MWTools::mw_constants`.
@@ -28,7 +28,7 @@
 #'   calc_amw_pfu() %>%
 #'   specify_product()
 specify_product <- function(.df,
-                            product = IEATools::iea_cols$product,
+                            product = MWTools::mw_constants$product,
                             primary = MWTools::all_stages$primary,
                             final = MWTools::all_stages$final,
                             useful = MWTools::all_stages$useful,
@@ -66,7 +66,7 @@ specify_product <- function(.df,
 #'
 #' @param .df A muscle work data frame with products already specified,
 #'            usually by `specify_product()`.
-#' @param product See `IEATools::iea_cols`.
+#' @param product See `MWTools::mw_constants`.
 #' @param primary See `MWTools::all_stages`.
 #' @param stage See `MWTools::mw_constants`.
 #' @param notation The notation to be used for primary energy product specification.
@@ -90,7 +90,7 @@ specify_product <- function(.df,
 #'   specify_primary_production()
 specify_primary_production <- function(.df,
                                        product = MWTools::mw_constants$product,
-                                       primary = IEATools::all_stages$primary,
+                                       primary = MWTools::all_stages$primary,
                                        stage = MWTools::mw_constants$stage_col,
                                        notation = RCLabels::from_notation,
                                        resources = MWTools::mw_sectors$resources_sector) {

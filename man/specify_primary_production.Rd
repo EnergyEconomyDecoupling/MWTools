@@ -7,7 +7,7 @@
 specify_primary_production(
   .df,
   product = MWTools::mw_constants$product,
-  primary = IEATools::all_stages$primary,
+  primary = MWTools::all_stages$primary,
   stage = MWTools::mw_constants$stage_col,
   notation = RCLabels::from_notation,
   resources = MWTools::mw_sectors$resources_sector
@@ -17,7 +17,7 @@ specify_primary_production(
 \item{.df}{A muscle work data frame with products already specified,
 usually by \code{specify_product()}.}
 
-\item{product}{See \code{IEATools::iea_cols}.}
+\item{product}{See \code{MWTools::mw_constants}.}
 
 \item{primary}{See \code{MWTools::all_stages}.}
 

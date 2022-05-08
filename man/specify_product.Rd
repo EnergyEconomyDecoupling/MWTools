@@ -6,7 +6,7 @@
 \usage{
 specify_product(
   .df,
-  product = IEATools::iea_cols$product,
+  product = MWTools::mw_constants$product,
   primary = MWTools::all_stages$primary,
   final = MWTools::all_stages$final,
   useful = MWTools::all_stages$useful,
@@ -26,9 +26,9 @@ specify_product(
 \arguments{
 \item{.df}{A data frame, likely produced by \code{calc_amw_pfu()} or \code{calc_hmw_pfu()}.}
 
-\item{product}{See \code{IEATools::iea_cols}.}
+\item{product}{See \code{MWTools::mw_constants}.}
 
-\item{primary, final, useful}{See \code{IEATools::all_stages}.}
+\item{primary, final, useful}{See \code{MWTools::all_stages}.}
 
 \item{species}{See \code{MWTools::mw_constants}.}
 

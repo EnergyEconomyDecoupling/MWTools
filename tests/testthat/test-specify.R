@@ -13,11 +13,11 @@ test_that("specify_product() works as expected", {
   specified_amw <- amw_df %>%
     specify_product()
 
-  expect_equal(unique(specified_hmw[[IEATools::iea_cols$product]]),
+  expect_equal(unique(specified_hmw[[MWTools::mw_constants$product]]),
                c(MWTools::mw_products$food,
                  MWTools::mw_products$biomass,
                  MWTools::mw_products$hu_mech))
-  expect_equal(unique(specified_amw[[IEATools::iea_cols$product]]),
+  expect_equal(unique(specified_amw[[MWTools::mw_constants$product]]),
                c(MWTools::mw_products$an_mech,
                  MWTools::mw_products$an_p,
                  MWTools::mw_products$feed,
@@ -43,10 +43,10 @@ test_that("specify_primary_production() works as expected", {
     specify_primary_production()
 
   nrow_primary_hmw_biomass <- specified_hmw %>%
-    dplyr::filter(.data[[IEATools::iea_cols$product]] == MWTools::mw_products$biomass) %>%
+    dplyr::filter(.data[[MWTools::mw_constants$product]] == MWTools::mw_products$biomass) %>%
     nrow()
   nrow_primary_hmw_biomass_from_resources <- specified_hmw %>%
-    dplyr::filter(.data[[IEATools::iea_cols$product]] == RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
+    dplyr::filter(.data[[MWTools::mw_constants$product]] == RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
                                                                                    suff = "Resources",
                                                                                    notation = RCLabels::from_notation)) %>%
     nrow()

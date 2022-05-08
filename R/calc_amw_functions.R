@@ -288,7 +288,7 @@ calc_working_animals <- function(.df,
                                              sheet = wa_perc_sheet) %>%
     tibble::tibble() %>%
     dplyr::select(-dplyr::all_of(c(exemplar_method_col, amw_region_col))) %>%
-    tidyr::pivot_longer(cols = -dplyr::all_of(c(species, amw_region_code_col)), # Use IEATools::year_cols()?
+    tidyr::pivot_longer(cols = -dplyr::all_of(c(species, amw_region_code_col)),
                         names_to = year,
                         values_to = prop_working_animals_col) %>%
     dplyr::mutate(
@@ -358,7 +358,7 @@ calc_sector_split <- function(.df,
   end_use <- readxl::read_excel(amw_analysis_data_path,
                                 sheet = wa_enduse_sheet) %>%
     dplyr::select(-dplyr::all_of(c(method_source, metric, amw_region_col))) %>%
-    tidyr::pivot_longer(cols = -dplyr::all_of(c(species, amw_region_code_col)), # Use IEATools::year_cols()?
+    tidyr::pivot_longer(cols = -dplyr::all_of(c(species, amw_region_code_col)),
                         names_to = year,
                         values_to = prop_working_animals_ag_col) %>%
     dplyr::mutate(

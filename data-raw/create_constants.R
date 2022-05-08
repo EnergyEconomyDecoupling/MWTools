@@ -1,12 +1,14 @@
 ### SOURCE this file when adding new constants ###
 ### Document constants in R/Data.R script ###
 
+library(IEATools)
+
 #
 # Constants for use in MWTools package
 #
 
 mw_constants <- list(country_name = "Country.name",
-                     year = "Year",
+                     year = IEATools::iea_cols$year,
                      species = "Species",
                      unit = "Unit",
                      units_col = "Units",
