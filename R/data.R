@@ -9,6 +9,7 @@
 #' \item{species}{The name of the metadata column representing a species of live animal from FAO data.}
 #' \item{unit}{The name of the metadata column containing the units associated with the `value` column.}
 #' \item{units_col}{The name of the metadata column containing the units associated with the `energy_col` column.}
+#' \item{product}{The name of the product column, whose value is taken from `IEATools::iea_cols`.}
 #' \item{value}{The name of the data column containing the values of a given observation.}
 #' \item{sector_col}{The name of the metadata column containing the sector associated with the `value`.}
 #' \item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the `value`. Usally one of "Primary", "Final", or "Useful".}
@@ -261,4 +262,21 @@
 #' @examples
 #' mw_sectors
 "mw_sectors"
+
+
+#' All energy stages
+#'
+#' A string list containing options for the all stages of energy conversion chain analysis.
+#' The values of these constants are taken from the `IEATools` package for consistency.
+#'
+#' @format A string list with `r length(all_stages)`
+#' \describe{
+#' \item{primary}{The string identifier for the Primary stage of the energy conversion chain.}
+#' \item{final}{The string identifier for the Final stage of the energy conversion chain.}
+#' \item{useful}{The string identifier for the Useful stage of the energy conversion chain.}
+#' \item{services}{The string identifier for the Services stage of the energy conversion chain.}
+#' }
+#' @examples
+#' all_stages
+"all_stages"
 

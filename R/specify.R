@@ -29,9 +29,9 @@
 #'   specify_product()
 specify_product <- function(.df,
                             product = IEATools::iea_cols$product,
-                            primary = IEATools::all_stages$primary,
-                            final = IEATools::all_stages$final,
-                            useful = IEATools::all_stages$useful,
+                            primary = MWTools::all_stages$primary,
+                            final = MWTools::all_stages$final,
+                            useful = MWTools::all_stages$useful,
                             species = MWTools::mw_constants$species,
                             human = MWTools::mw_species$human,
                             stage = MWTools::mw_constants$stage_col,
@@ -67,10 +67,10 @@ specify_product <- function(.df,
 #' @param .df A muscle work data frame with products already specified,
 #'            usually by `specify_product()`.
 #' @param product See `IEATools::iea_cols`.
-#' @param primary See `IEATools::all_stages`.
+#' @param primary See `MWTools::all_stages`.
 #' @param stage See `MWTools::mw_constants`.
 #' @param notation The notation to be used for primary energy product specification.
-#'                 Default is `IEATools::from_notation`.
+#'                 Default is `RCLabels::from_notation`.
 #' @param resources See `MWTools::mw_sectors`.
 #'
 #' @return A data frame with
@@ -89,7 +89,7 @@ specify_product <- function(.df,
 #'   specify_product() %>%
 #'   specify_primary_production()
 specify_primary_production <- function(.df,
-                                       product = IEATools::iea_cols$product,
+                                       product = MWTools::mw_constants$product,
                                        primary = IEATools::all_stages$primary,
                                        stage = MWTools::mw_constants$stage_col,
                                        notation = RCLabels::from_notation,

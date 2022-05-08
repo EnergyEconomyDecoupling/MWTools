@@ -10,6 +10,7 @@ mw_constants <- list(country_name = "Country.name",
                      species = "Species",
                      unit = "Unit",
                      units_col = "Units",
+                     product = IEATools::iea_cols$product,
                      value = "Value",
                      sector_col = "Sector",
                      stage_col = "Stage",
@@ -68,6 +69,7 @@ mw_species <- list(asses = "Asses",
                    human = "Human")
 usethis::use_data(mw_species, overwrite = TRUE)
 
+
 #
 # FAO data columns
 #
@@ -77,6 +79,7 @@ fao_cols <- list(area_fao_col = "area",
                  unit_fao_col = "unit",
                  value_fao_col = "value")
 usethis::use_data(fao_cols, overwrite = TRUE)
+
 
 #
 # FAO data codes
@@ -90,6 +93,7 @@ usethis::use_data(fao_codes, overwrite = TRUE)
 ilo_codes <- list(working_hours_code = "HOW_TEMP_SEX_ECO_NB_A",
                   employment_code = "EMP_TEMP_SEX_ECO_NB_A")
 usethis::use_data(ilo_codes, overwrite = TRUE)
+
 
 #
 # Animal Muscle Work (amw) analysis data constants
@@ -131,6 +135,7 @@ amw_analysis_constants <- list(prop_working_animals_col = "Prop.Working.animals"
                                yes_const = "Yes")
 usethis::use_data(amw_analysis_constants, overwrite = TRUE)
 
+
 #
 # Concordance columns
 #
@@ -144,6 +149,7 @@ conc_cols <- list(country_code_col = "Country.code",
                   mapping_sheet = "Mapping")
 usethis::use_data(conc_cols, overwrite = TRUE)
 
+
 #
 # Unit conversion constants
 #
@@ -154,7 +160,7 @@ usethis::use_data(unit_constants, overwrite = TRUE)
 
 
 #
-# Products
+# Energy products
 #
 mw_products <- list(food = "Food",
                     feed = "Feed",
@@ -180,3 +186,12 @@ mw_sectors <- list(broad_sector_col = "broad_sector",
                    resources_sector = "Resources")
 usethis::use_data(mw_sectors, overwrite = TRUE)
 
+
+#
+# Energy conversion chain stages
+#
+all_stages <- list(primary = IEATools::all_stages$primary,
+                   final = IEATools::all_stages$final,
+                   useful = IEATools::all_stages$useful,
+                   services = IEATools::all_stages$services)
+usethis::use_data(all_stages, overwrite = TRUE)

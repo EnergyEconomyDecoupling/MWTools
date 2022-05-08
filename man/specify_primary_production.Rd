@@ -6,7 +6,7 @@
 \usage{
 specify_primary_production(
   .df,
-  product = IEATools::iea_cols$product,
+  product = MWTools::mw_constants$product,
   primary = IEATools::all_stages$primary,
   stage = MWTools::mw_constants$stage_col,
   notation = RCLabels::from_notation,
@@ -19,12 +19,12 @@ usually by \code{specify_product()}.}
 
 \item{product}{See \code{IEATools::iea_cols}.}
 
-\item{primary}{See \code{IEATools::all_stages}.}
+\item{primary}{See \code{MWTools::all_stages}.}
 
 \item{stage}{See \code{MWTools::mw_constants}.}
 
 \item{notation}{The notation to be used for primary energy product specification.
-Default is \code{IEATools::from_notation}.}
+Default is \code{RCLabels::from_notation}.}
 
 \item{resources}{See \code{MWTools::mw_sectors}.}
 }

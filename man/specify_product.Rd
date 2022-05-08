@@ -7,9 +7,9 @@
 specify_product(
   .df,
   product = IEATools::iea_cols$product,
-  primary = IEATools::all_stages$primary,
-  final = IEATools::all_stages$final,
-  useful = IEATools::all_stages$useful,
+  primary = MWTools::all_stages$primary,
+  final = MWTools::all_stages$final,
+  useful = MWTools::all_stages$useful,
   species = MWTools::mw_constants$species,
   human = MWTools::mw_species$human,
   stage = MWTools::mw_constants$stage_col,
