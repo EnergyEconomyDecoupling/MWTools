@@ -9,6 +9,7 @@ test_that("specify_product() works as expected", {
 
   specified_hmw <- hmw_df %>%
     specify_product()
+
   specified_amw <- amw_df %>%
     specify_product()
 
