@@ -652,23 +652,19 @@ calc_useful_energy <- function(.df,
 #' @param .df A data frame containing the primary, final, and useful energy
 #'            associated with each working animal species.
 #'            Usually produced by calling the
-#'            `tidy_fao_live_animals`,
-#'            `add_concordance_codes`,
-#'            `trim_fao_data`,
-#'            `get_working_species`,
-#'            `calc_working_animals`,
-#'            `calc_sector_split`,
-#'            `calc_yearly_feed`,
-#'            `calc_final_energy`,
-#'            `calc_primary_energy`, and
-#'            `calc_useful_energy` functions in sequence on the raw FAO data.
-#' @param country_code_col See `MWTools::conc_cols`.
-#' @param year,species,sector_col,stage_col,energy_mj_year See `MWTools::mw_constants`.
-#' @param amw_region_code_col See `MWTools::amw_analysis_constants`.
-#' @param useful_energy_total,useful_energy_ag,useful_energy_tr See `MWTools::amw_analysis_constants`.
-#' @param final_energy_total,final_energy_ag,final_energy_tr See `MWTools::amw_analysis_constants`.
-#' @param primary_energy_total,primary_energy_ag,primary_energy_tr See `MWTools::amw_analysis_constants`.
-#'
+#'            `tidy_fao_live_animals()`,
+#'            `add_concordance_codes()`,
+#'            `trim_fao_data()`,
+#'            `get_working_species()`,
+#'            `calc_working_animals()`,
+#'            `calc_sector_split()`,
+#'            `calc_yearly_feed()`,
+#'            `calc_final_energy()`,
+#'            `calc_primary_energy()`, and
+#'            `calc_useful_energy()` functions in sequence on the raw FAO data.
+#' @param country_code_col,country_col,amw_region_code_col See `MWTools::conc_cols`.
+#' @param year,species,sector_col,stage_col,energy_col,units_col See `MWTools::mw_constants`.
+#' @param useful_energy_ag,useful_energy_tr,final_energy_ag,final_energy_tr,primary_energy_ag,primary_energy_tr,working_animals_ag_col,working_animals_tr_col See `MWTools::amw_analysis_constants`.
 #'
 #' @export
 #'
@@ -685,16 +681,16 @@ calc_useful_energy <- function(.df,
 #'   calc_primary_energy() %>%
 #'   calc_useful_energy() %>%
 #'   tidy_pfu_data()
-#'
 tidy_pfu_data <- function(.df,
                           country_code_col = MWTools::conc_cols$country_code_col,
                           country_col = MWTools::conc_cols$country_col,
+                          amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
                           year = MWTools::mw_constants$year,
                           species = MWTools::mw_constants$species,
                           sector_col = MWTools::mw_constants$sector_col,
                           stage_col = MWTools::mw_constants$stage_col,
                           energy_col = MWTools::mw_constants$energy_col,
-                          amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
+                          units_col = MWTools::mw_constants$units_col,
                           useful_energy_ag = MWTools::amw_analysis_constants$useful_energy_ag,
                           useful_energy_tr = MWTools::amw_analysis_constants$useful_energy_tr,
                           final_energy_ag = MWTools::amw_analysis_constants$final_energy_ag,
@@ -702,10 +698,7 @@ tidy_pfu_data <- function(.df,
                           primary_energy_ag = MWTools::amw_analysis_constants$primary_energy_ag,
                           primary_energy_tr = MWTools::amw_analysis_constants$primary_energy_tr,
                           working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
-                          working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col,
-                          units_col = MWTools::mw_constants$units_col
-                          ) {
-
+                          working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col) {
 
   .df %>%
     dplyr::select(dplyr::all_of(c(country_code_col, year, species,
