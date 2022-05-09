@@ -37,10 +37,10 @@ test_that("specify_primary_production() works as expected", {
     specify_product()
 
   specified_hmw <- hmw_df %>%
-    specify_primary_production()
+    MWTools::specify_primary_production()
 
   specified_amw <- amw_df %>%
-    specify_primary_production()
+    MWTools::specify_primary_production()
 
   nrow_primary_hmw_biomass <- specified_hmw %>%
     dplyr::filter(.data[[MWTools::mw_constants$product]] == MWTools::mw_products$biomass) %>%
