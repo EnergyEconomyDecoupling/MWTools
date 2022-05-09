@@ -324,7 +324,7 @@ calc_working_animals <- function(.df,
 #'                               by default, which returns the path the analysis data
 #'                               bundled with the `MWTools` package.
 #' @param year,species,method_source See `MWTools::mw_constants`.
-#' @param metric,amw_region_col,wa_enduse_sheet,working_animals_total_col,working_animals_ag_col,working_animals_tr_col,prop_wkg_anmls_ag_col,prop_working_animals_tr_col
+#' @param metric,amw_region_col,wa_enduse_sheet,working_animals_total_col,working_animals_ag_col,working_animals_tr_col,prop_wkg_anmls_ag_col,prop_wkg_anmls_tr_col
 #'        See `MWTools::amw_analysis_constants`.
 #' @param amw_region_code_col See `MWTools::conc_cols`.
 #'
@@ -353,7 +353,7 @@ calc_sector_split <- function(.df,
                               working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
                               working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col,
                               prop_wkg_anmls_ag_col = MWTools::amw_analysis_constants$prop_wkg_anmls_ag_col,
-                              prop_working_animals_tr_col = MWTools::amw_analysis_constants$prop_working_animals_tr_col) {
+                              prop_wkg_anmls_tr_col = MWTools::amw_analysis_constants$prop_wkg_anmls_tr_col) {
 
   end_use <- readxl::read_excel(amw_analysis_data_path,
                                 sheet = wa_enduse_sheet) %>%
@@ -363,14 +363,14 @@ calc_sector_split <- function(.df,
                         values_to = prop_wkg_anmls_ag_col) %>%
     dplyr::mutate(
       "{year}" := as.numeric(.data[[year]]),
-      "{prop_working_animals_tr_col}" := 1 - .data[[prop_wkg_anmls_ag_col]]
+      "{prop_wkg_anmls_tr_col}" := 1 - .data[[prop_wkg_anmls_ag_col]]
       )
 
   .df %>%
     dplyr::left_join(end_use, by = dplyr::all_of(c(species, amw_region_code_col, year))) %>%
     dplyr::mutate(
       "{working_animals_ag_col}" := .data[[working_animals_total_col]] * .data[[prop_wkg_anmls_ag_col]],
-      "{working_animals_tr_col}" := .data[[working_animals_total_col]] * .data[[prop_working_animals_tr_col]]
+      "{working_animals_tr_col}" := .data[[working_animals_total_col]] * .data[[prop_wkg_anmls_tr_col]]
       )
 
 }
@@ -398,7 +398,7 @@ calc_sector_split <- function(.df,
 #'                               by default, which returns the path the analysis data
 #'                               bundled with the `MWTools` package.
 #' @param species,method_source See `MWTools::mw_constants`.
-#' @param wa_feed_sheet,wa_days_hours_sheet,working_days_col,nonworking_days_col,working_hours_col,working_day_feed_col,nonworking_day_feed_col,working_yearly_feed_col,nonworking_yearly_feed_col,total_yearly_feed_col
+#' @param wa_feed_sheet,wa_days_hours_sheet,working_days_col,nonworking_days_col,working_hours_col,working_day_feed_col,nonworking_day_feed_col,working_yearly_feed_col,nonwkg_yearly_feed_col,total_yearly_feed_col
 #'        See `MWTools::amw_analysis_constants`.
 #' @param amw_region_code_col See `MWTools::conc_cols`.
 #'
@@ -426,7 +426,7 @@ calc_yearly_feed <- function(.df,
                              working_day_feed_col = MWTools::amw_analysis_constants$working_day_feed_col,
                              nonworking_day_feed_col = MWTools::amw_analysis_constants$nonworking_day_feed_col,
                              working_yearly_feed_col = MWTools::amw_analysis_constants$working_yearly_feed_col,
-                             nonworking_yearly_feed_col = MWTools::amw_analysis_constants$nonworking_yearly_feed_col,
+                             nonwkg_yearly_feed_col = MWTools::amw_analysis_constants$nonwkg_yearly_feed_col,
                              total_yearly_feed_col = MWTools::amw_analysis_constants$total_yearly_feed_col,
                              amw_region_code_col = MWTools::conc_cols$amw_region_code_col) {
 
@@ -445,8 +445,8 @@ calc_yearly_feed <- function(.df,
     dplyr::left_join(working_days, by = c(species, amw_region_code_col)) %>%
     dplyr::mutate(
       "{working_yearly_feed_col}" := .data[[working_day_feed_col]] * .data[[working_days_col]],
-      "{nonworking_yearly_feed_col}" := .data[[nonworking_day_feed_col]] * .data[[nonworking_days_col]],
-      "{total_yearly_feed_col}" := .data[[working_yearly_feed_col]] + .data[[nonworking_yearly_feed_col]]
+      "{nonwkg_yearly_feed_col}" := .data[[nonworking_day_feed_col]] * .data[[nonworking_days_col]],
+      "{total_yearly_feed_col}" := .data[[working_yearly_feed_col]] + .data[[nonwkg_yearly_feed_col]]
       ) %>%
     dplyr::select(dplyr::all_of(c(species, amw_region_code_col, total_yearly_feed_col)))
 

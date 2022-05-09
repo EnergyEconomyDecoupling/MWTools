@@ -18,8 +18,7 @@ calc_sector_split(
   working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
   working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col,
   prop_wkg_anmls_ag_col = MWTools::amw_analysis_constants$prop_wkg_anmls_ag_col,
- 
-    prop_working_animals_tr_col = MWTools::amw_analysis_constants$prop_working_animals_tr_col
+  prop_wkg_anmls_tr_col = MWTools::amw_analysis_constants$prop_wkg_anmls_tr_col
 )
 }
 \arguments{
@@ -40,7 +39,7 @@ bundled with the \code{MWTools} package.}
 
 \item{year, species, method_source}{See \code{MWTools::mw_constants}.}
 
-\item{metric, amw_region_col, wa_enduse_sheet, working_animals_total_col, working_animals_ag_col, working_animals_tr_col, prop_wkg_anmls_ag_col, prop_working_animals_tr_col}{See \code{MWTools::amw_analysis_constants}.}
+\item{metric, amw_region_col, wa_enduse_sheet, working_animals_total_col, working_animals_ag_col, working_animals_tr_col, prop_wkg_anmls_ag_col, prop_wkg_anmls_tr_col}{See \code{MWTools::amw_analysis_constants}.}
 
 \item{amw_region_code_col}{See \code{MWTools::conc_cols}.}
 }

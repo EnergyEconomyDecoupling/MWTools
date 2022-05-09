@@ -102,7 +102,7 @@ usethis::use_data(ilo_codes, overwrite = TRUE)
 #
 amw_analysis_constants <- list(prop_working_animals_col = "Prop.Working.animals",
                                prop_wkg_anmls_ag_col = "Prop.Working.animals.Ag",
-                               prop_working_animals_tr_col = "Prop.Working.animals.Tr",
+                               prop_wkg_anmls_tr_col = "Prop.Working.animals.Tr",
                                wa_perc_sheet = "WA_perc",
                                wa_enduse_sheet = "WA_enduse",
                                wa_feed_sheet = "WA_feed",
@@ -121,7 +121,7 @@ amw_analysis_constants <- list(prop_working_animals_col = "Prop.Working.animals"
                                working_day_feed_col = "Working.day.feed [MJ/day per animal]",
                                nonworking_day_feed_col = "Non-Working.day.feed [MJ/day per animal]",
                                working_yearly_feed_col = "Working.yearly.feed [MJ/year per animal]",
-                               nonworking_yearly_feed_col = "Non-Working.yearly.feed [MJ/year per animal]",
+                               nonwkg_yearly_feed_col = "Non-Working.yearly.feed [MJ/year per animal]",
                                total_yearly_feed_col = "Total.yearly.feed [MJ/year per animal]",
                                useful_energy_total = "Useful.energy.total [MJ/year]",
                                useful_energy_ag = "Useful.energy.Ag [MJ/year]",

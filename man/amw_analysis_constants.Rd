@@ -9,7 +9,7 @@ A string list with 35 entries.
 \describe{
 \item{prop_working_animals_col}{The metadata column "Prop.Working.animals" representing the proportion of live animals that are working animals.}
 \item{prop_wkg_anmls_ag_col}{The metadata column "Prop.Working.animals.Ag" representing the proportion of working animals that work in agriculture.}
-\item{prop_working_animals_tr_col}{The metadata column "Prop.Working.animals.Tr" representing the proportion of working animals that work transporting goods outside of agriculture.}
+\item{prop_wkg_anmls_tr_col}{The metadata column "Prop.Working.animals.Tr" representing the proportion of working animals that work transporting goods outside of agriculture.}
 \item{wa_perc_sheet}{The excel sheet name "WA_perc" representing the sheet containing information on the proportion of working animals.}
 \item{wa_enduse_sheet}{The excel sheet name "WA_enduse" representing the sheet containing information of the proportion of working animals in agriculture/transport.}
 \item{wa_feed_sheet}{The excel sheet name "WA_feed" representing the sheet containing information on the feed requirements of working animals.}
@@ -28,7 +28,7 @@ A string list with 35 entries.
 \item{working_day_feed_col}{The data column "Working.day.feed [MJ/day per animal]" representing the quantity of feed required by working animals each working day.}
 \item{nonworking_day_feed_col}{The data column "Non-Working.day.feed [MJ/day per animal]" representing the quantity of feed required by working animals each non-working day. }
 \item{working_yearly_feed_col}{The data column "Working.yearly.feed [MJ/year per animal]" representing the quantity of feed required by working animals on working days each year.}
-\item{nonworking_yearly_feed_col}{The data column "Non-Working.yearly.feed [MJ/year per animal]" representing the quantity of feed required by working animals on non-working days each year.}
+\item{nonwkg_yearly_feed_col}{The data column "Non-Working.yearly.feed [MJ/year per animal]" representing the quantity of feed required by working animals on non-working days each year.}
 \item{total_yearly_feed_col}{The data column "Total.yearly.feed [MJ/year per animal]" representing the quantity of feed required by working animals each year.}
 \item{useful_energy_total}{The data column "Useful.energy.total [MJ/year]" representing the total useful energy produced by working animals through muscle work.}
 \item{useful_energy_ag}{The data column "Useful.energy.Ag [MJ/year]" representing the useful energy produced by working animals through muscle work in agriculture.}
