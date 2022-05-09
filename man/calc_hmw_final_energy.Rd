@@ -16,8 +16,7 @@ calc_hmw_final_energy(
   hmw_food_sheet = MWTools::hmw_analysis_constants$hmw_food_sheet,
   hmw_plate_waste_sheet = MWTools::hmw_analysis_constants$hmw_plate_waste_sheet,
   food_consumption_col = MWTools::hmw_analysis_constants$food_consumption_col,
- 
-    yearly_energy_consumption_pp_col = MWTools::hmw_analysis_constants$yearly_energy_consumption_pp_col,
+  energy_pppa_col = MWTools::hmw_analysis_constants$energy_pppa_col,
   final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
   plate_waste_col = MWTools::hmw_analysis_constants$plate_waste_col,
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
@@ -44,7 +43,7 @@ Usually produced by calling the
 
 \item{sex_ilo_col, employed_persons_ilo_col}{See \code{MWTools::ilo_cols}}
 
-\item{hmw_food_sheet, hmw_plate_waste_sheet, food_consumption_col, yearly_energy_consumption_pp_col, final_energy_col, plate_waste_col, industry_activity_col}{See \code{MWTools::hmw_analysis_constants}.}
+\item{hmw_food_sheet, hmw_plate_waste_sheet, food_consumption_col, energy_pppa_col, final_energy_col, plate_waste_col, industry_activity_col}{See \code{MWTools::hmw_analysis_constants}.}
 
 \item{hmw_region_code_col}{See \code{MWTools::conc_cols}.}
 

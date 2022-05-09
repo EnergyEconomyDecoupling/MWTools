@@ -15,7 +15,7 @@ A string list with 17 entries.
 \item{hmw_plate_waste_sheet}{The excel sheet name "hmw_plate_waste", which contains information on proportion of food waste by region.}
 \item{hmw_harvest_waste_sheet}{The excel sheet name "hmw_harvest_waste", which contains information on the proportion of phytomass lost at the harvest stage by region.}
 \item{food_consumption_col}{The data column "Food consumption [kcal/day per person]", which contains information on the daily food consumption of humans in kilocalories (kcal).}
-\item{yearly_energy_consumption_pp_col}{The data column "Energy consumption [MJ/year per person]", which contains information on the yearly food consumption per working person in megajoules (MJ).}
+\item{energy_pppa_col}{The data column "Energy consumption [MJ/year per person]", which contains information on the yearly food consumption per working person in megajoules (MJ).}
 \item{final_energy_col}{The data column "Final energy [MJ/year]", which contains data on the yearly food consumption of all working persons in megajoules (MJ).}
 \item{primary_energy_col}{The data column "Primary energy [MJ/year]", which contains data on the yearly quantity of biomass required to meet the food requirements of all working persons in megajoules (MJ).}
 \item{useful_energy_hmw_col}{The data column "Useful energy [MJ/year]", which contains data on the yearly useful work performed by all working persons in megajoules (MJ).}

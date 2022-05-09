@@ -213,7 +213,7 @@ add_hmw_analysis_sectors <- function(.df,
 #'            `add_hmw_analysis_sectors` functions in sequence on the raw FAO data.
 #' @param hmw_analysis_data_path See `MWTools::hmw_analysis_data_path()`.
 #' @param sector_col,year,unit See `MWTools::mw_constants`.
-#' @param hmw_food_sheet,hmw_plate_waste_sheet,food_consumption_col,yearly_energy_consumption_pp_col,final_energy_col,plate_waste_col,industry_activity_col See `MWTools::hmw_analysis_constants`.
+#' @param hmw_food_sheet,hmw_plate_waste_sheet,food_consumption_col,energy_pppa_col,final_energy_col,plate_waste_col,industry_activity_col See `MWTools::hmw_analysis_constants`.
 #' @param sex_ilo_col,employed_persons_ilo_col See `MWTools::ilo_cols`
 #' @param hmw_region_code_col See `MWTools::conc_cols`.
 #' @param exemplar_method_col,hmw_analysis_sector_col See `MWTools::mw_sectors`.
@@ -242,7 +242,7 @@ calc_hmw_final_energy <- function(
     hmw_food_sheet = MWTools::hmw_analysis_constants$hmw_food_sheet,
     hmw_plate_waste_sheet = MWTools::hmw_analysis_constants$hmw_plate_waste_sheet,
     food_consumption_col = MWTools::hmw_analysis_constants$food_consumption_col,
-    yearly_energy_consumption_pp_col = MWTools::hmw_analysis_constants$yearly_energy_consumption_pp_col,
+    energy_pppa_col = MWTools::hmw_analysis_constants$energy_pppa_col,
     final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
     plate_waste_col = MWTools::hmw_analysis_constants$plate_waste_col,
     hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
@@ -283,10 +283,10 @@ calc_hmw_final_energy <- function(
 
     # Convert from kcal/day to MJ/year !!! Currently assuming every day worked - need to check ILO data for number of days worked !!!
     dplyr::mutate(
-      "{yearly_energy_consumption_pp_col}" := .data[[food_consumption_col]] * kcal_to_mj * 365,
-      "{final_energy_col}" := (.data[[employed_persons_ilo_col]] * .data[[yearly_energy_consumption_pp_col]]) / (1 - .data[[plate_waste_col]])
+      "{energy_pppa_col}" := .data[[food_consumption_col]] * kcal_to_mj * 365,
+      "{final_energy_col}" := (.data[[employed_persons_ilo_col]] * .data[[energy_pppa_col]]) / (1 - .data[[plate_waste_col]])
     ) %>%
-    dplyr::select(-dplyr::all_of(c(yearly_energy_consumption_pp_col, food_consumption_col, plate_waste_col)))
+    dplyr::select(-dplyr::all_of(c(energy_pppa_col, food_consumption_col, plate_waste_col)))
 
 }
 
