@@ -16,8 +16,7 @@ calc_hmw_useful_energy(
   industry_activity_col = MWTools::hmw_analysis_constants$industry_activity_col,
   hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
   power_col = MWTools::hmw_analysis_constants$power_col,
- 
-    total_working_hours_ilo_col = MWTools::hmw_analysis_constants$total_working_hours_ilo_col,
+  total_wk_hrs_ilo_col = MWTools::hmw_analysis_constants$total_wk_hrs_ilo_col,
   useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
   hours_to_seconds = MWTools::unit_constants$hours_to_seconds,
   joules_to_megajoules = MWTools::unit_constants$joules_to_megajoules
@@ -41,7 +40,7 @@ Usually produced by calling the
 
 \item{hmw_region_code_col}{See \code{MWTools::conc_cols}.}
 
-\item{hmw_analysis_data_path, hmw_power_sheet, power_col, total_working_hours_ilo_col, useful_energy_hmw_col, hours_to_seconds, joules_to_megajoules, industry_activity_col}{See \code{MWTools::hmw_analysis_constants}.}
+\item{hmw_analysis_data_path, hmw_power_sheet, power_col, total_wk_hrs_ilo_col, useful_energy_hmw_col, hours_to_seconds, joules_to_megajoules, industry_activity_col}{See \code{MWTools::hmw_analysis_constants}.}
 
 \item{hmw_analysis_sector_col}{See \code{MWTools::mw_sectors$hmw_analysis_sector_col}.}
 }

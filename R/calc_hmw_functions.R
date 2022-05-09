@@ -91,7 +91,7 @@ fill_ilo_data <- function(.df,
 #'            `add_hmw_region_codes`, and
 #'            `fill_ilo_data` functions in sequence on the raw FAO data.
 #' @param yearly_working_hours_ilo_col,employed_persons_ilo_col See `MWTools::ilo_cols`.
-#' @param total_working_hours_ilo_col See `MWTools::hmw_analysis_constants`
+#' @param total_wk_hrs_ilo_col See `MWTools::hmw_analysis_constants`
 #'
 #'
 #' @export
@@ -104,11 +104,11 @@ fill_ilo_data <- function(.df,
 calc_total_hours_worked <- function(.df,
                                      yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
                                      employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
-                                     total_working_hours_ilo_col = MWTools::hmw_analysis_constants$total_working_hours_ilo_col){
+                                     total_wk_hrs_ilo_col = MWTools::hmw_analysis_constants$total_wk_hrs_ilo_col){
 
   .df %>%
     dplyr::mutate(
-      "{total_working_hours_ilo_col}" := .data[[employed_persons_ilo_col]] * .data[[yearly_working_hours_ilo_col]]
+      "{total_wk_hrs_ilo_col}" := .data[[employed_persons_ilo_col]] * .data[[yearly_working_hours_ilo_col]]
     ) %>%
     dplyr::select(-dplyr::all_of(yearly_working_hours_ilo_col))
 
@@ -365,7 +365,7 @@ calc_hmw_primary_energy <- function(.df,
 #' @param sector_col,year,unit See `MWTools::mw_constants`.
 #' @param sex_ilo_col See `MWTools::ilo_cols`.
 #' @param hmw_region_code_col See `MWTools::conc_cols`.
-#' @param hmw_analysis_data_path,hmw_power_sheet,power_col,total_working_hours_ilo_col,useful_energy_hmw_col,hours_to_seconds,joules_to_megajoules,industry_activity_col See `MWTools::hmw_analysis_constants`.
+#' @param hmw_analysis_data_path,hmw_power_sheet,power_col,total_wk_hrs_ilo_col,useful_energy_hmw_col,hours_to_seconds,joules_to_megajoules,industry_activity_col See `MWTools::hmw_analysis_constants`.
 #' @param hmw_analysis_sector_col See `MWTools::mw_sectors$hmw_analysis_sector_col`.
 #'
 #'
@@ -392,7 +392,7 @@ calc_hmw_useful_energy <- function(.df,
                                    industry_activity_col = MWTools::hmw_analysis_constants$industry_activity_col,
                                    hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
                                    power_col = MWTools::hmw_analysis_constants$power_col,
-                                   total_working_hours_ilo_col = MWTools::hmw_analysis_constants$total_working_hours_ilo_col,
+                                   total_wk_hrs_ilo_col = MWTools::hmw_analysis_constants$total_wk_hrs_ilo_col,
                                    useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
                                    hours_to_seconds = MWTools::unit_constants$hours_to_seconds,
                                    joules_to_megajoules = MWTools::unit_constants$joules_to_megajoules
@@ -414,7 +414,7 @@ calc_hmw_useful_energy <- function(.df,
   .df %>%
     dplyr::left_join(power_data, by = c(sex_ilo_col, hmw_analysis_sector_col, hmw_region_code_col, year)) %>%
     dplyr::mutate(
-      "{useful_energy_hmw_col}" := .data[[power_col]] * .data[[total_working_hours_ilo_col]] * hours_to_seconds * joules_to_megajoules
+      "{useful_energy_hmw_col}" := .data[[power_col]] * .data[[total_wk_hrs_ilo_col]] * hours_to_seconds * joules_to_megajoules
     ) %>%
     dplyr::select(-dplyr::all_of(power_col))
 }

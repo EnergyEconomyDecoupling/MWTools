@@ -8,8 +8,7 @@ calc_total_hours_worked(
   .df,
   yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
   employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
- 
-    total_working_hours_ilo_col = MWTools::hmw_analysis_constants$total_working_hours_ilo_col
+  total_wk_hrs_ilo_col = MWTools::hmw_analysis_constants$total_wk_hrs_ilo_col
 )
 }
 \arguments{
@@ -21,7 +20,7 @@ Usually produced by calling the
 
 \item{yearly_working_hours_ilo_col, employed_persons_ilo_col}{See \code{MWTools::ilo_cols}.}
 
-\item{total_working_hours_ilo_col}{See \code{MWTools::hmw_analysis_constants}}
+\item{total_wk_hrs_ilo_col}{See \code{MWTools::hmw_analysis_constants}}
 }
 \description{
 Calc...
