@@ -101,7 +101,7 @@ usethis::use_data(ilo_codes, overwrite = TRUE)
 # Animal Muscle Work (amw) analysis data constants
 #
 amw_analysis_constants <- list(prop_working_animals_col = "Prop.Working.animals",
-                               prop_working_animals_ag_col = "Prop.Working.animals.Ag",
+                               prop_wkg_anmls_ag_col = "Prop.Working.animals.Ag",
                                prop_working_animals_tr_col = "Prop.Working.animals.Tr",
                                wa_perc_sheet = "WA_perc",
                                wa_enduse_sheet = "WA_enduse",

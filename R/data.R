@@ -148,7 +148,7 @@
 #' @format A string list with `r length(amw_analysis_constants)` entries.
 #' \describe{
 #' \item{prop_working_animals_col}{The metadata column "Prop.Working.animals" representing the proportion of live animals that are working animals.}
-#' \item{prop_working_animals_ag_col}{The metadata column "Prop.Working.animals.Ag" representing the proportion of working animals that work in agriculture.}
+#' \item{prop_wkg_anmls_ag_col}{The metadata column "Prop.Working.animals.Ag" representing the proportion of working animals that work in agriculture.}
 #' \item{prop_working_animals_tr_col}{The metadata column "Prop.Working.animals.Tr" representing the proportion of working animals that work transporting goods outside of agriculture.}
 #' \item{wa_perc_sheet}{The excel sheet name "WA_perc" representing the sheet containing information on the proportion of working animals.}
 #' \item{wa_enduse_sheet}{The excel sheet name "WA_enduse" representing the sheet containing information of the proportion of working animals in agriculture/transport.}

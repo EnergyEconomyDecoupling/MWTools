@@ -324,7 +324,7 @@ calc_working_animals <- function(.df,
 #'                               by default, which returns the path the analysis data
 #'                               bundled with the `MWTools` package.
 #' @param year,species,method_source See `MWTools::mw_constants`.
-#' @param metric,amw_region_col,wa_enduse_sheet,working_animals_total_col,working_animals_ag_col,working_animals_tr_col,prop_working_animals_ag_col,prop_working_animals_tr_col
+#' @param metric,amw_region_col,wa_enduse_sheet,working_animals_total_col,working_animals_ag_col,working_animals_tr_col,prop_wkg_anmls_ag_col,prop_working_animals_tr_col
 #'        See `MWTools::amw_analysis_constants`.
 #' @param amw_region_code_col See `MWTools::conc_cols`.
 #'
@@ -352,7 +352,7 @@ calc_sector_split <- function(.df,
                               working_animals_total_col = MWTools::amw_analysis_constants$working_animals_total_col,
                               working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
                               working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col,
-                              prop_working_animals_ag_col = MWTools::amw_analysis_constants$prop_working_animals_ag_col,
+                              prop_wkg_anmls_ag_col = MWTools::amw_analysis_constants$prop_wkg_anmls_ag_col,
                               prop_working_animals_tr_col = MWTools::amw_analysis_constants$prop_working_animals_tr_col) {
 
   end_use <- readxl::read_excel(amw_analysis_data_path,
@@ -360,16 +360,16 @@ calc_sector_split <- function(.df,
     dplyr::select(-dplyr::all_of(c(method_source, metric, amw_region_col))) %>%
     tidyr::pivot_longer(cols = -dplyr::all_of(c(species, amw_region_code_col)),
                         names_to = year,
-                        values_to = prop_working_animals_ag_col) %>%
+                        values_to = prop_wkg_anmls_ag_col) %>%
     dplyr::mutate(
       "{year}" := as.numeric(.data[[year]]),
-      "{prop_working_animals_tr_col}" := 1 - .data[[prop_working_animals_ag_col]]
+      "{prop_working_animals_tr_col}" := 1 - .data[[prop_wkg_anmls_ag_col]]
       )
 
   .df %>%
     dplyr::left_join(end_use, by = dplyr::all_of(c(species, amw_region_code_col, year))) %>%
     dplyr::mutate(
-      "{working_animals_ag_col}" := .data[[working_animals_total_col]] * .data[[prop_working_animals_ag_col]],
+      "{working_animals_ag_col}" := .data[[working_animals_total_col]] * .data[[prop_wkg_anmls_ag_col]],
       "{working_animals_tr_col}" := .data[[working_animals_total_col]] * .data[[prop_working_animals_tr_col]]
       )
 
