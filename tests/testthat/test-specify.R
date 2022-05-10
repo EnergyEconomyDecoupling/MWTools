@@ -7,21 +7,23 @@ test_that("specify_product() works as expected", {
     read.csv() %>%
     calc_amw_pfu()
 
-  specified_hmw <- hmw_df %>%
-    specify_product()
-
-  specified_amw <- amw_df %>%
-    specify_product()
+  specified_mw <- specify_product(hmw_df, amw_df)
 
   expect_equal(unique(specified_hmw[[MWTools::mw_constants$product]]),
                c(MWTools::mw_products$food,
                  MWTools::mw_products$biomass,
-                 MWTools::mw_products$hu_mech))
+                 MWTools::mw_products$hu_mech,
+                 RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
+                                           suff = MWTools::mw_sectors$resources_sector,
+                                           notation = RCLabels::from_notation)))
   expect_equal(unique(specified_amw[[MWTools::mw_constants$product]]),
                c(MWTools::mw_products$an_mech,
                  MWTools::mw_products$an_p,
                  MWTools::mw_products$feed,
-                 MWTools::mw_products$biomass))
+                 MWTools::mw_products$biomass,
+                 RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
+                                           suff = MWTools::mw_sectors$resources_sector,
+                                           notation = RCLabels::from_notation)))
 })
 
 

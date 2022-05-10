@@ -5,7 +5,10 @@
 #' The specification process adds entries (rows)
 #' needed for conversion to PSUT matrices.
 #'
-#' @param .df A data frame, likely produced by `calc_amw_pfu()` or `calc_hmw_pfu()`.
+#' This function binds `.hmw_df` and `.amw_df` by rows.
+#'
+#' @param .hmw_df A data frame, likely produced by `calc_hmw_pfu()`.
+#' @param .amw_df A data frame, likely produced by `calc_amw_pfu()`.
 #' @param product See `MWTools::mw_constants`.
 #' @param primary,final,useful See `MWTools::all_stages`.
 #' @param species See `MWTools::mw_constants`.
@@ -27,7 +30,7 @@
 #'   read.csv() %>%
 #'   calc_amw_pfu() %>%
 #'   specify_product()
-specify_product <- function(.df,
+specify_product <- function(.hmw_df, .amw_df,
                             product = MWTools::mw_constants$product,
                             primary = MWTools::all_stages$primary,
                             final = MWTools::all_stages$final,
@@ -44,8 +47,8 @@ specify_product <- function(.df,
                             an_p = MWTools::mw_products$an_p,
                             transport = MWTools::mw_sectors$transport_sector) {
 
-  # Add a Product column
-  .df %>%
+  dplyr::bind_rows(.hmw_df, .amw_df) %>%
+    # Add a Product column
     dplyr::mutate(
       "{product}" := dplyr::case_when(
         .data[[stage]] == primary ~ biomass,

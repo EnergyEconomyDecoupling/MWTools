@@ -5,7 +5,8 @@
 \title{Specify a data frame of PFU muscle work data}
 \usage{
 specify_product(
-  .df,
+  .hmw_df,
+  .amw_df,
   product = MWTools::mw_constants$product,
   primary = MWTools::all_stages$primary,
   final = MWTools::all_stages$final,
@@ -24,7 +25,9 @@ specify_product(
 )
 }
 \arguments{
-\item{.df}{A data frame, likely produced by \code{calc_amw_pfu()} or \code{calc_hmw_pfu()}.}
+\item{.hmw_df}{A data frame, likely produced by \code{calc_hmw_pfu()}.}
+
+\item{.amw_df}{A data frame, likely produced by \code{calc_amw_pfu()}.}
 
 \item{product}{See \code{MWTools::mw_constants}.}
 
@@ -46,6 +49,9 @@ A data frame with additional rows needed for converting to PSUT matrices.
 \description{
 The specification process adds entries (rows)
 needed for conversion to PSUT matrices.
+}
+\details{
+This function binds \code{.hmw_df} and \code{.amw_df} by rows.
 }
 \examples{
 hmw_test_data_path() \%>\%
