@@ -4,19 +4,26 @@
 #' Primary-final-useful (PFU) data need to be prepared
 #' for conversion to PSUT matrices by
 #' duplicating some rows and adding a matrix name column.
-#' This function performs that preparation.
+#' This function performs those operations.
 #'
-#' @param .pfu_df A PFU data frame,
-#'                the output from `specify_primary_production()`.
+#' This function binds `.hmw_pfu_df` and `.amw_pfu_df` by rows
+#' before starting its work.
+#'
+#' @param .hmw_pfu_df A PFU data frame for human muscle work,
+#'                    the output from `specify_primary_production()`.
+#' @param .amw_pfu_df A PFU data frame for animal muscle work,
+#'                    the output from `specify_primary_production()`.
 #'
 #' @return A data frame with correct rows (many duplicated) and a matrix name column.
 #'
 #' @export
 #'
 #' @examples
-prep_mw_df <- function(.pfu_df,
+prep_mw_df <- function(.hmw_pfu_df,
+                       .amw_pfu_df,
                        biomass = MWTools::mw_products$biomass,
                        resources = MWTools::mw_sectors$resources_sector,
+                       farms = MWTools::mw_sectors$farms,
                        product = MWTools::mw_constants$product,
                        matnames = MWTools::mw_constants$matnames_col,
                        rownames = MWTools::mw_constants$rownames_col,
@@ -39,9 +46,13 @@ prep_mw_df <- function(.pfu_df,
   biomass_resource_sector <- biomass_from_resources %>%
     RCLabels::switch_notation(from = product_notation, to = resource_notation, flip = TRUE)
 
-  # Deal with resource flows.
-  biomass_resource_rows <- .pfu_df %>%
+  pfu_df <- dplyr::bind_rows(.hmw_pfu_df, .amw_pfu_df)
+
+  # Deal with biomass resource flows.
+  # Each of these rows gets an entry in the R and U matrix.
+  biomass_resource_rows <- pfu_df %>%
     dplyr::filter(.data[[product]] == biomass_from_resources)
+  # Biomass resource entries in the R matrix
   biomass_resource_rows_R <- biomass_resource_rows %>%
     dplyr::mutate(
       "{matnames}" := R_mat,
@@ -50,12 +61,17 @@ prep_mw_df <- function(.pfu_df,
       "{rowtypes}" := industry_type,
       "{coltypes}" := product_type
     )
+  # Biomass resource entries in the U matrix
   biomass_resource_rows_U <- biomass_resource_rows %>%
     dplyr::mutate(
-      "{matnames}" := "V"
+      "{matnames}" := U_mat,
+      "{rownames}" := .data[[product]],
+      "{colnames}" := farms,
+      "{rowtypes}" := product_type,
+      "{coltypes}" := industry_type
     )
-  # Each of these rows gets an entry in the R matrix and an entry in the V matrix.
-  out <- dplyr::bind_rows(biomass_resource_rows_R, biomass_resource_rows_V)
+  # Add the R and U matrix entries to the outgoing data frame.
+  out <- dplyr::bind_rows(biomass_resource_rows_R, biomass_resource_rows_U)
 
 
 }

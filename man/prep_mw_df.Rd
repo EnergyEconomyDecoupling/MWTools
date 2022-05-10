@@ -5,9 +5,11 @@
 \title{Prep PFU data for conversion to PSUT matrices}
 \usage{
 prep_mw_df(
-  .pfu_df,
+  .hmw_pfu_df,
+  .amw_pfu_df,
   biomass = MWTools::mw_products$biomass,
   resources = MWTools::mw_sectors$resources_sector,
+  farms = MWTools::mw_sectors$farms,
   product = MWTools::mw_constants$product,
   matnames = MWTools::mw_constants$matnames_col,
   rownames = MWTools::mw_constants$rownames_col,
@@ -26,7 +28,10 @@ prep_mw_df(
 )
 }
 \arguments{
-\item{.pfu_df}{A PFU data frame,
+\item{.hmw_pfu_df}{A PFU data frame for human muscle work,
+the output from \code{specify_primary_production()}.}
+
+\item{.amw_pfu_df}{A PFU data frame for animal muscle work,
 the output from \code{specify_primary_production()}.}
 }
 \value{
@@ -36,5 +41,9 @@ A data frame with correct rows (many duplicated) and a matrix name column.
 Primary-final-useful (PFU) data need to be prepared
 for conversion to PSUT matrices by
 duplicating some rows and adding a matrix name column.
-This function performs that preparation.
+This function performs those operations.
+}
+\details{
+This function binds \code{.hmw_pfu_df} and \code{.amw_pfu_df} by rows
+before starting its work.
 }
