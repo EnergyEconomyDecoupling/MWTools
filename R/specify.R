@@ -216,6 +216,12 @@ specify_fu_machines <- function(.df,
 
 #' Create energy conversion chains for final and useful last stages
 #'
+#' We have two ways to describe the energy conversion chain:
+#' with last stage of "Final" and last stage of "Useful".
+#' This function takes `.df` (assumed to be `last_stage = "Useful"`)
+#' and converts to `last_stage = "Final"`
+#' by adding a last_stage column with appropriate values.
+#'
 #' @param .df A data frame, probably the output of `specify_fu_machines()`.
 #'
 #' @return A data frame containing a new column `last_stage` and
@@ -236,6 +242,7 @@ specify_fu_machines <- function(.df,
 #'   specify_fu_machines() %>%
 #'   specify_last_stages()
 specify_last_stages <- function(.df,
+                                stage = MWTools::mw_constants$stage_col,
                                 last_stage = MWTools::mw_constants$last_stage,
                                 final = MWTools::last_stages$final,
                                 useful = MWTools::last_stages$useful) {
@@ -247,17 +254,15 @@ specify_last_stages <- function(.df,
     )
 
   # Now work on situation where last stage is final.
-  # We need to construct this ECC using information available to us.
-  # Eliminate useful energy rows from the data frame.
+  # We need to construct this ECC using information available in .df.
 
-  # Find the proportion of Food that goes into each final demand sector
-
-  # Find the proportion of Feed that goes into each final demand sector
-
-
-  # Apportion Food by proportions
-
-  # Apportion Feed by the proportions
-
-
+  ls_final_rows <- .df %>%
+    # Eliminate useful rows
+    dplyr::filter(.data[[stage]] != useful) %>%
+    # And set last_stage
+    dplyr::mutate(
+      "{last_stage}" := final
+    )
+  # Bind and return
+  dplyr::bind_rows(ls_final_rows, ls_useful_rows)
 }
