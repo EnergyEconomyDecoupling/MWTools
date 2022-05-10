@@ -115,6 +115,9 @@ specify_primary_production <- function(.df,
 #' to include a `[from X]` suffix.
 #'
 #' @param .df A data frame, usually the output of `MWTools::specify_primary_production()`.
+#' @param product,stage,species See `MWTools::mw_constants`.
+#' @param useful See `MWTools::all_stages`.
+#' @param notation See `RCLabels::from_notation`.
 #'
 #' @return A data frame with
 #'
@@ -132,9 +135,9 @@ specify_primary_production <- function(.df,
 #'   specify_useful_products()
 specify_useful_products <- function(.df,
                                     product = MWTools::mw_constants$product,
-                                    useful = MWTools::all_stages$useful,
                                     stage = MWTools::mw_constants$stage_col,
                                     species = MWTools::mw_constants$species,
+                                    useful = MWTools::all_stages$useful,
                                     notation = RCLabels::from_notation) {
   # Find all useful rows
   useful_rows <- .df %>%
@@ -143,12 +146,65 @@ specify_useful_products <- function(.df,
   specified_useful_rows <- useful_rows %>%
     dplyr::mutate(
       "{product}" := RCLabels::paste_pref_suff(pref = .data[[product]],
-                                               suff = .data[[species]], ###### Not right.
+                                               # Get the prefix of the species, in case
+                                               # specify_fu_machines() has already been called.
+                                               suff = RCLabels::get_pref_suff(.data[[species]],
+                                                                              which = "pref",
+                                                                              notation = notation),
                                                notation = notation)
     )
   .df %>%
     # Eliminate useful energy rows
     dplyr::filter(.data[[stage]] != useful) %>%
-    # Bind the specified useful rows to the bottom of the data frame.
+    # Bind the specified useful rows to the bottom of the outgoing data frame.
     dplyr::bind_rows(specified_useful_rows)
+}
+
+
+#' Specify final-to-useful machines (species)
+#'
+#' Final-to-useful machines should be named as "Machine -> Product".
+#' This function renames final-to-useful machines (species) to the desired form.
+#'
+#' @param .df A data frame, likely the output of `specify_useful_products()`.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' hmw_df <- hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu()
+#' amw_df <- amw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_amw_pfu()
+#' specify_product(hmw_df, amw_df) %>%
+#'   MWTools::specify_primary_production() %>%
+#'   specify_useful_products() %>%
+#'   specify_fu_machines()
+specify_fu_machines <- function(.df,
+                                product = MWTools::mw_constants$product,
+                                stage = MWTools::mw_constants$stage_col,
+                                species = MWTools::mw_constants$species,
+                                useful = MWTools::all_stages$useful,
+                                product_notation = RCLabels::from_notation,
+                                machine_notation = RCLabels::arrow_notation) {
+  fu_machine_rows <- .df %>%
+    dplyr::filter(.data[[stage]] == useful)
+  # Specify the fu machines (in this case, species)
+  specified_fu_machines <- fu_machine_rows %>%
+    dplyr::mutate(
+      "{species}" := RCLabels::paste_pref_suff(pref = .data[[species]],
+                                               # Get the prefix of the product, in case
+                                               # specify_useful_products() has already been called.
+                                               suff = RCLabels::get_pref_suff(.data[[product]],
+                                                                              which = "pref",
+                                                                              notation = product_notation),
+                                               notation = machine_notation)
+    )
+  .df %>%
+    # Eliminate useful energy rows
+    dplyr::filter(.data[[stage]] != useful) %>%
+    # Bind the specified final-to-useful machines at the bottom of the outgoing data frame.
+    dplyr::bind_rows(specified_fu_machines)
 }

@@ -65,5 +65,43 @@ test_that("specify_useful_products() works as expected", {
     MWTools::specify_primary_production() %>%
     specify_useful_products()
 
+  # Check that all useful products are specified
+  check <- res %>%
+    dplyr::filter(.data[[MWTools::mw_constants$stage_col]] == MWTools::all_stages$useful) %>%
+    dplyr::mutate(
+      .suff = RCLabels::get_pref_suff(.data[[MWTools::mw_constants$product]],
+                                      which = "suff",
+                                      notation = RCLabels::from_notation),
+      .OK = .data[[".suff"]] == .data[[MWTools::mw_constants$species]]
+    )
+  expect_true(all(check$.OK))
+})
+
+
+test_that("specify_fu_machines() works as expected", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu()
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu()
+  res <- specify_product(hmw_df, amw_df) %>%
+    MWTools::specify_primary_production() %>%
+    specify_useful_products() %>%
+    specify_fu_machines()
+
+  # Check that all final-to-useful machines are specified
+  check <- res %>%
+    dplyr::filter(.data[[MWTools::mw_constants$stage_col]] == MWTools::all_stages$useful) %>%
+    dplyr::mutate(
+      .suff = RCLabels::get_pref_suff(.data[[MWTools::mw_constants$species]],
+                                      which = "suff",
+                                      notation = RCLabels::arrow_notation),
+      .OK = .data[[".suff"]] == RCLabels::get_pref_suff(.data[[MWTools::mw_constants$product]],
+                                                        which = "pref",
+                                                        notation = RCLabels::from_notation)
+    )
+  expect_true(all(check$.OK))
+
 })
 

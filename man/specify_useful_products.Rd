@@ -7,14 +7,20 @@
 specify_useful_products(
   .df,
   product = MWTools::mw_constants$product,
-  useful = MWTools::all_stages$useful,
   stage = MWTools::mw_constants$stage_col,
   species = MWTools::mw_constants$species,
+  useful = MWTools::all_stages$useful,
   notation = RCLabels::from_notation
 )
 }
 \arguments{
 \item{.df}{A data frame, usually the output of \code{MWTools::specify_primary_production()}.}
+
+\item{product, stage, species}{See \code{MWTools::mw_constants}.}
+
+\item{useful}{See \code{MWTools::all_stages}.}
+
+\item{notation}{See \code{RCLabels::from_notation}.}
 }
 \value{
 A data frame with
