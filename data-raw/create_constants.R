@@ -17,6 +17,7 @@ mw_constants <- list(country_name = "Country.name",
                      sector_col = "Sector",
                      stage_col = "Stage",
                      energy_col = "E.dot",
+                     last_stage = IEATools::iea_cols$last_stage,
                      exemplar_method_col = "Exemplar/Method",
                      method_source_col = "Method/Source")
 usethis::use_data(mw_constants, overwrite = TRUE)
@@ -41,6 +42,13 @@ usethis::use_data(row_col_types, overwrite = TRUE)
 #
 psut_cols <- IEATools::psut_cols
 usethis::use_data(psut_cols, overwrite = TRUE)
+
+
+#
+# Possible last stages
+#
+last_stages <- IEATools::last_stages
+usethis::use_data(last_stages, overwrite = TRUE)
 
 
 #

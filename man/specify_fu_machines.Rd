@@ -2,7 +2,7 @@
 % Please edit documentation in R/specify.R
 \name{specify_fu_machines}
 \alias{specify_fu_machines}
-\title{Specify final-to-useful machines (species)}
+\title{Specify final-to-useful industries}
 \usage{
 specify_fu_machines(
   .df,
@@ -16,13 +16,21 @@ specify_fu_machines(
 }
 \arguments{
 \item{.df}{A data frame, likely the output of \code{specify_useful_products()}.}
+
+\item{product, stage, species}{See \code{MWTools::mw_constants}.}
+
+\item{useful}{See \code{MWTools::all_stages}.}
+
+\item{product_notation}{The notation for products. Default is \code{RCLabels::from_notation}.}
+
+\item{machine_notation}{The notation for machines. Default is \code{RCLabels::arrow_notation}.}
 }
 \value{
 
 }
 \description{
-Final-to-useful machines should be named as "Machine -> Product".
-This function renames final-to-useful machines (species) to the desired form.
+Final-to-useful industries should be named as "Industry -> Product".
+This function renames final-to-useful industries (in this case, species) to the desired form.
 }
 \examples{
 hmw_df <- hmw_test_data_path() \%>\%

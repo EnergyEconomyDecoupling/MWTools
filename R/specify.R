@@ -161,12 +161,16 @@ specify_useful_products <- function(.df,
 }
 
 
-#' Specify final-to-useful machines (species)
+#' Specify final-to-useful industries
 #'
-#' Final-to-useful machines should be named as "Machine -> Product".
-#' This function renames final-to-useful machines (species) to the desired form.
+#' Final-to-useful industries should be named as "Industry -> Product".
+#' This function renames final-to-useful industries (in this case, species) to the desired form.
 #'
 #' @param .df A data frame, likely the output of `specify_useful_products()`.
+#' @param product,stage,species See `MWTools::mw_constants`.
+#' @param useful See `MWTools::all_stages`.
+#' @param product_notation The notation for products. Default is `RCLabels::from_notation`.
+#' @param machine_notation The notation for machines. Default is `RCLabels::arrow_notation`.
 #'
 #' @return
 #' @export
@@ -207,4 +211,53 @@ specify_fu_machines <- function(.df,
     dplyr::filter(.data[[stage]] != useful) %>%
     # Bind the specified final-to-useful machines at the bottom of the outgoing data frame.
     dplyr::bind_rows(specified_fu_machines)
+}
+
+
+#' Create energy conversion chains for final and useful last stages
+#'
+#' @param .df A data frame, probably the output of `specify_fu_machines()`.
+#'
+#' @return A data frame containing a new column `last_stage` and
+#'         rows for both final and useful being the last stage.
+#'
+#' @export
+#'
+#' @examples
+#' hmw_df <- hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu()
+#' amw_df <- amw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_amw_pfu()
+#' specify_product(hmw_df, amw_df) %>%
+#'   MWTools::specify_primary_production() %>%
+#'   specify_useful_products() %>%
+#'   specify_fu_machines() %>%
+#'   specify_last_stages()
+specify_last_stages <- function(.df,
+                                last_stage = MWTools::mw_constants$last_stage,
+                                final = MWTools::last_stages$final,
+                                useful = MWTools::last_stages$useful) {
+  # .df comes in with last_stage of useful,
+  # so just name it.
+  ls_useful_rows <- .df %>%
+    dplyr::mutate(
+      "{last_stage}" := useful
+    )
+
+  # Now work on situation where last stage is final.
+  # We need to construct this ECC using information available to us.
+  # Eliminate useful energy rows from the data frame.
+
+  # Find the proportion of Food that goes into each final demand sector
+
+  # Find the proportion of Feed that goes into each final demand sector
+
+
+  # Apportion Food by proportions
+
+  # Apportion Feed by the proportions
+
+
 }
