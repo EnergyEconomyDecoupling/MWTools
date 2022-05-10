@@ -18,16 +18,23 @@ mw_constants <- list(country_name = "Country.name",
                      stage_col = "Stage",
                      energy_col = "E.dot",
                      exemplar_method_col = "Exemplar/Method",
-                     method_source_col = "Method/Source",
-                     matnames_col = IEATools::mat_meta_cols$matnames,
-                     rownames_col = IEATools::mat_meta_cols$rownames,
-                     colnames_col = IEATools::mat_meta_cols$colnames,
-                     rowtypes_col = IEATools::mat_meta_cols$rowtypes,
-                     coltypes_col = IEATools::mat_meta_cols$coltypes,
-                     industry_type = IEATools::row_col_types$industry,
-                     product_type = IEATools::row_col_types$product)
+                     method_source_col = "Method/Source")
 usethis::use_data(mw_constants, overwrite = TRUE)
 
+
+#
+# Names for metadata columns in data frames
+# to be collapsed into matrices
+#
+mat_meta_cols <- IEATools::mat_meta_cols
+usethis::use_data(mat_meta_cols, overwrite = TRUE)
+
+
+#
+# Row and column types
+#
+row_col_types <- IEATools::row_col_types
+usethis::use_data(row_col_types, overwrite = TRUE)
 
 #
 # Names for PSUT columns
