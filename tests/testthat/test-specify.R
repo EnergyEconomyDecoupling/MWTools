@@ -9,21 +9,13 @@ test_that("specify_product() works as expected", {
 
   specified_mw <- specify_product(hmw_df, amw_df)
 
-  expect_equal(unique(specified_hmw[[MWTools::mw_constants$product]]),
+  expect_equal(unique(specified_mw[[MWTools::mw_constants$product]]),
                c(MWTools::mw_products$food,
                  MWTools::mw_products$biomass,
                  MWTools::mw_products$hu_mech,
-                 RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
-                                           suff = MWTools::mw_sectors$resources_sector,
-                                           notation = RCLabels::from_notation)))
-  expect_equal(unique(specified_amw[[MWTools::mw_constants$product]]),
-               c(MWTools::mw_products$an_mech,
+                 MWTools::mw_products$an_mech,
                  MWTools::mw_products$an_p,
-                 MWTools::mw_products$feed,
-                 MWTools::mw_products$biomass,
-                 RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
-                                           suff = MWTools::mw_sectors$resources_sector,
-                                           notation = RCLabels::from_notation)))
+                 MWTools::mw_products$feed))
 })
 
 
@@ -38,13 +30,10 @@ test_that("specify_primary_production() works as expected", {
   specified_mw <- specify_product(hmw_df, amw_df) %>%
     MWTools::specify_primary_production()
 
-  specified_amw <- amw_df %>%
-    MWTools::specify_primary_production()
-
-  nrow_primary_hmw_biomass <- specified_hmw %>%
+  nrow_primary_hmw_biomass <- specified_mw %>%
     dplyr::filter(.data[[MWTools::mw_constants$product]] == MWTools::mw_products$biomass) %>%
     nrow()
-  nrow_primary_hmw_biomass_from_resources <- specified_hmw %>%
+  nrow_primary_hmw_biomass_from_resources <- specified_mw %>%
     dplyr::filter(.data[[MWTools::mw_constants$product]] == RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
                                                                                    suff = "Resources",
                                                                                    notation = RCLabels::from_notation)) %>%
@@ -102,6 +91,5 @@ test_that("specify_fu_machines() works as expected", {
                                                         notation = RCLabels::from_notation)
     )
   expect_true(all(check$.OK))
-
 })
 
