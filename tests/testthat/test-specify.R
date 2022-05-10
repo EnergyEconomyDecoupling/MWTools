@@ -30,15 +30,12 @@ test_that("specify_product() works as expected", {
 test_that("specify_primary_production() works as expected", {
   hmw_df <- hmw_test_data_path() %>%
     read.csv() %>%
-    calc_hmw_pfu() %>%
-    specify_product()
-
+    calc_hmw_pfu()
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
-    calc_amw_pfu() %>%
-    specify_product()
+    calc_amw_pfu()
 
-  specified_hmw <- hmw_df %>%
+  specified_mw <- specify_product(hmw_df, amw_df) %>%
     MWTools::specify_primary_production()
 
   specified_amw <- amw_df %>%
@@ -54,5 +51,19 @@ test_that("specify_primary_production() works as expected", {
     nrow()
   # We should make 1 row of Biomass [from Resources] for every row of biomass.
   expect_equal(nrow_primary_hmw_biomass, nrow_primary_hmw_biomass_from_resources)
+})
+
+
+test_that("specify_useful_products() works as expected", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu()
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu()
+  res <- specify_product(hmw_df, amw_df) %>%
+    MWTools::specify_primary_production() %>%
+    specify_useful_products()
+
 })
 

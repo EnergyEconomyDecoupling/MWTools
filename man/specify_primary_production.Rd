@@ -29,20 +29,18 @@ Default is \code{RCLabels::from_notation}.}
 \item{resources}{See \code{MWTools::mw_sectors}.}
 }
 \value{
-A data frame with
+A data frame with primary production specified.
 }
 \description{
 Adds rows for biomass from resources
 }
 \examples{
-hmw_test_data_path() \%>\%
+hmw_df <- hmw_test_data_path() \%>\%
   read.csv() \%>\%
-  calc_hmw_pfu() \%>\%
-  specify_product() \%>\%
-  specify_primary_production()
-amw_test_data_path() \%>\%
+  calc_hmw_pfu()
+amw_df <- amw_test_data_path() \%>\%
   read.csv() \%>\%
-  calc_amw_pfu() \%>\%
-  specify_product() \%>\%
-  specify_primary_production()
+  calc_amw_pfu()
+specify_product(hmw_df, amw_df) \%>\%
+  MWTools::specify_primary_production()
 }

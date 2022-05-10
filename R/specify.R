@@ -76,21 +76,19 @@ specify_product <- function(.hmw_df, .amw_df,
 #'                 Default is `RCLabels::from_notation`.
 #' @param resources See `MWTools::mw_sectors`.
 #'
-#' @return A data frame with
+#' @return A data frame with primary production specified.
 #'
 #' @export
 #'
 #' @examples
-#' hmw_test_data_path() %>%
+#' hmw_df <- hmw_test_data_path() %>%
 #'   read.csv() %>%
-#'   calc_hmw_pfu() %>%
-#'   specify_product() %>%
-#'   specify_primary_production()
-#' amw_test_data_path() %>%
+#'   calc_hmw_pfu()
+#' amw_df <- amw_test_data_path() %>%
 #'   read.csv() %>%
-#'   calc_amw_pfu() %>%
-#'   specify_product() %>%
-#'   specify_primary_production()
+#'   calc_amw_pfu()
+#' specify_product(hmw_df, amw_df) %>%
+#'   MWTools::specify_primary_production()
 specify_primary_production <- function(.df,
                                        product = MWTools::mw_constants$product,
                                        primary = MWTools::all_stages$primary,
@@ -107,4 +105,50 @@ specify_primary_production <- function(.df,
       "{product}" := RCLabels::paste_pref_suff(pref = .data[[product]], suff = resources, notation = notation)
     )
   dplyr::bind_rows(.df, primary_rows)
+}
+
+
+#' Specify useful energy products
+#'
+#' Final-to-useful machines make useful energy products.
+#' This function specifies those products
+#' to include a `[from X]` suffix.
+#'
+#' @param .df A data frame, usually the output of `MWTools::specify_primary_production()`.
+#'
+#' @return A data frame with
+#'
+#' @export
+#'
+#' @examples
+#' hmw_df <- hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu()
+#' amw_df <- amw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_amw_pfu()
+#' specify_product(hmw_df, amw_df) %>%
+#'   MWTools::specify_primary_production() %>%
+#'   specify_useful_products()
+specify_useful_products <- function(.df,
+                                    product = MWTools::mw_constants$product,
+                                    useful = MWTools::all_stages$useful,
+                                    stage = MWTools::mw_constants$stage_col,
+                                    species = MWTools::mw_constants$species,
+                                    notation = RCLabels::from_notation) {
+  # Find all useful rows
+  useful_rows <- .df %>%
+    dplyr::filter(.data[[stage]] == useful)
+  # Specify the products in the useful rows
+  specified_useful_rows <- useful_rows %>%
+    dplyr::mutate(
+      "{product}" := RCLabels::paste_pref_suff(pref = .data[[product]],
+                                               suff = .data[[species]], ###### Not right.
+                                               notation = notation)
+    )
+  .df %>%
+    # Eliminate useful energy rows
+    dplyr::filter(.data[[stage]] != useful) %>%
+    # Bind the specified useful rows to the bottom of the data frame.
+    dplyr::bind_rows(specified_useful_rows)
 }
