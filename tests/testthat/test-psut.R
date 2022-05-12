@@ -19,6 +19,28 @@ test_that("add_row_col_meta() works as expected", {
   expect_false(any(res[[MWTools::mat_meta_cols$colnames]] %>% is.null()))
   expect_false(any(res[[MWTools::mat_meta_cols$rowtypes]] %>% is.null()))
   expect_false(any(res[[MWTools::mat_meta_cols$coltypes]] %>% is.null()))
+  # All R and V matrices are Industry x Product
+  res %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] %in% c(MWTools::psut_cols$R, MWTools::psut_cols$V)) %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$rowtypes]] != MWTools::row_col_types$industry) %>%
+    nrow() %>%
+    expect_equal(0)
+  res %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] %in% c(MWTools::psut_cols$R, MWTools::psut_cols$V)) %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$coltypes]] != MWTools::row_col_types$product) %>%
+    nrow() %>%
+    expect_equal(0)
+  # All U and Y matrices are Product x Industry
+  res %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] %in% c(MWTools::psut_cols$U, MWTools::psut_cols$Y)) %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$rowtypes]] != MWTools::row_col_types$product) %>%
+    nrow() %>%
+    expect_equal(0)
+  res %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] %in% c(MWTools::psut_cols$U, MWTools::psut_cols$Y)) %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$coltypes]] != MWTools::row_col_types$industry) %>%
+    nrow() %>%
+    expect_equal(0)
 
   R_matrix_rows <- res %>%
     dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] == MWTools::psut_cols$R)
@@ -32,18 +54,37 @@ test_that("add_row_col_meta() works as expected", {
     dplyr::filter(.data[[MWTools::mat_meta_cols$colnames]] != "Biomass [from Resources]") %>%
     nrow() %>%
     expect_equal(0)
-  # All rows for R matrix will be Industry x Product
-  R_matrix_rows %>%
-    dplyr::filter(!(.data[[MWTools::mat_meta_cols$rowtypes]] == MWTools::row_col_types$industry)) %>%
+
+  # Check Farms.
+  farm_rows <- res %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$rownames]] == MWTools::mw_sectors$farms |
+                    .data[[MWTools::mat_meta_cols$colnames]] == MWTools::mw_sectors$farms)
+  # Farms use exclusively Biomass [from Resources]
+  farm_rows %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$colnames]] == MWTools::mw_sectors$farms) %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$rownames]] != "Biomass [from Resources]") %>%
     nrow() %>%
     expect_equal(0)
-  R_matrix_rows %>%
-    dplyr::filter(!(.data[[MWTools::mat_meta_cols$coltypes]] == MWTools::row_col_types$product)) %>%
+  # Farms make exclusively Biomass
+  farm_rows %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$rownames]] == MWTools::mw_sectors$farms) %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$colnames]] != MWTools::mw_products$biomass) %>%
     nrow() %>%
     expect_equal(0)
 
-  #
-
+  # Food production and Feed production use exclusively Biomass
+  food_feed_prod_rows <- res %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$colnames]] %in% c("Food production", "Feed production") |
+                    .data[[MWTools::mat_meta_cols$rownames]] %in% c("Food production", "Feed production"))
+  food_feed_prod_rows %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] == MWTools::psut_cols$U) %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$rownames]] != "Biomass") %>%
+    nrow() %>%
+    expect_equal(0)
+  # Food production and Feed production make Feed or Food
+  food_feed_prod_rows %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] == MWTools::psut_cols$V) %>%
+    dplyr::filter(!(.data[[MWTools::mat_meta_cols$colnames]] %in% c()))
 
 
 })
