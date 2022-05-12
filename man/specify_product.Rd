@@ -2,7 +2,7 @@
 % Please edit documentation in R/specify.R
 \name{specify_product}
 \alias{specify_product}
-\title{Specify a data frame of PFU muscle work data}
+\title{Add a product column to a muscle work data frame}
 \usage{
 specify_product(
   .hmw_df,
@@ -29,7 +29,7 @@ specify_product(
 
 \item{.amw_df}{A data frame, likely produced by \code{calc_amw_pfu()}.}
 
-\item{product}{See \code{MWTools::mw_constants}.}
+\item{product}{The name of the column to be added. See \code{MWTools::mw_constants}.}
 
 \item{primary, final, useful}{See \code{MWTools::all_stages}.}
 
@@ -47,8 +47,8 @@ specify_product(
 A data frame with additional rows needed for converting to PSUT matrices.
 }
 \description{
-The specification process adds entries (rows)
-needed for conversion to PSUT matrices.
+A \code{product} column is needed before converting a muscle work data frame
+to PSUT matrices. This function adds and populates the \code{product} column.
 }
 \details{
 This function binds \code{.hmw_df} and \code{.amw_df} by rows.

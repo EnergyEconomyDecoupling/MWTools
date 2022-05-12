@@ -216,7 +216,9 @@ mw_sectors <- list(broad_sector_col = "broad_sector",
                    non_agriculture_broad.sector = "Non-agriculture",
                    total_sector = "Total",
                    resources_sector = "Resources",
-                   farms = "Farms")
+                   farms = "Farms",
+                   food_production = "Food production",
+                   feed_production = "Feed production")
 usethis::use_data(mw_sectors, overwrite = TRUE)
 
 

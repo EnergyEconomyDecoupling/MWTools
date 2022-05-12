@@ -9,6 +9,7 @@ specify_fu_machines(
   product = MWTools::mw_constants$product,
   stage = MWTools::mw_constants$stage_col,
   species = MWTools::mw_constants$species,
+  final = MWTools::all_stages$final,
   useful = MWTools::all_stages$useful,
   product_notation = RCLabels::from_notation,
   machine_notation = RCLabels::arrow_notation

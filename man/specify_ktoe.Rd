@@ -11,7 +11,9 @@ specify_ktoe(
 )
 }
 \arguments{
-\item{.df}{A data frame with \code{units} and \code{energy} columns.}
+\item{.df}{A data frame with \code{units_col} and \code{energy_col} columns.}
+
+\item{energy_col, units_col}{See \code{MWTools::mw_constants}.}
 }
 \value{
 \code{.df} with \code{energy} column converted from EJ to ktoe.
@@ -19,7 +21,13 @@ specify_ktoe(
 \description{
 Primary-final-useful (PFU) data from \code{calc_hmw_pfu()} and \code{calc_amw_pfu()}
 are in EJ.
-This function converts to ktoe.
+This function converts entries in the \code{energy_col} from EJ (exajoules) to ktoe and
+changes the \code{units_col} from "EJ" to "ktoe".
+}
+\details{
+Prior to converting the \code{energy_col} from EJ to ktoe,
+the \code{units_col} is verified to contain only "EJ".
+An error is thrown if any \code{units_col} entry is not in EJ.
 }
 \examples{
 hmw_test_data_path() \%>\%

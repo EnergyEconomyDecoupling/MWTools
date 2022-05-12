@@ -5,7 +5,7 @@
 \alias{mw_sectors}
 \title{Economic sectors for muscle work}
 \format{
-A string list with 11 entries.
+A string list with 13 entries.
 \describe{
 \item{broad_sector_col}{The column name "broad_sector", which contains the "Broad sector" sector names used by the ILO.}
 \item{hmw_analysis_sector_col}{The column name "Sector.hmw", which contains the sector names used in the hmw analysis data excel file bundled with this package.}

@@ -1,15 +1,15 @@
 
 
-#' Specify a data frame of PFU muscle work data
+#' Add a product column to a muscle work data frame
 #'
-#' The specification process adds entries (rows)
-#' needed for conversion to PSUT matrices.
+#' A `product` column is needed before converting a muscle work data frame
+#' to PSUT matrices. This function adds and populates the `product` column.
 #'
 #' This function binds `.hmw_df` and `.amw_df` by rows.
 #'
 #' @param .hmw_df A data frame, likely produced by `calc_hmw_pfu()`.
 #' @param .amw_df A data frame, likely produced by `calc_amw_pfu()`.
-#' @param product See `MWTools::mw_constants`.
+#' @param product The name of the column to be added. See `MWTools::mw_constants`.
 #' @param primary,final,useful See `MWTools::all_stages`.
 #' @param species See `MWTools::mw_constants`.
 #' @param human See `MWTools::mw_species`.
@@ -190,11 +190,13 @@ specify_fu_machines <- function(.df,
                                 product = MWTools::mw_constants$product,
                                 stage = MWTools::mw_constants$stage_col,
                                 species = MWTools::mw_constants$species,
+                                final = MWTools::all_stages$final,
                                 useful = MWTools::all_stages$useful,
                                 product_notation = RCLabels::from_notation,
                                 machine_notation = RCLabels::arrow_notation) {
   fu_machine_rows <- .df %>%
-    dplyr::filter(.data[[stage]] == useful)
+    # dplyr::filter(.data[[stage]] == useful)
+    dplyr::filter(.data[[stage]] %in% c(final, useful))
   # Specify the fu machines (in this case, species)
   specified_fu_machines <- fu_machine_rows %>%
     dplyr::mutate(
@@ -272,9 +274,15 @@ specify_last_stages <- function(.df,
 #'
 #' Primary-final-useful (PFU) data from `calc_hmw_pfu()` and `calc_amw_pfu()`
 #' are in EJ.
-#' This function converts to ktoe.
+#' This function converts entries in the `energy_col` from EJ (exajoules) to ktoe and
+#' changes the `units_col` from "EJ" to "ktoe".
 #'
-#' @param .df A data frame with `units` and `energy` columns.
+#' Prior to converting the `energy_col` from EJ to ktoe,
+#' the `units_col` is verified to contain only "EJ".
+#' An error is thrown if any `units_col` entry is not in EJ.
+#'
+#' @param .df A data frame with `units_col` and `energy_col` columns.
+#' @param energy_col,units_col See `MWTools::mw_constants`.
 #'
 #' @return `.df` with `energy` column converted from EJ to ktoe.
 #'
