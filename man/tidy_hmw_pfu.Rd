@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_hmw_functions.R
 \name{tidy_hmw_pfu}
 \alias{tidy_hmw_pfu}
-\title{Tidy}
+\title{Produce a tidy human muscle work data frame}
 \usage{
 tidy_hmw_pfu(
   .df,
@@ -43,7 +43,7 @@ Usually produced by calling the
 \item{final_energy_col, primary_energy_col, useful_energy_hmw_col, hmw_analysis_sector_col}{See \code{MWTools::hmw_analysis_constants}.}
 }
 \description{
-Tidy
+Produce a tidy human muscle work data frame
 }
 \examples{
 tidied_pfu_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%

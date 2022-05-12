@@ -124,7 +124,7 @@ test_that("specify_last_stages() works as expected", {
 })
 
 
-test_that("specify_ktoe() works as expected" {
+test_that("specify_ktoe() works as expected", {
   EJ_df <- hmw_test_data_path() %>%
     read.csv() %>%
     calc_hmw_pfu() %>%
@@ -148,12 +148,11 @@ test_that("specify_ktoe() works as expected" {
 
   check <- EJ_df %>%
     dplyr::mutate(
-      new_ktoe := .data[[MWTools::mw_constants$energy_col]] * MWTools::unit_constants$EJ_to_ktoe,
+      new_ktoe := .data[["E.dot_EJ"]] * MWTools::unit_constants$EJ_to_ktoe,
     ) %>%
     dplyr::full_join(ktoe_df, by = c("Country", "Year", "Species", "Stage", "Sector")) %>%
     dplyr::mutate(
-      diff = new_ktoe - E.dot.y
+      diff = new_ktoe - E.dot_ktoe
     )
-
-  expect_true(all(abs(check$diff) < 1e-6))
+  expect_true(all(check$diff == 0))
 })

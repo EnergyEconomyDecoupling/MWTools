@@ -395,8 +395,7 @@ calc_hmw_useful_energy <- function(.df,
                                    total_wk_hrs_ilo_col = MWTools::hmw_analysis_constants$total_wk_hrs_ilo_col,
                                    useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
                                    hours_to_seconds = MWTools::unit_constants$hours_to_seconds,
-                                   joules_to_megajoules = MWTools::unit_constants$joules_to_megajoules
-                                   ){
+                                   joules_to_megajoules = MWTools::unit_constants$joules_to_megajoules){
 
   # Reads power data
   power_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
@@ -420,7 +419,7 @@ calc_hmw_useful_energy <- function(.df,
 }
 
 
-#' Tidy an human muscle work data frame.
+#' Produce a tidy human muscle work data frame
 #'
 #' @param .df A data frame containing the final and useful energy consumed
 #'            by human workers.

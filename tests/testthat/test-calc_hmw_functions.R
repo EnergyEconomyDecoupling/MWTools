@@ -76,6 +76,7 @@ test_that("calc_hmw_final_energy() works",{
   expect_true(!is.null(hmw_data_finalenergy))
 })
 
+
 test_that("calc_hmw_primary_energy() works",{
   hmw_data <- read.csv(file = hmw_test_data_path())
   hmw_data_primaryenergy <- hmw_data %>%
@@ -104,8 +105,10 @@ test_that("calc_hmw_useful_energy() works",{
   expect_true(!is.null(hmw_data_usefulenergy))
   # As of 11 May 2022, we are getting some NA energy values,
   # which is probably not correct.
+  # So build a test for this.
   expect_false(any(is.na(hmw_data_usefulenergy$`Useful energy [MJ/year]`)))
 })
+
 
 test_that("tidy_hmw_data() works",{
   hmw_data <- read.csv(file = hmw_test_data_path())
@@ -122,6 +125,7 @@ test_that("tidy_hmw_data() works",{
   expect_true(!is.null(tidy_hmw_data))
   # As of 11 May 2022, we are getting some NA energy values,
   # which is probably not correct.
+  # So build a test for this.
   expect_false(any(is.na(tidy_hmw_data[[MWTools::mw_constants$energy_col]])))
 })
 
@@ -133,6 +137,7 @@ test_that("calc_hmw_pfu() works",{
   expect_true(!is.null(hmw_data_pfu))
   # As of 11 May 2022, we are getting some NA energy values,
   # which is probably not correct.
+  # So build a test for this.
   expect_false(any(is.na(hmw_data_pfu[[MWTools::mw_constants$energy_col]])))
 })
 
