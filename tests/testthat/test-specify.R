@@ -145,7 +145,6 @@ test_that("specify_ktoe() works as expected", {
   expect_true(all(ktoe_df[[MWTools::mw_constants$units_col]] == "ktoe"))
   check <- dplyr::full_join(EJ_df, ktoe_df, by = c("Country", "Year", "Species", "Stage", "Sector"))
 
-
   check <- EJ_df %>%
     dplyr::mutate(
       new_ktoe := .data[["E.dot_EJ"]] * MWTools::unit_constants$EJ_to_ktoe,
