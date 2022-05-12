@@ -195,8 +195,7 @@ specify_fu_machines <- function(.df,
                                 product_notation = RCLabels::from_notation,
                                 machine_notation = RCLabels::arrow_notation) {
   fu_machine_rows <- .df %>%
-    # dplyr::filter(.data[[stage]] == useful)
-    dplyr::filter(.data[[stage]] %in% c(final, useful))
+    dplyr::filter(.data[[stage]] == useful)
   # Specify the fu machines (in this case, species)
   specified_fu_machines <- fu_machine_rows %>%
     dplyr::mutate(

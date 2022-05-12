@@ -47,6 +47,7 @@ add_row_col_meta <- function(.df,
                              # Column names
                              species = MWTools::mw_constants$species,
                              sector = MWTools::mw_constants$sector_col,
+                             stage = MWTools::mw_constants$stage_col,
                              product = MWTools::mw_constants$product,
                              last_stage = MWTools::mw_constants$last_stage,
                              matnames = MWTools::mat_meta_cols$matnames,
@@ -95,7 +96,7 @@ add_row_col_meta <- function(.df,
       "{rowtypes}" := product_type,
       "{coltypes}" := industry_type
     )
-  # Add the Biomass [from Resources] entries to the outgoing data frame.
+  # Add the Biomass entries to the outgoing data frame.
   out <- dplyr::bind_rows(biomass_resource_rows_R, biomass_resource_rows_U)
 
   # Biomass flows go into the V and U matrices.
@@ -103,7 +104,7 @@ add_row_col_meta <- function(.df,
   biomass_rows <- .df %>%
     dplyr::filter(.data[[product]] == biomass)
   # Biomass entries in the V matrix
-  biomass_rows_V <- .df %>%
+  biomass_rows_V <- biomass_rows %>%
     dplyr::mutate(
       "{matnames}" := V_name,
       "{rownames}" := farms,
@@ -112,7 +113,7 @@ add_row_col_meta <- function(.df,
       "{coltypes}" := product_type
     )
   # Biomass entries in the U matrix
-  biomass_rows_U <- .df %>%
+  biomass_rows_U <- biomass_rows %>%
     dplyr::mutate(
       "{matnames}" := U_name,
       "{rownames}" := .data[[product]],
@@ -131,7 +132,7 @@ add_row_col_meta <- function(.df,
   food_feed_rows <- .df %>%
     dplyr::filter(.data[[product]] %in% c(food, feed))
   # Food and Feed entries in the V matrix.
-  food_feed_rows_V <- .df %>%
+  food_feed_rows_V <- food_feed_rows %>%
     dplyr::mutate(
       "{matnames}" := V_name,
       "{rownames}" := dplyr::case_when(
@@ -144,26 +145,25 @@ add_row_col_meta <- function(.df,
       "{coltypes}" := product_type
     )
   # Food and Feed entries in the U or Y matrix.
-  # Set some of the names we'll use later.
-  # horses_anmech <- RCLabels::paste_pref_suff(pref = horses, suff = an_mech, notation = species_notation)
-  food_feed_rows_UY <- .df %>%
+  food_feed_rows_UY <- food_feed_rows %>%
     dplyr::mutate(
       # The matrix name depends on whether the last stage is final or useful.
       "{matnames}" := dplyr::case_when(
-        .data[[last_stage]] == final ~ U_name,
-        .data[[last_stage]] == useful ~ Y_name
+        .data[[last_stage]] == final ~ Y_name,
+        .data[[last_stage]] == useful ~ U_name
       ),
       # The row name in U or Y is always the product.
       "{rownames}" := .data[[product]],
       # Column names depend on whether the last stage is final or useful.
       "{colnames}" := dplyr::case_when(
-        # If last stage is final, the column in the Y matrix is the destination sector.
+        # If last stage is final, the column in the Y matrix is the destination sector, and
+        # the column name should be the sector into which this energy flows ultimately.
         .data[[last_stage]] == final ~ .data[[sector]],
         # If last stage is useful
-        # (the only other option, so everything following *will* be last stage useful),
+        # (the only other option, so everything below *will* be energy for useful last stage),
         # the column in the U matrix is the specified name
         # of the human or animal machine.
-        # If the species is a human, then the column name (Industry) is
+        # If the species is a human being, then the column name (Industry) is
         # Species -> hu_mech.
         .data[[species]] %in% c(human_females, human_males) ~ RCLabels::paste_pref_suff(pref = .data[[species]],
                                                                                         suff = hu_mech,
@@ -172,10 +172,12 @@ add_row_col_meta <- function(.df,
         # When the species is an animal, the column name is again
         # Species -> Useful product,
         # but the Useful product can be either AnMech or AnP,
-        # depending on the final demand category (Transport for AnP or Agriculture for everything else).
+        # depending on the final demand category.
+        # The energy product going into the Transport sector is AnP.
         .data[[sector]] == transport ~ RCLabels::paste_pref_suff(pref = .data[[species]],
                                                                  suff = an_p,
                                                                  notation = species_notation),
+        # The energy product going into any other sector is AnMech.
         TRUE ~ RCLabels::paste_pref_suff(pref = .data[[species]],
                                          suff = an_mech,
                                          notation = species_notation)
@@ -186,5 +188,27 @@ add_row_col_meta <- function(.df,
   out <- out %>%
     dplyr::bind_rows(food_feed_rows_V, food_feed_rows_UY)
 
-  # Useful energy rows (V and Y)
+  # Useful energy rows go into the V and Y matrices.
+  useful_rows <- .df %>%
+    dplyr::filter(.data[[stage]] == useful)
+  # Useful entries in the V matrix.
+  useful_rows_V <- useful_rows %>%
+    dplyr::mutate(
+      "{matnames}" := V_name,
+      "{rownames}" := .data[[species]],
+      "{colnames}" := .data[[product]],
+      "{rowtypes}" := industry_type,
+      "{coltypes}" := product_type
+    )
+  useful_rows_Y <- useful_rows %>%
+    dplyr::mutate(
+      "{matnames}" := Y_name,
+      "{rownames}" := .data[[product]],
+      "{colnames}" := .data[[sector]],
+      "{rowtypes}" := product_type,
+      "{coltypes}" := industry_type
+    )
+
+  out %>%
+    dplyr::bind_rows(useful_rows_V, useful_rows_Y)
 }

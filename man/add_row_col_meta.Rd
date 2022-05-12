@@ -23,6 +23,7 @@ add_row_col_meta(
   useful = MWTools::all_stages$useful,
   species = MWTools::mw_constants$species,
   sector = MWTools::mw_constants$sector_col,
+  stage = MWTools::mw_constants$stage_col,
   product = MWTools::mw_constants$product,
   last_stage = MWTools::mw_constants$last_stage,
   matnames = MWTools::mat_meta_cols$matnames,
