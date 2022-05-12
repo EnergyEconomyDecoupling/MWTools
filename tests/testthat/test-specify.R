@@ -123,3 +123,37 @@ test_that("specify_last_stages() works as expected", {
   expect_equal(ls_final, ls_useful_pf)
 })
 
+
+test_that("specify_ktoe() works as expected" {
+  EJ_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    dplyr::rename(
+      E.dot_EJ := E.dot
+    ) %>%
+    dplyr::mutate(
+      "{MWTools::mw_constants$units_col}" := NULL
+    )
+  ktoe_df <- EJ_df %>%
+    specify_ktoe(energy_col = "E.dot_EJ") %>%
+    dplyr::rename(
+      E.dot_ktoe = E.dot_EJ
+    ) %>%
+    dplyr::mutate(
+      "{MWTools::mw_constants$units_col}" := NULL
+    )
+  expect_true(all(ktoe_df[[MWTools::mw_constants$units_col]] == "ktoe"))
+  check <- dplyr::full_join(EJ_df, ktoe_df, by = c("Country", "Year", "Species", "Stage", "Sector"))
+
+
+  check <- EJ_df %>%
+    dplyr::mutate(
+      new_ktoe := .data[[MWTools::mw_constants$energy_col]] * MWTools::unit_constants$EJ_to_ktoe,
+    ) %>%
+    dplyr::full_join(ktoe_df, by = c("Country", "Year", "Species", "Stage", "Sector")) %>%
+    dplyr::mutate(
+      diff = new_ktoe - E.dot.y
+    )
+
+  expect_true(all(abs(check$diff) < 1e-6))
+})

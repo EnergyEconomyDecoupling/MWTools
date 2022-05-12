@@ -420,7 +420,7 @@ calc_hmw_useful_energy <- function(.df,
 }
 
 
-#' Tidy
+#' Tidy an human muscle work data frame.
 #'
 #' @param .df A data frame containing the final and useful energy consumed
 #'            by human workers.

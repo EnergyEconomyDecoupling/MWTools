@@ -5,7 +5,7 @@
 \alias{unit_constants}
 \title{Unit constants}
 \format{
-A string list with 3 entries.
+A string list with 4 entries.
 \describe{
 \item{kcal_to_mj}{The value 0.0041858, representing the conversion factor between kilocalories (kcal) and megajoules (MJ)}
 \item{hours_to_seconds}{The value 3600, representing the conversion factor between hours and seconds.}

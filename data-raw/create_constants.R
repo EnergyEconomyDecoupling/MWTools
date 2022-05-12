@@ -186,7 +186,8 @@ usethis::use_data(conc_cols, overwrite = TRUE)
 #
 unit_constants <- list(kcal_to_mj = 0.0041858,
                        hours_to_seconds = 3600,
-                       joules_to_megajoules = 0.000001)
+                       joules_to_megajoules = 0.000001,
+                       EJ_to_ktoe = 23884.58966275)
 usethis::use_data(unit_constants, overwrite = TRUE)
 
 

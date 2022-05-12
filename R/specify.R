@@ -266,3 +266,34 @@ specify_last_stages <- function(.df,
   # Bind and return
   dplyr::bind_rows(ls_final_rows, ls_useful_rows)
 }
+
+
+#' Converts units from EJ to ktoe
+#'
+#' Primary-final-useful (PFU) data from `calc_hmw_pfu()` and `calc_amw_pfu()`
+#' are in EJ.
+#' This function converts to ktoe.
+#'
+#' @param .df A data frame with `units` and `energy` columns.
+#'
+#' @return `.df` with `energy` column converted from EJ to ktoe.
+#'
+#' @export
+#'
+#' @examples
+#' hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu() %>%
+#'   specify_ktoe()
+specify_ktoe <- function(.df,
+                         energy_col = MWTools::mw_constants$energy_col,
+                         units_col = MWTools::mw_constants$units_col) {
+  # Verify that .df has units of EJ
+  assertthat::assert_that(all(.df[[units_col]] == "EJ"), msg = "units_col not in EJ in MWTools::specify_ktoe().")
+  # Do the conversion
+  .df %>%
+    dplyr::mutate(
+      "{energy_col}" := .data[[energy_col]] * MWTools::unit_constants$EJ_to_ktoe,
+      "{units_col}" := "ktoe"
+    )
+}
