@@ -81,10 +81,40 @@ test_that("add_row_col_meta() works as expected", {
     dplyr::filter(.data[[MWTools::mat_meta_cols$rownames]] != "Biomass") %>%
     nrow() %>%
     expect_equal(0)
-  # Food production and Feed production make Feed or Food
+  # Food production makes only Food.
   food_feed_prod_rows %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] == MWTools::psut_cols$V &
+                    .data[[MWTools::mat_meta_cols$rownames]] == MWTools::mw_sectors$food_production) %>%
+    dplyr::filter(.data[[MWTools::mw_constants$product]] != MWTools::mw_products$food) %>%
+    nrow() %>%
+    expect_equal(0)
+  # Feed production makes only Feed.
+  food_feed_prod_rows %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] == MWTools::psut_cols$V &
+                    .data[[MWTools::mat_meta_cols$rownames]] == MWTools::mw_sectors$feed_production) %>%
+    dplyr::filter(.data[[MWTools::mw_constants$product]] != MWTools::mw_products$feed) %>%
+    nrow() %>%
+    expect_equal(0)
+  # The final-to-useful machines (which contain the string "->") use only food or feed
+  fu_machines <- res %>%
+    dplyr::filter(grepl(" -> ", .data[[MWTools::mat_meta_cols$rownames]]) |
+                    grepl(" -> ", .data[[MWTools::mat_meta_cols$colnames]]))
+  fu_machines %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] == MWTools::psut_cols$U) %>%
+    dplyr::filter(!(.data[[MWTools::mat_meta_cols$rownames]] %in% c(MWTools::mw_products$food, MWTools::mw_products$feed))) %>%
+    nrow() %>%
+    expect_equal(0)
+  # The final-to-useful machines (which contain the string "->") make only HuMech, AnMech, or AnP
+  fu_machines %>%
     dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] == MWTools::psut_cols$V) %>%
-    dplyr::filter(!(.data[[MWTools::mat_meta_cols$colnames]] %in% c()))
+    dplyr::mutate(
+      .check_col_pref = RCLabels::get_pref_suff(.data[[MWTools::mat_meta_cols$colnames]], which = "pref", notation = RCLabels::from_notation)
+    ) %>%
+    dplyr::filter(!(.data[[".check_col_pref"]] %in% c(MWTools::mw_products$hu_mech,
+                                                                              MWTools::mw_products$an_mech,
+                                                                              MWTools::mw_products$an_p))) %>%
+    nrow() %>%
+    expect_equal(0)
 
 
 })
