@@ -116,5 +116,13 @@ test_that("add_row_col_meta() works as expected", {
     nrow() %>%
     expect_equal(0)
 
-
+  # The final demand matrix (Y) should have only Industry, Services, Transport, or Agriculture as columns.
+  res %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] == MWTools::psut_cols$Y) %>%
+    dplyr::filter(!(.data[[MWTools::mat_meta_cols$colnames]] %in% c(MWTools::mw_sectors$industry_broad.sector,
+                                                                    MWTools::mw_sectors$services_broad.sector,
+                                                                    MWTools::mw_sectors$transport_sector,
+                                                                    MWTools::mw_sectors$agriculture_broad.sector))) %>%
+    nrow() %>%
+    expect_equal(0)
 })
