@@ -233,6 +233,25 @@ add_row_col_meta <- function(.df,
 #' @export
 #'
 #' @examples
+#' hmw_df <- hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu() %>%
+#'   # Keep only a few years for speed.
+#'   dplyr::filter(Year %in% 2000:2002)
+#' amw_df <- amw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_amw_pfu() %>%
+#'   # Keep only a few years for speed.
+#'   dplyr::filter(Year %in% 2000:2002)
+#' specify_energy_type_method(hmw_df, amw_df) %>%
+#'   specify_product() %>%
+#'   specify_ktoe() %>%
+#'   MWTools::specify_primary_production() %>%
+#'   specify_useful_products() %>%
+#'   specify_fu_machines() %>%
+#'   specify_last_stages() %>%
+#'   MWTools::add_row_col_meta() %>%
+#'   MWTools::prep_psut()
 prep_psut <- function(.df,
                       # Metadata columns
                       country = MWTools::mw_cols$country,
@@ -264,13 +283,11 @@ prep_psut <- function(.df,
     # by everything except the energy column,
     # so we can aggregate rows whose energy belongs
     # in the same spot (row and column) in the PSUT matrices.
-    # dplyr::group_by(!!!grouping_symbols_summarise) %>%
     matsindf::group_by_everything_except(e_dot) %>%
     dplyr::summarise(
       "{e_dot}" := sum(.data[[e_dot]])
     ) %>%
     # Group for the collapse operation
-    # dplyr::group_by(!!!rlang::enquos(!!!grouping_symbols_collapse)) %>%
     matsindf::group_by_everything_except(e_dot, matvals, rownames, colnames, rowtypes, coltypes) %>%
     # Create matrices
     matsindf::collapse_to_matrices(matvals = e_dot) %>%

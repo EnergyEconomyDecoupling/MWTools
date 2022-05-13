@@ -39,3 +39,24 @@ Prior to forming matrices, this function deletes unneeded columns
 It also aggregates data frame rows that will end up at the same
 row, column location in the matrices.
 }
+\examples{
+hmw_df <- hmw_test_data_path() \%>\%
+  read.csv() \%>\%
+  calc_hmw_pfu() \%>\%
+  # Keep only a few years for speed.
+  dplyr::filter(Year \%in\% 2000:2002)
+amw_df <- amw_test_data_path() \%>\%
+  read.csv() \%>\%
+  calc_amw_pfu() \%>\%
+  # Keep only a few years for speed.
+  dplyr::filter(Year \%in\% 2000:2002)
+specify_energy_type_method(hmw_df, amw_df) \%>\%
+  specify_product() \%>\%
+  specify_ktoe() \%>\%
+  MWTools::specify_primary_production() \%>\%
+  specify_useful_products() \%>\%
+  specify_fu_machines() \%>\%
+  specify_last_stages() \%>\%
+  MWTools::add_row_col_meta() \%>\%
+  MWTools::prep_psut()
+}
