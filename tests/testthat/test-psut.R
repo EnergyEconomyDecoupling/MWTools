@@ -168,7 +168,7 @@ test_that("prep_psut() works as expected", {
   # by taking a few samples.
   expected1 <- hmw_df %>%
     dplyr::filter(Country == "GBR", Year == 2000, Species == "Human females",
-                  Sector == "Agriculture", Stage == "Useful") %>%
+                  Sector == "Agriculture", Stage == MWTools::all_stages$useful) %>%
     magrittr::extract2("E.dot") %>%
     magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
   actual1 <- res %>%
@@ -177,6 +177,6 @@ test_that("prep_psut() works as expected", {
     magrittr::extract2(1) %>%
     matsbyname::select_rows_byname(retain_pattern = RCLabels::make_or_pattern("HuMech [from Human females]")) %>%
     matsbyname::select_cols_byname(retain_pattern = RCLabels::make_or_pattern("Agriculture")) %>%
-    magrittr::extract2(1,1)
+    magrittr::extract2(1, 1)
   expect_equal(actual1, expected1)
 })
