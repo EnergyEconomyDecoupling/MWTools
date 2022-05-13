@@ -9,7 +9,7 @@ fill_ilo_data(
   country_col = MWTools::conc_cols$country_col,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   sector_col = MWTools::mw_constants$sector_col,
-  year = MWTools::mw_constants$year,
+  year = MWTools::mw_cols$year,
   yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
   employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col
 )

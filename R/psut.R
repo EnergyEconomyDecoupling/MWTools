@@ -234,7 +234,7 @@ add_row_col_meta <- function(.df,
 prep_psut <- function(.df,
                       # Metadata columns
                       country = MWTools::conc_cols$country_col,
-                      year = MWTools::mw_constants$year,
+                      year = MWTools::mw_cols$year,
                       method = MWTools::mw_cols$method,
                       energy_type = MWTools::mw_cols$energy_type,
                       last_stage = MWTools::mw_constants$last_stage,

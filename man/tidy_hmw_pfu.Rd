@@ -6,7 +6,7 @@
 \usage{
 tidy_hmw_pfu(
   .df,
-  year = MWTools::mw_constants$year,
+  year = MWTools::mw_cols$year,
   sector_col = MWTools::mw_constants$sector_col,
   species = MWTools::mw_constants$species,
   energy_col = MWTools::mw_constants$energy_col,

@@ -7,7 +7,7 @@
 calc_sector_split(
   .df,
   amw_analysis_data_path = MWTools::amw_analysis_data_path(),
-  year = MWTools::mw_constants$year,
+  year = MWTools::mw_cols$year,
   species = MWTools::mw_constants$species,
   method_source = MWTools::mw_constants$method_source,
   metric = MWTools::amw_analysis_constants$metric,

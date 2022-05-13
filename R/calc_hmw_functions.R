@@ -24,7 +24,7 @@ add_hmw_region_codes <- function(.df,
                                  country_code_iso3_col = MWTools::conc_cols$country_code_iso3_col,
                                  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
                                  sector_col = MWTools::mw_constants$sector_col,
-                                 year = MWTools::mw_constants$year,
+                                 year = MWTools::mw_cols$year,
                                  yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
                                  employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col
                                  ){
@@ -66,7 +66,7 @@ fill_ilo_data <- function(.df,
                           country_col = MWTools::conc_cols$country_col,
                           sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
                           sector_col = MWTools::mw_constants$sector_col,
-                          year = MWTools::mw_constants$year,
+                          year = MWTools::mw_cols$year,
                           yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
                           employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col){
 
@@ -234,7 +234,7 @@ calc_hmw_final_energy <- function(
     .df,
     hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
     sector_col = MWTools::mw_constants$sector_col,
-    year = MWTools::mw_constants$year,
+    year = MWTools::mw_cols$year,
     unit = MWTools::mw_constants$unit,
     exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
     sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
@@ -319,7 +319,7 @@ calc_hmw_final_energy <- function(
 #'   calc_hmw_final_energy() %>%
 #'   calc_hmw_primary_energy()
 calc_hmw_primary_energy <- function(.df,
-                                    year = MWTools::mw_constants$year,
+                                    year = MWTools::mw_cols$year,
                                     unit = MWTools::mw_constants$unit,
                                     exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
                                     hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
@@ -383,7 +383,7 @@ calc_hmw_primary_energy <- function(.df,
 #'   calc_hmw_useful_energy()
 calc_hmw_useful_energy <- function(.df,
                                    sector_col = MWTools::mw_constants$sector_col,
-                                   year = MWTools::mw_constants$year,
+                                   year = MWTools::mw_cols$year,
                                    unit = MWTools::mw_constants$unit,
                                    sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
                                    hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
@@ -452,7 +452,7 @@ calc_hmw_useful_energy <- function(.df,
 #'   calc_hmw_useful_energy() %>%
 #'   tidy_hmw_pfu()
 tidy_hmw_pfu <- function(.df,
-                         year = MWTools::mw_constants$year,
+                         year = MWTools::mw_cols$year,
                          sector_col = MWTools::mw_constants$sector_col,
                          species = MWTools::mw_constants$species,
                          energy_col = MWTools::mw_constants$energy_col,

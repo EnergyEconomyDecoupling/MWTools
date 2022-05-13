@@ -10,7 +10,7 @@ get_working_species(
   country_name = MWTools::mw_constants$country_name,
   country_code_col = MWTools::conc_cols$country_code_col,
   amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
-  year = MWTools::mw_constants$year,
+  year = MWTools::mw_cols$year,
   value = MWTools::mw_constants$value,
   asses = MWTools::mw_species$asses,
   camels = MWTools::mw_species$camels,

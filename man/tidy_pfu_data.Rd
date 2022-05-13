@@ -9,7 +9,7 @@ tidy_pfu_data(
   country_code_col = MWTools::conc_cols$country_code_col,
   country_col = MWTools::conc_cols$country_col,
   amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
-  year = MWTools::mw_constants$year,
+  year = MWTools::mw_cols$year,
   species = MWTools::mw_constants$species,
   sector_col = MWTools::mw_constants$sector_col,
   stage_col = MWTools::mw_constants$stage_col,

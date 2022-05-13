@@ -6,7 +6,7 @@
 \usage{
 calc_hmw_primary_energy(
   .df,
-  year = MWTools::mw_constants$year,
+  year = MWTools::mw_cols$year,
   unit = MWTools::mw_constants$unit,
   exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
   hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
