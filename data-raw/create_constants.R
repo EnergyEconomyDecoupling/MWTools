@@ -15,7 +15,6 @@ mw_constants <- list(country_name = "Country.name",
                      exemplar_method_col = "Exemplar/Method",
                      method_source_col = "Method/Source",
                      product = IEATools::iea_cols$product,
-                     energy_col = "E.dot",
                      last_stage = IEATools::iea_cols$last_stage)
 usethis::use_data(mw_constants, overwrite = TRUE)
 

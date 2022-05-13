@@ -13,7 +13,7 @@ tidy_pfu_data(
   species = MWTools::mw_constants$species,
   sector_col = MWTools::mw_constants$sector_col,
   stage_col = MWTools::mw_constants$stage_col,
-  energy_col = MWTools::mw_constants$energy_col,
+  energy_col = MWTools::mw_cols$e_dot,
   units_col = MWTools::mw_cols$unit,
   useful_energy_ag = MWTools::amw_analysis_constants$useful_energy_ag,
   useful_energy_tr = MWTools::amw_analysis_constants$useful_energy_tr,

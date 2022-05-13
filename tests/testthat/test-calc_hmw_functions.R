@@ -126,7 +126,7 @@ test_that("tidy_hmw_data() works",{
   # As of 11 May 2022, we are getting some NA energy values,
   # which is probably not correct.
   # So build a test for this.
-  expect_false(any(is.na(tidy_hmw_data[[MWTools::mw_constants$energy_col]])))
+  expect_false(any(is.na(tidy_hmw_data[[MWTools::mw_cols$e_dot]])))
 })
 
 
@@ -138,6 +138,6 @@ test_that("calc_hmw_pfu() works",{
   # As of 11 May 2022, we are getting some NA energy values,
   # which is probably not correct.
   # So build a test for this.
-  expect_false(any(is.na(hmw_data_pfu[[MWTools::mw_constants$energy_col]])))
+  expect_false(any(is.na(hmw_data_pfu[[MWTools::mw_cols$e_dot]])))
 })
 

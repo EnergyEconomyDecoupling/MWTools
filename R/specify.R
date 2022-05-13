@@ -327,7 +327,7 @@ specify_last_stages <- function(.df,
 #'   calc_hmw_pfu() %>%
 #'   specify_ktoe()
 specify_ktoe <- function(.df,
-                         energy_col = MWTools::mw_constants$energy_col,
+                         energy_col = MWTools::mw_cols$e_dot,
                          units_col = MWTools::mw_cols$unit) {
   # Verify that .df has units of EJ
   assertthat::assert_that(all(.df[[units_col]] == "EJ"), msg = "units_col not in EJ in MWTools::specify_ktoe().")
