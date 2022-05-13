@@ -253,17 +253,20 @@ prep_psut <- function(.df,
     dplyr::select(dplyr::all_of(c(country, year, method, energy_type, last_stage, unit, e_dot,
                                   matnames, rownames, colnames, rowtypes, coltypes)))
   grouping_symbols_summarise <- matsindf::everything_except(trimmed_df, e_dot)
-  grouping_symbols_collapes <- c(country, year, method, energy_type, last_stage, unit, matnames)
+  grouping_symbols_collapse <- c(country, year, method, energy_type, last_stage, unit, matnames)
   trimmed_df %>%
     # Keep only the columns we need.
     dplyr::select(dplyr::all_of(c(country, year, method, energy_type, last_stage, unit, e_dot,
                   matnames, rownames, colnames, rowtypes, coltypes))) %>%
-    # Group by everything except the energy column so we can aggregate
-    # rows whose energy belongs in the same spot in the PSUT matrices.
+    # Group for the summarise operation
+    # by everything except the energy column,
+    # so we can aggregate rows whose energy belongs
+    # in the same spot (row and column) in the PSUT matrices.
     dplyr::group_by(!!!grouping_symbols_summarise) %>%
     dplyr::summarise(
       "{e_dot}" := sum(.data[[e_dot]])
     ) %>%
+    # Group for the collapse opreation
     dplyr::group_by()
     # Create matrices
     matsindf::collapse_to_matrices(matvals = e_dot)
