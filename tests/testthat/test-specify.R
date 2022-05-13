@@ -28,7 +28,7 @@ test_that("specify_product() works as expected", {
   specified_mw <- specify_energy_type_method(hmw_df, amw_df) %>%
     specify_product()
 
-  expect_equal(unique(specified_mw[[MWTools::mw_constants$product]]),
+  expect_equal(unique(specified_mw[[MWTools::mw_cols$product]]),
                c(MWTools::mw_products$food,
                  MWTools::mw_products$biomass,
                  MWTools::mw_products$hu_mech,
@@ -51,10 +51,10 @@ test_that("specify_primary_production() works as expected", {
     MWTools::specify_primary_production()
 
   nrow_primary_hmw_biomass <- specified_mw %>%
-    dplyr::filter(.data[[MWTools::mw_constants$product]] == MWTools::mw_products$biomass) %>%
+    dplyr::filter(.data[[MWTools::mw_cols$product]] == MWTools::mw_products$biomass) %>%
     nrow()
   nrow_primary_hmw_biomass_from_resources <- specified_mw %>%
-    dplyr::filter(.data[[MWTools::mw_constants$product]] == RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
+    dplyr::filter(.data[[MWTools::mw_cols$product]] == RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
                                                                                    suff = "Resources",
                                                                                    notation = RCLabels::from_notation)) %>%
     nrow()
@@ -79,7 +79,7 @@ test_that("specify_useful_products() works as expected", {
   check <- res %>%
     dplyr::filter(.data[[MWTools::mw_constants$stage_col]] == MWTools::all_stages$useful) %>%
     dplyr::mutate(
-      .suff = RCLabels::get_pref_suff(.data[[MWTools::mw_constants$product]],
+      .suff = RCLabels::get_pref_suff(.data[[MWTools::mw_cols$product]],
                                       which = "suff",
                                       notation = RCLabels::from_notation),
       .OK = .data[[".suff"]] == .data[[MWTools::mw_constants$species]]
@@ -108,7 +108,7 @@ test_that("specify_fu_machines() works as expected", {
       .suff = RCLabels::get_pref_suff(.data[[MWTools::mw_constants$species]],
                                       which = "suff",
                                       notation = RCLabels::arrow_notation),
-      .OK = .data[[".suff"]] == RCLabels::get_pref_suff(.data[[MWTools::mw_constants$product]],
+      .OK = .data[[".suff"]] == RCLabels::get_pref_suff(.data[[MWTools::mw_cols$product]],
                                                         which = "pref",
                                                         notation = RCLabels::from_notation)
     )

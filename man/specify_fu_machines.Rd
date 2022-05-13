@@ -6,7 +6,7 @@
 \usage{
 specify_fu_machines(
   .df,
-  product = MWTools::mw_constants$product,
+  product = MWTools::mw_cols$product,
   stage = MWTools::mw_constants$stage_col,
   species = MWTools::mw_constants$species,
   final = MWTools::all_stages$final,

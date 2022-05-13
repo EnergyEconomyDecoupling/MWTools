@@ -6,7 +6,7 @@
 \usage{
 specify_product(
   .df,
-  product = MWTools::mw_constants$product,
+  product = MWTools::mw_cols$product,
   primary = MWTools::all_stages$primary,
   final = MWTools::all_stages$final,
   useful = MWTools::all_stages$useful,

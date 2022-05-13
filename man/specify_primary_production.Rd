@@ -6,7 +6,7 @@
 \usage{
 specify_primary_production(
   .df,
-  product = MWTools::mw_constants$product,
+  product = MWTools::mw_cols$product,
   primary = MWTools::all_stages$primary,
   stage = MWTools::mw_constants$stage_col,
   notation = RCLabels::from_notation,

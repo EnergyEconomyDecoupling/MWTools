@@ -86,14 +86,14 @@ test_that("add_row_col_meta() works as expected", {
   food_feed_prod_rows %>%
     dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] == MWTools::psut_cols$V &
                     .data[[MWTools::mat_meta_cols$rownames]] == MWTools::mw_sectors$food_production) %>%
-    dplyr::filter(.data[[MWTools::mw_constants$product]] != MWTools::mw_products$food) %>%
+    dplyr::filter(.data[[MWTools::mw_cols$product]] != MWTools::mw_products$food) %>%
     nrow() %>%
     expect_equal(0)
   # Feed production makes only Feed.
   food_feed_prod_rows %>%
     dplyr::filter(.data[[MWTools::mat_meta_cols$matnames]] == MWTools::psut_cols$V &
                     .data[[MWTools::mat_meta_cols$rownames]] == MWTools::mw_sectors$feed_production) %>%
-    dplyr::filter(.data[[MWTools::mw_constants$product]] != MWTools::mw_products$feed) %>%
+    dplyr::filter(.data[[MWTools::mw_cols$product]] != MWTools::mw_products$feed) %>%
     nrow() %>%
     expect_equal(0)
   # The final-to-useful machines (which contain the string "->") use only food or feed

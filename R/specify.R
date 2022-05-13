@@ -65,7 +65,7 @@ specify_energy_type_method <- function(.hmw_df, .amw_df,
 #'   calc_amw_pfu() %>%
 #'   specify_product()
 specify_product <- function(.df,
-                            product = MWTools::mw_constants$product,
+                            product = MWTools::mw_cols$product,
                             primary = MWTools::all_stages$primary,
                             final = MWTools::all_stages$final,
                             useful = MWTools::all_stages$useful,
@@ -124,7 +124,7 @@ specify_product <- function(.df,
 #' specify_product(hmw_df, amw_df) %>%
 #'   MWTools::specify_primary_production()
 specify_primary_production <- function(.df,
-                                       product = MWTools::mw_constants$product,
+                                       product = MWTools::mw_cols$product,
                                        primary = MWTools::all_stages$primary,
                                        stage = MWTools::mw_constants$stage_col,
                                        notation = RCLabels::from_notation,
@@ -168,7 +168,7 @@ specify_primary_production <- function(.df,
 #'   MWTools::specify_primary_production() %>%
 #'   specify_useful_products()
 specify_useful_products <- function(.df,
-                                    product = MWTools::mw_constants$product,
+                                    product = MWTools::mw_cols$product,
                                     stage = MWTools::mw_constants$stage_col,
                                     species = MWTools::mw_constants$species,
                                     useful = MWTools::all_stages$useful,
@@ -221,7 +221,7 @@ specify_useful_products <- function(.df,
 #'   specify_useful_products() %>%
 #'   specify_fu_machines()
 specify_fu_machines <- function(.df,
-                                product = MWTools::mw_constants$product,
+                                product = MWTools::mw_cols$product,
                                 stage = MWTools::mw_constants$stage_col,
                                 species = MWTools::mw_constants$species,
                                 final = MWTools::all_stages$final,

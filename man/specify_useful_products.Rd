@@ -6,7 +6,7 @@
 \usage{
 specify_useful_products(
   .df,
-  product = MWTools::mw_constants$product,
+  product = MWTools::mw_cols$product,
   stage = MWTools::mw_constants$stage_col,
   species = MWTools::mw_constants$species,
   useful = MWTools::all_stages$useful,
