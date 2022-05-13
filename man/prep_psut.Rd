@@ -10,7 +10,7 @@ prep_psut(
   year = MWTools::mw_cols$year,
   method = MWTools::mw_cols$method,
   energy_type = MWTools::mw_cols$energy_type,
-  last_stage = MWTools::mw_constants$last_stage,
+  last_stage = MWTools::mw_cols$last_stage,
   unit = MWTools::mw_cols$unit,
   e_dot = MWTools::mw_cols$e_dot,
   matnames = MWTools::mat_meta_cols$matnames,

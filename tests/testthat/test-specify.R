@@ -131,16 +131,16 @@ test_that("specify_last_stages() works as expected", {
     specify_last_stages()
 
   ls_final <- res %>%
-    dplyr::filter(.data[[MWTools::mw_constants$last_stage]] == MWTools::last_stages$final) %>%
+    dplyr::filter(.data[[MWTools::mw_cols$last_stage]] == MWTools::last_stages$final) %>%
     dplyr::mutate(
-      "{MWTools::mw_constants$last_stage}" := NULL
+      "{MWTools::mw_cols$last_stage}" := NULL
     )
 
   ls_useful_pf <- res %>%
-    dplyr::filter(.data[[MWTools::mw_constants$last_stage]] == MWTools::last_stages$useful) %>%
+    dplyr::filter(.data[[MWTools::mw_cols$last_stage]] == MWTools::last_stages$useful) %>%
     dplyr::filter(.data[[MWTools::mw_constants$stage_col]] != MWTools::last_stages$useful) %>%
     dplyr::mutate(
-      "{MWTools::mw_constants$last_stage}" := NULL
+      "{MWTools::mw_cols$last_stage}" := NULL
     )
 
   expect_equal(ls_final, ls_useful_pf)

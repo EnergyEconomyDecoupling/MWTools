@@ -7,7 +7,7 @@
 specify_last_stages(
   .df,
   stage = MWTools::mw_constants$stage_col,
-  last_stage = MWTools::mw_constants$last_stage,
+  last_stage = MWTools::mw_cols$last_stage,
   final = MWTools::last_stages$final,
   useful = MWTools::last_stages$useful
 )

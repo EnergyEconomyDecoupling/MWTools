@@ -278,7 +278,7 @@ specify_fu_machines <- function(.df,
 #'   specify_last_stages()
 specify_last_stages <- function(.df,
                                 stage = MWTools::mw_constants$stage_col,
-                                last_stage = MWTools::mw_constants$last_stage,
+                                last_stage = MWTools::mw_cols$last_stage,
                                 final = MWTools::last_stages$final,
                                 useful = MWTools::last_stages$useful) {
   # .df comes in with last_stage of useful,

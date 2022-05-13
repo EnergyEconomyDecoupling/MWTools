@@ -25,7 +25,7 @@ add_row_col_meta(
   sector = MWTools::mw_constants$sector_col,
   stage = MWTools::mw_constants$stage_col,
   product = MWTools::mw_cols$product,
-  last_stage = MWTools::mw_constants$last_stage,
+  last_stage = MWTools::mw_cols$last_stage,
   matnames = MWTools::mat_meta_cols$matnames,
   rownames = MWTools::mat_meta_cols$rownames,
   colnames = MWTools::mat_meta_cols$colnames,
