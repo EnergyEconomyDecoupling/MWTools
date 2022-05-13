@@ -132,10 +132,14 @@ test_that("add_row_col_meta() works as expected", {
 test_that("prep_psut() works as expected", {
   hmw_df <- hmw_test_data_path() %>%
     read.csv() %>%
-    calc_hmw_pfu()
+    calc_hmw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
-    calc_amw_pfu()
+    calc_amw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
   res <- specify_energy_type_method(hmw_df, amw_df) %>%
     specify_product() %>%
     specify_ktoe() %>%
@@ -145,5 +149,32 @@ test_that("prep_psut() works as expected", {
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
     MWTools::prep_psut()
+
+  # Ensure that every entry in the E.dot column is a matrix
+  res[[MWTools::mw_cols$e_dot]] %>%
+    lapply(function(x) {
+      class(x)
+    }) %>%
+    lapply(function(x) {
+      x[[1]]
+    }) %>%
+    unlist() %>%
+    magrittr::equals("matrix") %>%
+    all() %>%
+    expect_true()
+
+  # Ensure that data are in the right place.
+  expected <- hmw_df %>%
+    dplyr::filter(Country == "GBR", Year == 1969, Species == "Human females",
+                  Sector == "Agriculture", Stage == "Useful") %>%
+    magrittr::extract2("E.dot") %>%
+    magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
+  matval <- res %>%
+    dplyr::filter(Country == "GBR", Year == 1969, matnames == "Y", Last.stage == "Useful") %>%
+    magrittr::extract2("E.dot") %>%
+    matsbyname::select_rows_byname(retain_pattern = RCLabels::make_or_pattern("HuMech [from Human females]")) %>%
+    matsbyname::select_cols_byname(retain_pattern = RCLabels::make_or_pattern("Agriculture")) %>%
+    unlist()
+  expect_equal(matval, expected)
 
 })
