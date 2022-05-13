@@ -150,14 +150,19 @@ test_that("prep_psut() works as expected", {
     MWTools::add_row_col_meta() %>%
     MWTools::prep_psut()
 
-  # Ensure that every entry in the E.dot column is a matrix
-  res[[MWTools::mw_cols$e_dot]] %>%
-    lapply(function(x) {
-      is.matrix(x)
-    }) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  # Ensure that every entry in the matrix columns is a matrix
+  for (mat in c(MWTools::psut_cols$R,
+                MWTools::psut_cols$U,
+                MWTools::psut_cols$V,
+                MWTools::psut_cols$Y)) {
+    res[[mat]] %>%
+      lapply(function(x) {
+        is.matrix(x)
+      }) %>%
+      unlist() %>%
+      all() %>%
+      expect_true()
+  }
 
   # Ensure that data are in the right place
   # by taking a few samples.
@@ -167,11 +172,11 @@ test_that("prep_psut() works as expected", {
     magrittr::extract2("E.dot") %>%
     magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
   actual1 <- res %>%
-    dplyr::filter(Country == "GBR", Year == 2000, matnames == "Y", Last.stage == "Useful") %>%
-    magrittr::extract2("E.dot") %>%
+    dplyr::filter(Country == "GBR", Year == 2000, Last.stage == "Useful") %>%
+    magrittr::extract2(MWTools::psut_cols$Y) %>%
+    magrittr::extract2(1) %>%
     matsbyname::select_rows_byname(retain_pattern = RCLabels::make_or_pattern("HuMech [from Human females]")) %>%
     matsbyname::select_cols_byname(retain_pattern = RCLabels::make_or_pattern("Agriculture")) %>%
-    unlist()
+    magrittr::extract2(1,1)
   expect_equal(actual1, expected1)
-
 })

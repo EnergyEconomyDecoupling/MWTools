@@ -6,7 +6,7 @@
 \usage{
 prep_psut(
   .df,
-  country = MWTools::conc_cols$country_col,
+  country = MWTools::mw_cols$country,
   year = MWTools::mw_cols$year,
   method = MWTools::mw_cols$method,
   energy_type = MWTools::mw_cols$energy_type,
@@ -22,10 +22,12 @@ prep_psut(
 )
 }
 \arguments{
-\item{.df}{}
+\item{country, year, method, energy_type, last_stage, unit, e_dot}{See \code{MWTools::mw_cols}.}
+
+\item{matnames, matvals, rownames, colnames, rowtypes, coltypes}{See \code{MWTools::mat_meta_cols}.}
 }
 \value{
-A \code{matsindf}-style data frame of muscle work matrices.
+A \code{matsindf}-style, wide-by-matrices data frame of muscle work matrices.
 }
 \description{
 A tidy data frame of muscle work information can be converted to

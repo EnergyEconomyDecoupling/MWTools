@@ -225,15 +225,17 @@ add_row_col_meta <- function(.df,
 #' row, column location in the matrices.
 #'
 #' @param .df
+#' @param country,year,method,energy_type,last_stage,unit,e_dot See `MWTools::mw_cols`.
+#' @param matnames,matvals,rownames,colnames,rowtypes,coltypes See `MWTools::mat_meta_cols`.
 #'
-#' @return A `matsindf`-style data frame of muscle work matrices.
+#' @return A `matsindf`-style, wide-by-matrices data frame of muscle work matrices.
 #'
 #' @export
 #'
 #' @examples
 prep_psut <- function(.df,
                       # Metadata columns
-                      country = MWTools::conc_cols$country_col,
+                      country = MWTools::mw_cols$country,
                       year = MWTools::mw_cols$year,
                       method = MWTools::mw_cols$method,
                       energy_type = MWTools::mw_cols$energy_type,
@@ -271,6 +273,7 @@ prep_psut <- function(.df,
     # dplyr::group_by(!!!rlang::enquos(!!!grouping_symbols_collapse)) %>%
     matsindf::group_by_everything_except(e_dot, matvals, rownames, colnames, rowtypes, coltypes) %>%
     # Create matrices
-    matsindf::collapse_to_matrices(matvals = e_dot)
-
+    matsindf::collapse_to_matrices(matvals = e_dot) %>%
+    # Spread to be wide-by-matrices
+    tidyr::pivot_wider(names_from = matnames, values_from = dplyr::all_of(e_dot))
 }
