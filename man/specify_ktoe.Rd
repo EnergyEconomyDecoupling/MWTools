@@ -7,7 +7,7 @@
 specify_ktoe(
   .df,
   energy_col = MWTools::mw_constants$energy_col,
-  units_col = MWTools::mw_constants$units_col
+  units_col = MWTools::mw_cols$unit
 )
 }
 \arguments{

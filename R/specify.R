@@ -1,11 +1,45 @@
 
 
+#' Add energy type and method columns to tidy muscle work data frames
+#'
+#' To specify muscle work data in preparation for
+#' conversion to PSUT matrices,
+#' the first step is specifying that these data are energy (not exergy) data
+#' and indicating the method for estimating
+#' the primary energy ("Biomass \[from Resources\]")
+#' associated with
+#' the initial stage of final energy ("Biomass").
+#' We assume the Physical Content Method (PCM) in which
+#' the primary energy ("Biomass \[from Resources\]")
+#' is equal in magnitude to
+#' the final energy ("Biomass").
+#'
+#' This function binds `.hmw_df` and `.amw_df` by rows.
+#'
+#' @param .hmw_df
+#' @param .amw_df
+#'
+#' @return
+#' @export
+#'
+#' @examples
+specify_energy_type_method <- function(.hmw_df, .amw_df,
+                                       energy_type = MWTools::mw_cols$energy_type,
+                                       method = MWTools::mw_cols$method,
+                                       e_type = MWTools::energy_types$e,
+                                       pcm = MWTools::methods$pcm) {
+  dplyr::bind_rows(.hmw_df, .amw_df) %>%
+    dplyr::mutate(
+      "{energy_type}" := e_type,
+      "{method}" := pcm
+    )
+}
+
+
 #' Add a product column to a muscle work data frame
 #'
 #' A `product` column is needed before converting a muscle work data frame
 #' to PSUT matrices. This function adds and populates the `product` column.
-#'
-#' This function binds `.hmw_df` and `.amw_df` by rows.
 #'
 #' @param .hmw_df A data frame, likely produced by `calc_hmw_pfu()`.
 #' @param .amw_df A data frame, likely produced by `calc_amw_pfu()`.
@@ -30,7 +64,7 @@
 #'   read.csv() %>%
 #'   calc_amw_pfu() %>%
 #'   specify_product()
-specify_product <- function(.hmw_df, .amw_df,
+specify_product <- function(.df,
                             product = MWTools::mw_constants$product,
                             primary = MWTools::all_stages$primary,
                             final = MWTools::all_stages$final,
@@ -47,7 +81,7 @@ specify_product <- function(.hmw_df, .amw_df,
                             an_p = MWTools::mw_products$an_p,
                             transport = MWTools::mw_sectors$transport_sector) {
 
-  dplyr::bind_rows(.hmw_df, .amw_df) %>%
+  .df %>%
     # Add a Product column
     dplyr::mutate(
       "{product}" := dplyr::case_when(
@@ -294,7 +328,7 @@ specify_last_stages <- function(.df,
 #'   specify_ktoe()
 specify_ktoe <- function(.df,
                          energy_col = MWTools::mw_constants$energy_col,
-                         units_col = MWTools::mw_constants$units_col) {
+                         units_col = MWTools::mw_cols$unit) {
   # Verify that .df has units of EJ
   assertthat::assert_that(all(.df[[units_col]] == "EJ"), msg = "units_col not in EJ in MWTools::specify_ktoe().")
   # Do the conversion

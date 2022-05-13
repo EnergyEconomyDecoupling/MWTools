@@ -1,3 +1,21 @@
+test_that("specify_energy_type_method() works as expected", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu()
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu()
+  res <- specify_energy_type_method(hmw_df, amw_df)
+
+  expect_true(MWTools::mw_cols$energy_type %in% colnames(res))
+  expect_true(all(res[[MWTools::mw_cols$energy_type]] == MWTools::energy_types$e))
+
+  expect_true(MWTools::mw_cols$method %in% colnames(res))
+  expect_true(all(res[[MWTools::mw_cols$method]] == MWTools::methods$pcm))
+})
+
+
+
 test_that("specify_product() works as expected", {
   # Create a sample input data frame
   hmw_df <- hmw_test_data_path() %>%
@@ -7,7 +25,8 @@ test_that("specify_product() works as expected", {
     read.csv() %>%
     calc_amw_pfu()
 
-  specified_mw <- specify_product(hmw_df, amw_df)
+  specified_mw <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product()
 
   expect_equal(unique(specified_mw[[MWTools::mw_constants$product]]),
                c(MWTools::mw_products$food,
@@ -27,7 +46,8 @@ test_that("specify_primary_production() works as expected", {
     read.csv() %>%
     calc_amw_pfu()
 
-  specified_mw <- specify_product(hmw_df, amw_df) %>%
+  specified_mw <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
     MWTools::specify_primary_production()
 
   nrow_primary_hmw_biomass <- specified_mw %>%
@@ -50,7 +70,8 @@ test_that("specify_useful_products() works as expected", {
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
     calc_amw_pfu()
-  res <- specify_product(hmw_df, amw_df) %>%
+  res <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
     MWTools::specify_primary_production() %>%
     specify_useful_products()
 
@@ -74,7 +95,8 @@ test_that("specify_fu_machines() works as expected", {
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
     calc_amw_pfu()
-  res <- specify_product(hmw_df, amw_df) %>%
+  res <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
     MWTools::specify_primary_production() %>%
     specify_useful_products() %>%
     specify_fu_machines()
@@ -101,7 +123,8 @@ test_that("specify_last_stages() works as expected", {
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
     calc_amw_pfu()
-  res <- specify_product(hmw_df, amw_df) %>%
+  res <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
     MWTools::specify_primary_production() %>%
     specify_useful_products() %>%
     specify_fu_machines() %>%
@@ -132,7 +155,7 @@ test_that("specify_ktoe() works as expected", {
       E.dot_EJ := E.dot
     ) %>%
     dplyr::mutate(
-      "{MWTools::mw_constants$units_col}" := NULL
+      "{MWTools::mw_cols$unit}" := NULL
     )
   ktoe_df <- EJ_df %>%
     specify_ktoe(energy_col = "E.dot_EJ") %>%
@@ -140,9 +163,9 @@ test_that("specify_ktoe() works as expected", {
       E.dot_ktoe = E.dot_EJ
     ) %>%
     dplyr::mutate(
-      "{MWTools::mw_constants$units_col}" := NULL
+      "{MWTools::mw_cols$unit}" := NULL
     )
-  expect_true(all(ktoe_df[[MWTools::mw_constants$units_col]] == "ktoe"))
+  expect_true(all(ktoe_df[[MWTools::mw_cols$unit]] == "ktoe"))
   check <- dplyr::full_join(EJ_df, ktoe_df, by = c("Country", "Year", "Species", "Stage", "Sector"))
 
   check <- EJ_df %>%

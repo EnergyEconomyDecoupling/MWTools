@@ -212,3 +212,60 @@ add_row_col_meta <- function(.df,
   out %>%
     dplyr::bind_rows(useful_rows_V, useful_rows_Y)
 }
+
+
+#' Convert a tidy data frame to PSUT matrices
+#'
+#' A tidy data frame of muscle work information can be converted to
+#' a `matsindf` data frame via this function.
+#'
+#' Prior to forming matrices, this function deletes unneeded columns
+#' (columns that are neither metadata nor energy values).
+#' It also aggregates data frame rows that will end up at the same
+#' row, column location in the matrices.
+#'
+#' @param .df
+#'
+#' @return A `matsindf`-style data frame of muscle work matrices.
+#'
+#' @export
+#'
+#' @examples
+prep_psut <- function(.df,
+                      # Metadata columns
+                      country = MWTools::conc_cols$country_col,
+                      year = MWTools::mw_constants$year,
+                      method = MWTools::mw_cols$method,
+                      energy_type = MWTools::mw_cols$energy_type,
+                      last_stage = MWTools::mw_constants$last_stage,
+                      unit = MWTools::mw_cols$unit,
+                      e_dot = MWTools::mw_cols$e_dot,
+                      matnames = MWTools::mat_meta_cols$matnames,
+                      matvals = MWTools::mat_meta_cols$matvals,
+                      rownames = MWTools::mat_meta_cols$rownames,
+                      colnames = MWTools::mat_meta_cols$colnames,
+                      rowtypes = MWTools::mat_meta_cols$rowtypes,
+                      coltypes = MWTools::mat_meta_cols$coltypes) {
+
+
+  trimmed_df <- .df %>%
+    # Keep only the columns we need.
+    dplyr::select(dplyr::all_of(c(country, year, method, energy_type, last_stage, unit, e_dot,
+                                  matnames, rownames, colnames, rowtypes, coltypes)))
+  grouping_symbols_summarise <- matsindf::everything_except(trimmed_df, e_dot)
+  grouping_symbols_collapes <- c(country, year, method, energy_type, last_stage, unit, matnames)
+  trimmed_df %>%
+    # Keep only the columns we need.
+    dplyr::select(dplyr::all_of(c(country, year, method, energy_type, last_stage, unit, e_dot,
+                  matnames, rownames, colnames, rowtypes, coltypes))) %>%
+    # Group by everything except the energy column so we can aggregate
+    # rows whose energy belongs in the same spot in the PSUT matrices.
+    dplyr::group_by(!!!grouping_symbols_summarise) %>%
+    dplyr::summarise(
+      "{e_dot}" := sum(.data[[e_dot]])
+    ) %>%
+    dplyr::group_by()
+    # Create matrices
+    matsindf::collapse_to_matrices(matvals = e_dot)
+
+}

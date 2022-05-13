@@ -8,19 +8,41 @@ library(IEATools)
 #
 
 mw_constants <- list(country_name = "Country.name",
-                     year = IEATools::iea_cols$year,
                      species = "Species",
-                     unit = "Unit",
-                     units_col = "Units",
-                     product = IEATools::iea_cols$product,
                      value = "Value",
                      sector_col = "Sector",
                      stage_col = "Stage",
-                     energy_col = "E.dot",
-                     last_stage = IEATools::iea_cols$last_stage,
                      exemplar_method_col = "Exemplar/Method",
-                     method_source_col = "Method/Source")
+                     method_source_col = "Method/Source",
+                     year = IEATools::iea_cols$year,
+                     unit = "Unit",
+                     units_col = "Units",
+                     product = IEATools::iea_cols$product,
+                     energy_col = "E.dot",
+                     last_stage = IEATools::iea_cols$last_stage)
 usethis::use_data(mw_constants, overwrite = TRUE)
+
+
+#
+# Names of columns in the tidy muscle work data frame
+#
+mw_cols <- IEATools::iea_cols
+usethis::use_data(mw_cols, overwrite = TRUE)
+
+
+#
+# Types of energy
+#
+energy_types <- IEATools::energy_types
+usethis::use_data(energy_types, overwrite = TRUE)
+
+
+#
+# Ways of counting primary energy associated with
+# renewable or biomass final energy
+#
+methods <- IEATools::methods
+usethis::use_data(methods, overwrite = TRUE)
 
 
 #
@@ -49,6 +71,12 @@ usethis::use_data(psut_cols, overwrite = TRUE)
 #
 last_stages <- IEATools::last_stages
 usethis::use_data(last_stages, overwrite = TRUE)
+
+
+#
+# Energy types
+#
+
 
 
 #

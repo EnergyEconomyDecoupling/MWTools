@@ -5,8 +5,7 @@
 \title{Add a product column to a muscle work data frame}
 \usage{
 specify_product(
-  .hmw_df,
-  .amw_df,
+  .df,
   product = MWTools::mw_constants$product,
   primary = MWTools::all_stages$primary,
   final = MWTools::all_stages$final,
@@ -25,10 +24,6 @@ specify_product(
 )
 }
 \arguments{
-\item{.hmw_df}{A data frame, likely produced by \code{calc_hmw_pfu()}.}
-
-\item{.amw_df}{A data frame, likely produced by \code{calc_amw_pfu()}.}
-
 \item{product}{The name of the column to be added. See \code{MWTools::mw_constants}.}
 
 \item{primary, final, useful}{See \code{MWTools::all_stages}.}
@@ -42,6 +37,10 @@ specify_product(
 \item{biomass, food, feed, hu_mech, an_mech, an_p}{See \code{MWTools::mw_products}.}
 
 \item{transport}{See \code{MWTools::sectors}.}
+
+\item{.hmw_df}{A data frame, likely produced by \code{calc_hmw_pfu()}.}
+
+\item{.amw_df}{A data frame, likely produced by \code{calc_amw_pfu()}.}
 }
 \value{
 A data frame with additional rows needed for converting to PSUT matrices.
@@ -49,9 +48,6 @@ A data frame with additional rows needed for converting to PSUT matrices.
 \description{
 A \code{product} column is needed before converting a muscle work data frame
 to PSUT matrices. This function adds and populates the \code{product} column.
-}
-\details{
-This function binds \code{.hmw_df} and \code{.amw_df} by rows.
 }
 \examples{
 hmw_test_data_path() \%>\%
