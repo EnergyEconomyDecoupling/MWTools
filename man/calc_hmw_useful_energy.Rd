@@ -8,7 +8,7 @@ calc_hmw_useful_energy(
   .df,
   sector_col = MWTools::mw_constants$sector_col,
   year = MWTools::mw_cols$year,
-  unit = MWTools::mw_constants$unit,
+  unit = MWTools::mw_cols$unit,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
   hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),

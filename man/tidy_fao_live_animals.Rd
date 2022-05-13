@@ -9,7 +9,7 @@ tidy_fao_live_animals(
   country_name = MWTools::mw_constants$country_name,
   species = MWTools::mw_constants$species,
   year = MWTools::mw_cols$year,
-  unit = MWTools::mw_constants$unit,
+  unit = MWTools::mw_cols$unit,
   value = MWTools::mw_constants$value,
   area_fao_col = MWTools::fao_cols$area_fao_col,
   item_fao_col = MWTools::fao_cols$item_fao_col,

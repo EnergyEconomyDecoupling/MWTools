@@ -9,7 +9,7 @@ calc_hmw_final_energy(
   hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
   sector_col = MWTools::mw_constants$sector_col,
   year = MWTools::mw_cols$year,
-  unit = MWTools::mw_constants$unit,
+  unit = MWTools::mw_cols$unit,
   exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
