@@ -153,28 +153,25 @@ test_that("prep_psut() works as expected", {
   # Ensure that every entry in the E.dot column is a matrix
   res[[MWTools::mw_cols$e_dot]] %>%
     lapply(function(x) {
-      class(x)
-    }) %>%
-    lapply(function(x) {
-      x[[1]]
+      is.matrix(x)
     }) %>%
     unlist() %>%
-    magrittr::equals("matrix") %>%
     all() %>%
     expect_true()
 
-  # Ensure that data are in the right place.
-  expected <- hmw_df %>%
-    dplyr::filter(Country == "GBR", Year == 1969, Species == "Human females",
+  # Ensure that data are in the right place
+  # by taking a few samples.
+  expected1 <- hmw_df %>%
+    dplyr::filter(Country == "GBR", Year == 2000, Species == "Human females",
                   Sector == "Agriculture", Stage == "Useful") %>%
     magrittr::extract2("E.dot") %>%
     magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
-  matval <- res %>%
-    dplyr::filter(Country == "GBR", Year == 1969, matnames == "Y", Last.stage == "Useful") %>%
+  actual1 <- res %>%
+    dplyr::filter(Country == "GBR", Year == 2000, matnames == "Y", Last.stage == "Useful") %>%
     magrittr::extract2("E.dot") %>%
     matsbyname::select_rows_byname(retain_pattern = RCLabels::make_or_pattern("HuMech [from Human females]")) %>%
     matsbyname::select_cols_byname(retain_pattern = RCLabels::make_or_pattern("Agriculture")) %>%
     unlist()
-  expect_equal(matval, expected)
+  expect_equal(actual1, expected1)
 
 })

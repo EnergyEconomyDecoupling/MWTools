@@ -291,7 +291,7 @@ test_that("tidy_pfu_data works", {
   expect_equal(nrow(tidy_pfu_data), 2124)
 
   expect_equal(colnames(tidy_pfu_data), c("Country", "Year", "Species",
-                                          "Stage", "Sector", "Units",
+                                          "Stage", "Sector", "Unit",
                                           "E.dot"))
 
 })
@@ -311,7 +311,7 @@ test_that("calc_amw_pfu", {
   expect_equal(nrow(tidy_pfu_data), 2124)
 
   expect_equal(colnames(tidy_pfu_data), c("Country", "Year", "Species",
-                                          "Stage", "Sector", "Units",
+                                          "Stage", "Sector", "Unit",
                                           "E.dot"))
 
 
