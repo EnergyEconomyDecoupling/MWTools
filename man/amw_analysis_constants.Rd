@@ -39,10 +39,9 @@ A string list with 35 entries.
 \item{primary_energy_total}{The data column "Primary.energy.total [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the total final energy required by working animals.}
 \item{primary_energy_ag}{The data column "Primary.energy.Ag [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals in agriculture.}
 \item{primary_energy_tr}{The data column "Primary.energy.Tr [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals transporting goods outside of agriculture.}
-\item{mw_region_code_col}{The metadata column "MW.Region.code" representing the codes associated with the aggregate regions used in this package.}
-\item{mw_region_col}{The metadata column "MW.Region" representing the a names associated with the aggregate regions used in this package.}
+\item{amw_region_col}{The data column "MMW.Region" representing the animal muscle work region.}
 \item{metric_col}{The metadata column "Metric" representing the metric name associated with a particular data series.}
-\item{transport_sector}{The string "Transport" representing the transportation sector of final demand.}
+\item{yes_const}{The string "Yes" representing when a quantity is present or applicable.}
 }
 }
 \usage{

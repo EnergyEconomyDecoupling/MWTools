@@ -116,6 +116,20 @@
 "last_stages"
 
 
+#' All stages for energy conversion chains
+#'
+#' A string list containing package constants used in MWTools package functions.
+#' This list is borrowed directly from the `IEATools` package.
+#'
+#' @format A string list with `r length(all_stages)` entries.
+#' \describe{
+#' See `IEATools::all_stages`.
+#' }
+#' @examples
+#' all_stages
+"all_stages"
+
+
 #' ILO data column names
 #'
 #' A string list containing a selection of ILO data column names. For data retrieved by the package `Rilostat`.
@@ -131,6 +145,36 @@
 #' @examples
 #' ilo_cols
 "ilo_cols"
+
+
+#' Human muscle work (hmw) analysis data constants
+#'
+#' A string list containing a selection of hmw analysis constants.
+#'
+#' @format A string list with `r length(hmw_analysis_constants)` entries.
+#' \describe{
+#' \item{total_wk_hrs_ilo_col}{The data column "Total.hours \[hours/year\]" containing the number of hours worked yearly by all humans for a given country, sex, sector, and year.}
+#' \item{col1960}{The column for 1960. Default is "1960".}
+#' \item{col2020}{The column for 2020. Default is "2020".}
+#' \item{industry_activity_col}{The data column "Industry/Activity" containing information on the industry or activity of human workers. Usually one of "Sedentary", "Primary", or "Secondary".}
+#' \item{hmw_power_sheet}{The excel sheet name "hmw_power", which contains information on the power output of humans performing muscle work.}
+#' \item{hmw_food_sheet}{The excel sheet name "hmw_food", which contains information on the food consumption of humans.}
+#' \item{hmw_sector_map_sheet}{The excel sheet name "hmw_sector_map", which contains information on the mapping the sector names used in the hmw analysis data excel file bundled with this package with the sector names in the ILO data.}
+#' \item{hmw_plate_waste_sheet}{The excel sheet name "hmw_plate_waste", which contains information on proportion of food waste by region.}
+#' \item{hmw_harvest_waste_sheet}{The excel sheet name "hmw_harvest_waste", which contains information on the proportion of phytomass lost at the harvest stage by region.}
+#' \item{food_consumption_col}{The data column "Food consumption \[kcal/day per person\]", which contains information on the daily food consumption of humans in kilocalories (kcal).}
+#' \item{energy_pppa_col}{The data column "Energy consumption \[MJ/year per person\]", which contains information on the yearly food consumption per working person in megajoules (MJ).}
+#' \item{final_energy_col}{The data column "Final energy \[MJ/year\]", which contains data on the yearly food consumption of all working persons in megajoules (MJ).}
+#' \item{primary_energy_col}{The data column "Primary energy \[MJ/year\]", which contains data on the yearly quantity of biomass required to meet the food requirements of all working persons in megajoules (MJ).}
+#' \item{useful_energy_hmw_col}{The data column "Useful energy \[MJ/year\]", which contains data on the yearly useful work performed by all working persons in megajoules (MJ).}
+#' \item{power_col}{The data column "Power \[W\]", which contains data on the power output of humans performing muscle work.}
+#' \item{plate_waste_col}{The data column "Plate waste \[-\]", which contains data on the proportion of food waste by region.}
+#' \item{hmw_harvest_waste_col}{The data column "arvest waste \[-\]", which contains data on the proportion of phytomass lost at the harvest stage by region.}
+#' }
+#'
+#' @examples
+#' hmw_analysis_constants
+"hmw_analysis_constants"
 
 
 #' Working animal species
@@ -206,34 +250,6 @@
 "ilo_codes"
 
 
-#' Human muscle work (hmw) analysis data constants
-#'
-#' A string list containing a selection of hmw analysis constants.
-#'
-#' @format A string list with `r length(hmw_analysis_constants)` entries.
-#' \describe{
-#' \item{total_wk_hrs_ilo_col}{The data column "Total.hours \[hours/year\]" containing the number of hours worked yearly by all humans for a given country, sex, sector, and year.}
-#' \item{industry_activity_col}{The data column "Industry/Activity" containing information on the industry or activity of human workers. Usually one of "Sedentary", "Primary", or "Secondary".}
-#' \item{hmw_power_sheet}{The excel sheet name "hmw_power", which contains information on the power output of humans performing muscle work.}
-#' \item{hmw_food_sheet}{The excel sheet name "hmw_food", which contains information on the food consumption of humans.}
-#' \item{hmw_sector_map_sheet}{The excel sheet name "hmw_sector_map", which contains information on the mapping the sector names used in the hmw analysis data excel file bundled with this package with the sector names in the ILO data.}
-#' \item{hmw_plate_waste_sheet}{The excel sheet name "hmw_plate_waste", which contains information on proportion of food waste by region.}
-#' \item{hmw_harvest_waste_sheet}{The excel sheet name "hmw_harvest_waste", which contains information on the proportion of phytomass lost at the harvest stage by region.}
-#' \item{food_consumption_col}{The data column "Food consumption \[kcal/day per person\]", which contains information on the daily food consumption of humans in kilocalories (kcal).}
-#' \item{energy_pppa_col}{The data column "Energy consumption \[MJ/year per person\]", which contains information on the yearly food consumption per working person in megajoules (MJ).}
-#' \item{final_energy_col}{The data column "Final energy \[MJ/year\]", which contains data on the yearly food consumption of all working persons in megajoules (MJ).}
-#' \item{primary_energy_col}{The data column "Primary energy \[MJ/year\]", which contains data on the yearly quantity of biomass required to meet the food requirements of all working persons in megajoules (MJ).}
-#' \item{useful_energy_hmw_col}{The data column "Useful energy \[MJ/year\]", which contains data on the yearly useful work performed by all working persons in megajoules (MJ).}
-#' \item{power_col}{The data column "Power \[W\]", which contains data on the power output of humans performing muscle work.}
-#' \item{plate_waste_col}{The data column "Plate waste \[-\]", which contains data on the proportion of food waste by region.}
-#' \item{hmw_harvest_waste_col}{The data column "arvest waste \[-\]", which contains data on the proportion of phytomass lost at the harvest stage by region.}
-#' }
-#'
-#' @examples
-#' hmw_analysis_constants
-"hmw_analysis_constants"
-
-
 #' Animal muscle work (amw) analysis data constants
 #'
 #' A string list containing a selection of amw analysis constants, used in the "amw_analysis_data.R" excel file.
@@ -272,10 +288,9 @@
 #' \item{primary_energy_total}{The data column "Primary.energy.total \[MJ/year\]" representing the primary energy (total feed crop biomass) embodied in the total final energy required by working animals.}
 #' \item{primary_energy_ag}{The data column "Primary.energy.Ag \[MJ/year\]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals in agriculture.}
 #' \item{primary_energy_tr}{The data column "Primary.energy.Tr \[MJ/year\]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals transporting goods outside of agriculture.}
-#' \item{mw_region_code_col}{The metadata column "MW.Region.code" representing the codes associated with the aggregate regions used in this package.}
-#' \item{mw_region_col}{The metadata column "MW.Region" representing the a names associated with the aggregate regions used in this package.}
+#' \item{amw_region_col}{The data column "MMW.Region" representing the animal muscle work region.}
 #' \item{metric_col}{The metadata column "Metric" representing the metric name associated with a particular data series.}
-#' \item{transport_sector}{The string "Transport" representing the transportation sector of final demand.}
+#' \item{yes_const}{The string "Yes" representing when a quantity is present or applicable.}
 #' }
 #'
 #' @examples
@@ -289,10 +304,13 @@
 #'
 #' @format A string list with `r length(conc_cols)` entries.
 #' \describe{
-#' \item{country_col}{The metadata column name "Country" containing three letter ISO 3166-1 country codes.}
 #' \item{country_code_col}{The metadata column name "Country.code" containing three letter ISO 3166-1 country codes.}
+#' \item{country_col}{The metadata column name "Country" containing three letter ISO 3166-1 country codes.}
 #' \item{country_code_pfu_col}{The metadata column name "Country_PFU" containing bespoke three letter country codes.}
 #' \item{country_incl_col}{The metadata column name "Country.incl." containing either "Yes" or "No" depending on whether a particulr region or country shoule be included for analysis in `MWTools`.}
+#' \item{amw_region_code_col}{The metadata column "AMW.Region.code" telling the region for this row.}
+#' \item{hmw_region_code_col}{The metadata column "HMW.Region.code" telling the region for this row.}
+#' \item{mapping_sheet}{The name of the sheet for name mappings.}
 #' }
 #'
 #' @examples
@@ -309,6 +327,7 @@
 #' \item{kcal_to_mj}{The value 0.0041858, representing the conversion factor between kilocalories (kcal) and megajoules (MJ)}
 #' \item{hours_to_seconds}{The value 3600, representing the conversion factor between hours and seconds.}
 #' \item{joules_to_megajoules}{The value 0.000001, representing the conversion factor between joules (J) and megajoules (MJ)}
+#' \item{EJ_to_ktoe}{The value 23884.58966275, representing the conversion factor between exajoules (EJ) and kilotonnes of oil equivalent (ktoe)}
 #' }
 #'
 #' @examples
@@ -346,10 +365,14 @@
 #' \item{agriculture_broad.sector}{The string "Agriculture" representing the agriculture sector. One of the ILO's "Broad sectors".}
 #' \item{industry_broad.sector}{The string "Industry" representing the industry sector. One of the ILO's "Broad sectors".}
 #' \item{services_broad.sector}{The string "Services" representing the services sector. One of the ILO's "Broad sectors".}
+#' \item{transport.sector}{The string "Transport" representing the transport sector.}
 #' \item{not_classified_broad.sector}{The string "Not classfied" representing unclassified labor data. One of the ILO's "Broad sectors".}
 #' \item{non_agriculture_broad.sector}{The string "Non-agriculture" representing all sectors outside of agriculture. One of the ILO's "Broad sectors".}
 #' \item{total_sector}{The string "Total" representing the entire economy. One of the ILO's "Broad sectors".}
 #' \item{resources_sectors}{The string "Resources" representing resouce sectors.}
+#' \item{farms}{The string "Farms" representing the farming sector.}
+#' \item{food_production}{The string "Food production" representing the food production sector.}
+#' \item{feed_production}{The string "Feed production" representing the feed production sector.}
 #' }
 #'
 #' @examples

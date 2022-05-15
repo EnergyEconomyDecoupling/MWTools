@@ -68,6 +68,13 @@ usethis::use_data(last_stages, overwrite = TRUE)
 
 
 #
+# All energy conversion chain stages
+#
+all_stages <- IEATools::all_stages
+usethis::use_data(all_stages, overwrite = TRUE)
+
+
+#
 # ILO bundled data columns
 #
 ilo_cols <- list(ref_area_col = "ref_area",
@@ -238,11 +245,3 @@ mw_sectors <- list(broad_sector_col = "broad_sector",
 usethis::use_data(mw_sectors, overwrite = TRUE)
 
 
-#
-# Energy conversion chain stages
-#
-all_stages <- list(primary = IEATools::all_stages$primary,
-                   final = IEATools::all_stages$final,
-                   useful = IEATools::all_stages$useful,
-                   services = IEATools::all_stages$services)
-usethis::use_data(all_stages, overwrite = TRUE)

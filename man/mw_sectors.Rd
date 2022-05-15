@@ -12,10 +12,14 @@ A string list with 13 entries.
 \item{agriculture_broad.sector}{The string "Agriculture" representing the agriculture sector. One of the ILO's "Broad sectors".}
 \item{industry_broad.sector}{The string "Industry" representing the industry sector. One of the ILO's "Broad sectors".}
 \item{services_broad.sector}{The string "Services" representing the services sector. One of the ILO's "Broad sectors".}
+\item{transport.sector}{The string "Transport" representing the transport sector.}
 \item{not_classified_broad.sector}{The string "Not classfied" representing unclassified labor data. One of the ILO's "Broad sectors".}
 \item{non_agriculture_broad.sector}{The string "Non-agriculture" representing all sectors outside of agriculture. One of the ILO's "Broad sectors".}
 \item{total_sector}{The string "Total" representing the entire economy. One of the ILO's "Broad sectors".}
 \item{resources_sectors}{The string "Resources" representing resouce sectors.}
+\item{farms}{The string "Farms" representing the farming sector.}
+\item{food_production}{The string "Food production" representing the food production sector.}
+\item{feed_production}{The string "Feed production" representing the feed production sector.}
 }
 }
 \usage{

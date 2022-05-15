@@ -3,8 +3,13 @@
 \docType{data}
 \name{all_stages}
 \alias{all_stages}
-\title{All energy stages}
+\title{All stages for energy conversion chains}
 \format{
+A string list with 4 entries.
+\describe{
+See \code{IEATools::all_stages}.
+}
+
 A string list with 4
 \describe{
 \item{primary}{The string identifier for the Primary stage of the energy conversion chain.}
@@ -15,12 +20,18 @@ A string list with 4
 }
 \usage{
 all_stages
+
+all_stages
 }
 \description{
+A string list containing package constants used in MWTools package functions.
+This list is borrowed directly from the \code{IEATools} package.
+
 A string list containing options for the all stages of energy conversion chain analysis.
 The values of these constants are taken from the \code{IEATools} package for consistency.
 }
 \examples{
+all_stages
 all_stages
 }
 \keyword{datasets}
