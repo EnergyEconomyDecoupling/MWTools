@@ -68,12 +68,6 @@ usethis::use_data(last_stages, overwrite = TRUE)
 
 
 #
-# Energy types
-#
-
-
-
-#
 # ILO bundled data columns
 #
 ilo_cols <- list(ref_area_col = "ref_area",

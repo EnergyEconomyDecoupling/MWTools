@@ -1,19 +1,14 @@
 #' General MWTools constants
 #'
-#' A string list containing constants used in the MWTools package functions
+#' A string list containing constants used in MWTools package functions.
 #'
 #' @format A string list with `r length(mw_constants)` entries.
 #' \describe{
 #' \item{country_name}{The name of a metadata column containing full length country names.}
-#' \item{year}{The name of a metadata column containing values for the year of the observation.}
 #' \item{species}{The name of the metadata column representing a species of live animal from FAO data.}
-#' \item{unit}{The name of the metadata column containing the units associated with the `value` column.}
-#' \item{units_col}{The name of the metadata column containing the units associated with the `energy_col` column.}
-#' \item{product}{The name of the product column, whose value is taken from `IEATools::iea_cols`.}
 #' \item{value}{The name of the data column containing the values of a given observation.}
 #' \item{sector_col}{The name of the metadata column containing the sector associated with the `value`.}
 #' \item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the `value`. Usally one of "Primary", "Final", or "Useful".}
-#' \item{energy_col}{The name of the data column containing muscle work energy values.}
 #' \item{exemplar_method_col}{The metadata column "Exemplar/Method" representing the regional exemplar or method used for a particular data series.}
 #' \item{method_source_col}{The metadata column "Method/Source" representing the method or source of information use for a particular data series.}
 #' }
@@ -21,6 +16,104 @@
 #' @examples
 #' mw_constants
 "mw_constants"
+
+
+#' Column names in muscle work data frames
+#'
+#' A string list containing package constants used in MWTools package functions.
+#' This list is borrowed directly from the `IEATools` package.
+#'
+#' @format A string list with `r length(mw_cols)` entries.
+#' \describe{
+#' See `IEATools::iea_cols`.
+#' }
+#' @examples
+#' mw_cols
+"mw_cols"
+
+
+#' Energy types in muscle work data frames
+#'
+#' A string list containing package constants used in MWTools package functions.
+#' This list is borrowed directly from the `IEATools` package.
+#'
+#' @format A string list with `r length(energy_types)` entries.
+#' \describe{
+#' See `IEATools::energy_types`.
+#' }
+#' @examples
+#' energy_types
+"energy_types"
+
+
+#' Methods of attributing primary energy from final energy in muscle work data frames
+#'
+#' A string list containing package constants used in MWTools package functions.
+#' This list is borrowed directly from the `IEATools` package.
+#'
+#' @format A string list with `r length(methods)` entries.
+#' \describe{
+#' See `IEATools::methods`.
+#' }
+#' @examples
+#' methods
+"methods"
+
+
+#' Names of matrix metadata columns in muscle work data frames
+#'
+#' A string list containing package constants used in MWTools package functions.
+#' This list is borrowed directly from the `IEATools` package.
+#'
+#' @format A string list with `r length(mat_meta_cols)` entries.
+#' \describe{
+#' See `IEATools::mat_meta_cols`.
+#' }
+#' @examples
+#' mat_meta_cols
+"mat_meta_cols"
+
+
+#' Row and column types for matrices made from muscle work data frames
+#'
+#' A string list containing package constants used in MWTools package functions.
+#' This list is borrowed directly from the `IEATools` package.
+#'
+#' @format A string list with `r length(row_col_types)` entries.
+#' \describe{
+#' See `IEATools::row_col_types`.
+#' }
+#' @examples
+#' row_col_types
+"row_col_types"
+
+
+#' Column names in PSUT data frames
+#'
+#' A string list containing package constants used in MWTools package functions.
+#' This list is borrowed directly from the `IEATools` package.
+#'
+#' @format A string list with `r length(psut_cols)` entries.
+#' \describe{
+#' See `IEATools::psut_cols`.
+#' }
+#' @examples
+#' psut_cols
+"psut_cols"
+
+
+#' Last stages for energy conversion chains in PSUT format
+#'
+#' A string list containing package constants used in MWTools package functions.
+#' This list is borrowed directly from the `IEATools` package.
+#'
+#' @format A string list with `r length(last_stages)` entries.
+#' \describe{
+#' See `IEATools::last_stages`.
+#' }
+#' @examples
+#' last_stages
+"last_stages"
 
 
 #' ILO data column names
