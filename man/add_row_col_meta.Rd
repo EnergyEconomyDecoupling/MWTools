@@ -86,10 +86,12 @@ hmw_df <- hmw_test_data_path() \%>\%
 amw_df <- amw_test_data_path() \%>\%
   read.csv() \%>\%
   calc_amw_pfu()
-specify_product(hmw_df, amw_df) \%>\%
+specify_energy_type_method(hmw_df, amw_df) \%>\%
+  specify_product() \%>\%
+  specify_ktoe() \%>\%
   MWTools::specify_primary_production() \%>\%
   specify_useful_products() \%>\%
   specify_fu_machines() \%>\%
   specify_last_stages() \%>\%
-  add_row_col_meta()
+  MWTools::add_row_col_meta()
 }

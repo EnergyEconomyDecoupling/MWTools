@@ -65,13 +65,14 @@ specify_energy_type_method <- function(.hmw_df, .amw_df,
 #' @export
 #'
 #' @examples
-#' hmw_test_data_path() %>%
+#' hmw_df <- hmw_test_data_path() %>%
 #'   read.csv() %>%
 #'   calc_hmw_pfu() %>%
 #'   specify_product()
-#' amw_test_data_path() %>%
+#' amw_df <- amw_test_data_path() %>%
 #'   read.csv() %>%
-#'   calc_amw_pfu() %>%
+#'   calc_amw_pfu()
+#' specify_energy_type_method(hmw_df, amw_df) %>%
 #'   specify_product()
 specify_product <- function(.df,
                             product = MWTools::mw_cols$product,
@@ -130,7 +131,8 @@ specify_product <- function(.df,
 #' amw_df <- amw_test_data_path() %>%
 #'   read.csv() %>%
 #'   calc_amw_pfu()
-#' specify_product(hmw_df, amw_df) %>%
+#' specify_energy_type_method(hmw_df, amw_df) %>%
+#'   specify_product() %>%
 #'   MWTools::specify_primary_production()
 specify_primary_production <- function(.df,
                                        product = MWTools::mw_cols$product,
@@ -173,7 +175,8 @@ specify_primary_production <- function(.df,
 #' amw_df <- amw_test_data_path() %>%
 #'   read.csv() %>%
 #'   calc_amw_pfu()
-#' specify_product(hmw_df, amw_df) %>%
+#' specify_energy_type_method(hmw_df, amw_df) %>%
+#'   specify_product() %>%
 #'   MWTools::specify_primary_production() %>%
 #'   specify_useful_products()
 specify_useful_products <- function(.df,
@@ -226,7 +229,8 @@ specify_useful_products <- function(.df,
 #' amw_df <- amw_test_data_path() %>%
 #'   read.csv() %>%
 #'   calc_amw_pfu()
-#' specify_product(hmw_df, amw_df) %>%
+#' specify_energy_type_method(hmw_df, amw_df) %>%
+#'   specify_product() %>%
 #'   MWTools::specify_primary_production() %>%
 #'   specify_useful_products() %>%
 #'   specify_fu_machines()
@@ -284,7 +288,8 @@ specify_fu_machines <- function(.df,
 #' amw_df <- amw_test_data_path() %>%
 #'   read.csv() %>%
 #'   calc_amw_pfu()
-#' specify_product(hmw_df, amw_df) %>%
+#' specify_energy_type_method(hmw_df, amw_df) %>%
+#'   specify_product() %>%
 #'   MWTools::specify_primary_production() %>%
 #'   specify_useful_products() %>%
 #'   specify_fu_machines() %>%

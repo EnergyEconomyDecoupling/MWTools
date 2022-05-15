@@ -24,6 +24,8 @@ specify_product(
 )
 }
 \arguments{
+\item{.df}{A data frame, likely produced by \code{specify_energy_type_method()}.}
+
 \item{product}{The name of the column to be added. See \code{MWTools::mw_constants}.}
 
 \item{primary, final, useful}{See \code{MWTools::all_stages}.}
@@ -37,10 +39,6 @@ specify_product(
 \item{biomass, food, feed, hu_mech, an_mech, an_p}{See \code{MWTools::mw_products}.}
 
 \item{transport}{See \code{MWTools::sectors}.}
-
-\item{.hmw_df}{A data frame, likely produced by \code{calc_hmw_pfu()}.}
-
-\item{.amw_df}{A data frame, likely produced by \code{calc_amw_pfu()}.}
 }
 \value{
 A data frame with additional rows needed for converting to PSUT matrices.
@@ -50,12 +48,13 @@ A \code{product} column is needed before converting a muscle work data frame
 to PSUT matrices. This function adds and populates the \code{product} column.
 }
 \examples{
-hmw_test_data_path() \%>\%
+hmw_df <- hmw_test_data_path() \%>\%
   read.csv() \%>\%
   calc_hmw_pfu() \%>\%
   specify_product()
-amw_test_data_path() \%>\%
+amw_df <- amw_test_data_path() \%>\%
   read.csv() \%>\%
-  calc_amw_pfu() \%>\%
+  calc_amw_pfu()
+specify_energy_type_method(hmw_df, amw_df) \%>\%
   specify_product()
 }
