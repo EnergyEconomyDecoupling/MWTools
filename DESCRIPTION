@@ -36,6 +36,7 @@ Imports:
     tidyr
 Suggests: 
     covr,
+    IEATools,
     knitr,
     matsbyname,
     testthat (>= 3.0.0)
