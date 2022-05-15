@@ -16,9 +16,9 @@ add_row_col_meta(
   farms = MWTools::mw_sectors$farms,
   food_production = MWTools::mw_sectors$food_production,
   feed_production = MWTools::mw_sectors$feed_production,
+  transport = MWTools::mw_sectors$transport_sector,
   human_females = MWTools::mw_species$human_females,
   human_males = MWTools::mw_species$human_males,
-  transport = MWTools::mw_sectors$transport_sector,
   final = MWTools::all_stages$final,
   useful = MWTools::all_stages$useful,
   species = MWTools::mw_constants$species,
@@ -45,9 +45,34 @@ add_row_col_meta(
 \arguments{
 \item{.df}{A data frame containing muscle work data,
 likely the output from \code{specify_last_stages()}.}
+
+\item{biomass, food, feed, hu_mech, an_mech, an_p}{See \code{MWTools::mw_products}.}
+
+\item{resources, farms, food_production, feed_production, transport}{See \code{MWTools::mw_sectors}}
+
+\item{human_females, human_males}{See \code{MWTools::mw_species}.}
+
+\item{final, useful}{See \code{MWTools::all_stages}.}
+
+\item{species, sector, stage}{See \code{MWTools::mw_constants}}
+
+\item{product, last_stage}{See \code{MWTools::mw_cols}.}
+
+\item{matnames, rownames, colnames, rowtypes, coltypes}{See \code{MWTools::mat_meta_cols}.}
+
+\item{R_name, U_name, V_name, Y_name}{See \code{MWTools::psut_cols}.}
+
+\item{industry_type, product_type}{See \code{MWTools::row_col_types}.}
+
+\item{product_notation}{The notation for products. Default is \code{RCLabels::from_notation}.}
+
+\item{resource_notation}{The notation for resources. Default is \code{RCLabels::of_notation}.}
+
+\item{species_notation}{The notation for species. Default is \code{RCLabels::arrow_notation}.}
 }
 \value{
-A data frame containing PSUT matrices.
+A data frame containing PSUT matrices
+representing muscle work energy conversion chains.
 }
 \description{
 Primary-final-useful (PFU) data need to be converted to PSUT matrices.

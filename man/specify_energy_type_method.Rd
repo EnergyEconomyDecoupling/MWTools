@@ -14,10 +14,16 @@ specify_energy_type_method(
 )
 }
 \arguments{
-\item{.amw_df}{}
+\item{.hmw_df}{A data frame produced by \code{calc_hmw_pfu()}.}
+
+\item{.amw_df}{A data frame produced by \code{calc_amw_pfu()}.}
+
+\item{energy_type, method, e_type}{See \code{MWTools::mw_cols}.}
+
+\item{pcm}{See \code{MWTools::methods}.}
 }
 \value{
-
+A data frame in which \code{energy_type} and \code{method} columns are included.
 }
 \description{
 To specify muscle work data in preparation for
@@ -34,4 +40,13 @@ the final energy ("Biomass").
 }
 \details{
 This function binds \code{.hmw_df} and \code{.amw_df} by rows.
+}
+\examples{
+hmw_df <- hmw_test_data_path() \%>\%
+  read.csv() \%>\%
+  calc_hmw_pfu()
+amw_df <- amw_test_data_path() \%>\%
+  read.csv() \%>\%
+  calc_amw_pfu()
+specify_energy_type_method(hmw_df, amw_df)
 }

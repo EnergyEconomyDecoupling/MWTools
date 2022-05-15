@@ -20,14 +20,14 @@ specify_fu_machines(
 
 \item{product, stage, species}{See \code{MWTools::mw_constants}.}
 
-\item{useful}{See \code{MWTools::all_stages}.}
+\item{final, useful}{See \code{MWTools::all_stages}.}
 
 \item{product_notation}{The notation for products. Default is \code{RCLabels::from_notation}.}
 
 \item{machine_notation}{The notation for machines. Default is \code{RCLabels::arrow_notation}.}
 }
 \value{
-
+A data frame in which final-to-useful machines are specified.
 }
 \description{
 Final-to-useful industries should be named as "Industry -> Product".

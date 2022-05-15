@@ -16,13 +16,23 @@
 #'
 #' This function binds `.hmw_df` and `.amw_df` by rows.
 #'
-#' @param .hmw_df
-#' @param .amw_df
+#' @param .hmw_df A data frame produced by `calc_hmw_pfu()`.
+#' @param .amw_df A data frame produced by `calc_amw_pfu()`.
+#' @param energy_type,method,e_type See `MWTools::mw_cols`.
+#' @param pcm See `MWTools::methods`.
 #'
-#' @return
+#' @return A data frame in which `energy_type` and `method` columns are included.
+#'
 #' @export
 #'
 #' @examples
+#' hmw_df <- hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu()
+#' amw_df <- amw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_amw_pfu()
+#' specify_energy_type_method(hmw_df, amw_df)
 specify_energy_type_method <- function(.hmw_df, .amw_df,
                                        energy_type = MWTools::mw_cols$energy_type,
                                        method = MWTools::mw_cols$method,
@@ -41,8 +51,7 @@ specify_energy_type_method <- function(.hmw_df, .amw_df,
 #' A `product` column is needed before converting a muscle work data frame
 #' to PSUT matrices. This function adds and populates the `product` column.
 #'
-#' @param .hmw_df A data frame, likely produced by `calc_hmw_pfu()`.
-#' @param .amw_df A data frame, likely produced by `calc_amw_pfu()`.
+#' @param .df A data frame, likely produced by `specify_energy_type_method()`.
 #' @param product The name of the column to be added. See `MWTools::mw_constants`.
 #' @param primary,final,useful See `MWTools::all_stages`.
 #' @param species See `MWTools::mw_constants`.
@@ -202,11 +211,12 @@ specify_useful_products <- function(.df,
 #'
 #' @param .df A data frame, likely the output of `specify_useful_products()`.
 #' @param product,stage,species See `MWTools::mw_constants`.
-#' @param useful See `MWTools::all_stages`.
+#' @param final,useful See `MWTools::all_stages`.
 #' @param product_notation The notation for products. Default is `RCLabels::from_notation`.
 #' @param machine_notation The notation for machines. Default is `RCLabels::arrow_notation`.
 #'
-#' @return
+#' @return A data frame in which final-to-useful machines are specified.
+#'
 #' @export
 #'
 #' @examples
@@ -258,6 +268,9 @@ specify_fu_machines <- function(.df,
 #' by adding a last_stage column with appropriate values.
 #'
 #' @param .df A data frame, probably the output of `specify_fu_machines()`.
+#' @param stage See `MWTools::mw_constants`.
+#' @param last_stage See `MWTools::mw_cols`.
+#' @param final,useful See `MWTools::last_stages`.
 #'
 #' @return A data frame containing a new column `last_stage` and
 #'         rows for both final and useful being the last stage.

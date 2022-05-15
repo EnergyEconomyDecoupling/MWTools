@@ -14,6 +14,12 @@ specify_last_stages(
 }
 \arguments{
 \item{.df}{A data frame, probably the output of \code{specify_fu_machines()}.}
+
+\item{stage}{See \code{MWTools::mw_constants}.}
+
+\item{last_stage}{See \code{MWTools::mw_cols}.}
+
+\item{final, useful}{See \code{MWTools::last_stages}.}
 }
 \value{
 A data frame containing a new column \code{last_stage} and

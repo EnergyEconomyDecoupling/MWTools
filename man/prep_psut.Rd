@@ -22,6 +22,9 @@ prep_psut(
 )
 }
 \arguments{
+\item{.df}{A data frame created by \code{add_row_col_meta()} so that it contains
+metadata columns for creating PSUT matrices.}
+
 \item{country, year, method, energy_type, last_stage, unit, e_dot}{See \code{MWTools::mw_cols}.}
 
 \item{matnames, matvals, rownames, colnames, rowtypes, coltypes}{See \code{MWTools::mat_meta_cols}.}

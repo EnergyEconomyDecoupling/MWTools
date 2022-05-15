@@ -7,8 +7,21 @@
 #'
 #' @param .df A data frame containing muscle work data,
 #'            likely the output from `specify_last_stages()`.
+#' @param biomass,food,feed,hu_mech,an_mech,an_p See `MWTools::mw_products`.
+#' @param resources,farms,food_production,feed_production,transport See `MWTools::mw_sectors`
+#' @param human_females,human_males See `MWTools::mw_species`.
+#' @param final,useful See `MWTools::all_stages`.
+#' @param species,sector,stage See `MWTools::mw_constants`
+#' @param product,last_stage See `MWTools::mw_cols`.
+#' @param matnames,rownames,colnames,rowtypes,coltypes See `MWTools::mat_meta_cols`.
+#' @param R_name,U_name,V_name,Y_name See `MWTools::psut_cols`.
+#' @param industry_type,product_type See `MWTools::row_col_types`.
+#' @param product_notation The notation for products. Default is `RCLabels::from_notation`.
+#' @param resource_notation The notation for resources. Default is `RCLabels::of_notation`.
+#' @param species_notation The notation for species. Default is `RCLabels::arrow_notation`.
 #'
-#' @return A data frame containing PSUT matrices.
+#' @return A data frame containing PSUT matrices
+#'         representing muscle work energy conversion chains.
 #'
 #' @export
 #'
@@ -38,9 +51,9 @@ add_row_col_meta <- function(.df,
                              farms = MWTools::mw_sectors$farms,
                              food_production = MWTools::mw_sectors$food_production,
                              feed_production = MWTools::mw_sectors$feed_production,
+                             transport = MWTools::mw_sectors$transport_sector,
                              human_females = MWTools::mw_species$human_females,
                              human_males = MWTools::mw_species$human_males,
-                             transport = MWTools::mw_sectors$transport_sector,
                              # Stages
                              final = MWTools::all_stages$final,
                              useful = MWTools::all_stages$useful,
@@ -224,7 +237,8 @@ add_row_col_meta <- function(.df,
 #' It also aggregates data frame rows that will end up at the same
 #' row, column location in the matrices.
 #'
-#' @param .df
+#' @param .df A data frame created by `add_row_col_meta()` so that it contains
+#'            metadata columns for creating PSUT matrices.
 #' @param country,year,method,energy_type,last_stage,unit,e_dot See `MWTools::mw_cols`.
 #' @param matnames,matvals,rownames,colnames,rowtypes,coltypes See `MWTools::mat_meta_cols`.
 #'
