@@ -27,8 +27,9 @@ The bundled functions are:
 \item \code{specify_useful_products()},
 \item \code{specify_fu_machines()},
 \item \code{specify_last_stages()},
-\item \code{MWTools::add_row_col_meta()}, and
-\item \code{MWTools::collapse_to_psut()}.
+\item \code{MWTools::add_row_col_meta()},
+\item \code{MWTools::collapse_to_psut()}, and
+= \code{append_S_units_col()}.
 }
 }
 \details{

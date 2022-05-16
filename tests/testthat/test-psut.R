@@ -294,6 +294,74 @@ test_that("Energy is balanced in PSUT matrices", {
 })
 
 
+test_that("append_S_units_col() works as expected", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  with_sunits <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
+    specify_ktoe() %>%
+    MWTools::specify_primary_production() %>%
+    specify_useful_products() %>%
+    specify_fu_machines() %>%
+    specify_last_stages() %>%
+    MWTools::add_row_col_meta() %>%
+    MWTools::collapse_to_psut() %>%
+    append_S_units_col()
+
+  # Check a few examples
+  expect_true(all(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% rownames() == c("Biomass", "Feed")))
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% colnames() == "ktoe")
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::rowtype() == MWTools::mw_cols$product)
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::coltype() == MWTools::row_col_types$unit)
+
+  expect_true(all(with_sunits[[MWTools::psut_cols$s_units]][[10]] %>% rownames() == c("Biomass", "Food", "HuMech")))
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% colnames() == "ktoe")
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::rowtype() == MWTools::mw_cols$product)
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::coltype() == MWTools::row_col_types$unit)
+})
+
+
+test_that("append_U_feed_U_eiou_cols() works as expected", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  with_U_cols <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
+    specify_ktoe() %>%
+    MWTools::specify_primary_production() %>%
+    specify_useful_products() %>%
+    specify_fu_machines() %>%
+    specify_last_stages() %>%
+    MWTools::add_row_col_meta() %>%
+    MWTools::collapse_to_psut() %>%
+    append_S_units_col() %>%
+    append_U_feed_U_eiou_cols()
+
+  for (i in 1:nrow(with_U_cols)) {
+    expect_true(!is.null(with_U_cols[[MWTools::psut_cols$U_feed]][[i]]))
+    expect_true(!is.null(with_U_cols[[MWTools::psut_cols$U_eiou]][[i]]))
+    expect_true(matsbyname::equal_byname(with_U_cols[[MWTools::psut_cols$U]][[i]], with_U_cols[[MWTools::psut_cols$U_feed]][[i]]))
+    expect_true(matsbyname::equal_byname(matsbyname::hadamardproduct_byname(with_U_cols[[MWTools::psut_cols$U]][[i]], 0),
+                                         with_U_cols[[MWTools::psut_cols$U_eiou]][[i]]))
+  }
+})
+
+
 test_that("prep_psut() works as expected", {
   hmw_df <- hmw_test_data_path() %>%
     read.csv() %>%
@@ -313,4 +381,7 @@ test_that("prep_psut() works as expected", {
   expect_true(MWTools::psut_cols$U %in% names(psut))
   expect_true(MWTools::psut_cols$V %in% names(psut))
   expect_true(MWTools::psut_cols$Y %in% names(psut))
+  expect_true(MWTools::psut_cols$s_units %in% names(psut))
+  expect_true(MWTools::psut_cols$U_feed %in% names(psut))
+  expect_true(MWTools::psut_cols$U_eiou %in% names(psut))
 })

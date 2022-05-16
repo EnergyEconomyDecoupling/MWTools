@@ -309,6 +309,121 @@ collapse_to_psut <- function(.df,
 }
 
 
+#' Add an S_units column given other columns of PSUT matrices
+#'
+#' The `S_units` column is a column of unit summation vectors
+#' with products (energy carriers) in rows and units in columns.
+#' The row names for each vector are the various products in that row of `.df`.
+#' The column names for each vector are taken from the `units` column of `.df`.
+#'
+#' @param .df A data frame
+#' @param units,product See `MWTools::mw_cols`.
+#' @param s_units See `MWTools::psut_cols`.
+#' @param product_notation Notation for products. Default is `RCLabels::from_notation`.
+#' @param unit_type The type for units columns. Default is `MWTools::row_col_types$unit`.
+#'
+#' @return `.df` with an `s_units` column added.
+#'
+#' @export
+#'
+#' @examples
+#' hmw_df <- hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu() %>%
+#'   # Keep only a few years for speed.
+#'   dplyr::filter(Year %in% 2000:2002)
+#' amw_df <- amw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_amw_pfu() %>%
+#'   # Keep only a few years for speed.
+#'   dplyr::filter(Year %in% 2000:2002)
+#' specify_energy_type_method(hmw_df, amw_df) %>%
+#'   specify_product() %>%
+#'   specify_ktoe() %>%
+#'   MWTools::specify_primary_production() %>%
+#'   specify_useful_products() %>%
+#'   specify_fu_machines() %>%
+#'   specify_last_stages() %>%
+#'   MWTools::add_row_col_meta() %>%
+#'   MWTools::collapse_to_psut() %>%
+#'   append_S_units_col()
+append_S_units_col <- function(.df,
+                               unit = MWTools::mw_cols$unit,
+                               product = MWTools::mw_cols$product,
+                               s_units = MWTools::psut_cols$s_units,
+                               product_notation = RCLabels::from_notation,
+                               unit_type = MWTools::row_col_types$unit) {
+  # Get the units for each row
+  unit_col <- .df[[unit]]
+  # Get the products in each row
+  R_products <- .df[[MWTools::psut_cols$R]] %>%
+    matsbyname::getcolnames_byname() %>%
+    lapply(FUN = function(lab) {
+      RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation) %>%
+        unique()
+    })
+  U_products <- .df[[MWTools::psut_cols$U]] %>%
+    matsbyname::getrownames_byname() %>%
+    lapply(FUN = function(lab) {
+      RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation) %>%
+        unique()
+    })
+  V_products <- .df[[MWTools::psut_cols$V]] %>%
+    matsbyname::getcolnames_byname() %>%
+    lapply(FUN = function(lab) {
+      RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation) %>%
+        unique()
+    })
+  Y_products <- .df[[MWTools::psut_cols$Y]] %>%
+    matsbyname::getrownames_byname() %>%
+    lapply(FUN = function(lab) {
+      RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation) %>%
+        unique()
+    })
+  S_units_col <- list()
+  for (i in 1:length(unit_col)) {
+    units_list <- c(R_products[[i]], U_products[[i]], V_products[[i]], Y_products[[i]]) %>%
+      unique()
+    units_vector <- matrix(1, nrow = length(units_list), ncol = 1,
+                           dimnames = list(units_list, unit_col[[i]])) %>%
+      matsbyname::setrowtype(product) %>% matsbyname::setcoltype(unit_type)
+    S_units_col[[i]] <- units_vector
+    # S_units_col <- append(S_units_col, units_vector)
+  }
+  .df %>%
+    dplyr::mutate(
+      "{s_units}" := S_units_col
+    )
+}
+
+
+#' Add U_feed and U_eiou columns to a muscle work PSUT data frame
+#'
+#' `U_feed` is simply a copy of `U`.
+#' `U_eiou` is a copy of `U` with `0` entries everywhere.
+#'
+#' @param .df A PSUT data frame containing a column of `U` matrices.
+#' @param U,U_feed,U_eiou See `MWTools::psut_cols`.
+#'
+#' @return `.df` with `U_feed` and `U_eiou` matrices added.
+#'
+#' @export
+#'
+#' @examples
+append_U_feed_U_eiou_cols <- function(.df,
+                                      U = MWTools::psut_cols$U,
+                                      U_feed = MWTools::psut_cols$U_feed,
+                                      U_eiou = MWTools::psut_cols$U_eiou) {
+  .df %>%
+    dplyr::mutate(
+      # Duplicate U for U_feed
+      "{U_feed}" := .data[[U]],
+      # Multiply U by 0 to get U_EIOU
+      "{U_eiou}" := matsbyname::hadamardproduct_byname(.data[[U]], 0)
+    )
+}
+
+
 #' A convenience function to create PSUT matrices in a data frame
 #'
 #' Starting from human and animal muscle work data frames,
@@ -322,8 +437,9 @@ collapse_to_psut <- function(.df,
 #'   - `specify_useful_products()`,
 #'   - `specify_fu_machines()`,
 #'   - `specify_last_stages()`,
-#'   - `MWTools::add_row_col_meta()`, and
-#'   - `MWTools::collapse_to_psut()`.
+#'   - `MWTools::add_row_col_meta()`,
+#'   - `MWTools::collapse_to_psut()`, and
+#'   = `append_S_units_col()`.
 #'
 #' Default values are assumed for function arguments.
 #'
@@ -355,5 +471,7 @@ prep_psut <- function(.hmw_df, .amw_df) {
     specify_fu_machines() %>%
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
-    MWTools::collapse_to_psut()
+    MWTools::collapse_to_psut() %>%
+    append_S_units_col() %>%
+    append_U_feed_U_eiou_cols()
 }
