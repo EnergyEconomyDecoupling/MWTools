@@ -15,13 +15,38 @@ append_U_feed_U_eiou_r_eiou_cols(
 \arguments{
 \item{.df}{A PSUT data frame containing a column of \code{U} matrices.}
 
-\item{U, U_feed, U_eiou, r_eiou}{See \code{MWTools::psut_cols}.}
+\item{U}{The name of the incoming \code{U} matrix. See \code{MWTools::psut_cols}.}
+
+\item{U_feed, U_eiou, r_eiou}{Names for outgoing matrices. See \code{MWTools::psut_cols}.}
 }
 \value{
-\code{.df} with \code{U_feed}, \code{U_eiou}, and \code{r_eiou} matrices added.
+\code{.df} with new columns for \code{U_feed}, \code{U_eiou}, and \code{r_eiou} matrices.
 }
 \description{
 \code{U_feed} is simply a copy of \code{U}.
 \code{U_eiou} is a copy of \code{U} with \code{0} entries everywhere.
 \code{r_eiou} has same structure as \code{U} but contains all \code{1}'s.
+}
+\examples{
+hmw_df <- hmw_test_data_path() \%>\%
+  read.csv() \%>\%
+  calc_hmw_pfu() \%>\%
+  # Keep only a few years for speed.
+  dplyr::filter(Year \%in\% 2000:2002)
+amw_df <- amw_test_data_path() \%>\%
+  read.csv() \%>\%
+  calc_amw_pfu() \%>\%
+  # Keep only a few years for speed.
+  dplyr::filter(Year \%in\% 2000:2002)
+with_U_cols <- specify_energy_type_method(hmw_df, amw_df) \%>\%
+  specify_product() \%>\%
+  specify_ktoe() \%>\%
+  MWTools::specify_primary_production() \%>\%
+  specify_useful_products() \%>\%
+  specify_fu_machines() \%>\%
+  specify_last_stages() \%>\%
+  MWTools::add_row_col_meta() \%>\%
+  MWTools::collapse_to_psut() \%>\%
+  append_S_units_col() \%>\%
+  append_U_feed_U_eiou_r_eiou_cols()
 }

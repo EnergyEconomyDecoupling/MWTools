@@ -317,7 +317,7 @@ collapse_to_psut <- function(.df,
 #' The column names for each vector are taken from the `units` column of `.df`.
 #'
 #' @param .df A data frame
-#' @param units,product See `MWTools::mw_cols`.
+#' @param unit,product See `MWTools::mw_cols`.
 #' @param s_units See `MWTools::psut_cols`.
 #' @param product_notation Notation for products. Default is `RCLabels::from_notation`.
 #' @param unit_type The type for units columns. Default is `MWTools::row_col_types$unit`.
@@ -392,7 +392,10 @@ append_S_units_col <- function(.df,
   }
   .df %>%
     dplyr::mutate(
-      "{s_units}" := S_units_col
+      # Set the S_units column.
+      "{s_units}" := S_units_col,
+      # Delete the unit column.
+      "{unit}" := NULL
     )
 }
 
@@ -404,27 +407,48 @@ append_S_units_col <- function(.df,
 #' `r_eiou` has same structure as `U` but contains all `1`'s.
 #'
 #' @param .df A PSUT data frame containing a column of `U` matrices.
-#' @param U,U_feed,U_eiou,r_eiou See `MWTools::psut_cols`.
+#' @param U The name of the incoming `U` matrix. See `MWTools::psut_cols`.
+#' @param U_feed,U_eiou,r_eiou Names for outgoing matrices. See `MWTools::psut_cols`.
 #'
-#' @return `.df` with `U_feed`, `U_eiou`, and `r_eiou` matrices added.
+#' @return `.df` with new columns for `U_feed`, `U_eiou`, and `r_eiou` matrices.
 #'
 #' @export
 #'
 #' @examples
+#' hmw_df <- hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu() %>%
+#'   # Keep only a few years for speed.
+#'   dplyr::filter(Year %in% 2000:2002)
+#' amw_df <- amw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_amw_pfu() %>%
+#'   # Keep only a few years for speed.
+#'   dplyr::filter(Year %in% 2000:2002)
+#' with_U_cols <- specify_energy_type_method(hmw_df, amw_df) %>%
+#'   specify_product() %>%
+#'   specify_ktoe() %>%
+#'   MWTools::specify_primary_production() %>%
+#'   specify_useful_products() %>%
+#'   specify_fu_machines() %>%
+#'   specify_last_stages() %>%
+#'   MWTools::add_row_col_meta() %>%
+#'   MWTools::collapse_to_psut() %>%
+#'   append_S_units_col() %>%
+#'   append_U_feed_U_eiou_r_eiou_cols()
 append_U_feed_U_eiou_r_eiou_cols <- function(.df,
-                                      U = MWTools::psut_cols$U,
-                                      U_feed = MWTools::psut_cols$U_feed,
-                                      U_eiou = MWTools::psut_cols$U_eiou,
-                                      r_eiou = MWTools::psut_cols$r_eiou) {
+                                             U = MWTools::psut_cols$U,
+                                             U_feed = MWTools::psut_cols$U_feed,
+                                             U_eiou = MWTools::psut_cols$U_eiou,
+                                             r_eiou = MWTools::psut_cols$r_eiou) {
   .df %>%
     dplyr::mutate(
       # Duplicate U for U_feed
       "{U_feed}" := .data[[U]],
-      # Multiply U by 0 to get U_EIOU
+      # Multiply U by 0 to get U_eiou
       "{U_eiou}" := matsbyname::hadamardproduct_byname(.data[[U]], 0),
-      "{r_eiou}" := matsbyname::quotient_byname(.data[[U]], .data[[U]]) %>%
-        # Take care of the case where we divide by 0.
-        matsbyname::replaceNaN_byname(val = 0)
+      # r_eiou is the ratio of U_eiou to U.
+      "{r_eiou}" := matsbyname::quotient_byname(.data[[U_eiou]], .data[[U]])
     )
 }
 
@@ -444,7 +468,7 @@ append_U_feed_U_eiou_r_eiou_cols <- function(.df,
 #'   - `specify_last_stages()`,
 #'   - `MWTools::add_row_col_meta()`,
 #'   - `MWTools::collapse_to_psut()`, and
-#'   = `append_S_units_col()`.
+#'   - `append_S_units_col()`.
 #'
 #' Default values are assumed for function arguments.
 #'

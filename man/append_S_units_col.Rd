@@ -16,13 +16,13 @@ append_S_units_col(
 \arguments{
 \item{.df}{A data frame}
 
+\item{unit, product}{See \code{MWTools::mw_cols}.}
+
 \item{s_units}{See \code{MWTools::psut_cols}.}
 
 \item{product_notation}{Notation for products. Default is \code{RCLabels::from_notation}.}
 
 \item{unit_type}{The type for units columns. Default is \code{MWTools::row_col_types$unit}.}
-
-\item{units, product}{See \code{MWTools::mw_cols}.}
 }
 \value{
 \code{.df} with an \code{s_units} column added.

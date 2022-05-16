@@ -326,6 +326,9 @@ test_that("append_S_units_col() works as expected", {
   expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% colnames() == "ktoe")
   expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::rowtype() == MWTools::mw_cols$product)
   expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::coltype() == MWTools::row_col_types$unit)
+
+  # Make sure the unit column was deleted
+  expect_false(MWTools::mw_cols$unit %in% names(with_sunits))
 })
 
 
@@ -358,6 +361,9 @@ test_that("append_U_feed_U_eiou_r_eiou_cols() works as expected", {
     expect_true(matsbyname::equal_byname(with_U_cols[[MWTools::psut_cols$U]][[i]], with_U_cols[[MWTools::psut_cols$U_feed]][[i]]))
     expect_true(matsbyname::equal_byname(matsbyname::hadamardproduct_byname(with_U_cols[[MWTools::psut_cols$U]][[i]], 0),
                                          with_U_cols[[MWTools::psut_cols$U_eiou]][[i]]))
+    # The U_eiou and r_eiou columns should contain all 0 matrices.
+    expect_true(matsbyname::iszero_byname(with_U_cols[[MWTools::psut_cols$U_eiou]][[i]]))
+    expect_true(matsbyname::iszero_byname(with_U_cols[[MWTools::psut_cols$r_eiou]][[i]]))
   }
 })
 
