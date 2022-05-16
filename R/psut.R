@@ -448,7 +448,10 @@ append_U_feed_U_eiou_r_eiou_cols <- function(.df,
       # Multiply U by 0 to get U_eiou
       "{U_eiou}" := matsbyname::hadamardproduct_byname(.data[[U]], 0),
       # r_eiou is the ratio of U_eiou to U.
-      "{r_eiou}" := matsbyname::quotient_byname(.data[[U_eiou]], .data[[U]])
+      "{r_eiou}" := matsbyname::quotient_byname(.data[[U_eiou]], .data[[U]]) %>%
+        # Some values in U are 0, which gives NaN.
+        # So replace all NaN with 0.
+        matsbyname::replaceNaN_byname(val = 0)
     )
 }
 
