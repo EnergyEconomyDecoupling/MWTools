@@ -2,45 +2,37 @@
 % Please edit documentation in R/psut.R
 \name{prep_psut}
 \alias{prep_psut}
-\title{Convert a tidy data frame to PSUT matrices}
+\title{A convenience function to create PSUT matrices in a data frame}
 \usage{
-prep_psut(
-  .df,
-  country = MWTools::mw_cols$country,
-  year = MWTools::mw_cols$year,
-  method = MWTools::mw_cols$method,
-  energy_type = MWTools::mw_cols$energy_type,
-  last_stage = MWTools::mw_cols$last_stage,
-  unit = MWTools::mw_cols$unit,
-  e_dot = MWTools::mw_cols$e_dot,
-  matnames = MWTools::mat_meta_cols$matnames,
-  matvals = MWTools::mat_meta_cols$matvals,
-  rownames = MWTools::mat_meta_cols$rownames,
-  colnames = MWTools::mat_meta_cols$colnames,
-  rowtypes = MWTools::mat_meta_cols$rowtypes,
-  coltypes = MWTools::mat_meta_cols$coltypes
-)
+prep_psut(.hmw_df, .amw_df)
 }
 \arguments{
-\item{.df}{A data frame created by \code{add_row_col_meta()} so that it contains
-metadata columns for creating PSUT matrices.}
+\item{.hmw_df}{A data frame produced by \code{calc_hmw_pfu()}.}
 
-\item{country, year, method, energy_type, last_stage, unit, e_dot}{See \code{MWTools::mw_cols}.}
-
-\item{matnames, matvals, rownames, colnames, rowtypes, coltypes}{See \code{MWTools::mat_meta_cols}.}
+\item{.amw_df}{A data frame produced by \code{calc_amw_pfu()}.}
 }
 \value{
-A \code{matsindf}-style, wide-by-matrices data frame of muscle work matrices.
+A data frame of musle work PSUT matrices.
 }
 \description{
-A tidy data frame of muscle work information can be converted to
-a \code{matsindf} data frame via this function.
+Starting from human and animal muscle work data frames,
+this function bundles several functions to create a
+data frame of PSUT matrices.
+The bundled functions are:
+\itemize{
+\item \code{specify_energy_type_method()},
+\item \code{specify_product()},
+\item \code{specify_ktoe()},
+\item \code{MWTools::specify_primary_production()},
+\item \code{specify_useful_products()},
+\item \code{specify_fu_machines()},
+\item \code{specify_last_stages()},
+\item \code{MWTools::add_row_col_meta()}, and
+\item \code{MWTools::collapse_to_psut()}.
+}
 }
 \details{
-Prior to forming matrices, this function deletes unneeded columns
-(columns that are neither metadata nor energy values).
-It also aggregates data frame rows that will end up at the same
-row, column location in the matrices.
+Default values are assumed for function arguments.
 }
 \examples{
 hmw_df <- hmw_test_data_path() \%>\%
@@ -53,13 +45,5 @@ amw_df <- amw_test_data_path() \%>\%
   calc_amw_pfu() \%>\%
   # Keep only a few years for speed.
   dplyr::filter(Year \%in\% 2000:2002)
-specify_energy_type_method(hmw_df, amw_df) \%>\%
-  specify_product() \%>\%
-  specify_ktoe() \%>\%
-  MWTools::specify_primary_production() \%>\%
-  specify_useful_products() \%>\%
-  specify_fu_machines() \%>\%
-  specify_last_stages() \%>\%
-  MWTools::add_row_col_meta() \%>\%
-  MWTools::prep_psut()
+prep_psut(hmw_df, amw_df)
 }

@@ -267,30 +267,27 @@ add_row_col_meta <- function(.df,
 #'   specify_fu_machines() %>%
 #'   specify_last_stages() %>%
 #'   MWTools::add_row_col_meta() %>%
-#'   MWTools::prep_psut()
-prep_psut <- function(.df,
-                      # Metadata columns
-                      country = MWTools::mw_cols$country,
-                      year = MWTools::mw_cols$year,
-                      method = MWTools::mw_cols$method,
-                      energy_type = MWTools::mw_cols$energy_type,
-                      last_stage = MWTools::mw_cols$last_stage,
-                      unit = MWTools::mw_cols$unit,
-                      e_dot = MWTools::mw_cols$e_dot,
-                      matnames = MWTools::mat_meta_cols$matnames,
-                      matvals = MWTools::mat_meta_cols$matvals,
-                      rownames = MWTools::mat_meta_cols$rownames,
-                      colnames = MWTools::mat_meta_cols$colnames,
-                      rowtypes = MWTools::mat_meta_cols$rowtypes,
-                      coltypes = MWTools::mat_meta_cols$coltypes) {
-
+#'   MWTools::collapse_to_psut()
+collapse_to_psut <- function(.df,
+                             # Metadata columns
+                             country = MWTools::mw_cols$country,
+                             year = MWTools::mw_cols$year,
+                             method = MWTools::mw_cols$method,
+                             energy_type = MWTools::mw_cols$energy_type,
+                             last_stage = MWTools::mw_cols$last_stage,
+                             unit = MWTools::mw_cols$unit,
+                             e_dot = MWTools::mw_cols$e_dot,
+                             matnames = MWTools::mat_meta_cols$matnames,
+                             matvals = MWTools::mat_meta_cols$matvals,
+                             rownames = MWTools::mat_meta_cols$rownames,
+                             colnames = MWTools::mat_meta_cols$colnames,
+                             rowtypes = MWTools::mat_meta_cols$rowtypes,
+                             coltypes = MWTools::mat_meta_cols$coltypes) {
 
   trimmed_df <- .df %>%
     # Keep only the columns we need.
     dplyr::select(dplyr::all_of(c(country, year, method, energy_type, last_stage, unit, e_dot,
                                   matnames, rownames, colnames, rowtypes, coltypes)))
-  grouping_symbols_summarise <- matsindf::everything_except(trimmed_df, e_dot)
-  grouping_symbols_collapse <- rlang::syms(c(country, year, method, energy_type, last_stage, unit, matnames))
   trimmed_df %>%
     # Keep only the columns we need.
     dplyr::select(dplyr::all_of(c(country, year, method, energy_type, last_stage, unit, e_dot,
@@ -309,4 +306,54 @@ prep_psut <- function(.df,
     matsindf::collapse_to_matrices(matvals = e_dot) %>%
     # Spread to be wide-by-matrices
     tidyr::pivot_wider(names_from = matnames, values_from = dplyr::all_of(e_dot))
+}
+
+
+#' A convenience function to create PSUT matrices in a data frame
+#'
+#' Starting from human and animal muscle work data frames,
+#' this function bundles several functions to create a
+#' data frame of PSUT matrices.
+#' The bundled functions are:
+#'   - `specify_energy_type_method()`,
+#'   - `specify_product()`,
+#'   - `specify_ktoe()`,
+#'   - `MWTools::specify_primary_production()`,
+#'   - `specify_useful_products()`,
+#'   - `specify_fu_machines()`,
+#'   - `specify_last_stages()`,
+#'   - `MWTools::add_row_col_meta()`, and
+#'   - `MWTools::collapse_to_psut()`.
+#'
+#' Default values are assumed for function arguments.
+#'
+#' @param .hmw_df A data frame produced by `calc_hmw_pfu()`.
+#' @param .amw_df A data frame produced by `calc_amw_pfu()`.
+#'
+#' @return A data frame of musle work PSUT matrices.
+#'
+#' @export
+#'
+#' @examples
+#' hmw_df <- hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu() %>%
+#'   # Keep only a few years for speed.
+#'   dplyr::filter(Year %in% 2000:2002)
+#' amw_df <- amw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_amw_pfu() %>%
+#'   # Keep only a few years for speed.
+#'   dplyr::filter(Year %in% 2000:2002)
+#' prep_psut(hmw_df, amw_df)
+prep_psut <- function(.hmw_df, .amw_df) {
+  specify_energy_type_method(.hmw_df, .amw_df) %>%
+    specify_product() %>%
+    specify_ktoe() %>%
+    MWTools::specify_primary_production() %>%
+    specify_useful_products() %>%
+    specify_fu_machines() %>%
+    specify_last_stages() %>%
+    MWTools::add_row_col_meta() %>%
+    MWTools::collapse_to_psut()
 }
