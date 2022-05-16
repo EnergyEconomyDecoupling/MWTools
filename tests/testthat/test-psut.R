@@ -167,9 +167,12 @@ test_that("prep_psut() works as expected", {
   # Ensure that data are in the right place
   # by taking a few samples.
   expected1 <- hmw_df %>%
-    dplyr::filter(Country == "GBR", Year == 2000, Species == "Human females",
-                  Sector == "Agriculture", Stage == MWTools::all_stages$useful) %>%
-    magrittr::extract2("E.dot") %>%
+    dplyr::filter(.data[[MWTools::mw_cols$country]] == "GBR",
+                  .data[[MWTools::mw_cols$year]] == 2000,
+                  .data[[MWTools::mw_constants$species]] == "Human females",
+                  .data[[MWTools::mw_constants$sector_col]] == "Agriculture",
+                  .data[[MWTools::mw_constants$stage_col]] == MWTools::all_stages$useful) %>%
+    magrittr::extract2(MWTools::mw_cols$e_dot) %>%
     magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
   actual1 <- res %>%
     dplyr::filter(Country == "GBR", Year == 2000, Last.stage == "Useful") %>%
@@ -180,9 +183,31 @@ test_that("prep_psut() works as expected", {
     magrittr::extract2(1, 1)
   expect_equal(actual1, expected1)
 
+  expected2 <- amw_df %>%
+    dplyr::filter(.data[[MWTools::mw_cols$country]] == "CHN",
+                  .data[[MWTools::mw_cols$year]] == 2002,
+                  # .data[[MWTools::mw_constants$species]] == "Asses",
+                  .data[[MWTools::mw_constants$sector_col]] == "Transport",
+                  .data[[MWTools::mw_constants$stage_col]] == MWTools::all_stages$final) %>%
+    # Several Species provide Transport.
+    # Sum them before comparing to the entry in the Y matrix.
+    magrittr::extract2(MWTools::mw_cols$e_dot) %>%
+    sum() %>%
+    magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
+  actual2 <- res %>%
+    dplyr::filter(Country == "CHN", Year == 2002, Last.stage == MWTools::all_stages$final) %>%
+    magrittr::extract2(MWTools::psut_cols$Y) %>%
+    # Grab the first matrix in the column.
+    magrittr::extract2(1) %>%
+    magrittr::extract2(MWTools::mw_products$feed, MWTools::mw_sectors$transport_sector)
+  expect_equal(actual2, expected2)
 })
 
-test_that("prep_psut() works for Farms", {
+
+test_that("prep_psut() works for inputs to Farms", {
+  # This is an important test, because it checks whether aggregation
+  # works at the level of the tidy data frame
+  # (prior to forming matrices).
   hmw_df <- hmw_test_data_path() %>%
     read.csv() %>%
     calc_hmw_pfu() %>%
