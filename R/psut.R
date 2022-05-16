@@ -397,29 +397,34 @@ append_S_units_col <- function(.df,
 }
 
 
-#' Add U_feed and U_eiou columns to a muscle work PSUT data frame
+#' Add U_feed, U_eiou, and r_eiou columns to a muscle work PSUT data frame
 #'
 #' `U_feed` is simply a copy of `U`.
 #' `U_eiou` is a copy of `U` with `0` entries everywhere.
+#' `r_eiou` has same structure as `U` but contains all `1`'s.
 #'
 #' @param .df A PSUT data frame containing a column of `U` matrices.
-#' @param U,U_feed,U_eiou See `MWTools::psut_cols`.
+#' @param U,U_feed,U_eiou,r_eiou See `MWTools::psut_cols`.
 #'
-#' @return `.df` with `U_feed` and `U_eiou` matrices added.
+#' @return `.df` with `U_feed`, `U_eiou`, and `r_eiou` matrices added.
 #'
 #' @export
 #'
 #' @examples
-append_U_feed_U_eiou_cols <- function(.df,
+append_U_feed_U_eiou_r_eiou_cols <- function(.df,
                                       U = MWTools::psut_cols$U,
                                       U_feed = MWTools::psut_cols$U_feed,
-                                      U_eiou = MWTools::psut_cols$U_eiou) {
+                                      U_eiou = MWTools::psut_cols$U_eiou,
+                                      r_eiou = MWTools::psut_cols$r_eiou) {
   .df %>%
     dplyr::mutate(
       # Duplicate U for U_feed
       "{U_feed}" := .data[[U]],
       # Multiply U by 0 to get U_EIOU
-      "{U_eiou}" := matsbyname::hadamardproduct_byname(.data[[U]], 0)
+      "{U_eiou}" := matsbyname::hadamardproduct_byname(.data[[U]], 0),
+      "{r_eiou}" := matsbyname::quotient_byname(.data[[U]], .data[[U]]) %>%
+        # Take care of the case where we divide by 0.
+        matsbyname::replaceNaN_byname(val = 0)
     )
 }
 
@@ -473,5 +478,5 @@ prep_psut <- function(.hmw_df, .amw_df) {
     MWTools::add_row_col_meta() %>%
     MWTools::collapse_to_psut() %>%
     append_S_units_col() %>%
-    append_U_feed_U_eiou_cols()
+    append_U_feed_U_eiou_r_eiou_cols()
 }
