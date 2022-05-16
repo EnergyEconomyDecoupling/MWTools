@@ -183,19 +183,33 @@ test_that("prep_psut() works as expected", {
 })
 
 test_that("prep_psut() works for Farms", {
-  # Grab all the inputs to Farms (which is Biomass [from Resources])
-  farms_input <- specify_energy_type_method(hmw_df, amw_df) %>%
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  temp <- specify_energy_type_method(hmw_df, amw_df) %>%
     specify_product() %>%
     specify_ktoe() %>%
     MWTools::specify_primary_production() %>%
     specify_useful_products() %>%
     specify_fu_machines() %>%
     specify_last_stages() %>%
-    MWTools::add_row_col_meta() %>%
+    MWTools::add_row_col_meta()
+  res <- temp %>%
+    MWTools::prep_psut()
+
+  # Grab all the inputs to Farms (which is Biomass [from Resources])
+  farms_input <- temp %>%
     dplyr::filter(.data[[MWTools::mat_meta_cols$rownames]] == RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
                                                                                         suff = MWTools::mw_sectors$resources_sector,
                                                                                         notation = RCLabels::from_notation)) %>%
-    dplyr::group_by(.data[[MWTools::mw_cols$country]], .data[[MWTools::mw_cols$year]]) %>%
+    dplyr::group_by(.data[[MWTools::mw_cols$country]], .data[[MWTools::mw_cols$year]], .data[[MWTools::mw_cols$last_stage]]) %>%
     dplyr::summarise("{MWTools::mw_cols$e_dot}" := sum(.data[[MWTools::mw_cols$e_dot]]), .groups = "drop")
 
   # Compare the data in farms_input to data in the U matrices.
@@ -218,12 +232,12 @@ test_that("prep_psut() works for Farms", {
         # Get the correct item from farms_input
         expected <- farms_input %>%
           dplyr::filter(.data[[MWTools::mw_cols$year]] == yr,
-                        .data[[MWTools::mw_cols$country]] == coun) %>%
+                        .data[[MWTools::mw_cols$country]] == coun,
+                        .data[[MWTools::mw_cols$last_stage]] == ls) %>%
           magrittr::extract2(MWTools::mw_cols$e_dot) %>%
           magrittr::extract2(1)
         expect_equal(actual, expected)
       }
     }
   }
-
 })
