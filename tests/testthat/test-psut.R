@@ -266,3 +266,29 @@ test_that("prep_psut() works for inputs to Farms", {
     }
   }
 })
+
+
+test_that("Energy is balanced in PSUT matrices", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  psut <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
+    specify_ktoe() %>%
+    MWTools::specify_primary_production() %>%
+    specify_useful_products() %>%
+    specify_fu_machines() %>%
+    specify_last_stages() %>%
+    MWTools::add_row_col_meta() %>%
+    MWTools::prep_psut()
+  balanced <- psut %>%
+    Recca::verify_SUT_energy_balance()
+  expect_true(all(balanced[[".SUT_energy_balance"]] %>% unlist()))
+})
