@@ -46,7 +46,7 @@ amw_df <- amw_test_data_path() \%>\%
   calc_amw_pfu() \%>\%
   # Keep only a few years for speed.
   dplyr::filter(Year \%in\% 2000:2002)
-with_U_cols <- specify_energy_type_method(hmw_df, amw_df) \%>\%
+specify_energy_type_method(hmw_df, amw_df) \%>\%
   specify_product() \%>\%
   specify_ktoe() \%>\%
   MWTools::specify_primary_production() \%>\%
