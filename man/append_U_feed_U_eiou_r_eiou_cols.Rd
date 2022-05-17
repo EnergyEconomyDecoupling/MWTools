@@ -55,6 +55,6 @@ with_U_cols <- specify_energy_type_method(hmw_df, amw_df) \%>\%
   specify_last_stages() \%>\%
   MWTools::add_row_col_meta() \%>\%
   MWTools::collapse_to_psut() \%>\%
-  append_S_units_col() \%>\%
+  calc_S_units() \%>\%
   append_U_feed_U_eiou_r_eiou_cols()
 }

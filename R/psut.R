@@ -356,8 +356,8 @@ collapse_to_psut <- function(.df,
 #'   specify_last_stages() %>%
 #'   MWTools::add_row_col_meta() %>%
 #'   MWTools::collapse_to_psut() %>%
-#'   append_S_units_col()
-append_S_units_col <- function(.df = NULL,
+#'   calc_S_units()
+calc_S_units <- function(.df = NULL,
                                # Input columns
                                unit = MWTools::mw_cols$unit,
                                R = MWTools::psut_cols$R,
@@ -451,7 +451,7 @@ append_S_units_col <- function(.df = NULL,
 #'   specify_last_stages() %>%
 #'   MWTools::add_row_col_meta() %>%
 #'   MWTools::collapse_to_psut() %>%
-#'   append_S_units_col() %>%
+#'   calc_S_units() %>%
 #'   append_U_feed_U_eiou_r_eiou_cols()
 append_U_feed_U_eiou_r_eiou_cols <- function(.df = NULL,
                                              # Input names
@@ -490,7 +490,7 @@ append_U_feed_U_eiou_r_eiou_cols <- function(.df = NULL,
 #'   - `specify_last_stages()`,
 #'   - `MWTools::add_row_col_meta()`,
 #'   - `MWTools::collapse_to_psut()`, and
-#'   - `append_S_units_col()`.
+#'   - `calc_S_units()`.
 #'
 #' Default values are assumed for function arguments.
 #'
@@ -523,6 +523,6 @@ prep_psut <- function(.hmw_df, .amw_df) {
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
     MWTools::collapse_to_psut() %>%
-    append_S_units_col() %>%
+    calc_S_units() %>%
     append_U_feed_U_eiou_r_eiou_cols()
 }

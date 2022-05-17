@@ -294,7 +294,7 @@ test_that("Energy is balanced in PSUT matrices", {
 })
 
 
-test_that("append_S_units_col() works as expected", {
+test_that("calc_S_units() works as expected", {
   hmw_df <- hmw_test_data_path() %>%
     read.csv() %>%
     calc_hmw_pfu() %>%
@@ -314,7 +314,7 @@ test_that("append_S_units_col() works as expected", {
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
     MWTools::collapse_to_psut() %>%
-    append_S_units_col()
+    calc_S_units()
 
   # Check a few examples
   expect_true(all(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% rownames() == c("Biomass", "Feed")))
@@ -352,7 +352,7 @@ test_that("append_U_feed_U_eiou_r_eiou_cols() works as expected", {
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
     MWTools::collapse_to_psut() %>%
-    append_S_units_col() %>%
+    calc_S_units() %>%
     append_U_feed_U_eiou_r_eiou_cols()
 
   for (i in 1:nrow(with_U_cols)) {

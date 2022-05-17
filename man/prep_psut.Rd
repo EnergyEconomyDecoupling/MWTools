@@ -29,7 +29,7 @@ The bundled functions are:
 \item \code{specify_last_stages()},
 \item \code{MWTools::add_row_col_meta()},
 \item \code{MWTools::collapse_to_psut()}, and
-\item \code{append_S_units_col()}.
+\item \code{calc_S_units()}.
 }
 }
 \details{
