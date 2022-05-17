@@ -4,7 +4,9 @@ output: html_document
 ---
 
 
-
+* Now setting `NA` values to `0` in `specify_energy_type_method()`,
+  to defend against energy balance errors later in the `prep_psut()` 
+  function.
 * New functions to create a data frame of PSUT matrices
   representing a muscle work energy conversion chain.
   See `prep_psut()` and friends.
