@@ -332,7 +332,7 @@ test_that("calc_S_units() works as expected", {
 })
 
 
-test_that("append_U_feed_U_eiou_r_eiou_cols() works as expected", {
+test_that("calc_U_feed_U_eiou_r_eiou() works as expected", {
   hmw_df <- hmw_test_data_path() %>%
     read.csv() %>%
     calc_hmw_pfu() %>%
@@ -353,7 +353,7 @@ test_that("append_U_feed_U_eiou_r_eiou_cols() works as expected", {
     MWTools::add_row_col_meta() %>%
     MWTools::collapse_to_psut() %>%
     calc_S_units() %>%
-    append_U_feed_U_eiou_r_eiou_cols()
+    calc_U_feed_U_eiou_r_eiou()
 
   for (i in 1:nrow(with_U_cols)) {
     expect_true(!is.null(with_U_cols[[MWTools::psut_cols$U_feed]][[i]]))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/psut.R
 \name{calc_S_units}
 \alias{calc_S_units}
-\title{Add an S_units column given other columns of PSUT matrices}
+\title{Calculate an S_units vector given other PSUT matrices}
 \usage{
 calc_S_units(
   .df = NULL,
@@ -34,7 +34,7 @@ calc_S_units(
 \code{.df} with an \code{s_units} column added.
 }
 \description{
-The \code{S_units} column is a column of unit summation vectors
+The \code{S_units} vector is a unit summation vector
 with products (energy carriers) in rows and units in columns.
 The row names for each vector are the various products in that row of \code{.df}.
 The column names for each vector are taken from the \code{units} column of \code{.df}.

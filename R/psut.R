@@ -309,9 +309,9 @@ collapse_to_psut <- function(.df,
 }
 
 
-#' Add an S_units column given other columns of PSUT matrices
+#' Calculate an S_units vector given other PSUT matrices
 #'
-#' The `S_units` column is a column of unit summation vectors
+#' The `S_units` vector is a unit summation vector
 #' with products (energy carriers) in rows and units in columns.
 #' The row names for each vector are the various products in that row of `.df`.
 #' The column names for each vector are taken from the `units` column of `.df`.
@@ -410,7 +410,7 @@ calc_S_units <- function(.df = NULL,
 }
 
 
-#' Add U_feed, U_eiou, and r_eiou columns to a muscle work PSUT data frame
+#' Calculate U_feed, U_eiou, and r_eiou columns from a U matrix
 #'
 #' `U_feed`, `U_eiou`, and `r_eiou` matrices are calculated from `U`.
 #' All three matrices (`U_feed`, `U_eiou`, and `r_eiou`)
@@ -452,8 +452,8 @@ calc_S_units <- function(.df = NULL,
 #'   MWTools::add_row_col_meta() %>%
 #'   MWTools::collapse_to_psut() %>%
 #'   calc_S_units() %>%
-#'   append_U_feed_U_eiou_r_eiou_cols()
-append_U_feed_U_eiou_r_eiou_cols <- function(.df = NULL,
+#'   calc_U_feed_U_eiou_r_eiou()
+calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
                                              # Input names
                                              U = MWTools::psut_cols$U,
                                              # Output names
@@ -524,5 +524,5 @@ prep_psut <- function(.hmw_df, .amw_df) {
     MWTools::add_row_col_meta() %>%
     MWTools::collapse_to_psut() %>%
     calc_S_units() %>%
-    append_U_feed_U_eiou_r_eiou_cols()
+    calc_U_feed_U_eiou_r_eiou()
 }
