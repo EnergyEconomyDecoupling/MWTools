@@ -358,18 +358,18 @@ collapse_to_psut <- function(.df,
 #'   MWTools::collapse_to_psut() %>%
 #'   calc_S_units()
 calc_S_units <- function(.df = NULL,
-                               # Input columns
-                               unit = MWTools::mw_cols$unit,
-                               R = MWTools::psut_cols$R,
-                               U = MWTools::psut_cols$U,
-                               V = MWTools::psut_cols$V,
-                               Y = MWTools::psut_cols$Y,
-                               # Output column
-                               s_units = MWTools::psut_cols$s_units,
-                               # Miscellaneous information
-                               product_notation = RCLabels::from_notation,
-                               product_type = MWTools::row_col_types$product,
-                               unit_type = MWTools::row_col_types$unit) {
+                         # Input columns
+                         unit = MWTools::mw_cols$unit,
+                         R = MWTools::psut_cols$R,
+                         U = MWTools::psut_cols$U,
+                         V = MWTools::psut_cols$V,
+                         Y = MWTools::psut_cols$Y,
+                         # Output column
+                         s_units = MWTools::psut_cols$s_units,
+                         # Miscellaneous information
+                         product_notation = RCLabels::from_notation,
+                         product_type = MWTools::row_col_types$product,
+                         unit_type = MWTools::row_col_types$unit) {
   s_units_func <- function(unit_val, R_mat, U_mat, V_mat, Y_mat) {
     # Get the products in the R, U, V, and Y matrices
     R_products <- R_mat %>%
@@ -454,12 +454,12 @@ calc_S_units <- function(.df = NULL,
 #'   calc_S_units() %>%
 #'   calc_U_feed_U_eiou_r_eiou()
 calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
-                                             # Input names
-                                             U = MWTools::psut_cols$U,
-                                             # Output names
-                                             U_feed = MWTools::psut_cols$U_feed,
-                                             U_eiou = MWTools::psut_cols$U_eiou,
-                                             r_eiou = MWTools::psut_cols$r_eiou) {
+                                      # Input names
+                                      U = MWTools::psut_cols$U,
+                                      # Output names
+                                      U_feed = MWTools::psut_cols$U_feed,
+                                      U_eiou = MWTools::psut_cols$U_eiou,
+                                      r_eiou = MWTools::psut_cols$r_eiou) {
   u_func <- function(U_mat) {
     # At this point, U will be a matrix
     U_feed_mat <- U_mat
