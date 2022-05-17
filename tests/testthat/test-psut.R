@@ -291,6 +291,11 @@ test_that("Energy is balanced in PSUT matrices", {
   balanced <- psut %>%
     Recca::verify_SUT_energy_balance()
   expect_true(all(balanced[[".SUT_energy_balance"]] %>% unlist()))
+  # Test with prep_psut()
+  psut2 <- MWTools::prep_psut(.hmw_df = hmw_df, .amw_df = amw_df)
+  balanced2 <- psut2 %>%
+    Recca::verify_SUT_energy_balance()
+  expect_true(all(balanced2[[".SUT_energy_balance"]] %>% unlist()))
 })
 
 
