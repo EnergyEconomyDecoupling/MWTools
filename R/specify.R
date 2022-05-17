@@ -14,11 +14,13 @@
 #' is equal in magnitude to
 #' the final energy ("Biomass").
 #'
-#' This function binds `.hmw_df` and `.amw_df` by rows.
+#' `.hmw_df` and `.amw_df` bound by rows.
+#' The resulting data frame is modified,
+#' replacing any `NA` values with `0` in the `e_dot` column.
 #'
 #' @param .hmw_df A data frame produced by `calc_hmw_pfu()`.
 #' @param .amw_df A data frame produced by `calc_amw_pfu()`.
-#' @param energy_type,method,e_type See `MWTools::mw_cols`.
+#' @param e_dot,energy_type,method,e_type See `MWTools::mw_cols`.
 #' @param pcm See `MWTools::methods`.
 #'
 #' @return A data frame in which `energy_type` and `method` columns are included.
@@ -34,11 +36,20 @@
 #'   calc_amw_pfu()
 #' specify_energy_type_method(hmw_df, amw_df)
 specify_energy_type_method <- function(.hmw_df, .amw_df,
+                                       e_dot = MWTools::mw_cols$e_dot,
                                        energy_type = MWTools::mw_cols$energy_type,
                                        method = MWTools::mw_cols$method,
                                        e_type = MWTools::energy_types$e,
                                        pcm = MWTools::methods$pcm) {
   dplyr::bind_rows(.hmw_df, .amw_df) %>%
+    # Replace all NA values with 0.
+    dplyr::mutate(
+      "{e_dot}" := dplyr::case_when(
+        is.na(.data[[e_dot]]) ~ 0,
+        TRUE ~ .data[[e_dot]]
+      )
+    ) %>%
+    # Add energy type and method.
     dplyr::mutate(
       "{energy_type}" := e_type,
       "{method}" := pcm

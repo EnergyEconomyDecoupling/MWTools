@@ -7,6 +7,7 @@
 specify_energy_type_method(
   .hmw_df,
   .amw_df,
+  e_dot = MWTools::mw_cols$e_dot,
   energy_type = MWTools::mw_cols$energy_type,
   method = MWTools::mw_cols$method,
   e_type = MWTools::energy_types$e,
@@ -18,7 +19,7 @@ specify_energy_type_method(
 
 \item{.amw_df}{A data frame produced by \code{calc_amw_pfu()}.}
 
-\item{energy_type, method, e_type}{See \code{MWTools::mw_cols}.}
+\item{e_dot, energy_type, method, e_type}{See \code{MWTools::mw_cols}.}
 
 \item{pcm}{See \code{MWTools::methods}.}
 }
@@ -39,7 +40,9 @@ is equal in magnitude to
 the final energy ("Biomass").
 }
 \details{
-This function binds \code{.hmw_df} and \code{.amw_df} by rows.
+\code{.hmw_df} and \code{.amw_df} bound by rows.
+The resulting data frame is modified,
+replacing any \code{NA} values with \code{0} in the \code{e_dot} column.
 }
 \examples{
 hmw_df <- hmw_test_data_path() \%>\%
