@@ -327,8 +327,8 @@ test_that("append_S_units_col() works as expected", {
   expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::rowtype() == MWTools::mw_cols$product)
   expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::coltype() == MWTools::row_col_types$unit)
 
-  # Make sure the unit column was deleted
-  expect_false(MWTools::mw_cols$unit %in% names(with_sunits))
+  # Make sure the unit column remains in the data frame
+  expect_true(MWTools::mw_cols$unit %in% names(with_sunits))
 })
 
 

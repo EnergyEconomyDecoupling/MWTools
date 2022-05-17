@@ -5,7 +5,7 @@
 \title{Add U_feed, U_eiou, and r_eiou columns to a muscle work PSUT data frame}
 \usage{
 append_U_feed_U_eiou_r_eiou_cols(
-  .df,
+  .df = NULL,
   U = MWTools::psut_cols$U,
   U_feed = MWTools::psut_cols$U_feed,
   U_eiou = MWTools::psut_cols$U_eiou,
@@ -13,7 +13,8 @@ append_U_feed_U_eiou_r_eiou_cols(
 )
 }
 \arguments{
-\item{.df}{A PSUT data frame containing a column of \code{U} matrices.}
+\item{.df}{A PSUT data frame containing a column of \code{U} matrices.
+Default is \code{NULL}, allowing a single matrix for the \code{U} argument.}
 
 \item{U}{The name of the incoming \code{U} matrix. See \code{MWTools::psut_cols}.}
 
@@ -23,9 +24,16 @@ append_U_feed_U_eiou_r_eiou_cols(
 \code{.df} with new columns for \code{U_feed}, \code{U_eiou}, and \code{r_eiou} matrices.
 }
 \description{
-\code{U_feed} is simply a copy of \code{U}.
-\code{U_eiou} is a copy of \code{U} with \code{0} entries everywhere.
-\code{r_eiou} has same structure as \code{U} but contains all \code{1}'s.
+\code{U_feed}, \code{U_eiou}, and \code{r_eiou} matrices are calculated from \code{U}.
+All three matrices (\code{U_feed}, \code{U_eiou}, and \code{r_eiou})
+have the same structure (row names, column names, row types, and column types)
+as \code{U}.
+For \code{MWTools}, there is no energy industry own use (EIOU),
+so \code{U_feed} is simply a copy of \code{U}, and \code{U_eiou} and \code{r_eiou} are full of \code{0}s.
+}
+\details{
+This function employs \code{matsindf::matsindf_apply()} internally, so
+\code{U} can be either a single matrix or the name of the \code{U} column in \code{.df}.
 }
 \examples{
 hmw_df <- hmw_test_data_path() \%>\%

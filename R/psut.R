@@ -316,11 +316,21 @@ collapse_to_psut <- function(.df,
 #' The row names for each vector are the various products in that row of `.df`.
 #' The column names for each vector are taken from the `units` column of `.df`.
 #'
-#' @param .df A data frame
-#' @param unit,product See `MWTools::mw_cols`.
-#' @param s_units See `MWTools::psut_cols`.
+#' This function employs `matsindf::matsindf_apply()` internally, so
+#' `unit` can be a single string or the name of a column in `.df`.
+#' Similarly, `R`, `U`, `V`, and `Y` can be either matrices or the names of columns in `.df`.
+#'
+#' Product names are taken from the prefixes of row or columns names
+#' of the `R`, `U`, `V`, and `Y` matrices.
+#'
+#' The `unit` column will remain in `.df` on output and will need to be deleted afterward.
+#'
+#' @param .df A data frame. Default is `NULL`.
+#' @param unit A string unit for each row or the name of the unit column in `.df`. See `MWTools::mw_cols`.
+#' @param R,U,V,Y PSUT matrices or the names of matrix columns in `.df`. See `MWTools::psut_cols`.
+#' @param s_units The name of the output matrix or the output column. See `MWTools::psut_cols`.
 #' @param product_notation Notation for products. Default is `RCLabels::from_notation`.
-#' @param unit_type The type for units columns. Default is `MWTools::row_col_types$unit`.
+#' @param product_type,unit_type The types for products and units columns. See `MWTools::row_col_types$unit`.
 #'
 #' @return `.df` with an `s_units` column added.
 #'
@@ -347,66 +357,73 @@ collapse_to_psut <- function(.df,
 #'   MWTools::add_row_col_meta() %>%
 #'   MWTools::collapse_to_psut() %>%
 #'   append_S_units_col()
-append_S_units_col <- function(.df,
+append_S_units_col <- function(.df = NULL,
+                               # Input columns
                                unit = MWTools::mw_cols$unit,
-                               product = MWTools::mw_cols$product,
+                               R = MWTools::psut_cols$R,
+                               U = MWTools::psut_cols$U,
+                               V = MWTools::psut_cols$V,
+                               Y = MWTools::psut_cols$Y,
+                               # Output column
                                s_units = MWTools::psut_cols$s_units,
+                               # Miscellaneous information
                                product_notation = RCLabels::from_notation,
+                               product_type = MWTools::row_col_types$product,
                                unit_type = MWTools::row_col_types$unit) {
-  # Get the units for each row
-  unit_col <- .df[[unit]]
-  # Get the products in each row
-  R_products <- .df[[MWTools::psut_cols$R]] %>%
-    matsbyname::getcolnames_byname() %>%
-    lapply(FUN = function(lab) {
-      RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation) %>%
-        unique()
-    })
-  U_products <- .df[[MWTools::psut_cols$U]] %>%
-    matsbyname::getrownames_byname() %>%
-    lapply(FUN = function(lab) {
-      RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation) %>%
-        unique()
-    })
-  V_products <- .df[[MWTools::psut_cols$V]] %>%
-    matsbyname::getcolnames_byname() %>%
-    lapply(FUN = function(lab) {
-      RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation) %>%
-        unique()
-    })
-  Y_products <- .df[[MWTools::psut_cols$Y]] %>%
-    matsbyname::getrownames_byname() %>%
-    lapply(FUN = function(lab) {
-      RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation) %>%
-        unique()
-    })
-  S_units_col <- list()
-  for (i in 1:length(unit_col)) {
-    units_list <- c(R_products[[i]], U_products[[i]], V_products[[i]], Y_products[[i]]) %>%
+  s_units_func <- function(unit_val, R_mat, U_mat, V_mat, Y_mat) {
+    # Get the products in the R, U, V, and Y matrices
+    R_products <- R_mat %>%
+      matsbyname::getcolnames_byname() %>%
+      lapply(FUN = function(lab) {
+        RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation)
+      }) %>%
+      unlist()
+    U_products <- U_mat %>%
+      matsbyname::getrownames_byname() %>%
+      lapply(FUN = function(lab) {
+        RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation)
+      }) %>%
+      unlist()
+    V_products <- V_mat %>%
+      matsbyname::getcolnames_byname() %>%
+      lapply(FUN = function(lab) {
+        RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation)
+      }) %>%
+      unlist()
+    Y_products <- Y_mat %>%
+      matsbyname::getrownames_byname() %>%
+      lapply(FUN = function(lab) {
+        RCLabels::get_pref_suff(lab, which = "pref", notation = product_notation)
+      }) %>%
+      unlist()
+
+    products_list <- c(R_products, U_products, V_products, Y_products) %>%
       unique()
-    units_vector <- matrix(1, nrow = length(units_list), ncol = 1,
-                           dimnames = list(units_list, unit_col[[i]])) %>%
-      matsbyname::setrowtype(product) %>% matsbyname::setcoltype(unit_type)
-    S_units_col[[i]] <- units_vector
-    # S_units_col <- append(S_units_col, units_vector)
+    units_vector <- matrix(1, nrow = length(products_list), ncol = 1,
+                           dimnames = list(products_list, unit_val)) %>%
+      matsbyname::setrowtype(product_type) %>% matsbyname::setcoltype(unit_type)
+    list(units_vector) %>%
+      magrittr::set_names(c(s_units))
   }
-  .df %>%
-    dplyr::mutate(
-      # Set the S_units column.
-      "{s_units}" := S_units_col,
-      # Delete the unit column.
-      "{unit}" := NULL
-    )
+
+  matsindf::matsindf_apply(.df, FUN = s_units_func, unit_val = unit, R_mat = R, U_mat = U, V_mat = V, Y_mat = Y)
 }
 
 
 #' Add U_feed, U_eiou, and r_eiou columns to a muscle work PSUT data frame
 #'
-#' `U_feed` is simply a copy of `U`.
-#' `U_eiou` is a copy of `U` with `0` entries everywhere.
-#' `r_eiou` has same structure as `U` but contains all `1`'s.
+#' `U_feed`, `U_eiou`, and `r_eiou` matrices are calculated from `U`.
+#' All three matrices (`U_feed`, `U_eiou`, and `r_eiou`)
+#' have the same structure (row names, column names, row types, and column types)
+#' as `U`.
+#' For `MWTools`, there is no energy industry own use (EIOU),
+#' so `U_feed` is simply a copy of `U`, and `U_eiou` and `r_eiou` are full of `0`s.
+#'
+#' This function employs `matsindf::matsindf_apply()` internally, so
+#' `U` can be either a single matrix or the name of the `U` column in `.df`.
 #'
 #' @param .df A PSUT data frame containing a column of `U` matrices.
+#'            Default is `NULL`, allowing a single matrix for the `U` argument.
 #' @param U The name of the incoming `U` matrix. See `MWTools::psut_cols`.
 #' @param U_feed,U_eiou,r_eiou Names for outgoing matrices. See `MWTools::psut_cols`.
 #'
@@ -436,23 +453,25 @@ append_S_units_col <- function(.df,
 #'   MWTools::collapse_to_psut() %>%
 #'   append_S_units_col() %>%
 #'   append_U_feed_U_eiou_r_eiou_cols()
-append_U_feed_U_eiou_r_eiou_cols <- function(.df,
+append_U_feed_U_eiou_r_eiou_cols <- function(.df = NULL,
+                                             # Input names
                                              U = MWTools::psut_cols$U,
+                                             # Output names
                                              U_feed = MWTools::psut_cols$U_feed,
                                              U_eiou = MWTools::psut_cols$U_eiou,
                                              r_eiou = MWTools::psut_cols$r_eiou) {
-  .df %>%
-    dplyr::mutate(
-      # Duplicate U for U_feed
-      "{U_feed}" := .data[[U]],
-      # Multiply U by 0 to get U_eiou
-      "{U_eiou}" := matsbyname::hadamardproduct_byname(.data[[U]], 0),
-      # r_eiou is the ratio of U_eiou to U.
-      "{r_eiou}" := matsbyname::quotient_byname(.data[[U_eiou]], .data[[U]]) %>%
-        # Some values in U are 0, which gives NaN.
-        # So replace all NaN with 0.
-        matsbyname::replaceNaN_byname(val = 0)
-    )
+  u_func <- function(U_mat) {
+    # At this point, U will be a matrix
+    U_feed_mat <- U_mat
+    U_eiou_mat <- matsbyname::hadamardproduct_byname(U_mat, 0)
+    r_eiou_mat <- matsbyname::quotient_byname(U_eiou_mat, U_mat) %>%
+      # Some values in U are 0, which gives NaN.
+      # So replace all NaN with 0.
+      matsbyname::replaceNaN_byname(val = 0)
+    list(U_feed_mat, U_eiou_mat, r_eiou_mat) %>%
+      magrittr::set_names(c(U_feed, U_eiou, r_eiou))
+  }
+  matsindf::matsindf_apply(.df, FUN = u_func, U_mat = U)
 }
 
 
