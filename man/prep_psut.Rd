@@ -28,8 +28,9 @@ The bundled functions are:
 \item \code{specify_fu_machines()},
 \item \code{specify_last_stages()},
 \item \code{MWTools::add_row_col_meta()},
-\item \code{MWTools::collapse_to_psut()}, and
-\item \code{calc_S_units()}.
+\item \code{MWTools::collapse_to_psut()},
+\item \code{calc_S_units()}, and
+\item \code{calc_U_feed_U_eiou_r_eiou()}.
 }
 }
 \details{

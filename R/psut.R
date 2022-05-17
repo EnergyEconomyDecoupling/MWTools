@@ -489,8 +489,9 @@ calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
 #'   - `specify_fu_machines()`,
 #'   - `specify_last_stages()`,
 #'   - `MWTools::add_row_col_meta()`,
-#'   - `MWTools::collapse_to_psut()`, and
-#'   - `calc_S_units()`.
+#'   - `MWTools::collapse_to_psut()`,
+#'   - `calc_S_units()`, and
+#'   - `calc_U_feed_U_eiou_r_eiou()`.
 #'
 #' Default values are assumed for function arguments.
 #'
