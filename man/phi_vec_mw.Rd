@@ -15,7 +15,16 @@ phi_vec_mw(
 \arguments{
 \item{.phi_table}{A table of phi (exergy-to-energy ratio) values.}
 
-\item{mw_energy_carriers}{A vector of energy carriers relevant to muscle work calculations.}
+\item{mw_energy_carriers}{A vector of string energy carriers
+relevant to muscle work calculations.
+Default is \code{MWTools::mw_products}.}
+
+\item{product}{See \code{MWTools::mw_cols}.}
+
+\item{product_type}{See \code{MWTools::row_col_types}.}
+
+\item{phi}{The name of the phi column in the outgoing vector.
+Default is "phi".}
 }
 \value{
 A column vector of phi values.
@@ -24,4 +33,8 @@ A column vector of phi values.
 To move from an energy to an exergy description of an energy conversion chain,
 a vector of phi (exergy-to-energy ratio) values is needed.
 Entries in the vector are for each type of muscle work energy carrier.
+}
+\examples{
+phi_vec_mw()
+phi_vec_mw(mw_energy_carriers = c("Food", "Feed"))
 }

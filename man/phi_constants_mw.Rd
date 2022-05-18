@@ -7,12 +7,9 @@
 \format{
 A data frame with 6 rows. Each row provides the phi value for one energy carrier:
 \describe{
-\item{food}{The name for food final energy.}
-\item{feed}{The name for feed final energy.}
-\item{biomass}{The name for biomass primary energy.}
-\item{hu_mech}{The name for human mechanical work useful energy.}
-\item{an_mech}{The name for animal mechanical work useful energy.}
-\item{an_p}{The name for animal propulsion work useful energy.}
+\item{Product}{A string column of muscle work energy carriers.}
+\item{phi}{A string column of exergy-to-energy ratios.}
+\item{is.useful}{A boolean column telling whether this energy carrier is found at the useful stage (or not).}
 }
 }
 \usage{

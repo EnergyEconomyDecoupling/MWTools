@@ -5,11 +5,21 @@
 #' Entries in the vector are for each type of muscle work energy carrier.
 #'
 #' @param .phi_table A table of phi (exergy-to-energy ratio) values.
-#' @param mw_energy_carriers A vector of energy carriers relevant to muscle work calculations.
+#' @param mw_energy_carriers A vector of string energy carriers
+#'                           relevant to muscle work calculations.
+#'                           Default is `MWTools::mw_products`.
+#' @param product See `MWTools::mw_cols`.
+#' @param product_type See `MWTools::row_col_types`.
+#' @param phi The name of the phi column in the outgoing vector.
+#'            Default is "phi".
 #'
 #' @return A column vector of phi values.
 #'
 #' @export
+#'
+#' @examples
+#' phi_vec_mw()
+#' phi_vec_mw(mw_energy_carriers = c("Food", "Feed"))
 phi_vec_mw <- function(.phi_table = MWTools::phi_constants_mw,
                        mw_energy_carriers = MWTools::mw_products,
                        product = MWTools::mw_cols$product,

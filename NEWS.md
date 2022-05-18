@@ -4,6 +4,8 @@ output: html_document
 ---
 
 
+* New function `phi_vec_mw()` creates a phi vector 
+  for use when converting energy to exergy.
 * Now setting `NA` values to `0` in `specify_energy_type_method()`,
   to defend against energy balance errors later in the `prep_psut()` 
   function.
