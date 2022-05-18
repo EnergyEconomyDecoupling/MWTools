@@ -344,7 +344,7 @@
 #' \item{food}{The name for food final energy.}
 #' \item{feed}{The name for feed final energy.}
 #' \item{biomass}{The name for biomass primary energy.}
-#' \item{hu_mech}{The name for human mechanical work final energy.}
+#' \item{hu_mech}{The name for human mechanical work useful energy.}
 #' \item{an_mech}{The name for animal mechanical work useful energy.}
 #' \item{an_p}{The name for animal propulsion work useful energy.}
 #' }
@@ -352,6 +352,29 @@
 #' @examples
 #' mw_products
 "mw_products"
+
+
+#' Muscle work phi constants
+#'
+#' A data frame containing
+#'     - muscle work products (energy carriers),
+#'     - phi (exergy-to-energy ratio) values,
+#'     - and an "is.useful" column saying whether that energy carrier is found
+#'       at the useful stage.
+#'
+#' @format A data frame with `r nrow(phi_constants_mw)` rows. Each row provides the phi value for one energy carrier:
+#' \describe{
+#' \item{food}{The name for food final energy.}
+#' \item{feed}{The name for feed final energy.}
+#' \item{biomass}{The name for biomass primary energy.}
+#' \item{hu_mech}{The name for human mechanical work useful energy.}
+#' \item{an_mech}{The name for animal mechanical work useful energy.}
+#' \item{an_p}{The name for animal propulsion work useful energy.}
+#' }
+#'
+#' @examples
+#' phi_constants_mw
+"phi_constants_mw"
 
 
 #' Economic sectors for muscle work

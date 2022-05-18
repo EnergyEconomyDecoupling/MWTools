@@ -227,6 +227,15 @@ usethis::use_data(mw_products, overwrite = TRUE)
 
 
 #
+# phi constants
+#
+phi_constants_mw <- tibble::tibble(Product = unlist(mw_products),
+                                   phi = 1,
+                                   is.useful = c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE))
+usethis::use_data(phi_constants_mw, overwrite = TRUE)
+
+
+#
 # Economic sectors
 #
 mw_sectors <- list(broad_sector_col = "broad_sector",

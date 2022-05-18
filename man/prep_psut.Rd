@@ -35,6 +35,8 @@ The bundled functions are:
 }
 \details{
 Default values are assumed for function arguments.
+
+The "Unit" column is deleted after the "S_units" column is created.
 }
 \examples{
 hmw_df <- hmw_test_data_path() \%>\%

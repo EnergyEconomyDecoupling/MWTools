@@ -495,6 +495,8 @@ calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
 #'
 #' Default values are assumed for function arguments.
 #'
+#' The "Unit" column is deleted after the "S_units" column is created.
+#'
 #' @param .hmw_df A data frame produced by `calc_hmw_pfu()`.
 #' @param .amw_df A data frame produced by `calc_amw_pfu()`.
 #'
@@ -525,5 +527,9 @@ prep_psut <- function(.hmw_df, .amw_df) {
     MWTools::add_row_col_meta() %>%
     MWTools::collapse_to_psut() %>%
     calc_S_units() %>%
+    # Eliminate the Unit column.
+    dplyr::mutate(
+      "{MWTools::mw_cols$unit}" := NULL
+    ) %>%
     calc_U_feed_U_eiou_r_eiou()
 }
