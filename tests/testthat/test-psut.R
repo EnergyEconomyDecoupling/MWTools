@@ -321,6 +321,10 @@ test_that("calc_S_units() works as expected", {
     MWTools::collapse_to_psut() %>%
     calc_S_units()
 
+  # Need items in the S_units column to *not* have names.
+  expect_null(with_sunits[[MWTools::psut_cols$s_units]] %>%
+                names())
+
   # Check a few examples
   expect_true(all(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% rownames() == c("Biomass", "Feed")))
   expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% colnames() == "ktoe")
