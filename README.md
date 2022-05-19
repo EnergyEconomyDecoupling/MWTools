@@ -47,11 +47,11 @@ fao_raw_rds <- readr::read_rds(file = fao_fp)
 
 amw_pfu_data <- calc_amw_pfu(.df = fao_raw_rds,
                              concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
-                             amw_analysis_path = PFUSetup::get_abs_paths()$amw_analysis_data_path)
+                             amw_analysis_data_path = PFUSetup::get_abs_paths()$amw_analysis_data_path)
 
 head(amw_pfu_data)
 #> # A tibble: 6 × 7
-#>   Country  Year Species Stage   Sector      Units    E.dot
+#>   Country  Year Species Stage   Sector      Unit     E.dot
 #>   <chr>   <dbl> <chr>   <chr>   <chr>       <chr>    <dbl>
 #> 1 AFG      1961 Asses   Useful  Agriculture EJ    0.000125
 #> 2 AFG      1961 Asses   Useful  Transport   EJ    0.000706
@@ -73,6 +73,8 @@ hours the primary, final, and useful energy associated with human muscle
 work can be estimated using the helper function `MWTools::calc_hmw_pfu`.
 
 ``` r
+library(MWTools)
+
 ilo_fp <- PFUSetup::get_abs_paths()$ilo_data_path
 
 ilo_raw_rds <- readr::read_rds(file = ilo_fp)
@@ -83,7 +85,7 @@ hmw_pfu_data <- calc_hmw_pfu(.df = ilo_raw_rds,
 
 head(hmw_pfu_data)
 #> # A tibble: 6 × 7
-#>   Country  Year Species       Stage   Sector      Units E.dot
+#>   Country  Year Species       Stage   Sector      Unit  E.dot
 #>   <chr>   <dbl> <chr>         <chr>   <chr>       <chr> <dbl>
 #> 1 ABW      1994 Human females Final   Agriculture EJ       NA
 #> 2 ABW      1994 Human females Primary Agriculture EJ       NA
@@ -92,3 +94,7 @@ head(hmw_pfu_data)
 #> 5 ABW      1997 Human females Primary Agriculture EJ       NA
 #> 6 ABW      1997 Human females Useful  Agriculture EJ       NA
 ```
+
+## PSUT matrices
+
+PFU data can be converted to PSUT matrices using `prep_psut()`.

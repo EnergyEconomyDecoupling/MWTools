@@ -73,4 +73,6 @@ head(hmw_pfu_data)
 
 ```
 
+## PSUT matrices
 
+PFU data can be converted to PSUT matrices using `prep_psut()`.
