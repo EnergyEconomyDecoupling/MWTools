@@ -17,8 +17,7 @@ tidy_hmw_pfu(
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
   final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
   primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
-  useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
-  hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col
+  useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col
 )
 }
 \arguments{
@@ -40,7 +39,7 @@ Usually produced by calling the
 
 \item{country_col, hmw_region_code_col}{See \code{MWTools::conc_cols}.}
 
-\item{final_energy_col, primary_energy_col, useful_energy_hmw_col, hmw_analysis_sector_col}{See \code{MWTools::hmw_analysis_constants}.}
+\item{final_energy_col, primary_energy_col, useful_energy_hmw_col}{See \code{MWTools::hmw_analysis_constants}.}
 }
 \description{
 Produce a tidy human muscle work data frame
@@ -51,7 +50,7 @@ tidied_pfu_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
   fill_ilo_data() \%>\%
   calc_total_hours_worked() \%>\%
   get_broad.sector_data() \%>\%
-  add_hmw_analysis_sectors() \%>\%
+  split_labor_by_sector() \%>\%
   calc_hmw_final_energy() \%>\%
   calc_hmw_primary_energy() \%>\%
   calc_hmw_useful_energy() \%>\%

@@ -12,7 +12,7 @@ calc_hmw_final_energy(
   unit = MWTools::mw_cols$unit,
   exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
-  hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
+  labor_type_col = MWTools::hmw_analysis_constants$labor_type_col,
   hmw_food_sheet = MWTools::hmw_analysis_constants$hmw_food_sheet,
   hmw_plate_waste_sheet = MWTools::hmw_analysis_constants$hmw_plate_waste_sheet,
   food_consumption_col = MWTools::hmw_analysis_constants$food_consumption_col,
@@ -21,8 +21,7 @@ calc_hmw_final_energy(
   plate_waste_col = MWTools::hmw_analysis_constants$plate_waste_col,
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
   kcal_to_mj = MWTools::unit_constants$kcal_to_mj,
-  employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
-  industry_activity_col = MWTools::hmw_analysis_constants$industry_activity_col
+  employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col
 )
 }
 \arguments{
@@ -33,17 +32,17 @@ Usually produced by calling the
 \code{fill_ilo_data},
 \code{calc_total_hours_worked},
 \code{get_broad.sector_data}, and
-\code{add_hmw_analysis_sectors} functions in sequence on the raw FAO data.}
+\code{split_labor_by_sector} functions in sequence on the raw FAO data.}
 
 \item{hmw_analysis_data_path}{See \code{MWTools::hmw_analysis_data_path()}.}
 
 \item{sector_col, year, unit}{See \code{MWTools::mw_constants}.}
 
-\item{exemplar_method_col, hmw_analysis_sector_col}{See \code{MWTools::mw_sectors}.}
+\item{exemplar_method_col}{See \code{MWTools::mw_sectors}.}
 
 \item{sex_ilo_col, employed_persons_ilo_col}{See \code{MWTools::ilo_cols}}
 
-\item{hmw_food_sheet, hmw_plate_waste_sheet, food_consumption_col, energy_pppa_col, final_energy_col, plate_waste_col, industry_activity_col}{See \code{MWTools::hmw_analysis_constants}.}
+\item{hmw_food_sheet, hmw_plate_waste_sheet, food_consumption_col, energy_pppa_col, final_energy_col, plate_waste_col, labor_type_col}{See \code{MWTools::hmw_analysis_constants}.}
 
 \item{hmw_region_code_col}{See \code{MWTools::conc_cols}.}
 
@@ -58,6 +57,6 @@ final_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
   fill_ilo_data() \%>\%
   calc_total_hours_worked() \%>\%
   get_broad.sector_data() \%>\%
-  add_hmw_analysis_sectors() \%>\%
+  split_labor_by_sector() \%>\%
   calc_hmw_final_energy()
 }

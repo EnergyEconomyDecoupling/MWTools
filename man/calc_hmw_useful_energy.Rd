@@ -13,8 +13,7 @@ calc_hmw_useful_energy(
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
   hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
   hmw_power_sheet = MWTools::hmw_analysis_constants$hmw_power_sheet,
-  industry_activity_col = MWTools::hmw_analysis_constants$industry_activity_col,
-  hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
+  labor_type_col = MWTools::hmw_analysis_constants$labor_type_col,
   power_col = MWTools::hmw_analysis_constants$power_col,
   total_wk_hrs_ilo_col = MWTools::hmw_analysis_constants$total_wk_hrs_ilo_col,
   useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
@@ -30,7 +29,7 @@ Usually produced by calling the
 \code{fill_ilo_data},
 \code{calc_total_hours_worked},
 \code{get_broad.sector_data},
-\code{add_hmw_analysis_sectors},
+\code{split_labor_by_sector},
 \code{calc_hmw_final_energy}, and
 \code{calc_hmw_primary_energy} functions in sequence on the raw FAO data.}
 
@@ -40,9 +39,7 @@ Usually produced by calling the
 
 \item{hmw_region_code_col}{See \code{MWTools::conc_cols}.}
 
-\item{hmw_analysis_data_path, hmw_power_sheet, power_col, total_wk_hrs_ilo_col, useful_energy_hmw_col, hours_to_seconds, joules_to_megajoules, industry_activity_col}{See \code{MWTools::hmw_analysis_constants}.}
-
-\item{hmw_analysis_sector_col}{See \code{MWTools::mw_sectors$hmw_analysis_sector_col}.}
+\item{hmw_analysis_data_path, hmw_power_sheet, power_col, total_wk_hrs_ilo_col, useful_energy_hmw_col, hours_to_seconds, joules_to_megajoules, labor_type_col}{See \code{MWTools::hmw_analysis_constants}.}
 }
 \description{
 Calculate the useful energy produced by human workers
@@ -53,7 +50,7 @@ useful_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
   fill_ilo_data() \%>\%
   calc_total_hours_worked() \%>\%
   get_broad.sector_data() \%>\%
-  add_hmw_analysis_sectors() \%>\%
+  split_labor_by_sector() \%>\%
   calc_hmw_final_energy() \%>\%
   calc_hmw_primary_energy() \%>\%
   calc_hmw_useful_energy()

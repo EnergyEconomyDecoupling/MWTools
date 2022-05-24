@@ -156,9 +156,11 @@
 #' \item{total_wk_hrs_ilo_col}{The data column "Total.hours \[hours/year\]" containing the number of hours worked yearly by all humans for a given country, sex, sector, and year.}
 #' \item{col1960}{The column for 1960. Default is "1960".}
 #' \item{col2020}{The column for 2020. Default is "2020".}
-#' \item{industry_activity_col}{The data column "Industry/Activity" containing information on the industry or activity of human workers. Usually one of "Sedentary", "Primary", or "Secondary".}
+#' \item{labor_type_col}{The data column "Labor.Type" containing information on the human labor type (Primary, Secondary, or Sedentary) of human workers.}
+#' \item{labor_split_col}{The data column "Labor.Type.Split" containing information on the proportion of human labor type by sector.}
 #' \item{hmw_power_sheet}{The excel sheet name "hmw_power", which contains information on the power output of humans performing muscle work.}
 #' \item{hmw_food_sheet}{The excel sheet name "hmw_food", which contains information on the food consumption of humans.}
+#' \item{hmw_labor_map_sheet}{The excel sheet name "hmw_sector_labor_map", which contains data on the split of labor type by ILO broad sector.}
 #' \item{hmw_sector_map_sheet}{The excel sheet name "hmw_sector_map", which contains information on the mapping the sector names used in the hmw analysis data excel file bundled with this package with the sector names in the ILO data.}
 #' \item{hmw_plate_waste_sheet}{The excel sheet name "hmw_plate_waste", which contains information on proportion of food waste by region.}
 #' \item{hmw_harvest_waste_sheet}{The excel sheet name "hmw_harvest_waste", which contains information on the proportion of phytomass lost at the harvest stage by region.}
@@ -381,7 +383,6 @@
 #' @format A string list with `r length(mw_sectors)` entries.
 #' \describe{
 #' \item{broad_sector_col}{The column name "broad_sector", which contains the "Broad sector" sector names used by the ILO.}
-#' \item{hmw_analysis_sector_col}{The column name "Sector.hmw", which contains the sector names used in the hmw analysis data excel file bundled with this package.}
 #' \item{agriculture_broad.sector}{The string "Agriculture" representing the agriculture sector. One of the ILO's "Broad sectors".}
 #' \item{industry_broad.sector}{The string "Industry" representing the industry sector. One of the ILO's "Broad sectors".}
 #' \item{services_broad.sector}{The string "Services" representing the services sector. One of the ILO's "Broad sectors".}

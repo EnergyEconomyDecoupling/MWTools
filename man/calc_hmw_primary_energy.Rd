@@ -25,7 +25,7 @@ Usually produced by calling the
 \code{fill_ilo_data},
 \code{calc_total_hours_worked},
 \code{get_broad.sector_data},
-\code{add_hmw_analysis_sectors}, and
+\code{split_labor_by_sector}, and
 \code{calc_hmw_final_energy} functions in sequence on the raw FAO data.}
 
 \item{year, unit, exemplar_method_col}{See \code{MWTools::mw_constants}.}
@@ -43,7 +43,7 @@ primary_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
   fill_ilo_data() \%>\%
   calc_total_hours_worked() \%>\%
   get_broad.sector_data() \%>\%
-  add_hmw_analysis_sectors() \%>\%
+  split_labor_by_sector() \%>\%
   calc_hmw_final_energy() \%>\%
   calc_hmw_primary_energy()
 }

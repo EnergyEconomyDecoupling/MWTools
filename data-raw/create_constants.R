@@ -90,10 +90,12 @@ usethis::use_data(ilo_cols, overwrite = TRUE)
 hmw_analysis_constants <- list(total_wk_hrs_ilo_col = "Total.hours [hours/year]",
                                col_1960 = "1960",
                                col_2020 = "2020",
-                               industry_activity_col = "Industry/Activity",
+                               labor_type_col = "Labor.Type",
+                               labor_split_col = "Labor.Type.Split",
                                hmw_power_sheet = "hmw_power",
                                hmw_food_sheet = "hmw_food",
                                hmw_sector_map_sheet = "hmw_sector_map",
+                               hmw_labor_map_sheet = "hmw_sector_labor_map",
                                hmw_plate_waste_sheet = "hmw_plate_waste",
                                hmw_harvest_waste_sheet = "hmw_harvest_waste",
                                food_consumption_col = "Food consumption [kcal/day per person]",
@@ -239,7 +241,6 @@ usethis::use_data(phi_constants_mw, overwrite = TRUE)
 # Economic sectors
 #
 mw_sectors <- list(broad_sector_col = "broad_sector",
-                   hmw_analysis_sector_col = "Sector.hmw",
                    agriculture_broad.sector = "Agriculture",
                    industry_broad.sector = "Industry",
                    services_broad.sector = "Services",

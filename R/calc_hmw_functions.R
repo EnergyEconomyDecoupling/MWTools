@@ -149,53 +149,73 @@ get_broad.sector_data <- function(.df,
 
 }
 
-
-#' Map ILO broad sectors HMW analysis sector categories
+#' Title
 #'
-#' Map ILO broad sectors HMW analysis sector categories, which correspond to
-#' activity levels (Primary, Secondary, and Sedentary).
-#'
-#' @param .df A data frame containing the number of hours worked by broad sector
-#'            (Agriculture, Industry, and Services).
+#' @param .df A data frame containing the number of hours worked by broad sector.
 #'            Usually produced by calling the
 #'            `add_hmw_region_codes`,
 #'            `fill_ilo_data`,
 #'            `calc_total_hours_worked`, and
 #'            `get_broad.sector_data` functions in sequence on the raw FAO data.
-#' @param sector_col See `MWTools::mw_constants`.
 #' @param hmw_analysis_data_path See `MWTools::hmw_analysis_data_path()`.
-#' @param hmw_sector_map_sheet See `MWTools::hmw_analysis_constants`.
-#' @param hmw_analysis_sector_col,agriculture,industry,services See `MWTools::mw_sectors`.
-#'
+#' @param hmw_labor_map_sheet,labor_type_col,labor_split_col,total_wk_hrs_ilo_col See `MWTools::hmw_analysis_constants`.
+#' @param unit,year See `MWTools::mw_cols`.
+#' @param hmw_region_code_col See `MWTools::conc_cols`.
+#' @param sex_ilo_col,employed_persons_ilo_col See `MWTools::ilo_cols`.
+#' @param sector_col See `MWTools::mw_constants`.
+#' @param agriculture,industry,services See `MWTools::mw_sectors`.
 #'
 #' @export
 #'
 #' @examples
-#' working_hours_activity_data <- read.csv(file = MWTools::hmw_test_data_path()) %>%
+#' working_hours_labor_type_data <- read.csv(file = MWTools::hmw_test_data_path()) %>%
 #'   add_hmw_region_codes() %>%
 #'   fill_ilo_data() %>%
 #'   calc_total_hours_worked() %>%
 #'   get_broad.sector_data() %>%
-#'   add_hmw_analysis_sectors()
-add_hmw_analysis_sectors <- function(.df,
-                                     hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
-                                     sector_col = MWTools::mw_constants$sector_col,
-                                     hmw_sector_map_sheet = MWTools::hmw_analysis_constants$hmw_sector_map_sheet,
-                                     agriculture = MWTools::mw_sectors$agriculture_broad.sector,
-                                     hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
-                                     industry = MWTools::mw_sectors$industry_broad.sector,
-                                     services = MWTools::mw_sectors$services_broad.sector){
+#'   split_labor_by_sector()
+split_labor_by_sector <- function(.df,
+                                  hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
+                                  hmw_labor_map_sheet = MWTools::hmw_analysis_constants$hmw_labor_map_sheet,
+                                  unit =  MWTools::mw_cols$unit,
+                                  hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
+                                  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
+                                  sector_col = MWTools::mw_constants$sector_col,
+                                  year = MWTools::mw_cols$year,
+                                  labor_type_col = MWTools::hmw_analysis_constants$labor_type_col,
+                                  labor_split_col = MWTools::hmw_analysis_constants$labor_split_col,
+                                  employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
+                                  total_wk_hrs_ilo_col = MWTools::hmw_analysis_constants$total_wk_hrs_ilo_col,
+                                  agriculture = MWTools::mw_sectors$agriculture_broad.sector,
+                                  industry = MWTools::mw_sectors$industry_broad.sector,
+                                  services = MWTools::mw_sectors$services_broad.sector){
 
-  # Reads sheet in hmw_analysis_data which maps ILO broad sectors to sectors used in the analysis
   sector_mapping_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
-                                           sheet = hmw_sector_map_sheet) %>%
-    magrittr::set_colnames(c(sector_col, hmw_analysis_sector_col))
+                                           sheet = hmw_labor_map_sheet) %>%
+    dplyr::select(-dplyr::all_of(c(unit))) %>%
+    tidyr::pivot_longer(cols = -dplyr::all_of(c(sex_ilo_col,
+                                                sector_col,
+                                                labor_type_col,
+                                                hmw_region_code_col)),
+                        names_to = year,
+                        values_to = labor_split_col) %>%
+    dplyr::mutate("{year}" := as.numeric(.data[[year]]))
 
-  # Adds hmw analysis sectors to data frame
   .df %>%
-    dplyr::filter(.data[[sector_col]] %in% c(agriculture, industry, services)) %>%
-    dplyr::left_join(sector_mapping_data, by = sector_col) %>%
-    dplyr::relocate(dplyr::all_of(hmw_analysis_sector_col), .after = dplyr::all_of(sector_col))
+    dplyr::filter(.data[[sector_col]] %in% c(agriculture,
+                                             industry,
+                                             services)) %>%
+    dplyr::left_join(sector_mapping_data,
+                     by = dplyr::all_of(c(hmw_region_code_col,
+                                          sex_ilo_col,
+                                          sector_col,
+                                          year))) %>%
+    dplyr::relocate(.data[[labor_type_col]], .after = dplyr::all_of(c(sector_col))) %>%
+    dplyr::mutate("{employed_persons_ilo_col}" := .data[[employed_persons_ilo_col]] * .data[[labor_split_col]],
+                  "{total_wk_hrs_ilo_col}" := .data[[total_wk_hrs_ilo_col]] * .data[[labor_split_col]]) %>%
+    dplyr::select(-dplyr::all_of(c(labor_split_col)))
+
+
 
 }
 
@@ -210,13 +230,13 @@ add_hmw_analysis_sectors <- function(.df,
 #'            `fill_ilo_data`,
 #'            `calc_total_hours_worked`,
 #'            `get_broad.sector_data`, and
-#'            `add_hmw_analysis_sectors` functions in sequence on the raw FAO data.
+#'            `split_labor_by_sector` functions in sequence on the raw FAO data.
 #' @param hmw_analysis_data_path See `MWTools::hmw_analysis_data_path()`.
 #' @param sector_col,year,unit See `MWTools::mw_constants`.
-#' @param hmw_food_sheet,hmw_plate_waste_sheet,food_consumption_col,energy_pppa_col,final_energy_col,plate_waste_col,industry_activity_col See `MWTools::hmw_analysis_constants`.
+#' @param hmw_food_sheet,hmw_plate_waste_sheet,food_consumption_col,energy_pppa_col,final_energy_col,plate_waste_col,labor_type_col See `MWTools::hmw_analysis_constants`.
 #' @param sex_ilo_col,employed_persons_ilo_col See `MWTools::ilo_cols`
 #' @param hmw_region_code_col See `MWTools::conc_cols`.
-#' @param exemplar_method_col,hmw_analysis_sector_col See `MWTools::mw_sectors`.
+#' @param exemplar_method_col See `MWTools::mw_sectors`.
 #' @param kcal_to_mj See `MWTools::unit_constants`.
 #'
 #'
@@ -228,7 +248,7 @@ add_hmw_analysis_sectors <- function(.df,
 #'   fill_ilo_data() %>%
 #'   calc_total_hours_worked() %>%
 #'   get_broad.sector_data() %>%
-#'   add_hmw_analysis_sectors() %>%
+#'   split_labor_by_sector() %>%
 #'   calc_hmw_final_energy()
 calc_hmw_final_energy <- function(
     .df,
@@ -238,7 +258,7 @@ calc_hmw_final_energy <- function(
     unit = MWTools::mw_cols$unit,
     exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
     sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
-    hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
+    labor_type_col = MWTools::hmw_analysis_constants$labor_type_col,
     hmw_food_sheet = MWTools::hmw_analysis_constants$hmw_food_sheet,
     hmw_plate_waste_sheet = MWTools::hmw_analysis_constants$hmw_plate_waste_sheet,
     food_consumption_col = MWTools::hmw_analysis_constants$food_consumption_col,
@@ -247,21 +267,20 @@ calc_hmw_final_energy <- function(
     plate_waste_col = MWTools::hmw_analysis_constants$plate_waste_col,
     hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
     kcal_to_mj = MWTools::unit_constants$kcal_to_mj,
-    employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
-    industry_activity_col = MWTools::hmw_analysis_constants$industry_activity_col){
+    employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col){
 
 
   # Reads food consumption data
   food_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
                                  sheet = hmw_food_sheet) %>%
     dplyr::select(-dplyr::all_of(unit)) %>%
-    tidyr::pivot_longer(cols = -dplyr::all_of(c(sex_ilo_col, hmw_region_code_col, industry_activity_col)),
+    tidyr::pivot_longer(cols = -dplyr::all_of(c(sex_ilo_col, hmw_region_code_col, labor_type_col)),
                         names_to = year,
                         values_to = food_consumption_col) %>%
     dplyr::mutate(
       "{year}" := as.numeric(.data[[year]])
     ) %>%
-    magrittr::set_colnames(c(sex_ilo_col, hmw_analysis_sector_col, hmw_region_code_col, year, food_consumption_col))
+    magrittr::set_colnames(c(sex_ilo_col, labor_type_col, hmw_region_code_col, year, food_consumption_col))
 
   # Reads plate waste data
   plate_waste_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
@@ -276,7 +295,7 @@ calc_hmw_final_energy <- function(
 
   # Adds daily food consumption
   .df %>%
-    dplyr::left_join(food_data, by = c(sex_ilo_col, hmw_analysis_sector_col, hmw_region_code_col, year)) %>%
+    dplyr::left_join(food_data, by = c(sex_ilo_col, labor_type_col, hmw_region_code_col, year)) %>%
 
     # Add plate waste
     dplyr::left_join(plate_waste_data, by = c(year, hmw_region_code_col)) %>%
@@ -300,7 +319,7 @@ calc_hmw_final_energy <- function(
 #'            `fill_ilo_data`,
 #'            `calc_total_hours_worked`,
 #'            `get_broad.sector_data`,
-#'            `add_hmw_analysis_sectors`, and
+#'            `split_labor_by_sector`, and
 #'            `calc_hmw_final_energy` functions in sequence on the raw FAO data.
 #' @param year,unit,exemplar_method_col See `MWTools::mw_constants`.
 #' @param hmw_analysis_data_path,hmw_harvest_waste_sheet,final_energy_col,primary_energy_col,hmw_harvest_waste_col See `MWTools::hmw_analysis_constants`.
@@ -315,7 +334,7 @@ calc_hmw_final_energy <- function(
 #'   fill_ilo_data() %>%
 #'   calc_total_hours_worked() %>%
 #'   get_broad.sector_data() %>%
-#'   add_hmw_analysis_sectors() %>%
+#'   split_labor_by_sector() %>%
 #'   calc_hmw_final_energy() %>%
 #'   calc_hmw_primary_energy()
 calc_hmw_primary_energy <- function(.df,
@@ -359,14 +378,13 @@ calc_hmw_primary_energy <- function(.df,
 #'            `fill_ilo_data`,
 #'            `calc_total_hours_worked`,
 #'            `get_broad.sector_data`,
-#'            `add_hmw_analysis_sectors`,
+#'            `split_labor_by_sector`,
 #'            `calc_hmw_final_energy`, and
 #'            `calc_hmw_primary_energy` functions in sequence on the raw FAO data.
 #' @param sector_col,year,unit See `MWTools::mw_constants`.
 #' @param sex_ilo_col See `MWTools::ilo_cols`.
 #' @param hmw_region_code_col See `MWTools::conc_cols`.
-#' @param hmw_analysis_data_path,hmw_power_sheet,power_col,total_wk_hrs_ilo_col,useful_energy_hmw_col,hours_to_seconds,joules_to_megajoules,industry_activity_col See `MWTools::hmw_analysis_constants`.
-#' @param hmw_analysis_sector_col See `MWTools::mw_sectors$hmw_analysis_sector_col`.
+#' @param hmw_analysis_data_path,hmw_power_sheet,power_col,total_wk_hrs_ilo_col,useful_energy_hmw_col,hours_to_seconds,joules_to_megajoules,labor_type_col See `MWTools::hmw_analysis_constants`.
 #'
 #'
 #' @export
@@ -377,7 +395,7 @@ calc_hmw_primary_energy <- function(.df,
 #'   fill_ilo_data() %>%
 #'   calc_total_hours_worked() %>%
 #'   get_broad.sector_data() %>%
-#'   add_hmw_analysis_sectors() %>%
+#'   split_labor_by_sector() %>%
 #'   calc_hmw_final_energy() %>%
 #'   calc_hmw_primary_energy() %>%
 #'   calc_hmw_useful_energy()
@@ -389,8 +407,7 @@ calc_hmw_useful_energy <- function(.df,
                                    hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
                                    hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
                                    hmw_power_sheet = MWTools::hmw_analysis_constants$hmw_power_sheet,
-                                   industry_activity_col = MWTools::hmw_analysis_constants$industry_activity_col,
-                                   hmw_analysis_sector_col = MWTools::mw_sectors$hmw_analysis_sector_col,
+                                   labor_type_col = MWTools::hmw_analysis_constants$labor_type_col,
                                    power_col = MWTools::hmw_analysis_constants$power_col,
                                    total_wk_hrs_ilo_col = MWTools::hmw_analysis_constants$total_wk_hrs_ilo_col,
                                    useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
@@ -401,17 +418,17 @@ calc_hmw_useful_energy <- function(.df,
   power_data <- readxl::read_xlsx(path = hmw_analysis_data_path,
                                   sheet = hmw_power_sheet) %>%
     dplyr::select(-dplyr::all_of(unit)) %>%
-    tidyr::pivot_longer(cols = -dplyr::all_of(c(sex_ilo_col, hmw_region_code_col, industry_activity_col)),
+    tidyr::pivot_longer(cols = -dplyr::all_of(c(sex_ilo_col, hmw_region_code_col, labor_type_col)),
                         names_to = year,
                         values_to = power_col) %>%
     dplyr::mutate(
       "{year}" := as.numeric(.data[[year]])
     ) %>%
-    magrittr::set_colnames(c(sex_ilo_col, hmw_analysis_sector_col, hmw_region_code_col, year, power_col))
+    magrittr::set_colnames(c(sex_ilo_col, labor_type_col, hmw_region_code_col, year, power_col))
 
   # Add power data to data frame
   .df %>%
-    dplyr::left_join(power_data, by = c(sex_ilo_col, hmw_analysis_sector_col, hmw_region_code_col, year)) %>%
+    dplyr::left_join(power_data, by = c(sex_ilo_col, labor_type_col, hmw_region_code_col, year)) %>%
     dplyr::mutate(
       "{useful_energy_hmw_col}" := .data[[power_col]] * .data[[total_wk_hrs_ilo_col]] * hours_to_seconds * joules_to_megajoules
     ) %>%
@@ -435,7 +452,7 @@ calc_hmw_useful_energy <- function(.df,
 #' @param year,sector_col,species,energy_col,stage_col,units_col See `MWTools::mw_constants`.
 #' @param sex_ilo_col See `MWTools::ilo_cols`.
 #' @param country_col,hmw_region_code_col See `MWTools::conc_cols`.
-#' @param final_energy_col,primary_energy_col,useful_energy_hmw_col,hmw_analysis_sector_col See `MWTools::hmw_analysis_constants`.
+#' @param final_energy_col,primary_energy_col,useful_energy_hmw_col See `MWTools::hmw_analysis_constants`.
 #'
 #'
 #' @export
@@ -446,7 +463,7 @@ calc_hmw_useful_energy <- function(.df,
 #'   fill_ilo_data() %>%
 #'   calc_total_hours_worked() %>%
 #'   get_broad.sector_data() %>%
-#'   add_hmw_analysis_sectors() %>%
+#'   split_labor_by_sector() %>%
 #'   calc_hmw_final_energy() %>%
 #'   calc_hmw_primary_energy() %>%
 #'   calc_hmw_useful_energy() %>%
@@ -463,8 +480,7 @@ tidy_hmw_pfu <- function(.df,
                          hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
                          final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
                          primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
-                         useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col,
-                         hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col){
+                         useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col){
 
   .df %>%
     tidyr::pivot_longer(cols = dplyr::all_of(c(final_energy_col, primary_energy_col, useful_energy_hmw_col)),
@@ -510,7 +526,7 @@ calc_hmw_pfu <- function(.df,
     fill_ilo_data() %>%
     calc_total_hours_worked() %>%
     get_broad.sector_data() %>%
-    add_hmw_analysis_sectors(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+    split_labor_by_sector(hmw_analysis_data_path = hmw_analysis_data_path) %>%
     calc_hmw_final_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
     calc_hmw_primary_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
     calc_hmw_useful_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
