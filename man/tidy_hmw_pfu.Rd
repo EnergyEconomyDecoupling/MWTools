@@ -15,6 +15,7 @@ tidy_hmw_pfu(
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   country_col = MWTools::conc_cols$country_col,
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
+  labor_type_col = MWTools::hmw_analysis_constants$labor_type_col,
   final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
   primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
   useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col
@@ -39,7 +40,7 @@ Usually produced by calling the
 
 \item{country_col, hmw_region_code_col}{See \code{MWTools::conc_cols}.}
 
-\item{final_energy_col, primary_energy_col, useful_energy_hmw_col}{See \code{MWTools::hmw_analysis_constants}.}
+\item{final_energy_col, primary_energy_col, useful_energy_hmw_col, labor_type_col}{See \code{MWTools::hmw_analysis_constants}.}
 }
 \description{
 Produce a tidy human muscle work data frame

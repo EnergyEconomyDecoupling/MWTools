@@ -452,7 +452,7 @@ calc_hmw_useful_energy <- function(.df,
 #' @param year,sector_col,species,energy_col,stage_col,units_col See `MWTools::mw_constants`.
 #' @param sex_ilo_col See `MWTools::ilo_cols`.
 #' @param country_col,hmw_region_code_col See `MWTools::conc_cols`.
-#' @param final_energy_col,primary_energy_col,useful_energy_hmw_col See `MWTools::hmw_analysis_constants`.
+#' @param final_energy_col,primary_energy_col,useful_energy_hmw_col,labor_type_col See `MWTools::hmw_analysis_constants`.
 #'
 #'
 #' @export
@@ -478,6 +478,7 @@ tidy_hmw_pfu <- function(.df,
                          sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
                          country_col = MWTools::conc_cols$country_col,
                          hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
+                         labor_type_col = MWTools::hmw_analysis_constants$labor_type_col,
                          final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
                          primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
                          useful_energy_hmw_col = MWTools::hmw_analysis_constants$useful_energy_hmw_col){
@@ -487,7 +488,7 @@ tidy_hmw_pfu <- function(.df,
                         names_to = stage_col,
                         values_to = energy_col) %>%
     dplyr::select(dplyr::all_of(c(country_col, year, sex_ilo_col,
-                                  stage_col, sector_col, energy_col))) %>%
+                                  stage_col, sector_col, labor_type_col, energy_col))) %>%
     dplyr::mutate(
       "{stage_col}" := stringr::str_replace(.data[[stage_col]], stringr::fixed(" energy [MJ/year]"), "")
     ) %>%
@@ -500,7 +501,17 @@ tidy_hmw_pfu <- function(.df,
     ) %>%
     dplyr::rename("{species}" := .data[[sex_ilo_col]]) %>%
     dplyr::mutate("{energy_col}" := .data[[energy_col]] * 0.000000000001) %>%
-    dplyr::mutate("{units_col}" := "EJ", .before = dplyr::all_of(energy_col))
+    dplyr::mutate("{units_col}" := "EJ", .before = dplyr::all_of(energy_col)) %>%
+    dplyr::group_by(
+      dplyr::across({{ country_col }}),
+      dplyr::across({{ year }}),
+      dplyr::across({{ species }}),
+      dplyr::across({{ stage_col }}),
+      dplyr::across({{ sector_col }}),
+      dplyr::across({{ units_col }})
+    ) %>%
+    dplyr::summarise("{energy_col}" := sum(.data[[energy_col]])) %>%
+    dplyr::ungroup()
 }
 
 
