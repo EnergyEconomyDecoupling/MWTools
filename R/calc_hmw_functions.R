@@ -214,10 +214,8 @@ split_labor_by_sector <- function(.df,
     dplyr::mutate("{employed_persons_ilo_col}" := .data[[employed_persons_ilo_col]] * .data[[labor_split_col]],
                   "{total_wk_hrs_ilo_col}" := .data[[total_wk_hrs_ilo_col]] * .data[[labor_split_col]]) %>%
     dplyr::select(-dplyr::all_of(c(labor_split_col)))
-
-
-
 }
+
 
 #' Calculate the final energy consumed by human workers
 #'
@@ -306,7 +304,6 @@ calc_hmw_final_energy <- function(
       "{final_energy_col}" := (.data[[employed_persons_ilo_col]] * .data[[energy_pppa_col]]) / (1 - .data[[plate_waste_col]])
     ) %>%
     dplyr::select(-dplyr::all_of(c(energy_pppa_col, food_consumption_col, plate_waste_col)))
-
 }
 
 
@@ -542,7 +539,6 @@ calc_hmw_pfu <- function(.df,
     calc_hmw_primary_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
     calc_hmw_useful_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
     tidy_hmw_pfu()
-
 }
 
 
