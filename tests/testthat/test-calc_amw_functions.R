@@ -86,6 +86,30 @@ test_that("get_working_species works", {
 
 })
 
+test_that("get_working_species works without 'Camelids, other'", {
+
+  test_data_path <- amw_test_data_path()
+
+  test_data <- read.csv(test_data_path)
+
+  live_animals_w.species <- test_data %>%
+    tidy_fao_live_animals() %>%
+    add_concordance_codes() %>%
+    trim_fao_data() %>%
+    dplyr::filter(Species != "Camelids, other") %>%
+    get_working_species()
+
+  expect_true(!is.null(live_animals_w.species))
+
+  expect_equal(unique(live_animals_w.species$Country.code), "CHNM")
+
+  expect_equal(nrow(live_animals_w.species), 354)
+
+  expect_equal(unique(live_animals_w.species$Species),
+               c("Asses", "Buffaloes", "Camelids", "Cattle", "Horses", "Mules"))
+
+})
+
 
 test_that("calc_working_animals works", {
 
