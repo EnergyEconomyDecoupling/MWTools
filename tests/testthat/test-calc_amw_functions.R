@@ -14,7 +14,7 @@ test_that("tidy_fao_live_animals works", {
   expect_equal(colnames(live_animals), c("Country.name", "Species", "Year",
                                          "Value"))
 
-  expect_equal(nrow(live_animals), 708)
+  expect_equal(nrow(live_animals), 709)
 
 })
 
@@ -31,13 +31,13 @@ test_that("add_concordance_codes works", {
 
   expect_true(!is.null(live_animals_w.codes))
 
-  expect_equal(unique(live_animals_w.codes$Country.code), c("CHN", "-"))
+  expect_equal(unique(live_animals_w.codes$Country.code), c("CHNM", "-"))
 
   expect_equal(colnames(live_animals_w.codes), c("Country.code", "AMW.Region.code",
                                                  "Country.name", "Species", "Year",
                                                  "Value", "Country.incl.", "Country_PFU"))
 
-  expect_equal(nrow(live_animals_w.codes), 708)
+  expect_equal(nrow(live_animals_w.codes), 709)
 
 })
 
@@ -55,9 +55,9 @@ test_that("trim_fao_data works", {
 
   expect_true(!is.null(live_animals_trimmed))
 
-  expect_equal(unique(live_animals_trimmed$Country.code), "CHN")
+  expect_equal(unique(live_animals_trimmed$Country.code), "CHNM")
 
-  expect_equal(nrow(live_animals_trimmed), 354)
+  expect_equal(nrow(live_animals_trimmed), 355)
 
 })
 
@@ -77,7 +77,7 @@ test_that("get_working_species works", {
 
   expect_true(!is.null(live_animals_w.species))
 
-  expect_equal(unique(live_animals_w.species$Country.code), "CHN")
+  expect_equal(unique(live_animals_w.species$Country.code), "CHNM")
 
   expect_equal(nrow(live_animals_w.species), 354)
 
