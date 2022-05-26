@@ -184,7 +184,7 @@ test_that("collapse_to_psut() works as expected", {
   expect_equal(actual1, expected1)
 
   expected2 <- amw_df %>%
-    dplyr::filter(.data[[MWTools::mw_cols$country]] == "CHN",
+    dplyr::filter(.data[[MWTools::mw_cols$country]] == "CHNM",
                   .data[[MWTools::mw_cols$year]] == 2002,
                   # .data[[MWTools::mw_constants$species]] == "Asses",
                   .data[[MWTools::mw_constants$sector_col]] == "Transport",
@@ -195,7 +195,7 @@ test_that("collapse_to_psut() works as expected", {
     sum() %>%
     magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
   actual2 <- res %>%
-    dplyr::filter(Country == "CHN", Year == 2002, Last.stage == MWTools::all_stages$final) %>%
+    dplyr::filter(Country == "CHNM", Year == 2002, Last.stage == MWTools::all_stages$final) %>%
     magrittr::extract2(MWTools::psut_cols$Y) %>%
     # Grab the first matrix in the column.
     magrittr::extract2(1) %>%
