@@ -516,8 +516,18 @@ calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
 #'   # Keep only a few years for speed.
 #'   dplyr::filter(Year %in% 2000:2002)
 #' prep_psut(hmw_df, amw_df)
-prep_psut <- function(.hmw_df, .amw_df) {
-  specify_energy_type_method(.hmw_df, .amw_df) %>%
+prep_psut <- function(.hmw_df, .amw_df,
+                      unit = IEATools::iea_cols$unit,
+                      R = IEATools::psut_cols$R,
+                      U = IEATools::psut_cols$U,
+                      V = IEATools::psut_cols$V,
+                      Y = IEATools::psut_cols$Y,
+                      s_units = IEATools::psut_cols$s_units,
+                      U_feed = IEATools::psut_cols$U_feed,
+                      U_eiou = IEATools::psut_cols$U_eiou,
+                      r_eiou = IEATools::psut_cols$r_eiou) {
+  # Calculate a preliminary outbound data frame.
+  out <- specify_energy_type_method(.hmw_df, .amw_df) %>%
     specify_product() %>%
     specify_ktoe() %>%
     MWTools::specify_primary_production() %>%
@@ -525,7 +535,37 @@ prep_psut <- function(.hmw_df, .amw_df) {
     specify_fu_machines() %>%
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
-    MWTools::collapse_to_psut() %>%
+    MWTools::collapse_to_psut()
+  # If out has no rows, it probably means that the incoming data frames
+  # had no rows.
+  # Trap that condition here (where correct metadata columns are present) and
+  # return a data frame with the correct columns of empty data.
+  if (nrow(out) == 0) {
+    # Get names of additional outgoing columns
+    more_cnames <- c(R, U, V, Y, s_units, U_feed, U_eiou, r_eiou)
+    # Make a zero-row data frame with these columns, all of type double
+    mat_cols <- data.frame(Doubles = double(),
+                           Doubles = double(),
+                           Doubles = double(),
+                           Doubles = double(),
+                           Doubles = double(),
+                           Doubles = double(),
+                           Doubles = double(),
+                           Doubles = double())
+    colnames(mat_cols) <- more_cnames
+    no_rows <- out %>%
+      dplyr::mutate(
+        # The incoming unit column should be deleted.
+        "{unit}" := NULL,
+      ) %>%
+      # Add R, U, V, Y, S_units, U_feed, U_EIOU, and r_EIOU columns.
+      dplyr::bind_cols(mat_cols)
+    return(no_rows)
+  }
+
+  # If we get here, we have a non-zero-rows outgoing data frame.
+  # Continue with the calculations.
+  out %>%
     calc_S_units() %>%
     # Eliminate the Unit column.
     dplyr::mutate(

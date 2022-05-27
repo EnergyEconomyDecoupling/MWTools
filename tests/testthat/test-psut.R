@@ -400,3 +400,40 @@ test_that("prep_psut() works as expected", {
   expect_true(MWTools::psut_cols$U_feed %in% names(psut))
   expect_true(MWTools::psut_cols$U_eiou %in% names(psut))
 })
+
+
+test_that("trapping zero-row output in prep_psut() works as expected", {
+  # Make a couple bogus zero-row data frames with the right rows.
+  cnames <- c(IEATools::iea_cols$country,
+              IEATools::iea_cols$year,
+              MWTools::mw_constants$species,
+              MWTools::mw_constants$stage_col,
+              MWTools::mw_constants$sector_col,
+              IEATools::iea_cols$unit,
+              IEATools::iea_cols$e_dot)
+  hmw_data <- data.frame(Characters = character(), # Country
+                         Doubles = double(),       # Year
+                         Characters = character(), # Species
+                         Characters = character(), # Stage
+                         Characters = character(), # Sector
+                         Characters = character(), # Unit
+                         Doubles = double())       # E.dot
+  colnames(hmw_data) <- cnames
+  amw_data <- hmw_data
+  should_have_no_rows <- prep_psut(hmw_data, amw_data)
+  expect_equal(nrow(should_have_no_rows), 0)
+  expected_colnames <- c(IEATools::iea_cols$country,
+                         IEATools::iea_cols$year,
+                         IEATools::iea_cols$method,
+                         IEATools::iea_cols$energy_type,
+                         IEATools::iea_cols$last_stage,
+                         IEATools::psut_cols$R,
+                         IEATools::psut_cols$U,
+                         IEATools::psut_cols$V,
+                         IEATools::psut_cols$Y,
+                         IEATools::psut_cols$s_units,
+                         IEATools::psut_cols$U_feed,
+                         IEATools::psut_cols$U_eiou,
+                         IEATools::psut_cols$r_eiou)
+  expect_equal(colnames(should_have_no_rows), expected_colnames)
+})

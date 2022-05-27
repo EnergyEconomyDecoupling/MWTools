@@ -4,7 +4,19 @@
 \alias{prep_psut}
 \title{A convenience function to create PSUT matrices in a data frame}
 \usage{
-prep_psut(.hmw_df, .amw_df)
+prep_psut(
+  .hmw_df,
+  .amw_df,
+  unit = IEATools::iea_cols$unit,
+  R = IEATools::psut_cols$R,
+  U = IEATools::psut_cols$U,
+  V = IEATools::psut_cols$V,
+  Y = IEATools::psut_cols$Y,
+  s_units = IEATools::psut_cols$s_units,
+  U_feed = IEATools::psut_cols$U_feed,
+  U_eiou = IEATools::psut_cols$U_eiou,
+  r_eiou = IEATools::psut_cols$r_eiou
+)
 }
 \arguments{
 \item{.hmw_df}{A data frame produced by \code{calc_hmw_pfu()}.}
