@@ -543,15 +543,16 @@ prep_psut <- function(.hmw_df, .amw_df,
   if (nrow(out) == 0) {
     # Get names of additional outgoing columns
     more_cnames <- c(R, U, V, Y, s_units, U_feed, U_eiou, r_eiou)
-    # Make a zero-row data frame with these columns, all of type double
-    mat_cols <- data.frame(Doubles = double(),
-                           Doubles = double(),
-                           Doubles = double(),
-                           Doubles = double(),
-                           Doubles = double(),
-                           Doubles = double(),
-                           Doubles = double(),
-                           Doubles = double())
+    # Make a zero-row data frame with these columns,
+    # all of which are list columns to match the standard output of this function.
+    mat_cols <- tibble::tibble(c1 = list(),
+                               c2 = list(),
+                               c3 = list(),
+                               c4 = list(),
+                               c5 = list(),
+                               c6 = list(),
+                               c7 = list(),
+                               c8 = list())
     colnames(mat_cols) <- more_cnames
     no_rows <- out %>%
       dplyr::mutate(
