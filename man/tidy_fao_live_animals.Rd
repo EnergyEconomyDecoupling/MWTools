@@ -8,8 +8,8 @@ tidy_fao_live_animals(
   .df,
   country_name = MWTools::mw_constants$country_name,
   species = MWTools::mw_constants$species,
-  year = MWTools::mw_constants$year,
-  unit = MWTools::mw_constants$unit,
+  year = MWTools::mw_cols$year,
+  unit = MWTools::mw_cols$unit,
   value = MWTools::mw_constants$value,
   area_fao_col = MWTools::fao_cols$area_fao_col,
   item_fao_col = MWTools::fao_cols$item_fao_col,
@@ -19,22 +19,19 @@ tidy_fao_live_animals(
 )
 }
 \arguments{
+\item{.df}{A data frame containing the raw FAO live animals data,
+corresponding to the "QCL" FAO bulk download query.}
+
 \item{country_name, species, year, unit, value}{See \code{MWTools::mw_constants}.}
 
 \item{area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col}{See \code{MWTools::fao_cols}.}
-
-\item{data_path}{A user-specified file path to the directory in which to
-download the FAO live animals data.}
-}
-\value{
-
 }
 \description{
 Create a tidy data frame using data supplied by the function
 \code{MWTools::down_fao_live_animals}.
 }
 \examples{
-live_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data"))
+live_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals()
 
 }

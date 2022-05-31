@@ -2,11 +2,13 @@
 # employed persons and number of working hours, and then forms a data frame to
 # to bundle in this package.
 
+library(Rilostat)
+
 # Establish constants
 country_code_col <- MWTools::conc_cols$country_code_col
 sex_ilo_col <- MWTools::ilo_cols$sex_ilo_col
 sector_col <- MWTools::mw_constants$sector_col
-year <- MWTools::mw_constants$year
+year <- MWTools::mw_cols$year
 ref_area_col <- MWTools::ilo_cols$ref_area_col
 yearly_working_hours_ilo_col <- MWTools::ilo_cols$yearly_working_hours_ilo_col
 employed_persons_ilo_col <- MWTools::ilo_cols$employed_persons_ilo_col
@@ -18,14 +20,14 @@ employment_code <- MWTools::ilo_codes$employment_code
 working_hours <- Rilostat::get_ilostat(id = working_hours_code,
                                        quiet = TRUE) %>%
   Rilostat::label_ilostat(code = c(ref_area_col)) %>%
-  dplyr::select(ref_area, sex.label, classif1.label, time, obs_value) %>% # Create constants
+  dplyr::select(dplyr::all_of(c(ref_area, sex.label, classif1.label, time, obs_value))) %>% # Create constants
   magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year, yearly_working_hours_ilo_col))
 
 # Employment by sex and economic activity (thousands): EMP_TEMP_SEX_ECO_NB_A
 employment <- Rilostat::get_ilostat(id = employment_code,
                                     quiet = TRUE) %>%
   Rilostat::label_ilostat(code = c(ref_area_col)) %>%
-  dplyr::select(ref_area, sex.label, classif1.label, time, obs_value) %>%
+  dplyr::select(dplyr::all_of(c(ref_area, sex.label, classif1.label, time, obs_value))) %>%
   magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year, employed_persons_ilo_col))
 
 # Convert Employed persons [1000 persons] to employed persons [persons] and

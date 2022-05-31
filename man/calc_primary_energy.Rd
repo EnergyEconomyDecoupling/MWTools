@@ -16,22 +16,28 @@ calc_primary_energy(
 )
 }
 \arguments{
-\item{.df}{A data frame containing ...}
+\item{.df}{A data frame containing the final energy consumption of working
+animals. Usually produced by calling the
+\code{tidy_fao_live_animals},
+\code{add_concordance_codes},
+\code{trim_fao_data},
+\code{get_working_species},
+\code{calc_working_animals},
+\code{calc_sector_split},
+\code{calc_yearly_feed}, and
+\code{calc_final_energy} functions in sequence on the raw FAO data.}
 
-\item{harvest_waste}{The proportion of energy embidied in biomass wasted when
+\item{harvest_waste}{The proportion of energy embodied in biomass wasted when
 animal feed is harvested.}
 
 \item{final_energy_total, final_energy_ag, final_energy_tr, primary_energy_total, primary_energy_ag, primary_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
-}
-\value{
-
 }
 \description{
 Calculate the primary energy embodied in the feed supplied to working animals
 }
 \examples{
-working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals() \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species() \%>\%

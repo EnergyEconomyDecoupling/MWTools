@@ -9,15 +9,16 @@ add_concordance_codes(
   concordance_path = MWTools::fao_concordance_path(),
   amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
-  country_name = MWTools::mw_constants$country_name,
   country_incl_col = MWTools::conc_cols$country_incl_col,
   country_code_col = MWTools::conc_cols$country_code_col,
-  country_code_pfu_col = MWTools::conc_cols$country_code_pfu_col
+  country_code_pfu_col = MWTools::conc_cols$country_code_pfu_col,
+  country_name = MWTools::mw_constants$country_name
 )
 }
 \arguments{
-\item{.df}{The data frame containing tidy live animals data, to which to add
-3 letter ISO codes.}
+\item{.df}{The data frame containing tidied live animals data, Usually
+produced by calling the \code{tidy_fao_live_animals} function
+on the raw FAO data.}
 
 \item{concordance_path}{The file path to concordance information mapping the
 FAO country names supplied in FAOSTAT to 3-letter ISO
@@ -25,14 +26,9 @@ codes, and MWTools specific region codes. Set to
 \code{MWTools::fao_concordance_path()} by default, the path
 to the bundled concordance information in \code{MWTools}.}
 
-\item{amw_region_code_col}{See \code{MWTools::amw_analysis_constants}.}
+\item{amw_region_code_col, hmw_region_code_col, country_incl_col, country_code_col, country_code_pfu_col}{See \code{MWTools::conc_cols}.}
 
-\item{country_name}{See \code{MWTools::mw_constants}.}
-
-\item{country_incl_col, country_code_col, country_code_pfu_col}{See \code{MWTools::conc_cols}.}
-}
-\value{
-
+\item{country_name}{See \code{MWTools::mw_constants}}
 }
 \description{
 Adds 3 letter ISO country codes and muscle work region codes for countries
@@ -40,8 +36,8 @@ present in the FAO's Live animals data, downloaded through the \code{FAOSTAT} pa
 usually using the \code{MWTools::down_fao_live_animals} function.
 }
 \examples{
-live_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+live_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals() \%>\%
   add_concordance_codes()
 
 }

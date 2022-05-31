@@ -5,17 +5,13 @@
 \alias{mw_constants}
 \title{General MWTools constants}
 \format{
-A string list with 11 entries.
+A string list with 7 entries.
 \describe{
 \item{country_name}{The name of a metadata column containing full length country names.}
-\item{year}{The name of a metadata column containing values for the year of the observation.}
 \item{species}{The name of the metadata column representing a species of live animal from FAO data.}
-\item{unit}{The name of the metadata column containing the units associated with the \code{value} column.}
-\item{units_col}{The name of the metadata column containing the units associated with the \code{energy_col} column.}
 \item{value}{The name of the data column containing the values of a given observation.}
 \item{sector_col}{The name of the metadata column containing the sector associated with the \code{value}.}
 \item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the \code{value}. Usally one of "Primary", "Final", or "Useful".}
-\item{energy_col}{The name of the data column containing muscle work energy values.}
 \item{exemplar_method_col}{The metadata column "Exemplar/Method" representing the regional exemplar or method used for a particular data series.}
 \item{method_source_col}{The metadata column "Method/Source" representing the method or source of information use for a particular data series.}
 }
@@ -24,7 +20,7 @@ A string list with 11 entries.
 mw_constants
 }
 \description{
-A string list containing constants used in the MWTools package functions
+A string list containing constants used in MWTools package functions.
 }
 \examples{
 mw_constants

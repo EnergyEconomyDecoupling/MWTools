@@ -7,7 +7,7 @@
 calc_working_animals(
   .df,
   amw_analysis_data_path = MWTools::amw_analysis_data_path(),
-  year = MWTools::mw_constants$year,
+  year = MWTools::mw_cols$year,
   species = MWTools::mw_constants$species,
   exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
   prop_working_animals_col = MWTools::amw_analysis_constants$prop_working_animals_col,
@@ -19,7 +19,12 @@ calc_working_animals(
 )
 }
 \arguments{
-\item{.df}{A data frame ...}
+\item{.df}{A data frame containing the number of live animals for working
+species. Usually produced by calling the
+\code{tidy_fao_live_animals},
+\code{add_concordance_codes},
+\code{trim_fao_data}, and
+\code{get_working_species} functions in sequence on the raw FAO data.}
 
 \item{amw_analysis_data_path}{The path to the animal muscle work analysis data,
 containing data for the proportion of working animals
@@ -30,12 +35,9 @@ with the \code{MWTools} package.}
 
 \item{year, species, exemplar_method_col}{See \code{MWTools::mw_constants}.}
 
-\item{prop_working_animal, da_perc, working_animals_total_col, live_animals_col, mw_region_code_col, mw_region_col}{See \code{MWTools::amw_analysis_constants}.}
+\item{prop_working_animals_col, wa_perc_sheet, working_animals_total_col, live_animals_col, amw_region_col}{See \code{MWTools::amw_analysis_constants}.}
 
-\item{...}{}
-}
-\value{
-
+\item{amw_region_code_col}{See \code{MWTools::conc_cols}.}
 }
 \description{
 Calculate the number of working animals using data for the number of live
@@ -43,11 +45,10 @@ animals from the FAO, and user-supplied data for the proportion of working
 animals by region and year.
 }
 \examples{
-working_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals() \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species() \%>\%
   calc_working_animals()
-
 }

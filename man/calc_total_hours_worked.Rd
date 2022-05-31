@@ -8,18 +8,26 @@ calc_total_hours_worked(
   .df,
   yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
   employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
- 
-    total_working_hours_ilo_col = MWTools::hmw_analysis_constants$total_working_hours_ilo_col
+  total_wk_hrs_ilo_col = MWTools::hmw_analysis_constants$total_wk_hrs_ilo_col
 )
 }
 \arguments{
+\item{.df}{The ILO labor data filled (held constant back to 1960 from the
+earliest year of data).
+Usually produced by calling the
+\code{add_hmw_region_codes}, and
+\code{fill_ilo_data} functions in sequence on the raw FAO data.}
+
 \item{yearly_working_hours_ilo_col, employed_persons_ilo_col}{See \code{MWTools::ilo_cols}.}
 
-\item{total_working_hours_ilo_col}{See \code{MWTools::hmw_analysis_constants}}
-}
-\value{
-
+\item{total_wk_hrs_ilo_col}{See \code{MWTools::hmw_analysis_constants}}
 }
 \description{
 Calc...
+}
+\examples{
+working_hours_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
+  add_hmw_region_codes() \%>\%
+  fill_ilo_data() \%>\%
+  calc_total_hours_worked()
 }

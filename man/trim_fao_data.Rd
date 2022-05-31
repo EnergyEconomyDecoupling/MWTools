@@ -6,17 +6,20 @@
 \usage{
 trim_fao_data(
   .df,
+  yes_const = MWTools::amw_analysis_constants$yes_const,
   country_incl_col = MWTools::conc_cols$country_incl_col,
   country_code_pfu_col = MWTools::conc_cols$country_code_pfu_col
 )
 }
 \arguments{
-\item{.df}{The data frame containing live animals data.}
+\item{.df}{The data frame containing live animals data, with added country
+codes. Usually produced by calling the
+\code{tidy_fao_live_animals}, and
+\code{add_concordance_codes} functions in sequence on the raw FAO data.}
+
+\item{yes_const}{See \code{MWTools::amw_analysis_constants}.}
 
 \item{country_incl_col, country_code_pfu_col}{See \code{MWTools::conc_cols}.}
-}
-\value{
-
 }
 \description{
 This function filters out countries which have more than one instance
@@ -25,8 +28,8 @@ through the \code{FAOSTAT} package, using the \code{MWTools::down_fao_live_anima
 function, and after applying the \code{MWTools::add_concordance_codes} function.
 }
 \examples{
-live_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+live_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals() \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data()
 

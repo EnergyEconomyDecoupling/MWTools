@@ -18,17 +18,22 @@ calc_final_energy(
 )
 }
 \arguments{
-\item{.df}{A data frame containing ...}
+\item{.df}{A data frame containing the yearly feed requirements of working
+animals. Usually produced by calling the
+\code{tidy_fao_live_animals},
+\code{add_concordance_codes},
+\code{trim_fao_data},
+\code{get_working_species},
+\code{calc_working_animals},
+\code{calc_sector_split}, and
+\code{calc_yearly_feed} functions in sequence on the raw FAO data.}
 
 \item{trough_waste}{The proportion of feed energy wasted when feeding working animals.}
 
 \item{ge_de_ratio}{The ratio between the gross energy content of the feed and
 digestible energy that is recovered from the feed.}
 
-\item{working_animals_total_col, working_animals_ag_col, working_animals_tr_col, total_yearly_feed_col, final_energy, final_energy_ag, final_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
-}
-\value{
-
+\item{working_animals_total_col, working_animals_ag_col, working_animals_tr_col, total_yearly_feed_col, final_energy_ag, final_energy_tr, final_energy_total}{See \code{MWTools::amw_analysis_constants}.}
 }
 \description{
 Calculate the final energy metabolised by working animals to perform muscle work.
@@ -37,8 +42,8 @@ and country by their associated feed requirements, then corrects for feed
 wasted, and the gross energy to digestible energy ratio.
 }
 \examples{
-working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals() \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species() \%>\%
@@ -46,5 +51,4 @@ working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(f
   calc_sector_split() \%>\%
   calc_yearly_feed() \%>\%
   calc_final_energy()
-
 }

@@ -10,7 +10,7 @@ get_working_species(
   country_name = MWTools::mw_constants$country_name,
   country_code_col = MWTools::conc_cols$country_code_col,
   amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
-  year = MWTools::mw_constants$year,
+  year = MWTools::mw_cols$year,
   value = MWTools::mw_constants$value,
   asses = MWTools::mw_species$asses,
   camels = MWTools::mw_species$camels,
@@ -25,16 +25,18 @@ get_working_species(
 }
 \arguments{
 \item{.df}{A tidy data frame containing the number of live animals by
-country over time. Usually supplied from the FAO through
-the functions \code{MWTools::down_fao_live_animals} and
-\code{MWTools::tidy_fao_live_animals}.}
+country over time. Usually produced by calling the
+\code{tidy_fao_live_animals},
+\code{add_concordance_codes}, and
+\code{trim_fao_data} functions in sequence on the raw FAO data.}
 
-\item{species, value}{See \code{MWTools::mw_constants}.}
+\item{species, country_name, value, year}{See \code{MWTools::mw_constants}.}
+
+\item{country_code_col, amw_region_code_col}{See \code{MWtools::conc_cols}.}
 
 \item{asses, camels, cattle, horses, mules, buffaloes, camelids_other, camelids}{See \code{MWTools::mw_species}.}
-}
-\value{
 
+\item{live_animals_col}{See \code{MWtools::amw_analysis_constants}.}
 }
 \description{
 Using a tidy dataframe containing the number of live animals, this function
@@ -43,8 +45,8 @@ Buffaloes, and Camelids, other; then combines Camels and Camlelids, other
 into a combined "Camelids" species group.
 }
 \examples{
-live_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+live_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals() \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species()

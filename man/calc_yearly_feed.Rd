@@ -17,14 +17,20 @@ calc_yearly_feed(
   working_day_feed_col = MWTools::amw_analysis_constants$working_day_feed_col,
   nonworking_day_feed_col = MWTools::amw_analysis_constants$nonworking_day_feed_col,
   working_yearly_feed_col = MWTools::amw_analysis_constants$working_yearly_feed_col,
- 
-    nonworking_yearly_feed_col = MWTools::amw_analysis_constants$nonworking_yearly_feed_col,
+  nonwkg_yearly_feed_col = MWTools::amw_analysis_constants$nonwkg_yearly_feed_col,
   total_yearly_feed_col = MWTools::amw_analysis_constants$total_yearly_feed_col,
   amw_region_code_col = MWTools::conc_cols$amw_region_code_col
 )
 }
 \arguments{
-\item{.df}{A data frame containing ...}
+\item{.df}{A data frame containing tidied data for the number of live and
+working animals. Usually produced by calling the
+\code{tidy_fao_live_animals},
+\code{add_concordance_codes},
+\code{trim_fao_data},
+\code{get_working_species},
+\code{calc_working_animals}, and
+\code{calc_sector_split} functions in sequence on the raw FAO data.}
 
 \item{amw_analysis_data_path}{The path to the animal muscle work analysis data,
 containing feed requirements of working animals
@@ -35,10 +41,9 @@ bundled with the \code{MWTools} package.}
 
 \item{species, method_source}{See \code{MWTools::mw_constants}.}
 
-\item{wa_feed_sheet, wa_days_hours_sheet, working_days_col, nonworking_days_col, working_hours_col, working_day_feed_col, nonworking_day_feed_col, working_yearly_feed_col, nonworking_yearly_feed_col, total_yearly_feed_col, amw_region_code_col}{See \code{MWTools::amw_analysis_constants}.}
-}
-\value{
+\item{wa_feed_sheet, wa_days_hours_sheet, working_days_col, nonworking_days_col, working_hours_col, working_day_feed_col, nonworking_day_feed_col, working_yearly_feed_col, nonwkg_yearly_feed_col, total_yearly_feed_col}{See \code{MWTools::amw_analysis_constants}.}
 
+\item{amw_region_code_col}{See \code{MWTools::conc_cols}.}
 }
 \description{
 Calculate the yearly feed requirements of working animals by species and region.
@@ -48,13 +53,12 @@ and region, and user-supplied data for the number of working days by species
 and region to estimate the total yearly feed requirements.
 }
 \examples{
-working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals() \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species() \%>\%
   calc_working_animals() \%>\%
   calc_sector_split() \%>\%
   calc_yearly_feed()
-
 }

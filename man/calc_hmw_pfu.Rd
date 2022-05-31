@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_hmw_functions.R
 \name{calc_hmw_pfu}
 \alias{calc_hmw_pfu}
-\title{Title}
+\title{Calculate primary, final, and useful human muscle work.}
 \usage{
 calc_hmw_pfu(
   .df,
@@ -11,11 +11,16 @@ calc_hmw_pfu(
 )
 }
 \arguments{
-\item{stage_col}{}
-}
-\value{
+\item{.df}{The raw ILO data, retrieved from ILOSTAT.}
 
+\item{concordance_path}{The path to the muscle work concordance information.}
+
+\item{hmw_analysis_data_path}{The path to the human muscle work analysis data.}
 }
 \description{
-Title
+Calculate primary, final, and useful human muscle work.
+}
+\examples{
+pfu_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
+  calc_hmw_pfu()
 }

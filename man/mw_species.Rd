@@ -5,7 +5,7 @@
 \alias{mw_species}
 \title{Working animal species}
 \format{
-A string list with 8 entries.
+A string list with 11 entries.
 \describe{
 \item{asses}{The string "Asses".}
 \item{camels}{The string "Camels".}
@@ -15,6 +15,9 @@ A string list with 8 entries.
 \item{buffaloes}{The string "Buffaloes".}
 \item{camelids_other}{The string "Camelids, other".}
 \item{camelids}{The string "Camelids", representing the combined category of "Camels" and "Camelids, other".}
+\item{human_females}{The string "Human females", representing human females.}
+\item{human_males}{The string "Human males", representing human males.}
+\item{human}{The string "Human", representing all humans.}
 }
 }
 \usage{

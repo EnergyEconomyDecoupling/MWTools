@@ -2,14 +2,14 @@
 % Please edit documentation in R/calc_hmw_functions.R
 \name{calc_hmw_primary_energy}
 \alias{calc_hmw_primary_energy}
-\title{Title}
+\title{Calculate the primary energy consumed by human workers}
 \usage{
 calc_hmw_primary_energy(
   .df,
-  hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
-  year = MWTools::mw_constants$year,
-  unit = MWTools::mw_constants$unit,
+  year = MWTools::mw_cols$year,
+  unit = MWTools::mw_cols$unit,
   exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
+  hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
   hmw_harvest_waste_sheet = MWTools::hmw_analysis_constants$hmw_harvest_waste_sheet,
   final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
   primary_energy_col = MWTools::hmw_analysis_constants$primary_energy_col,
@@ -18,11 +18,32 @@ calc_hmw_primary_energy(
 )
 }
 \arguments{
-\item{hmw_harvest_waste_col}{}
-}
-\value{
+\item{.df}{A data frame containing the final energy consumed by human
+workers.
+Usually produced by calling the
+\code{add_hmw_region_codes},
+\code{fill_ilo_data},
+\code{calc_total_hours_worked},
+\code{get_broad.sector_data},
+\code{split_labor_by_sector}, and
+\code{calc_hmw_final_energy} functions in sequence on the raw FAO data.}
 
+\item{year, unit, exemplar_method_col}{See \code{MWTools::mw_constants}.}
+
+\item{hmw_analysis_data_path, hmw_harvest_waste_sheet, final_energy_col, primary_energy_col, hmw_harvest_waste_col}{See \code{MWTools::hmw_analysis_constants}.}
+
+\item{hmw_region_code_col}{See \code{MWTools::conc_cols}.}
 }
 \description{
-Title
+Calculate the primary energy consumed by human workers
+}
+\examples{
+primary_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
+  add_hmw_region_codes() \%>\%
+  fill_ilo_data() \%>\%
+  calc_total_hours_worked() \%>\%
+  get_broad.sector_data() \%>\%
+  split_labor_by_sector() \%>\%
+  calc_hmw_final_energy() \%>\%
+  calc_hmw_primary_energy()
 }

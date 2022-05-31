@@ -5,11 +5,12 @@
 \alias{unit_constants}
 \title{Unit constants}
 \format{
-A string list with 3 entries.
+A string list with 4 entries.
 \describe{
 \item{kcal_to_mj}{The value 0.0041858, representing the conversion factor between kilocalories (kcal) and megajoules (MJ)}
 \item{hours_to_seconds}{The value 3600, representing the conversion factor between hours and seconds.}
 \item{joules_to_megajoules}{The value 0.000001, representing the conversion factor between joules (J) and megajoules (MJ)}
+\item{EJ_to_ktoe}{The value 23884.58966275, representing the conversion factor between exajoules (EJ) and kilotonnes of oil equivalent (ktoe)}
 }
 }
 \usage{

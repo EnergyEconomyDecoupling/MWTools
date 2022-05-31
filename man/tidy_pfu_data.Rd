@@ -8,12 +8,13 @@ tidy_pfu_data(
   .df,
   country_code_col = MWTools::conc_cols$country_code_col,
   country_col = MWTools::conc_cols$country_col,
-  year = MWTools::mw_constants$year,
+  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
+  year = MWTools::mw_cols$year,
   species = MWTools::mw_constants$species,
   sector_col = MWTools::mw_constants$sector_col,
   stage_col = MWTools::mw_constants$stage_col,
-  energy_col = MWTools::mw_constants$energy_col,
-  amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
+  energy_col = MWTools::mw_cols$e_dot,
+  units_col = MWTools::mw_cols$unit,
   useful_energy_ag = MWTools::amw_analysis_constants$useful_energy_ag,
   useful_energy_tr = MWTools::amw_analysis_constants$useful_energy_tr,
   final_energy_ag = MWTools::amw_analysis_constants$final_energy_ag,
@@ -21,34 +22,36 @@ tidy_pfu_data(
   primary_energy_ag = MWTools::amw_analysis_constants$primary_energy_ag,
   primary_energy_tr = MWTools::amw_analysis_constants$primary_energy_tr,
   working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
-  working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col,
-  units_col = MWTools::mw_constants$units_col
+  working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col
 )
 }
 \arguments{
-\item{.df}{A data frame containing ...}
+\item{.df}{A data frame containing the primary, final, and useful energy
+associated with each working animal species.
+Usually produced by calling the
+\code{tidy_fao_live_animals()},
+\code{add_concordance_codes()},
+\code{trim_fao_data()},
+\code{get_working_species()},
+\code{calc_working_animals()},
+\code{calc_sector_split()},
+\code{calc_yearly_feed()},
+\code{calc_final_energy()},
+\code{calc_primary_energy()}, and
+\code{calc_useful_energy()} functions in sequence on the raw FAO data.}
 
-\item{country_code_col}{See \code{MWTools::conc_cols}.}
+\item{country_code_col, country_col, amw_region_code_col}{See \code{MWTools::conc_cols}.}
 
-\item{year, species, sector_col, stage_col, energy_mj_year}{See \code{MWTools::mw_constants}.}
+\item{year, species, sector_col, stage_col, energy_col, units_col}{See \code{MWTools::mw_constants}.}
 
-\item{amw_region_code_col}{See \code{MWTools::amw_analysis_constants}.}
-
-\item{useful_energy_total, useful_energy_ag, useful_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
-
-\item{final_energy_total, final_energy_ag, final_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
-
-\item{primary_energy_total, primary_energy_ag, primary_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
-}
-\value{
-
+\item{useful_energy_ag, useful_energy_tr, final_energy_ag, final_energy_tr, primary_energy_ag, primary_energy_tr, working_animals_ag_col, working_animals_tr_col}{See \code{MWTools::amw_analysis_constants}.}
 }
 \description{
 Tidy a data frame containg primary, final, and useful energy data for working animals
 }
 \examples{
-working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals() \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species() \%>\%
@@ -59,5 +62,4 @@ working_animals_data <- MWTools::down_fao_live_animals(data_folder = file.path(f
   calc_primary_energy() \%>\%
   calc_useful_energy() \%>\%
   tidy_pfu_data()
-
 }

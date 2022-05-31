@@ -8,16 +8,15 @@ calc_hmw_final_energy(
   .df,
   hmw_analysis_data_path = MWTools::hmw_analysis_data_path(),
   sector_col = MWTools::mw_constants$sector_col,
-  year = MWTools::mw_constants$year,
-  unit = MWTools::mw_constants$unit,
+  year = MWTools::mw_cols$year,
+  unit = MWTools::mw_cols$unit,
   exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
-  hmw_analysis_sector_col = MWTools::hmw_analysis_constants$hmw_analysis_sector_col,
+  labor_type_col = MWTools::hmw_analysis_constants$labor_type_col,
   hmw_food_sheet = MWTools::hmw_analysis_constants$hmw_food_sheet,
   hmw_plate_waste_sheet = MWTools::hmw_analysis_constants$hmw_plate_waste_sheet,
   food_consumption_col = MWTools::hmw_analysis_constants$food_consumption_col,
- 
-    yearly_energy_consumption_pp_col = MWTools::hmw_analysis_constants$yearly_energy_consumption_pp_col,
+  energy_pppa_col = MWTools::hmw_analysis_constants$energy_pppa_col,
   final_energy_col = MWTools::hmw_analysis_constants$final_energy_col,
   plate_waste_col = MWTools::hmw_analysis_constants$plate_waste_col,
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
@@ -26,19 +25,38 @@ calc_hmw_final_energy(
 )
 }
 \arguments{
+\item{.df}{A data frame containing the number of hours worked by sector and
+activity level.
+Usually produced by calling the
+\code{add_hmw_region_codes},
+\code{fill_ilo_data},
+\code{calc_total_hours_worked},
+\code{get_broad.sector_data}, and
+\code{split_labor_by_sector} functions in sequence on the raw FAO data.}
+
 \item{hmw_analysis_data_path}{See \code{MWTools::hmw_analysis_data_path()}.}
 
 \item{sector_col, year, unit}{See \code{MWTools::mw_constants}.}
 
-\item{sex_ilo_col}{See \code{MWTools::ilo_cols}}
+\item{exemplar_method_col}{See \code{MWTools::mw_sectors}.}
 
-\item{hmw_analysis_sector_col, hmw_food_sheet, food_consumption_col}{See \code{MWTools::hmw_analysis_constants}.}
+\item{sex_ilo_col, employed_persons_ilo_col}{See \code{MWTools::ilo_cols}}
+
+\item{hmw_food_sheet, hmw_plate_waste_sheet, food_consumption_col, energy_pppa_col, final_energy_col, plate_waste_col, labor_type_col}{See \code{MWTools::hmw_analysis_constants}.}
 
 \item{hmw_region_code_col}{See \code{MWTools::conc_cols}.}
-}
-\value{
 
+\item{kcal_to_mj}{See \code{MWTools::unit_constants}.}
 }
 \description{
 ...
+}
+\examples{
+final_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
+  add_hmw_region_codes() \%>\%
+  fill_ilo_data() \%>\%
+  calc_total_hours_worked() \%>\%
+  get_broad.sector_data() \%>\%
+  split_labor_by_sector() \%>\%
+  calc_hmw_final_energy()
 }

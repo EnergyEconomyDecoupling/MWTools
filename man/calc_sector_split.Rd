@@ -7,9 +7,9 @@
 calc_sector_split(
   .df,
   amw_analysis_data_path = MWTools::amw_analysis_data_path(),
-  year = MWTools::mw_constants$year,
+  year = MWTools::mw_cols$year,
   species = MWTools::mw_constants$species,
-  method_source = MWTools::amw_analysis_constants$method_source,
+  method_source = MWTools::mw_constants$method_source,
   metric = MWTools::amw_analysis_constants$metric,
   amw_region_col = MWTools::amw_analysis_constants$amw_region_col,
   amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
@@ -17,14 +17,18 @@ calc_sector_split(
   working_animals_total_col = MWTools::amw_analysis_constants$working_animals_total_col,
   working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
   working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col,
- 
-    prop_working_animals_ag_col = MWTools::amw_analysis_constants$prop_working_animals_ag_col,
- 
-    prop_working_animals_tr_col = MWTools::amw_analysis_constants$prop_working_animals_tr_col
+  prop_wkg_anmls_ag_col = MWTools::amw_analysis_constants$prop_wkg_anmls_ag_col,
+  prop_wkg_anmls_tr_col = MWTools::amw_analysis_constants$prop_wkg_anmls_tr_col
 )
 }
 \arguments{
-\item{.df}{A data frame containing live animals data...}
+\item{.df}{A data frame containing the number of working animals.
+Usually produced by calling the
+\code{tidy_fao_live_animals},
+\code{add_concordance_codes},
+\code{trim_fao_data},
+\code{get_working_species}, and
+\code{calc_working_animals} functions in sequence on the raw FAO data.}
 
 \item{amw_analysis_data_path}{The path to the animal muscle work analysis data,
 containing data for the proportion of working animals
@@ -33,12 +37,11 @@ over time. Set to the function \code{MWTools::amw_analysis_data_path()},
 by default, which returns the path the analysis data
 bundled with the \code{MWTools} package.}
 
-\item{year, species}{See \code{MWTools::mw_constants}.}
+\item{year, species, method_source}{See \code{MWTools::mw_constants}.}
 
-\item{method_source, metric, amw_region_col, amw_region_code_col, wa_enduse_sheet, working_animals_total_col, working_animals_ag_col, working_animals_tr_col, prop_working_animals_ag_col, prop_working_animals_tr_col}{See \code{MWTools::amw_analysis_constants}.}
-}
-\value{
+\item{metric, amw_region_col, wa_enduse_sheet, working_animals_total_col, working_animals_ag_col, working_animals_tr_col, prop_wkg_anmls_ag_col, prop_wkg_anmls_tr_col}{See \code{MWTools::amw_analysis_constants}.}
 
+\item{amw_region_code_col}{See \code{MWTools::conc_cols}.}
 }
 \description{
 Calculate the split of working animals performing muscle work in agriculture
@@ -46,8 +49,8 @@ and transport using user-supplied data for the proportion of animals working
 in agriculture by region and year.
 }
 \examples{
-working_animals_data <- MWTools::down_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
-  tidy_fao_live_animals(data_path = file.path(fs::home_path(), "FAO_data")) \%>\%
+working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
+  tidy_fao_live_animals() \%>\%
   add_concordance_codes() \%>\%
   trim_fao_data() \%>\%
   get_working_species() \%>\%

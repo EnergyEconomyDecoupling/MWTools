@@ -11,11 +11,12 @@ calc_amw_pfu(
 )
 }
 \arguments{
-\item{.df}{The FAO live animals data downloaded using
-the function \code{MWTools::down_fao_live_animals}.}
-}
-\value{
+\item{.df}{A data frame containing the raw FAO live animals data,
+corresponding to the "QCL" FAO bulk download query.}
 
+\item{concordance_path}{The path to the muscle work concordance information.}
+
+\item{amw_analysis_data_path}{The path to the animal muscle work analysis data.}
 }
 \description{
 Calculate the total number of working animals and primary, final, and useful
@@ -26,7 +27,7 @@ in sequence to convert FAO data for live animals, usually downloaded with the fu
 \code{down_fao_live_animals}, into a tidy data frame.
 }
 \examples{
-tidy_amw_pfu_data <- MWTools::down_fao_live_animals(data_folder = file.path(fs::home_path(), "FAO_data")) \%>\%
+tidy_amw_pfu_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
   calc_amw_pfu()
 
 }
