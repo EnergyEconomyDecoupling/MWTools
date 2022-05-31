@@ -499,6 +499,7 @@ calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
 #'
 #' @param .hmw_df A data frame produced by `calc_hmw_pfu()`.
 #' @param .amw_df A data frame produced by `calc_amw_pfu()`.
+#' @param unit,R,U,V,Y,s_units,U_feed,U_eiou,r_eiou Column names. See `IEATools::psut_cols`.
 #'
 #' @return A data frame of musle work PSUT matrices.
 #'

@@ -22,6 +22,8 @@ prep_psut(
 \item{.hmw_df}{A data frame produced by \code{calc_hmw_pfu()}.}
 
 \item{.amw_df}{A data frame produced by \code{calc_amw_pfu()}.}
+
+\item{unit, R, U, V, Y, s_units, U_feed, U_eiou, r_eiou}{Column names. See \code{IEATools::psut_cols}.}
 }
 \value{
 A data frame of musle work PSUT matrices.
