@@ -21,7 +21,6 @@ add_hmw_region_codes <- function(.df,
                                  country_col = MWTools::conc_cols$country_col,
                                  country_code_col = MWTools::conc_cols$country_code_col,
                                  hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
-                                 country_code_iso3_col = MWTools::conc_cols$country_code_iso3_col,
                                  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
                                  sector_col = MWTools::mw_constants$sector_col,
                                  year = MWTools::mw_cols$year,
@@ -31,7 +30,7 @@ add_hmw_region_codes <- function(.df,
 
   hmw_region_codes <- readxl::read_xlsx(path = concordance_path,
                                         sheet = mapping_sheet) %>%
-    dplyr::select(dplyr::all_of(c(country_code_iso3_col, hmw_region_code_col))) %>%
+    dplyr::select(dplyr::all_of(c(country_col, hmw_region_code_col))) %>%
     magrittr::set_colnames(c(country_code_col, hmw_region_code_col))
 
   .df %>%

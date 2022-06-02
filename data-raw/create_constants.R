@@ -197,11 +197,11 @@ usethis::use_data(amw_analysis_constants, overwrite = TRUE)
 #
 conc_cols <- list(country_code_col = "Country.code",
                   country_col = "Country",
-                  country_code_pfu_col = "Country_PFU",
                   country_incl_col = "Country.incl.",
-                  country_code_iso3_col = "Country.code_ISO3",
+                  exemplar_country_col = "Exemplar.country",
                   amw_region_code_col = "AMW.Region.code",
                   hmw_region_code_col = "HMW.Region.code",
+                  region_code_col = "Region.code",
                   mapping_sheet = "Mapping")
 usethis::use_data(conc_cols, overwrite = TRUE)
 
