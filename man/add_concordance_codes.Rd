@@ -11,7 +11,6 @@ add_concordance_codes(
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
   country_incl_col = MWTools::conc_cols$country_incl_col,
   country_code_col = MWTools::conc_cols$country_code_col,
-  country_code_pfu_col = MWTools::conc_cols$country_code_pfu_col,
   country_name = MWTools::mw_constants$country_name
 )
 }

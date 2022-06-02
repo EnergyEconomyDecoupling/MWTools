@@ -20,14 +20,14 @@ employment_code <- MWTools::ilo_codes$employment_code
 working_hours <- Rilostat::get_ilostat(id = working_hours_code,
                                        quiet = TRUE) %>%
   Rilostat::label_ilostat(code = c(ref_area_col)) %>%
-  dplyr::select(dplyr::all_of(c(ref_area, sex.label, classif1.label, time, obs_value))) %>% # Create constants
+  dplyr::select(ref_area_col, `sex.label`, `classif1.label`, time, obs_value) %>% # Create constants
   magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year, yearly_working_hours_ilo_col))
 
 # Employment by sex and economic activity (thousands): EMP_TEMP_SEX_ECO_NB_A
 employment <- Rilostat::get_ilostat(id = employment_code,
                                     quiet = TRUE) %>%
   Rilostat::label_ilostat(code = c(ref_area_col)) %>%
-  dplyr::select(dplyr::all_of(c(ref_area, sex.label, classif1.label, time, obs_value))) %>%
+  dplyr::select(ref_area_col, sex.label, classif1.label, time, obs_value) %>%
   magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year, employed_persons_ilo_col))
 
 # Convert Employed persons [1000 persons] to employed persons [persons] and
@@ -46,8 +46,18 @@ ilo_hmw_data <- employment %>%
   ) %>%
   dplyr::mutate(
     "{year}" := as.numeric(.data[[year]])
+  ) %>%
+  # Manually change the ILO country code for Kosovo from KOS to XKX, this is the
+  # only country code which does not correspond to the other datasets as
+  # Kosovo has not formal country code
+  dplyr::mutate(
+    Country.code = dplyr::case_when(
+      Country.code == "KOS" ~ "XKX",
+      TRUE ~ as.character(Country.code)
+    )
   )
 
-# Use hmw data in package
-usethis::use_data(ilo_hmw_data, overwrite = TRUE)
+# Save downloaded file
+# saveRDS(object = ilo_hmw_data,
+#         file = PFUSetup::get_abs_paths()$ilo_data_path)
 

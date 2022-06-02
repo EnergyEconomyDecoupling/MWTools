@@ -7,7 +7,6 @@
 get_working_species(
   .df,
   species = MWTools::mw_constants$species,
-  country_name = MWTools::mw_constants$country_name,
   country_code_col = MWTools::conc_cols$country_code_col,
   amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
   year = MWTools::mw_cols$year,
@@ -30,7 +29,7 @@ country over time. Usually produced by calling the
 \code{add_concordance_codes}, and
 \code{trim_fao_data} functions in sequence on the raw FAO data.}
 
-\item{species, country_name, value, year}{See \code{MWTools::mw_constants}.}
+\item{species, value, year}{See \code{MWTools::mw_constants}.}
 
 \item{country_code_col, amw_region_code_col}{See \code{MWtools::conc_cols}.}
 

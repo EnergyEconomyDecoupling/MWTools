@@ -31,11 +31,11 @@ test_that("add_concordance_codes works", {
 
   expect_true(!is.null(live_animals_w.codes))
 
-  expect_equal(unique(live_animals_w.codes$Country.code), c("CHNM", "-"))
+  expect_equal(unique(live_animals_w.codes$Country.code), c("CHNM", "CHN"))
 
   expect_equal(colnames(live_animals_w.codes), c("Country.code", "AMW.Region.code",
                                                  "Country.name", "Species", "Year",
-                                                 "Value", "Country.incl.", "Country_PFU"))
+                                                 "Value", "Country.incl."))
 
   expect_equal(nrow(live_animals_w.codes), 709)
 
@@ -82,7 +82,7 @@ test_that("get_working_species works", {
   expect_equal(nrow(live_animals_w.species), 354)
 
   expect_equal(unique(live_animals_w.species$Species),
-               c("Asses", "Buffaloes", "Camelids", "Cattle", "Horses", "Mules"))
+               c("Asses", "Buffaloes", "Cattle", "Horses", "Mules", "Camelids"))
 
 })
 
@@ -106,7 +106,7 @@ test_that("get_working_species works without 'Camelids, other'", {
   expect_equal(nrow(live_animals_w.species), 354)
 
   expect_equal(unique(live_animals_w.species$Species),
-               c("Asses", "Buffaloes", "Camelids", "Cattle", "Horses", "Mules"))
+               c("Asses", "Buffaloes", "Cattle", "Horses", "Mules", "Camelids"))
 
 })
 
@@ -129,7 +129,7 @@ test_that("calc_working_animals works", {
   expect_equal(nrow(working_animals), 354)
 
   expect_equal(colnames(working_animals), c("Country.code", "AMW.Region.code",
-                                            "Country.name", "Year", "Species",
+                                            "Year", "Species",
                                             "Live.animals", "Prop.Working.animals",
                                             "Working.animals.total"))
 })
@@ -154,7 +154,7 @@ test_that("calc_sector_split works", {
   expect_equal(nrow(working_animals_s.split), 354)
 
   expect_equal(colnames(working_animals_s.split), c("Country.code", "AMW.Region.code",
-                                                    "Country.name", "Year", "Species",
+                                                    "Year", "Species",
                                                     "Live.animals", "Prop.Working.animals",
                                                     "Working.animals.total", "Prop.Working.animals.Ag",
                                                     "Prop.Working.animals.Tr", "Working.animals.Ag",
@@ -181,7 +181,7 @@ test_that("calc_yearly_feed works", {
 
   expect_equal(nrow(working_animals_w.feed), 354)
 
-  expect_equal(colnames(working_animals_w.feed), c("Country.code", "AMW.Region.code", "Country.name",
+  expect_equal(colnames(working_animals_w.feed), c("Country.code", "AMW.Region.code",
                                                    "Year", "Species", "Live.animals",
                                                    "Prop.Working.animals", "Working.animals.total",
                                                    "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
@@ -209,7 +209,7 @@ test_that("calc_final_energy works", {
 
   expect_equal(nrow(working_animals_w.finalenergy), 354)
 
-  expect_equal(colnames(working_animals_w.finalenergy), c("Country.code", "AMW.Region.code", "Country.name",
+  expect_equal(colnames(working_animals_w.finalenergy), c("Country.code", "AMW.Region.code",
                                                           "Year", "Species", "Live.animals",
                                                           "Prop.Working.animals", "Working.animals.total",
                                                           "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
@@ -240,7 +240,7 @@ test_that("calc_primary_energy",{
 
   expect_equal(nrow(working_animals_w.primaryenergy), 354)
 
-  expect_equal(colnames(working_animals_w.primaryenergy), c("Country.code", "AMW.Region.code", "Country.name",
+  expect_equal(colnames(working_animals_w.primaryenergy), c("Country.code", "AMW.Region.code",
                                                             "Year", "Species", "Live.animals",
                                                             "Prop.Working.animals", "Working.animals.total",
                                                             "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
@@ -275,7 +275,7 @@ test_that("calc_useful_energy",{
 
   expect_equal(nrow(working_animals_w.usefulenergy), 354)
 
-  expect_equal(colnames(working_animals_w.usefulenergy), c("Country.code", "AMW.Region.code", "Country.name",
+  expect_equal(colnames(working_animals_w.usefulenergy), c("Country.code", "AMW.Region.code",
                                                            "Year", "Species", "Live.animals",
                                                            "Prop.Working.animals", "Working.animals.total",
                                                            "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",

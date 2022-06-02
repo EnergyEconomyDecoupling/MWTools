@@ -12,8 +12,6 @@ download_filename <- ""
 # Download .zip file containing data for the number of live animals into a specified folder
 fao_amw_data <- FAOSTAT::get_faostat_bulk(code = live_animals_code, data_folder = download_location)
 
-# Use amw data in package
-usethis::use_data(fao_amw_data, overwrite = TRUE)
-
-# Remove file from temporary directory
-file.remove(file.path(download_location, download_filename))
+# Save downloaded file
+# saveRDS(object = fao_amw_data,
+#         file = PFUSetup::get_abs_paths()$fao_data_path)
