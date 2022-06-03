@@ -6,9 +6,10 @@
 #' @param concordance_path The path to the country code concordance information.
 #'                         Set to the bundled information by default,
 #'                         retrieved using the `fao_concordance_path` function.
-#' @param country_col,country_code_col,hmw_region_code_col,mapping_sheet,country_code_iso3_col See `MWTools::conc_cols`.
+#' @param country_col,country_code_col,country_incl_col,hmw_region_code_col,mapping_sheet See `MWTools::conc_cols`.
 #' @param sex_ilo_col,yearly_working_hours_ilo_col,employed_persons_ilo_col See `MWTools::ilo_cols`.
 #' @param sector_col,year See `MWTools::mw_constants`.
+#' @param yes_const See `MWTools::amw_analysis_constants`.
 #'
 #' @export
 #'

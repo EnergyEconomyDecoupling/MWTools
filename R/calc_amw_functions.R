@@ -81,7 +81,7 @@ tidy_fao_live_animals <- function(.df,
 #'                         codes, and MWTools specific region codes. Set to
 #'                         `MWTools::fao_concordance_path()` by default, the path
 #'                         to the bundled concordance information in `MWTools`.
-#' @param amw_region_code_col,hmw_region_code_col,country_incl_col,country_code_col,country_code_pfu_col
+#' @param amw_region_code_col,hmw_region_code_col,country_incl_col,country_code_col
 #'        See `MWTools::conc_cols`.
 #' @param country_name See `MWTools::mw_constants`
 #'
