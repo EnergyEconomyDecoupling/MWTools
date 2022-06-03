@@ -20,22 +20,26 @@ add_hmw_region_codes <- function(.df,
                                  mapping_sheet = MWTools::conc_cols$mapping_sheet,
                                  country_col = MWTools::conc_cols$country_col,
                                  country_code_col = MWTools::conc_cols$country_code_col,
+                                 country_incl_col = MWTools::conc_cols$country_incl_col,
                                  hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
                                  sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
                                  sector_col = MWTools::mw_constants$sector_col,
                                  year = MWTools::mw_cols$year,
                                  yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
-                                 employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col
+                                 employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
+                                 yes_const = MWTools::amw_analysis_constants$yes_const
                                  ){
 
   hmw_region_codes <- readxl::read_xlsx(path = concordance_path,
                                         sheet = mapping_sheet) %>%
-    dplyr::select(dplyr::all_of(c(country_col, hmw_region_code_col))) %>%
-    magrittr::set_colnames(c(country_code_col, hmw_region_code_col))
+    dplyr::select(dplyr::all_of(c(country_col, hmw_region_code_col, country_incl_col))) %>%
+    magrittr::set_colnames(c(country_code_col, hmw_region_code_col, country_incl_col))
 
   .df %>%
     dplyr::left_join(hmw_region_codes, by = country_code_col) %>%
     dplyr::relocate(dplyr::all_of(hmw_region_code_col), .after = dplyr::all_of(country_code_col)) %>%
+    dplyr::filter(.data[[country_incl_col]] == yes_const) %>%
+    dplyr::select(-country_incl_col) %>%
     magrittr::set_colnames(c(country_col, hmw_region_code_col, sex_ilo_col,
                              sector_col, year, employed_persons_ilo_col,
                              yearly_working_hours_ilo_col))
