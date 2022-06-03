@@ -40,12 +40,10 @@ add_hmw_region_codes <- function(.df,
     dplyr::left_join(hmw_region_codes, by = country_code_col) %>%
     dplyr::relocate(dplyr::all_of(hmw_region_code_col), .after = dplyr::all_of(country_code_col)) %>%
     dplyr::filter(.data[[country_incl_col]] == yes_const) %>%
-    dplyr::select(-country_incl_col) %>%
+    dplyr::select(-dplyr::all_of(country_incl_col)) %>%
     magrittr::set_colnames(c(country_col, hmw_region_code_col, sex_ilo_col,
                              sector_col, year, employed_persons_ilo_col,
                              yearly_working_hours_ilo_col))
-
-
 }
 
 
