@@ -9,10 +9,12 @@ A string list with 8 entries.
 \describe{
 \item{country_code_col}{The metadata column name "Country.code" containing three letter ISO 3166-1 country codes.}
 \item{country_col}{The metadata column name "Country" containing three letter ISO 3166-1 country codes.}
-\item{country_code_pfu_col}{The metadata column name "Country_PFU" containing bespoke three letter country codes.}
 \item{country_incl_col}{The metadata column name "Country.incl." containing either "Yes" or "No" depending on whether a particulr region or country shoule be included for analysis in \code{MWTools}.}
+\item{exemplar_country_col}{THe metadata column name "Exemplar.country", representing the country from which some data should be taken if absent from a particular country.}
 \item{amw_region_code_col}{The metadata column "AMW.Region.code" telling the region for this row.}
 \item{hmw_region_code_col}{The metadata column "HMW.Region.code" telling the region for this row.}
+\item{region_code_col}{The metadata column "Region.code" telling the region for this row.}
+\item{agg_code_col}{The metadata column "Agg.Code", representing the country, or country group code for individual country level data to be aggreagted in to.}
 \item{mapping_sheet}{The name of the sheet for name mappings.}
 }
 }

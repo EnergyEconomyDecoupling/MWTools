@@ -10,13 +10,14 @@ add_hmw_region_codes(
   mapping_sheet = MWTools::conc_cols$mapping_sheet,
   country_col = MWTools::conc_cols$country_col,
   country_code_col = MWTools::conc_cols$country_code_col,
+  country_incl_col = MWTools::conc_cols$country_incl_col,
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
-  country_code_iso3_col = MWTools::conc_cols$country_code_iso3_col,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   sector_col = MWTools::mw_constants$sector_col,
   year = MWTools::mw_cols$year,
   yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
-  employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col
+  employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
+  yes_const = MWTools::amw_analysis_constants$yes_const
 )
 }
 \arguments{
@@ -26,11 +27,13 @@ add_hmw_region_codes(
 Set to the bundled information by default,
 retrieved using the \code{fao_concordance_path} function.}
 
-\item{country_col, country_code_col, hmw_region_code_col, mapping_sheet, country_code_iso3_col}{See \code{MWTools::conc_cols}.}
+\item{country_col, country_code_col, country_incl_col, hmw_region_code_col, mapping_sheet}{See \code{MWTools::conc_cols}.}
 
 \item{sex_ilo_col, yearly_working_hours_ilo_col, employed_persons_ilo_col}{See \code{MWTools::ilo_cols}.}
 
 \item{sector_col, year}{See \code{MWTools::mw_constants}.}
+
+\item{yes_const}{See \code{MWTools::amw_analysis_constants}.}
 }
 \description{
 ...

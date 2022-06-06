@@ -11,7 +11,6 @@ add_concordance_codes(
   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
   country_incl_col = MWTools::conc_cols$country_incl_col,
   country_code_col = MWTools::conc_cols$country_code_col,
-  country_code_pfu_col = MWTools::conc_cols$country_code_pfu_col,
   country_name = MWTools::mw_constants$country_name
 )
 }
@@ -26,7 +25,7 @@ codes, and MWTools specific region codes. Set to
 \code{MWTools::fao_concordance_path()} by default, the path
 to the bundled concordance information in \code{MWTools}.}
 
-\item{amw_region_code_col, hmw_region_code_col, country_incl_col, country_code_col, country_code_pfu_col}{See \code{MWTools::conc_cols}.}
+\item{amw_region_code_col, hmw_region_code_col, country_incl_col, country_code_col}{See \code{MWTools::conc_cols}.}
 
 \item{country_name}{See \code{MWTools::mw_constants}}
 }

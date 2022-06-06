@@ -81,7 +81,7 @@ tidy_fao_live_animals <- function(.df,
 #'                         codes, and MWTools specific region codes. Set to
 #'                         `MWTools::fao_concordance_path()` by default, the path
 #'                         to the bundled concordance information in `MWTools`.
-#' @param amw_region_code_col,hmw_region_code_col,country_incl_col,country_code_col,country_code_pfu_col
+#' @param amw_region_code_col,hmw_region_code_col,country_incl_col,country_code_col
 #'        See `MWTools::conc_cols`.
 #' @param country_name See `MWTools::mw_constants`
 #'
@@ -99,14 +99,13 @@ add_concordance_codes <- function(.df,
                                   hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
                                   country_incl_col = MWTools::conc_cols$country_incl_col,
                                   country_code_col = MWTools::conc_cols$country_code_col,
-                                  country_code_pfu_col = MWTools::conc_cols$country_code_pfu_col,
                                   country_name = MWTools::mw_constants$country_name){
 
   # Read bundled concordance data
   concordance_data <- readxl::read_xlsx(path = concordance_path,
                                         sheet = "Mapping") %>%
     dplyr::select(-dplyr::all_of(hmw_region_code_col)) %>%
-    magrittr::set_colnames(c(country_name, country_incl_col, country_code_col, country_code_pfu_col, amw_region_code_col))
+    magrittr::set_colnames(c(country_name, country_incl_col, country_code_col, amw_region_code_col))
 
   .df %>%
     dplyr::left_join(concordance_data, by = country_name) %>%
@@ -126,7 +125,8 @@ add_concordance_codes <- function(.df,
 #'            codes. Usually produced by calling the
 #'            `tidy_fao_live_animals`, and
 #'            `add_concordance_codes` functions in sequence on the raw FAO data.
-#' @param country_incl_col,country_code_pfu_col See `MWTools::conc_cols`.
+#' @param country_incl_col See `MWTools::conc_cols`.
+#' @param country_name See ` MWTools::mw_constants`.
 #' @param yes_const See `MWTools::amw_analysis_constants`.
 #'
 #'
@@ -141,11 +141,11 @@ add_concordance_codes <- function(.df,
 trim_fao_data <- function(.df,
                           yes_const = MWTools::amw_analysis_constants$yes_const,
                           country_incl_col = MWTools::conc_cols$country_incl_col,
-                          country_code_pfu_col = MWTools::conc_cols$country_code_pfu_col){
+                          country_name = MWTools::mw_constants$country_name){
 
   .df %>%
     dplyr::filter(.data[[country_incl_col]] == yes_const) %>%
-    dplyr::select(-dplyr::all_of(c(country_incl_col, country_code_pfu_col)))
+    dplyr::select(-dplyr::all_of(c(country_incl_col, country_name)))
 
 }
 
@@ -161,7 +161,7 @@ trim_fao_data <- function(.df,
 #'            `tidy_fao_live_animals`,
 #'            `add_concordance_codes`, and
 #'            `trim_fao_data` functions in sequence on the raw FAO data.
-#' @param species,country_name,value,year See `MWTools::mw_constants`.
+#' @param species,value,year See `MWTools::mw_constants`.
 #' @param live_animals_col See `MWtools::amw_analysis_constants`.
 #' @param country_code_col,amw_region_code_col See `MWtools::conc_cols`.
 #' @param asses,camels,cattle,horses,mules,buffaloes,camelids_other,camelids
@@ -179,7 +179,6 @@ trim_fao_data <- function(.df,
 #'
 get_working_species <- function(.df,
                                 species = MWTools::mw_constants$species,
-                                country_name = MWTools::mw_constants$country_name,
                                 country_code_col = MWTools::conc_cols$country_code_col,
                                 amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
                                 year = MWTools::mw_cols$year,
@@ -212,24 +211,32 @@ get_working_species <- function(.df,
   working_species <- replace(working_species, is.na(working_species), 0)
 
   if(camelids_other %in% colnames(working_species)){
+
     working_species_w.camelids <- working_species %>%
       dplyr::mutate(
         "{camelids}" := .data[[camels]] + .data[[camelids_other]],
         .keep = "unused"
       )
-  } else {
+
+  } else if(camels %in% colnames(working_species)) {
+
     working_species_w.camelids <- working_species %>%
       dplyr::mutate(
         "{camelids}" := .data[[camels]],
         .keep = "unused"
       )
+
+  } else {
+
+    working_species_w.camelids <- working_species
+
   }
 
-  working_species_final <-  working_species_w.camelids %>%
-    tidyr::pivot_longer(cols = dplyr::all_of(c(asses, buffaloes, camelids, cattle, horses, mules)),
+  working_species_final <- working_species_w.camelids %>%
+    tidyr::pivot_longer(cols = -dplyr::all_of(c(country_code_col, amw_region_code_col, year)),
                         names_to = species,
                         values_to = value) %>%
-    magrittr::set_colnames(c(country_code_col, amw_region_code_col, country_name, year, species, live_animals_col))
+    magrittr::set_colnames(c(country_code_col, amw_region_code_col, year, species, live_animals_col))
 
   # Returns a tidy data frame containing the number of working animals
   return(working_species_final)
