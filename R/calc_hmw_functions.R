@@ -49,8 +49,6 @@ add_hmw_region_codes <- function(.df,
 
 #' Fill missing data for the number of hours worked and employed persons based on the earliest value
 #'
-#'
-#'
 #' @param .df The ILO labor data with added region codes.
 #'            Usually produced by calling the
 #'            `add_hmw_region_codes` function in sequence on the raw FAO data.
