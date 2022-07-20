@@ -32,7 +32,12 @@ Default is \code{RCLabels::from_notation}.}
 A data frame with primary production specified.
 }
 \description{
-Adds rows for biomass from resources
+Adds rows for biomass from resources.
+}
+\details{
+If no primary rows are found
+(probably because \code{.df} has no rows),
+\code{.df} is returned unmodified.
 }
 \examples{
 hmw_df <- hmw_test_data_path() \%>\%
