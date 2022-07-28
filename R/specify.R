@@ -120,7 +120,11 @@ specify_product <- function(.df,
 
 #' Add primary production to a data frame of PFU muscle work data
 #'
-#' Adds rows for biomass from resources
+#' Adds rows for biomass from resources.
+#'
+#' If no primary rows are found
+#' (probably because `.df` has no rows),
+#' `.df` is returned unmodified.
 #'
 #' @param .df A muscle work data frame with products already specified,
 #'            usually by `specify_product()`.
@@ -155,6 +159,10 @@ specify_primary_production <- function(.df,
   # Find all primary rows
   primary_rows <- .df %>%
     dplyr::filter(.data[[stage]] == primary)
+  # If we have no primary rows, avoid an error by simply returning the incoming .df
+  if (nrow(primary_rows) == 0) {
+    return(.df)
+  }
   # Modify the product
   primary_rows <- primary_rows %>%
     dplyr::mutate(

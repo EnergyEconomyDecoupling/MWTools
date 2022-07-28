@@ -4,6 +4,10 @@ output: html_document
 ---
 
 
+* Defend against zero-row data frames,
+  which can occur when there is no muscle work data.
+  Now returning zero-row data frames
+  to enable pipelines containing some countries without muscle work data.
 * `prep_psut()` now returns a zero-row data frame
   if the inputs are zero-row data frames.
 * New function `phi_vec_mw()` creates a phi vector 

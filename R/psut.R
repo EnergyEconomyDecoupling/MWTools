@@ -160,46 +160,59 @@ add_row_col_meta <- function(.df,
       "{coltypes}" := product_type
     )
   # Food and Feed entries in the U or Y matrix.
-  food_feed_rows_UY <- food_feed_rows %>%
-    dplyr::mutate(
-      # The matrix name depends on whether the last stage is final or useful.
-      "{matnames}" := dplyr::case_when(
-        .data[[last_stage]] == final ~ Y_name,
-        .data[[last_stage]] == useful ~ U_name
-      ),
-      # The row name in U or Y is always the product.
-      "{rownames}" := .data[[product]],
-      # Column names depend on whether the last stage is final or useful.
-      "{colnames}" := dplyr::case_when(
-        # If last stage is final, the column in the Y matrix is the destination sector, and
-        # the column name should be the sector into which this energy flows ultimately.
-        .data[[last_stage]] == final ~ .data[[sector]],
-        # If last stage is useful
-        # (the only other option, so everything below *will* be energy for useful last stage),
-        # the column in the U matrix is the specified name
-        # of the human or animal machine.
-        # If the species is a human being, then the column name (Industry) is
-        # Species -> hu_mech.
-        .data[[species]] %in% c(human_females, human_males) ~ RCLabels::paste_pref_suff(pref = .data[[species]],
-                                                                                        suff = hu_mech,
-                                                                                        notation = species_notation),
-        # If we get here, we have taken care of all of the humans, so only animals remain.
-        # When the species is an animal, the column name is again
-        # Species -> Useful product,
-        # but the Useful product can be either AnMech or AnP,
-        # depending on the final demand category.
-        # The energy product going into the Transport sector is AnP.
-        .data[[sector]] == transport ~ RCLabels::paste_pref_suff(pref = .data[[species]],
-                                                                 suff = an_p,
-                                                                 notation = species_notation),
-        # The energy product going into any other sector is AnMech.
-        TRUE ~ RCLabels::paste_pref_suff(pref = .data[[species]],
-                                         suff = an_mech,
-                                         notation = species_notation)
-      ),
-      "{rowtypes}" := product_type,
-      "{coltypes}" := industry_type
-    )
+  if (nrow(food_feed_rows) == 0) {
+    # Add the columns to the empty data frame to avoid the error
+    # in paste_pref_suff() that comes when pref or suff has character().
+    food_feed_rows_UY <- food_feed_rows %>%
+      dplyr::mutate(
+        "{matnames}" := character(),
+        "{rownames}" := character(),
+        "{colnames}" := character(),
+        "{rowtypes}" := character(),
+        "{coltypes}" := character()
+      )
+  } else {
+    food_feed_rows_UY <- food_feed_rows %>%
+      dplyr::mutate(
+        # The matrix name depends on whether the last stage is final or useful.
+        "{matnames}" := dplyr::case_when(
+          .data[[last_stage]] == final ~ Y_name,
+          .data[[last_stage]] == useful ~ U_name
+        ),
+        # The row name in U or Y is always the product.
+        "{rownames}" := .data[[product]],
+        # Column names depend on whether the last stage is final or useful.
+        "{colnames}" := dplyr::case_when(
+          # If last stage is final, the column in the Y matrix is the destination sector, and
+          # the column name should be the sector into which this energy flows ultimately.
+          .data[[last_stage]] == final ~ .data[[sector]],
+          # If last stage is useful
+          # (the only other option, so everything below *will* be energy for useful last stage),
+          # the column in the U matrix is the specified name
+          # of the human or animal machine.
+          # If the species is a human being, then the column name (Industry) is
+          # Species -> hu_mech.
+          .data[[species]] %in% c(human_females, human_males) ~ RCLabels::paste_pref_suff(pref = .data[[species]],
+                                                                                          suff = hu_mech,
+                                                                                          notation = species_notation),
+          # If we get here, we have taken care of all of the humans, so only animals remain.
+          # When the species is an animal, the column name is again
+          # Species -> Useful product,
+          # but the Useful product can be either AnMech or AnP,
+          # depending on the final demand category.
+          # The energy product going into the Transport sector is AnP.
+          .data[[sector]] == transport ~ RCLabels::paste_pref_suff(pref = .data[[species]],
+                                                                   suff = an_p,
+                                                                   notation = species_notation),
+          # The energy product going into any other sector is AnMech.
+          TRUE ~ RCLabels::paste_pref_suff(pref = .data[[species]],
+                                           suff = an_mech,
+                                           notation = species_notation)
+        ),
+        "{rowtypes}" := product_type,
+        "{coltypes}" := industry_type
+      )
+  }
   out <- out %>%
     dplyr::bind_rows(food_feed_rows_V, food_feed_rows_UY)
 
