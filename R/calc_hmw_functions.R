@@ -47,16 +47,21 @@ add_hmw_region_codes <- function(.df,
 }
 
 
-#' Fill missing data for the number of hours worked and employed persons based on the earliest value
+#' Fill missing data for the number of hours worked and employed persons
 #'
-#'
+#' Fill missing values from the ILO for the number of employed persons and
+#' yearly working hours by adding years absent from the raw data, removing
+#' groups of data for which there are no values at all, then interpolating
+#' and extrapolating groups of data for which there is atleast one value.
 #'
 #' @param .df The ILO labor data with added region codes.
 #'            Usually produced by calling the
 #'            `add_hmw_region_codes` function in sequence on the raw FAO data.
-#' @param country_col See `MWTools::conc_cols`.
+#' @param country_col,hmw_region_code_col See `MWTools::conc_cols`.
 #' @param sex_ilo_col,yearly_working_hours_ilo_col,employed_persons_ilo_col See `MWTools::ilo_cols`.
-#' @param sector_col,year See `MWTools::mw_constants`.
+#' @param sector_col See `MWTools::mw_constants`.
+#' @param year See `MWTools::mw_cols`.
+#' @param col_1960,col_2020 See `MWTools::hmw_analysis_constants`.
 #'
 #' @export
 #'
@@ -66,18 +71,85 @@ add_hmw_region_codes <- function(.df,
 #'   fill_ilo_data()
 fill_ilo_data <- function(.df,
                           country_col = MWTools::conc_cols$country_col,
+                          hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
                           sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
                           sector_col = MWTools::mw_constants$sector_col,
                           year = MWTools::mw_cols$year,
                           yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
-                          employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col){
+                          employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
+                          col_1960 = MWTools::hmw_analysis_constants$col_1960,
+                          col_2020 = MWTools::hmw_analysis_constants$col_2020){
 
-  # Fills data for each Country, Sex, and Sector based on earliest year
+  # Fills data for each Country, HMW region code, Sex, and Sector by
+  # linearly interpolating and extrapolating the data.
   .df %>%
-    dplyr::group_by(.data[[country_col]], .data[[sex_ilo_col]], .data[[sector_col]]) %>%
-    dplyr::arrange(.data[[year]], .by_group = TRUE) %>%
-    tidyr::fill(.data[[employed_persons_ilo_col]], .direction = "up") %>%
-    tidyr::fill(.data[[yearly_working_hours_ilo_col]], .direction = "up") %>%
+    dplyr::group_by(.data[[country_col]], .data[[hmw_region_code_col]], .data[[sex_ilo_col]], .data[[sector_col]]) %>%
+
+    # Add a column containing the number of data points for each group of data
+    # prior to adding na values for missing years
+    dplyr::mutate("employed_count" = sum(!is.na(.data[[employed_persons_ilo_col]]))) %>%
+    dplyr::mutate("hours_count" = sum(!is.na(.data[[yearly_working_hours_ilo_col]]))) %>%
+
+
+    ### Option 1
+    # Remove groups of data that only have one observation, as interpolation
+    # and extrapolation is not possible from a single data point
+    dplyr::filter(employed_count > 1 & hours_count > 1) %>%
+
+    # Complete data frame by adding rows for missing years between 1960 and 2020
+    tidyr::complete(Year = tidyr::full_seq(col_1960:col_2020, 1)) %>%
+    # Remove groups for which there is no data at all
+    dplyr::filter(!all(is.na(.data[[employed_persons_ilo_col]]))) %>%
+    dplyr::filter(!all(is.na(.data[[yearly_working_hours_ilo_col]]))) %>%
+
+
+    # # ### Option 2
+    # # # For groups of data with a single data point, hold that data point constant
+    # # # for every other year
+    # dplyr::mutate(
+    #     "{employed_persons_ilo_col}" := dplyr::case_when(
+    #       .data[[employed_count]] > 1 ~ .data[[employed_persons_ilo_col]],
+    #       is.na(.data[[employed_count]]) ~ tidyr::fill(.data[[employed_persons_ilo_col]], .direction = "downup"),
+    #       TRUE ~ as.numeric(.data[[employed_persons_ilo_col]])
+    #     ),
+    #     "{yearly_working_hours_ilo_col}" := dplyr::case_when(
+    #       .data[[hours_count]] > 1 ~ .data[[yearly_working_hours_ilo_col]],
+    #       is.na(.data[[hours_count]]) ~ tidyr::fill(.data[[yearly_working_hours_ilo_col]], .direction = "downup"),
+    #       TRUE ~ as.numeric(.data[[yearly_working_hours_ilo_col]])
+    #     )
+    #   ) %>%
+
+    dplyr::select(-employed_count, -hours_count) %>%
+
+    # Fill missing values
+    # Linear interpolation
+    dplyr::mutate("{employed_persons_ilo_col}" := threadr::na_interpolate(.data[[employed_persons_ilo_col]])) %>%
+    dplyr::mutate("{yearly_working_hours_ilo_col}" := threadr::na_interpolate(.data[[yearly_working_hours_ilo_col]])) %>%
+
+    # Linear extrapolation
+    # dplyr::mutate("{yearly_working_hours_ilo_col}" := threadr::na_extrapolate(.data[[yearly_working_hours_ilo_col]])) %>%
+    # dplyr::mutate("{employed_persons_ilo_col}" := threadr::na_extrapolate(.data[[employed_persons_ilo_col]])) %>%
+
+    # Holding constant
+    tidyr::fill(.data[[yearly_working_hours_ilo_col]], .direction = "downup") %>%
+    tidyr::fill(.data[[employed_persons_ilo_col]], .direction = "downup") %>%
+
+    # Replace negative values with 0
+    dplyr::mutate(
+      "{employed_persons_ilo_col}" := dplyr::case_when(
+        .data[[employed_persons_ilo_col]] > 0 ~ .data[[employed_persons_ilo_col]],
+        .data[[employed_persons_ilo_col]] <= 0 ~ 0,
+        TRUE ~ as.numeric(.data[[employed_persons_ilo_col]])
+      ),
+
+      "{yearly_working_hours_ilo_col}" := dplyr::case_when(
+        .data[[yearly_working_hours_ilo_col]] > 0 ~ .data[[yearly_working_hours_ilo_col]],
+        .data[[yearly_working_hours_ilo_col]] <= 0 ~ 0,
+        TRUE ~ as.numeric(.data[[yearly_working_hours_ilo_col]])
+      )
+
+    ) %>%
+
     dplyr::ungroup()
 
 }

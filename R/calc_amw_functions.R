@@ -8,6 +8,7 @@
 #' @param country_name,species,year,unit,value See `MWTools::mw_constants`.
 #' @param area_fao_col,item_fao_col,year_fao_col,unit_fao_col,value_fao_col
 #'        See `MWTools::fao_cols`.
+#' @param col_1960,col_2020 See `MWTools::hmw_analysis_constants`.
 #'
 #'
 #' @export
@@ -26,7 +27,9 @@ tidy_fao_live_animals <- function(.df,
                                   item_fao_col = MWTools::fao_cols$item_fao_col,
                                   year_fao_col = MWTools::fao_cols$year_fao_col,
                                   unit_fao_col = MWTools::fao_cols$unit_fao_col,
-                                  value_fao_col = MWTools::fao_cols$value_fao_col){
+                                  value_fao_col = MWTools::fao_cols$value_fao_col,
+                                  col_1960 = MWTools::hmw_analysis_constants$col_1960,
+                                  col_2020 = MWTools::hmw_analysis_constants$col_2020){
 
   # Read file into a tidy data frame
   live_animals <- .df %>%
@@ -57,9 +60,61 @@ tidy_fao_live_animals <- function(.df,
     dplyr::filter(.data[[unit]] == "Number")
 
   # Re-combines live animals data
-  live_animals_final <- live_animals_1000 %>%
+  live_animals_fixednum <- live_animals_1000 %>%
     rbind(live_animals_1) %>%
     dplyr::select(-dplyr::all_of(c(unit)))
+
+  live_animals_final <- live_animals_fixednum %>%
+    dplyr::group_by(.data[[country_name]], .data[[species]]) %>%
+
+    # Add a column containing the number of data points for each group of data
+    # prior to adding na values for missing years
+    dplyr::mutate("value_count" = dplyr::n()) %>%
+
+    ### Option 1
+    # Remove groups of data that only have one observation, as interpolation
+    # and extrapolation is not possible from a single data point
+    dplyr::filter(value_count > 1) %>%
+
+    # Complete data frame by adding rows for missing years between 1960 and 2020
+    tidyr::complete(Year = tidyr::full_seq(col_1960:col_2020, 1)) %>%
+    # Remove groups for which there is no data at all
+    dplyr::filter(!all(is.na(.data[[value]]))) %>%
+
+    # ### Option 2
+    # # For groups of data with a single data point, hold that data point constant
+    # # for every other year
+    # dplyr::mutate(
+    #   "{value}" := dplyr::case_when(
+    #     .data[[value_count]] > 1 ~ .data[[value]],
+    #     .data[[value_count]] == 1 ~ tidyr::fill(.data[[value]], .direction = "downup"),
+    #     TRUE ~ as.numeric(.data[[value]])
+    #   )
+    # ) %>%
+
+    dplyr::select(-value_count) %>%
+
+    # Fill missing values
+    # Linear interpolation
+    dplyr::mutate("{value}" := threadr::na_interpolate(.data[[value]])) %>%
+
+    # Linear extrapolation
+    # dplyr::mutate("{value}" := threadr::na_extrapolate(.data[[value]])) %>%
+
+    # Holding constant
+    tidyr::fill(.data[[value]], .direction = "downup") %>%
+
+    # Replace negative values with 0
+    dplyr::mutate(
+      "{value}" := dplyr::case_when(
+        .data[[value]] > 0 ~ .data[[value]],
+        .data[[value]] <= 0 ~ 0,
+        TRUE ~ as.numeric(.data[[value]])
+        )
+      ) %>%
+
+    # Ungroup data
+    dplyr::ungroup()
 
   # Returns tidy data
   return(live_animals_final)
