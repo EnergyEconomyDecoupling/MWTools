@@ -8,8 +8,8 @@
 A string list with 19 entries.
 \describe{
 \item{total_wk_hrs_ilo_col}{The data column "Total.hours [hours/year]" containing the number of hours worked yearly by all humans for a given country, sex, sector, and year.}
-\item{col1960}{The column for 1960. Default is "1960".}
-\item{col2020}{The column for 2020. Default is "2020".}
+\item{col_1960}{The column for 1960. Default is "1960".}
+\item{col_2020}{The column for 2020. Default is "2020".}
 \item{labor_type_col}{The data column "Labor.Type" containing information on the human labor type (Primary, Secondary, or Sedentary) of human workers.}
 \item{labor_split_col}{The data column "Labor.Type.Split" containing information on the proportion of human labor type by sector.}
 \item{hmw_power_sheet}{The excel sheet name "hmw_power", which contains information on the power output of humans performing muscle work.}

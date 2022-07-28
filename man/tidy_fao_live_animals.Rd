@@ -15,7 +15,9 @@ tidy_fao_live_animals(
   item_fao_col = MWTools::fao_cols$item_fao_col,
   year_fao_col = MWTools::fao_cols$year_fao_col,
   unit_fao_col = MWTools::fao_cols$unit_fao_col,
-  value_fao_col = MWTools::fao_cols$value_fao_col
+  value_fao_col = MWTools::fao_cols$value_fao_col,
+  col_1960 = MWTools::hmw_analysis_constants$col_1960,
+  col_2020 = MWTools::hmw_analysis_constants$col_2020
 )
 }
 \arguments{
@@ -25,6 +27,8 @@ corresponding to the "QCL" FAO bulk download query.}
 \item{country_name, species, year, unit, value}{See \code{MWTools::mw_constants}.}
 
 \item{area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col}{See \code{MWTools::fao_cols}.}
+
+\item{col_1960, col_2020}{See \code{MWTools::hmw_analysis_constants}.}
 }
 \description{
 Create a tidy data frame using data supplied by the function

@@ -2,16 +2,19 @@
 % Please edit documentation in R/calc_hmw_functions.R
 \name{fill_ilo_data}
 \alias{fill_ilo_data}
-\title{Fill missing data for the number of hours worked and employed persons based on the earliest value}
+\title{Fill missing data for the number of hours worked and employed persons}
 \usage{
 fill_ilo_data(
   .df,
   country_col = MWTools::conc_cols$country_col,
+  hmw_region_code_col = MWTools::conc_cols$hmw_region_code_col,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
   sector_col = MWTools::mw_constants$sector_col,
   year = MWTools::mw_cols$year,
   yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
-  employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col
+  employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
+  col_1960 = MWTools::hmw_analysis_constants$col_1960,
+  col_2020 = MWTools::hmw_analysis_constants$col_2020
 )
 }
 \arguments{
@@ -19,14 +22,21 @@ fill_ilo_data(
 Usually produced by calling the
 \code{add_hmw_region_codes} function in sequence on the raw FAO data.}
 
-\item{country_col}{See \code{MWTools::conc_cols}.}
+\item{country_col, hmw_region_code_col}{See \code{MWTools::conc_cols}.}
 
 \item{sex_ilo_col, yearly_working_hours_ilo_col, employed_persons_ilo_col}{See \code{MWTools::ilo_cols}.}
 
-\item{sector_col, year}{See \code{MWTools::mw_constants}.}
+\item{sector_col}{See \code{MWTools::mw_constants}.}
+
+\item{year}{See \code{MWTools::mw_cols}.}
+
+\item{col_1960, col_2020}{See \code{MWTools::hmw_analysis_constants}.}
 }
 \description{
-Fill missing data for the number of hours worked and employed persons based on the earliest value
+Fill missing values from the ILO for the number of employed persons and
+yearly working hours by adding years absent from the raw data, removing
+groups of data for which there are no values at all, then interpolating
+and extrapolating groups of data for which there is atleast one value.
 }
 \examples{
 working_humans_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
