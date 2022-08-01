@@ -13,6 +13,8 @@ fill_ilo_data(
   year = MWTools::mw_cols$year,
   yearly_working_hours_ilo_col = MWTools::ilo_cols$yearly_working_hours_ilo_col,
   employed_persons_ilo_col = MWTools::ilo_cols$employed_persons_ilo_col,
+  hours_count = MWTools::ilo_cols$hours_count,
+  employed_count = MWTools::ilo_cols$employed_count,
   col_1960 = MWTools::hmw_analysis_constants$col_1960,
   col_2020 = MWTools::hmw_analysis_constants$col_2020
 )
@@ -24,7 +26,7 @@ Usually produced by calling the
 
 \item{country_col, hmw_region_code_col}{See \code{MWTools::conc_cols}.}
 
-\item{sex_ilo_col, yearly_working_hours_ilo_col, employed_persons_ilo_col}{See \code{MWTools::ilo_cols}.}
+\item{sex_ilo_col, yearly_working_hours_ilo_col, employed_persons_ilo_col, employed_count, hours_count}{See \code{MWTools::ilo_cols}.}
 
 \item{sector_col}{See \code{MWTools::mw_constants}.}
 

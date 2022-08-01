@@ -10,6 +10,7 @@ library(IEATools)
 mw_constants <- list(country_name = "Country.name",
                      species = "Species",
                      value = "Value",
+                     value_count = "Value.count",
                      sector_col = "Sector",
                      stage_col = "Stage",
                      exemplar_method_col = "Exemplar/Method",
@@ -80,7 +81,9 @@ usethis::use_data(all_stages, overwrite = TRUE)
 ilo_cols <- list(ref_area_col = "ref_area",
                  sex_ilo_col = "Sex",
                  yearly_working_hours_ilo_col = "Working.hours [hours/year]",
-                 employed_persons_ilo_col = "Employed.persons [persons]")
+                 employed_persons_ilo_col = "Employed.persons [persons]",
+                 employed_count = "Employed.persons.count",
+                 hours_count = "Working.hours.count")
 usethis::use_data(ilo_cols, overwrite = TRUE)
 
 

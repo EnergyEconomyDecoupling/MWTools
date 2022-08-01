@@ -32,9 +32,9 @@ Imports:
     readxl,
     rlang,
     stringr,
-    threadr,
     tibble,
-    tidyr
+    tidyr,
+    zoo
 Suggests: 
     covr,
     IEATools,

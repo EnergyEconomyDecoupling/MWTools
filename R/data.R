@@ -7,6 +7,7 @@
 #' \item{country_name}{The name of a metadata column containing full length country names.}
 #' \item{species}{The name of the metadata column representing a species of live animal from FAO data.}
 #' \item{value}{The name of the data column containing the values of a given observation.}
+#' \item{value_count}{The name of the column containing data on the number of observations associated with each `value` data points group.}
 #' \item{sector_col}{The name of the metadata column containing the sector associated with the `value`.}
 #' \item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the `value`. Usally one of "Primary", "Final", or "Useful".}
 #' \item{exemplar_method_col}{The metadata column "Exemplar/Method" representing the regional exemplar or method used for a particular data series.}
@@ -140,6 +141,8 @@
 #' \item{sex_ilo_col}{The string "Sex".}
 #' \item{working_hours_ilo_col}{The string "Working.hours".}
 #' \item{employed_persons_ilo_col}{The string "Employed.persons".}
+#' \item{employed_count}{The name of the column containing data on the number of observations associated with each `employed_persons_ilo_col` data points group.}
+#' \item{hours_count}{The name of the column containing data on the number of observations associated with each `working_hours_ilo_col` data points group.}
 #' }
 #'
 #' @examples
