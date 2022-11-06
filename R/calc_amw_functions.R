@@ -5,7 +5,7 @@
 #'
 #' @param .df A data frame containing the raw FAO live animals data,
 #'            corresponding to the "QCL" FAO bulk download query.
-#' @param country_name,species,year,unit,value See `MWTools::mw_constants`.
+#' @param country_name,species,year,unit,value,value_count See `MWTools::mw_constants`.
 #' @param area_fao_col,item_fao_col,year_fao_col,unit_fao_col,value_fao_col
 #'        See `MWTools::fao_cols`.
 #' @param col_1960,col_2020 See `MWTools::hmw_analysis_constants`.
@@ -23,6 +23,7 @@ tidy_fao_live_animals <- function(.df,
                                   year = MWTools::mw_cols$year,
                                   unit = MWTools::mw_cols$unit,
                                   value = MWTools::mw_constants$value,
+                                  value_count = MWTools::mw_constants$value_count,
                                   area_fao_col = MWTools::fao_cols$area_fao_col,
                                   item_fao_col = MWTools::fao_cols$item_fao_col,
                                   year_fao_col = MWTools::fao_cols$year_fao_col,
@@ -50,7 +51,7 @@ tidy_fao_live_animals <- function(.df,
 
   # Converts "1000 Number" to "Number"
   live_animals_1000 <- live_animals %>%
-    dplyr::filter(.data[[unit]] == "1000 Number") %>%
+    dplyr::filter(.data[[unit]] == "1000 Number") %>% # ????????????????????????
     dplyr::mutate(
       "{value}" := .data[[value]] * 1000
     )
@@ -69,50 +70,23 @@ tidy_fao_live_animals <- function(.df,
 
     # Add a column containing the number of data points for each group of data
     # prior to adding na values for missing years
-    dplyr::mutate("value_count" = dplyr::n()) %>%
+    dplyr::mutate("{value_count}" := dplyr::n()) %>%
 
-    ### Option 1
     # Remove groups of data that only have one observation, as interpolation
     # and extrapolation is not possible from a single data point
-    dplyr::filter(value_count > 1) %>%
+    dplyr::filter(.data[[value_count]] > 1) %>%
+    # Remove columns that are no longer needed
+    dplyr::select(-value_count) %>%
 
     # Complete data frame by adding rows for missing years between 1960 and 2020
     tidyr::complete(Year = tidyr::full_seq(col_1960:col_2020, 1)) %>%
     # Remove groups for which there is no data at all
     dplyr::filter(!all(is.na(.data[[value]]))) %>%
-
-    # ### Option 2
-    # # For groups of data with a single data point, hold that data point constant
-    # # for every other year
-    # dplyr::mutate(
-    #   "{value}" := dplyr::case_when(
-    #     .data[[value_count]] > 1 ~ .data[[value]],
-    #     .data[[value_count]] == 1 ~ tidyr::fill(.data[[value]], .direction = "downup"),
-    #     TRUE ~ as.numeric(.data[[value]])
-    #   )
-    # ) %>%
-
-    dplyr::select(-value_count) %>%
-
     # Fill missing values
     # Linear interpolation
-    dplyr::mutate("{value}" := threadr::na_interpolate(.data[[value]])) %>%
-
-    # Linear extrapolation
-    # dplyr::mutate("{value}" := threadr::na_extrapolate(.data[[value]])) %>%
-
+    dplyr::mutate("{value}" := zoo::na.approx(.data[[value]], na.rm = FALSE)) %>%
     # Holding constant
     tidyr::fill(.data[[value]], .direction = "downup") %>%
-
-    # Replace negative values with 0
-    dplyr::mutate(
-      "{value}" := dplyr::case_when(
-        .data[[value]] > 0 ~ .data[[value]],
-        .data[[value]] <= 0 ~ 0,
-        TRUE ~ as.numeric(.data[[value]])
-        )
-      ) %>%
-
     # Ungroup data
     dplyr::ungroup()
 

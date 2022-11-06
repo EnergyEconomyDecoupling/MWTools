@@ -5,12 +5,14 @@
 \alias{ilo_cols}
 \title{ILO data column names}
 \format{
-A string list with 4 entries.
+A string list with 6 entries.
 \describe{
 \item{ref_area_col}{The string "ref_area".}
 \item{sex_ilo_col}{The string "Sex".}
 \item{working_hours_ilo_col}{The string "Working.hours".}
 \item{employed_persons_ilo_col}{The string "Employed.persons".}
+\item{employed_count}{The name of the column containing data on the number of observations associated with each \code{employed_persons_ilo_col} data points group.}
+\item{hours_count}{The name of the column containing data on the number of observations associated with each \code{working_hours_ilo_col} data points group.}
 }
 }
 \usage{
