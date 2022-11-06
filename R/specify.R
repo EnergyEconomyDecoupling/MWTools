@@ -216,7 +216,8 @@ specify_useful_products <- function(.df,
                                                suff = RCLabels::get_pref_suff(.data[[species]],
                                                                               which = "pref",
                                                                               notation = notation),
-                                               notation = notation)
+                                               notation = notation),
+      "{product}" := as.character(.data[[product]])
     )
   .df %>%
     # Eliminate useful energy rows
@@ -272,7 +273,8 @@ specify_fu_machines <- function(.df,
                                                suff = RCLabels::get_pref_suff(.data[[product]],
                                                                               which = "pref",
                                                                               notation = product_notation),
-                                               notation = machine_notation)
+                                               notation = machine_notation),
+      "{species}" := as.character(.data[[species]])
     )
   .df %>%
     # Eliminate useful energy rows
