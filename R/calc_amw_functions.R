@@ -76,7 +76,7 @@ tidy_fao_live_animals <- function(.df,
     # and extrapolation is not possible from a single data point
     dplyr::filter(.data[[value_count]] > 1) %>%
     # Remove columns that are no longer needed
-    dplyr::select(-value_count) %>%
+    dplyr::select(-dplyr::any_of(value_count)) %>%
 
     # Complete data frame by adding rows for missing years between 1960 and 2020
     tidyr::complete(Year = tidyr::full_seq(col_1960:col_2020, 1)) %>%
@@ -86,7 +86,8 @@ tidy_fao_live_animals <- function(.df,
     # Linear interpolation
     dplyr::mutate("{value}" := zoo::na.approx(.data[[value]], na.rm = FALSE)) %>%
     # Holding constant
-    tidyr::fill(.data[[value]], .direction = "downup") %>%
+    # tidyr::fill(.data[[value]], .direction = "downup") %>%
+    tidyr::fill(dplyr::all_of(value), .direction = "downup") %>%
     # Ungroup data
     dplyr::ungroup()
 
@@ -403,7 +404,7 @@ calc_sector_split <- function(.df,
       )
 
   .df %>%
-    dplyr::left_join(end_use, by = dplyr::all_of(c(species, amw_region_code_col, year))) %>%
+    dplyr::left_join(end_use, by = c(species, amw_region_code_col, year)) %>%
     dplyr::mutate(
       "{working_animals_ag_col}" := .data[[working_animals_total_col]] * .data[[prop_wkg_anmls_ag_col]],
       "{working_animals_tr_col}" := .data[[working_animals_total_col]] * .data[[prop_wkg_anmls_tr_col]]
