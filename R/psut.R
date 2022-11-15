@@ -304,7 +304,7 @@ collapse_to_psut <- function(.df,
   trimmed_df %>%
     # Keep only the columns we need.
     dplyr::select(dplyr::all_of(c(country, year, method, energy_type, last_stage, unit, e_dot,
-                  matnames, rownames, colnames, rowtypes, coltypes))) %>%
+                                  matnames, rownames, colnames, rowtypes, coltypes))) %>%
     # Group for the summarise operation
     # by everything except the energy column,
     # so we can aggregate rows whose energy belongs

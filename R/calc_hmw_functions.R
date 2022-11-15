@@ -237,7 +237,9 @@ split_labor_by_sector <- function(.df,
                                                 hmw_region_code_col)),
                         names_to = year,
                         values_to = labor_split_col) %>%
-    dplyr::mutate("{year}" := as.numeric(.data[[year]]))
+    dplyr::mutate(
+      "{year}" := as.numeric(.data[[year]])
+    )
 
   .df %>%
     dplyr::filter(.data[[sector_col]] %in% c(agriculture,
@@ -402,7 +404,7 @@ calc_hmw_primary_energy <- function(.df,
     dplyr::mutate(
       "{primary_energy_col}" := .data[[final_energy_col]] / (1 - .data[[hmw_harvest_waste_col]])
     ) %>%
-    dplyr::select(-dplyr::all_of(hmw_harvest_waste_col))
+    dplyr::select(-dplyr::any_of(hmw_harvest_waste_col))
 }
 
 
