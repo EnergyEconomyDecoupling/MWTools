@@ -107,14 +107,15 @@ fill_ilo_data <- function(.df,
     dplyr::filter(!all(is.na(.data[[yearly_working_hours_ilo_col]]))) %>%
     # Fill missing values
     # Linear interpolation
-    dplyr::mutate("{employed_persons_ilo_col}" := zoo::na.approx(.data[[employed_persons_ilo_col]], na.rm = FALSE)) %>%
-    dplyr::mutate("{yearly_working_hours_ilo_col}" := zoo::na.approx(.data[[yearly_working_hours_ilo_col]], na.rm = FALSE)) %>%
+    dplyr::mutate(
+      "{employed_persons_ilo_col}" := zoo::na.approx(.data[[employed_persons_ilo_col]], na.rm = FALSE),
+      "{yearly_working_hours_ilo_col}" := zoo::na.approx(.data[[yearly_working_hours_ilo_col]], na.rm = FALSE)
+    ) %>%
     # Holding constant
-    tidyr::fill(.data[[yearly_working_hours_ilo_col]], .direction = "downup") %>%
-    tidyr::fill(.data[[employed_persons_ilo_col]], .direction = "downup") %>%
+    tidyr::fill(dplyr::all_of(yearly_working_hours_ilo_col), .direction = "downup") %>%
+    tidyr::fill(dplyr::all_of(employed_persons_ilo_col), .direction = "downup") %>%
     # Ungroup data
     dplyr::ungroup()
-
 }
 
 
