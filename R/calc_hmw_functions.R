@@ -248,7 +248,7 @@ split_labor_by_sector <- function(.df,
                                           sex_ilo_col,
                                           sector_col,
                                           year))) %>%
-    dplyr::relocate(.data[[labor_type_col]], .after = dplyr::all_of(c(sector_col))) %>%
+    dplyr::relocate(dplyr::all_of(labor_type_col), .after = dplyr::all_of(sector_col)) %>%
     dplyr::mutate("{employed_persons_ilo_col}" := .data[[employed_persons_ilo_col]] * .data[[labor_split_col]],
                   "{total_wk_hrs_ilo_col}" := .data[[total_wk_hrs_ilo_col]] * .data[[labor_split_col]]) %>%
     dplyr::select(-dplyr::all_of(c(labor_split_col)))
@@ -534,9 +534,11 @@ tidy_hmw_pfu <- function(.df,
         TRUE ~ "Unknown sector column value"
       )
     ) %>%
-    dplyr::rename("{species}" := .data[[sex_ilo_col]]) %>%
-    dplyr::mutate("{energy_col}" := .data[[energy_col]] * 0.000000000001) %>%
-    dplyr::mutate("{units_col}" := "EJ", .before = dplyr::all_of(energy_col)) %>%
+    dplyr::rename("{species}" := dplyr::all_of(sex_ilo_col)) %>%
+    dplyr::mutate(
+      "{energy_col}" := .data[[energy_col]] * 0.000000000001,
+      "{units_col}" := "EJ", .before = dplyr::all_of(energy_col)
+    ) %>%
     dplyr::group_by(
       dplyr::across({{ country_col }}),
       dplyr::across({{ year }}),
