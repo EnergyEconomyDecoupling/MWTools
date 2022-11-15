@@ -249,8 +249,10 @@ split_labor_by_sector <- function(.df,
                                           sector_col,
                                           year))) %>%
     dplyr::relocate(dplyr::all_of(labor_type_col), .after = dplyr::all_of(sector_col)) %>%
-    dplyr::mutate("{employed_persons_ilo_col}" := .data[[employed_persons_ilo_col]] * .data[[labor_split_col]],
-                  "{total_wk_hrs_ilo_col}" := .data[[total_wk_hrs_ilo_col]] * .data[[labor_split_col]]) %>%
+    dplyr::mutate(
+      "{employed_persons_ilo_col}" := .data[[employed_persons_ilo_col]] * .data[[labor_split_col]],
+      "{total_wk_hrs_ilo_col}" := .data[[total_wk_hrs_ilo_col]] * .data[[labor_split_col]]
+    ) %>%
     dplyr::select(-dplyr::all_of(c(labor_split_col)))
 }
 
