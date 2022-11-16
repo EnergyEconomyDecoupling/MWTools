@@ -4,6 +4,8 @@ output: html_document
 ---
 
 
+* Responded to changes in `tidyselect`, 
+  eliminating warnings from several `dplyr::all_of()` invocations.
 * Defend against zero-row data frames,
   which can occur when there is no muscle work data.
   Now returning zero-row data frames
