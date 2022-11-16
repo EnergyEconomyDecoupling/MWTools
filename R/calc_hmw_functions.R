@@ -246,10 +246,10 @@ split_labor_by_sector <- function(.df,
                                              industry,
                                              services)) %>%
     dplyr::left_join(sector_mapping_data,
-                     by = dplyr::all_of(c(hmw_region_code_col,
-                                          sex_ilo_col,
-                                          sector_col,
-                                          year))) %>%
+                     by = c(hmw_region_code_col,
+                            sex_ilo_col,
+                            sector_col,
+                            year)) %>%
     dplyr::relocate(dplyr::all_of(labor_type_col), .after = dplyr::all_of(sector_col)) %>%
     dplyr::mutate(
       "{employed_persons_ilo_col}" := .data[[employed_persons_ilo_col]] * .data[[labor_split_col]],

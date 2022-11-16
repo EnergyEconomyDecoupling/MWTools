@@ -756,8 +756,13 @@ tidy_pfu_data <- function(.df,
         TRUE ~ "Unknown sector column value"
         )
       ) %>%
-    dplyr::mutate("{energy_col}" := .data[[energy_col]] * 0.000000000001) %>%
-    dplyr::mutate("{units_col}" := "EJ", .before = dplyr::all_of(energy_col)) %>%
+    dplyr::mutate(
+      "{energy_col}" := .data[[energy_col]] * 0.000000000001
+    ) %>%
+    dplyr::mutate(
+      "{units_col}" := "EJ",
+      .before = dplyr::all_of(energy_col)
+    ) %>%
     magrittr::set_colnames(c(country_col, year, species,
                              stage_col, sector_col, units_col, energy_col))
 }
