@@ -129,9 +129,9 @@ test_that("tidy_hmw_data() works",{
     calc_total_hours_worked() %>%
     get_broad.sector_data() %>%
     split_labor_by_sector() %>%
-    calc_hmw_final_energy %>%
-    calc_hmw_primary_energy %>%
-    calc_hmw_useful_energy %>%
+    calc_hmw_final_energy() %>%
+    calc_hmw_primary_energy() %>%
+    calc_hmw_useful_energy() %>%
     tidy_hmw_pfu()
   expect_true(!is.null(tidy_hmw_data))
   # As of 11 May 2022, we are getting some NA energy values,
