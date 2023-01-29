@@ -13,7 +13,7 @@ Author:
              role = c("aut"),
              email = "matthew.heun@me.com"),
              comment = c(ORCID = "0000-0002-7438-214X")))
-Maintainer: Zeke Marshall <marshall_zeke@outlook.com>
+Maintainer: Zeke Marshall <marshall_zeke@outlook.com> and Matthew Kuperus Heun <matthew.heun@me.com>
 Description: MWTools provides functions for retrieving and wrangling data for the
              calculation of human and animal muscle work data, and conversion into
              the PSUT format.

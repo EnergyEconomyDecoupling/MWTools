@@ -43,6 +43,12 @@
     <loc>/reference/amw_test_data_path.html</loc>
   </url>
   <url>
+    <loc>/reference/calc_S_units.html</loc>
+  </url>
+  <url>
+    <loc>/reference/calc_U_feed_U_eiou_r_eiou.html</loc>
+  </url>
+  <url>
     <loc>/reference/calc_amw_pfu.html</loc>
   </url>
   <url>
@@ -77,6 +83,9 @@
   </url>
   <url>
     <loc>/reference/calc_yearly_feed.html</loc>
+  </url>
+  <url>
+    <loc>/reference/collapse_to_psut.html</loc>
   </url>
   <url>
     <loc>/reference/conc_cols.html</loc>
@@ -124,6 +133,15 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
+    <loc>/reference/last_stages.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mat_meta_cols.html</loc>
+  </url>
+  <url>
+    <loc>/reference/methods.html</loc>
+  </url>
+  <url>
     <loc>/reference/mw_cols.html</loc>
   </url>
   <url>
@@ -139,13 +157,25 @@
     <loc>/reference/mw_species.html</loc>
   </url>
   <url>
+    <loc>/reference/phi_constants_mw.html</loc>
+  </url>
+  <url>
+    <loc>/reference/phi_vec_mw.html</loc>
+  </url>
+  <url>
     <loc>/reference/pipe.html</loc>
   </url>
   <url>
     <loc>/reference/prep_psut.html</loc>
   </url>
   <url>
+    <loc>/reference/psut_cols.html</loc>
+  </url>
+  <url>
     <loc>/reference/quasi-quote-assign.html</loc>
+  </url>
+  <url>
+    <loc>/reference/row_col_types.html</loc>
   </url>
   <url>
     <loc>/reference/specify_energy_type_method.html</loc>
@@ -167,6 +197,9 @@
   </url>
   <url>
     <loc>/reference/specify_useful_products.html</loc>
+  </url>
+  <url>
+    <loc>/reference/split_labor_by_sector.html</loc>
   </url>
   <url>
     <loc>/reference/tidy_fao_live_animals.html</loc>
