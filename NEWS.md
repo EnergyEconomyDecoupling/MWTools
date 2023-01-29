@@ -4,6 +4,8 @@ output: html_document
 ---
 
 
+# MWTools 0.1.1 (2023-01-28)
+
 * Responded to changes in `tidyselect`, 
   eliminating warnings from several `dplyr::all_of()` invocations.
 * Defend against zero-row data frames,
