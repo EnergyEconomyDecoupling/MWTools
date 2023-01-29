@@ -1,11 +1,50 @@
 Package: MWTools
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Functions For Calculation of Muscle Work Within the PSUT Framework
+Version: 0.1.1
+Date: 2023-01-28
+Author:
+    c(person(given = "Zeke",
+             family = "Marshall",
+             role = c("aut", "cre"),
+             email = "marshall_zeke@outlook.com",
+             comment = c(ORCID = "0000-0001-9260-7827")),
+      person(given = "Matthew",
+             family = "Heun", 
+             role = c("aut"),
+             email = "matthew.heun@me.com"),
+             comment = c(ORCID = "0000-0002-7438-214X")))
+Maintainer: Zeke Marshall <marshall_zeke@outlook.com> and Matthew Kuperus Heun <matthew.heun@me.com>
+Description: MWTools provides functions for retrieving and wrangling data for the
+             calculation of human and animal muscle work data, and conversion into
+             the PSUT format.
+License: MIT + file LICENSE
+Language: en-US
 Encoding: UTF-8
 LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports:
+    assertthat,
+    dplyr,
+    magrittr,
+    matsindf,
+    RCLabels,
+    readxl,
+    rlang,
+    stringr,
+    tibble,
+    tidyr,
+    zoo
+Suggests: 
+    covr,
+    IEATools,
+    knitr,
+    matsbyname,
+    Recca,
+    testthat (>= 3.0.0)
+Depends: 
+    R (>= 2.10)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+URL: https://energyeconomydecoupling.github.io/MWTools/
