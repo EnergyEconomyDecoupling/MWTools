@@ -1,7 +1,8 @@
 Package: MWTools
 Type: Package
-Title: Functions for the calculation of muscle work Within the PSUT Framework
-Version: 0.1.0
+Title: Functions For Calculation of Muscle Work Within the PSUT Framework
+Version: 0.1.1
+Date: 2023-01-28
 Author:
     c(person(given = "Zeke",
              family = "Marshall",
@@ -22,7 +23,7 @@ Language: en-US
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 Imports:
     assertthat,
     dplyr,

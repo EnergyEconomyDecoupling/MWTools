@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MWTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,10 +39,22 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.1" id="mwtools-011-2023-01-28">MWTools 0.1.1 (2023-01-28)<a class="anchor" aria-label="anchor" href="#mwtools-011-2023-01-28"></a></h2>
+<ul><li>Responded to changes in <code>tidyselect</code>, eliminating warnings from several <code><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">dplyr::all_of()</a></code> invocations.</li>
+<li>Defend against zero-row data frames, which can occur when there is no muscle work data. Now returning zero-row data frames to enable pipelines containing some countries without muscle work data.</li>
+<li>
+<code><a href="../reference/prep_psut.html">prep_psut()</a></code> now returns a zero-row data frame if the inputs are zero-row data frames.</li>
+<li>New function <code><a href="../reference/phi_vec_mw.html">phi_vec_mw()</a></code> creates a phi vector for use when converting energy to exergy.</li>
+<li>Now setting <code>NA</code> values to <code>0</code> in <code><a href="../reference/specify_energy_type_method.html">specify_energy_type_method()</a></code>, to defend against energy balance errors later in the <code><a href="../reference/prep_psut.html">prep_psut()</a></code> function.</li>
+<li>New functions to create a data frame of PSUT matrices representing a muscle work energy conversion chain. See <code><a href="../reference/prep_psut.html">prep_psut()</a></code> and friends.</li>
+<li>Functions now return uniform data frames with the following columns: AMW.Region.code (or HMW.Region.code), Country.code, Year, Species (or Sex), Stage, Sector, and E.dot.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="mwtools-010">MWTools 0.1.0<a class="anchor" aria-label="anchor" href="#mwtools-010"></a></h2>
 <ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
 </ul></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
