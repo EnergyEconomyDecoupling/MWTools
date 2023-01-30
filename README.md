@@ -7,6 +7,8 @@
 
 [![Codecov test
 coverage](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools/branch/master/graph/badge.svg)](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools?branch=master)
+[![R-CMD-check](https://github.com/EnergyEconomyDecoupling/MWTools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/EnergyEconomyDecoupling/MWTools/actions/workflows/R-CMD-check.yaml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7584859.svg)](https://doi.org/10.5281/zenodo.7584859)
 <!-- badges: end -->
 
 The `R` package `MWTools` provides functions for the estimation of human
@@ -53,12 +55,12 @@ head(amw_pfu_data)
 #> # A tibble: 6 × 7
 #>   Country  Year Species Stage   Sector      Unit     E.dot
 #>   <chr>   <dbl> <chr>   <chr>   <chr>       <chr>    <dbl>
-#> 1 AFG      1961 Asses   Useful  Agriculture EJ    0.000125
-#> 2 AFG      1961 Asses   Useful  Transport   EJ    0.000706
-#> 3 AFG      1961 Asses   Final   Agriculture EJ    0.00190 
-#> 4 AFG      1961 Asses   Final   Transport   EJ    0.0108  
-#> 5 AFG      1961 Asses   Primary Agriculture EJ    0.00423 
-#> 6 AFG      1961 Asses   Primary Transport   EJ    0.0240
+#> 1 AFG      1960 Asses   Useful  Agriculture EJ    0.000125
+#> 2 AFG      1960 Asses   Useful  Transport   EJ    0.000706
+#> 3 AFG      1960 Asses   Final   Agriculture EJ    0.00190 
+#> 4 AFG      1960 Asses   Final   Transport   EJ    0.0108  
+#> 5 AFG      1960 Asses   Primary Agriculture EJ    0.00423 
+#> 6 AFG      1960 Asses   Primary Transport   EJ    0.0240
 ```
 
 ## Human Muscle Work
@@ -85,14 +87,14 @@ hmw_pfu_data <- calc_hmw_pfu(.df = ilo_raw_rds,
 
 head(hmw_pfu_data)
 #> # A tibble: 6 × 7
-#>   Country  Year Species       Stage   Sector      Unit  E.dot
-#>   <chr>   <dbl> <chr>         <chr>   <chr>       <chr> <dbl>
-#> 1 ABW      1994 Human females Final   Agriculture EJ       NA
-#> 2 ABW      1994 Human females Primary Agriculture EJ       NA
-#> 3 ABW      1994 Human females Useful  Agriculture EJ       NA
-#> 4 ABW      1997 Human females Final   Agriculture EJ       NA
-#> 5 ABW      1997 Human females Primary Agriculture EJ       NA
-#> 6 ABW      1997 Human females Useful  Agriculture EJ       NA
+#>   Country  Year Species       Stage   Sector      Unit     E.dot
+#>   <chr>   <dbl> <chr>         <chr>   <chr>       <chr>    <dbl>
+#> 1 AFG      1960 Human females Final   Agriculture EJ    0.00686 
+#> 2 AFG      1960 Human females Final   Industry    EJ    0.000842
+#> 3 AFG      1960 Human females Final   Services    EJ    0.000393
+#> 4 AFG      1960 Human females Primary Agriculture EJ    0.0156  
+#> 5 AFG      1960 Human females Primary Industry    EJ    0.00191 
+#> 6 AFG      1960 Human females Primary Services    EJ    0.000892
 ```
 
 ## PSUT matrices

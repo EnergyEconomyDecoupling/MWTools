@@ -3,6 +3,8 @@ title: "Release notes for `MWTools`"
 output: html_document
 ---
 
+# MWTools 0.1.2 (2023-01-30)
+
 * Adding Zenodo badge
 
 # MWTools 0.1.1 (2023-01-28)
