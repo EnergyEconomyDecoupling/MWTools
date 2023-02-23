@@ -152,3 +152,81 @@ test_that("calc_hmw_pfu() works",{
   expect_false(any(is.na(hmw_data_pfu[[MWTools::mw_cols$e_dot]])))
 })
 
+
+test_that("calc_hmw_pfu() no longer throws a warning", {
+  # These function calls are in a chain that throws a warning.
+  # Go through them one-by-one to find the problem.
+
+  concordance_path <- MWTools::fao_concordance_path()
+  hmw_analysis_data_path <- MWTools::hmw_analysis_data_path()
+
+  pfu_energy_data <- read.csv(file = MWTools::hmw_test_data_path())
+
+  expect_no_warning(pfu_energy_data %>%
+                      add_hmw_region_codes(concordance_path = concordance_path))
+
+  expect_no_warning(pfu_energy_data %>%
+                      add_hmw_region_codes(concordance_path = concordance_path) %>%
+                      fill_ilo_data())
+
+  expect_no_warning(pfu_energy_data %>%
+                      add_hmw_region_codes(concordance_path = concordance_path) %>%
+                      fill_ilo_data() %>%
+                      calc_total_hours_worked())
+
+  expect_no_warning(pfu_energy_data %>%
+                      add_hmw_region_codes(concordance_path = concordance_path) %>%
+                      fill_ilo_data() %>%
+                      calc_total_hours_worked() %>%
+                      get_broad.sector_data())
+
+  expect_no_warning(pfu_energy_data %>%
+                      add_hmw_region_codes(concordance_path = concordance_path) %>%
+                      fill_ilo_data() %>%
+                      calc_total_hours_worked() %>%
+                      get_broad.sector_data() %>%
+                      split_labor_by_sector(hmw_analysis_data_path = hmw_analysis_data_path))
+
+  expect_no_warning(pfu_energy_data %>%
+                      add_hmw_region_codes(concordance_path = concordance_path) %>%
+                      fill_ilo_data() %>%
+                      calc_total_hours_worked() %>%
+                      get_broad.sector_data() %>%
+                      split_labor_by_sector(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+                      calc_hmw_final_energy(hmw_analysis_data_path = hmw_analysis_data_path))
+
+  expect_no_warning(pfu_energy_data %>%
+                      add_hmw_region_codes(concordance_path = concordance_path) %>%
+                      fill_ilo_data() %>%
+                      calc_total_hours_worked() %>%
+                      get_broad.sector_data() %>%
+                      split_labor_by_sector(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+                      calc_hmw_final_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+                      calc_hmw_primary_energy(hmw_analysis_data_path = hmw_analysis_data_path))
+
+  expect_no_warning(pfu_energy_data %>%
+                      add_hmw_region_codes(concordance_path = concordance_path) %>%
+                      fill_ilo_data() %>%
+                      calc_total_hours_worked() %>%
+                      get_broad.sector_data() %>%
+                      split_labor_by_sector(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+                      calc_hmw_final_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+                      calc_hmw_primary_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+                      calc_hmw_useful_energy(hmw_analysis_data_path = hmw_analysis_data_path))
+
+  expect_no_warning(pfu_energy_data %>%
+                      add_hmw_region_codes(concordance_path = concordance_path) %>%
+                      fill_ilo_data() %>%
+                      calc_total_hours_worked() %>%
+                      get_broad.sector_data() %>%
+                      split_labor_by_sector(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+                      calc_hmw_final_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+                      calc_hmw_primary_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+                      calc_hmw_useful_energy(hmw_analysis_data_path = hmw_analysis_data_path) %>%
+                      tidy_hmw_pfu())
+
+  # The whole function should also not produce a warning.
+  expect_no_warning(pfu_energy_data %>%
+                      calc_hmw_pfu(concordance_path = concordance_path, hmw_analysis_data_path = hmw_analysis_data_path))
+
+})

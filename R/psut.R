@@ -254,6 +254,8 @@ add_row_col_meta <- function(.df,
 #'
 #' @param .df A data frame created by `add_row_col_meta()` so that it contains
 #'            metadata columns for creating PSUT matrices.
+#' @param matrix.class The type of matrix to be created, one of "matrix" or "Matrix".
+#'                     Default is "matrix".
 #' @param country,year,method,energy_type,last_stage,unit,e_dot See `MWTools::mw_cols`.
 #' @param matnames,matvals,rownames,colnames,rowtypes,coltypes See `MWTools::mat_meta_cols`.
 #'
@@ -282,6 +284,7 @@ add_row_col_meta <- function(.df,
 #'   MWTools::add_row_col_meta() %>%
 #'   MWTools::collapse_to_psut()
 collapse_to_psut <- function(.df,
+                             matrix.class = c("matrix", "Matrix"),
                              # Metadata columns
                              country = MWTools::mw_cols$country,
                              year = MWTools::mw_cols$year,
@@ -296,6 +299,8 @@ collapse_to_psut <- function(.df,
                              colnames = MWTools::mat_meta_cols$colnames,
                              rowtypes = MWTools::mat_meta_cols$rowtypes,
                              coltypes = MWTools::mat_meta_cols$coltypes) {
+
+  matrix.class <- match.arg(matrix.class)
 
   trimmed_df <- .df %>%
     # Keep only the columns we need.
@@ -316,7 +321,7 @@ collapse_to_psut <- function(.df,
     # Group for the collapse operation
     matsindf::group_by_everything_except(e_dot, matvals, rownames, colnames, rowtypes, coltypes) %>%
     # Create matrices
-    matsindf::collapse_to_matrices(matvals = e_dot) %>%
+    matsindf::collapse_to_matrices(matvals = e_dot, matrix.class = matrix.class) %>%
     # Spread to be wide-by-matrices
     tidyr::pivot_wider(names_from = matnames, values_from = dplyr::all_of(e_dot))
 }
@@ -339,6 +344,8 @@ collapse_to_psut <- function(.df,
 #' The `unit` column will remain in `.df` on output and will need to be deleted afterward.
 #'
 #' @param .df A data frame. Default is `NULL`.
+#' @param matrix.class The type of matrix to be created, one of "matrix" or "Matrix".
+#'                     Default is "matrix".
 #' @param unit A string unit for each row or the name of the unit column in `.df`. See `MWTools::mw_cols`.
 #' @param R,U,V,Y PSUT matrices or the names of matrix columns in `.df`. See `MWTools::psut_cols`.
 #' @param s_units The name of the output matrix or the output column. See `MWTools::psut_cols`.
@@ -371,6 +378,7 @@ collapse_to_psut <- function(.df,
 #'   MWTools::collapse_to_psut() %>%
 #'   calc_S_units()
 calc_S_units <- function(.df = NULL,
+                         matrix.class = c("matrix", "Matrix"),
                          # Input columns
                          unit = MWTools::mw_cols$unit,
                          R = MWTools::psut_cols$R,
@@ -383,6 +391,9 @@ calc_S_units <- function(.df = NULL,
                          product_notation = RCLabels::from_notation,
                          product_type = MWTools::row_col_types$product,
                          unit_type = MWTools::row_col_types$unit) {
+
+  matrix.class <- match.arg(matrix.class)
+
   s_units_func <- function(unit_val, R_mat, U_mat, V_mat, Y_mat) {
     # Get the products in the R, U, V, and Y matrices
     R_products <- R_mat %>%
@@ -412,9 +423,15 @@ calc_S_units <- function(.df = NULL,
 
     products_list <- c(R_products, U_products, V_products, Y_products) %>%
       unique()
-    units_vector <- matrix(1, nrow = length(products_list), ncol = 1,
-                           dimnames = list(products_list, unit_val)) %>%
-      matsbyname::setrowtype(product_type) %>% matsbyname::setcoltype(unit_type)
+    if (matrix.class == "matrix") {
+      units_vector <- matrix(1, nrow = length(products_list), ncol = 1,
+                             dimnames = list(products_list, unit_val)) %>%
+        matsbyname::setrowtype(product_type) %>% matsbyname::setcoltype(unit_type)
+    } else {
+      units_vector <- matsbyname::Matrix(1, nrow = length(products_list), ncol = 1,
+                                         dimnames = list(products_list, unit_val)) %>%
+        matsbyname::setrowtype(product_type) %>% matsbyname::setcoltype(unit_type)
+    }
     list(units_vector) %>%
       magrittr::set_names(c(s_units))
   }
@@ -512,6 +529,8 @@ calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
 #'
 #' @param .hmw_df A data frame produced by `calc_hmw_pfu()`.
 #' @param .amw_df A data frame produced by `calc_amw_pfu()`.
+#' @param matrix.class The type of matrix to be created, one of "matrix" or "Matrix".
+#'                     Default is "matrix".
 #' @param unit,R,U,V,Y,s_units,U_feed,U_eiou,r_eiou Column names. See `IEATools::psut_cols`.
 #'
 #' @return A data frame of musle work PSUT matrices.
@@ -531,6 +550,7 @@ calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
 #'   dplyr::filter(Year %in% 2000:2002)
 #' prep_psut(hmw_df, amw_df)
 prep_psut <- function(.hmw_df, .amw_df,
+                      matrix.class = c("matrix", "Matrix"),
                       unit = IEATools::iea_cols$unit,
                       R = IEATools::psut_cols$R,
                       U = IEATools::psut_cols$U,
@@ -540,6 +560,9 @@ prep_psut <- function(.hmw_df, .amw_df,
                       U_feed = IEATools::psut_cols$U_feed,
                       U_eiou = IEATools::psut_cols$U_eiou,
                       r_eiou = IEATools::psut_cols$r_eiou) {
+
+  matrix.class <- match.arg(matrix.class)
+
   # Calculate a preliminary outbound data frame.
   out <- specify_energy_type_method(.hmw_df, .amw_df) %>%
     specify_product() %>%
@@ -549,7 +572,7 @@ prep_psut <- function(.hmw_df, .amw_df,
     specify_fu_machines() %>%
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
-    MWTools::collapse_to_psut()
+    MWTools::collapse_to_psut(matrix.class = matrix.class)
   # If out has no rows, it probably means that the incoming data frames
   # had no rows.
   # Trap that condition here (where correct metadata columns are present) and
@@ -581,7 +604,7 @@ prep_psut <- function(.hmw_df, .amw_df,
   # If we get here, we have a non-zero-rows outgoing data frame.
   # Continue with the calculations.
   out %>%
-    calc_S_units() %>%
+    calc_S_units(matrix.class = matrix.class) %>%
     # Eliminate the Unit column.
     dplyr::mutate(
       "{MWTools::mw_cols$unit}" := NULL

@@ -6,6 +6,7 @@
 \usage{
 collapse_to_psut(
   .df,
+  matrix.class = c("matrix", "Matrix"),
   country = MWTools::mw_cols$country,
   year = MWTools::mw_cols$year,
   method = MWTools::mw_cols$method,
@@ -24,6 +25,9 @@ collapse_to_psut(
 \arguments{
 \item{.df}{A data frame created by \code{add_row_col_meta()} so that it contains
 metadata columns for creating PSUT matrices.}
+
+\item{matrix.class}{The type of matrix to be created, one of "matrix" or "Matrix".
+Default is "matrix".}
 
 \item{country, year, method, energy_type, last_stage, unit, e_dot}{See \code{MWTools::mw_cols}.}
 

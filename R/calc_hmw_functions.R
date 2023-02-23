@@ -249,7 +249,11 @@ split_labor_by_sector <- function(.df,
                      by = c(hmw_region_code_col,
                             sex_ilo_col,
                             sector_col,
-                            year)) %>%
+                            year),
+                     # The left_join() results in multiple rows, as desired.
+                     # But left_join() has been changed to give a warning when that occurs.
+                     # multiple = "all" suppresses that warning in an approved way.
+                     multiple = "all") %>%
     dplyr::relocate(dplyr::all_of(labor_type_col), .after = dplyr::all_of(sector_col)) %>%
     dplyr::mutate(
       "{employed_persons_ilo_col}" := .data[[employed_persons_ilo_col]] * .data[[labor_split_col]],
@@ -570,8 +574,7 @@ tidy_hmw_pfu <- function(.df,
 #'   calc_hmw_pfu()
 calc_hmw_pfu <- function(.df,
                          concordance_path = MWTools::fao_concordance_path(),
-                         hmw_analysis_data_path = MWTools::hmw_analysis_data_path()
-                         ){
+                         hmw_analysis_data_path = MWTools::hmw_analysis_data_path()){
 
   .df %>%
     add_hmw_region_codes(concordance_path = concordance_path) %>%

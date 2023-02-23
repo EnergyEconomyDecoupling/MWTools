@@ -3,6 +3,10 @@ title: "Release notes for `MWTools`"
 output: html_document
 ---
 
+
+* Now works with `Matrix` objects.
+
+
 # MWTools 0.1.2 (2023-01-30)
 
 * Adding Zenodo badge

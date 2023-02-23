@@ -204,6 +204,81 @@ test_that("collapse_to_psut() works as expected", {
 })
 
 
+test_that("collapse_to_psut() works for Matrix objects", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  res <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
+    specify_ktoe() %>%
+    MWTools::specify_primary_production() %>%
+    specify_useful_products() %>%
+    specify_fu_machines() %>%
+    specify_last_stages() %>%
+    MWTools::add_row_col_meta() %>%
+    MWTools::collapse_to_psut(matrix.class = "Matrix")
+
+  # Ensure that every entry in the matrix columns is a Matrix
+  for (mat in c(MWTools::psut_cols$R,
+                MWTools::psut_cols$U,
+                MWTools::psut_cols$V,
+                MWTools::psut_cols$Y)) {
+    res[[mat]] %>%
+      lapply(function(x) {
+        matsbyname::is.Matrix(x)
+      }) %>%
+      unlist() %>%
+      all() %>%
+      expect_true()
+  }
+
+  # Ensure that data are in the right place
+  # by taking a few samples.
+  expected1 <- hmw_df %>%
+    dplyr::filter(.data[[MWTools::mw_cols$country]] == "GBR",
+                  .data[[MWTools::mw_cols$year]] == 2000,
+                  .data[[MWTools::mw_constants$species]] == "Human females",
+                  .data[[MWTools::mw_constants$sector_col]] == "Agriculture",
+                  .data[[MWTools::mw_constants$stage_col]] == MWTools::all_stages$useful) %>%
+    magrittr::extract2(MWTools::mw_cols$e_dot) %>%
+    magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
+  actual1 <- res %>%
+    dplyr::filter(Country == "GBR", Year == 2000, Last.stage == "Useful") %>%
+    magrittr::extract2(MWTools::psut_cols$Y) %>%
+    magrittr::extract2(1) %>%
+    matsbyname::select_rows_byname(retain_pattern = RCLabels::make_or_pattern("HuMech [from Human females]")) %>%
+    matsbyname::select_cols_byname(retain_pattern = RCLabels::make_or_pattern("Agriculture")) %>%
+    magrittr::extract(1, 1)
+  expect_equal(actual1, expected1)
+
+  expected2 <- amw_df %>%
+    dplyr::filter(.data[[MWTools::mw_cols$country]] == "CHNM",
+                  .data[[MWTools::mw_cols$year]] == 2002,
+                  # .data[[MWTools::mw_constants$species]] == "Asses",
+                  .data[[MWTools::mw_constants$sector_col]] == "Transport",
+                  .data[[MWTools::mw_constants$stage_col]] == MWTools::all_stages$final) %>%
+    # Several Species provide Transport.
+    # Sum them before comparing to the entry in the Y matrix.
+    magrittr::extract2(MWTools::mw_cols$e_dot) %>%
+    sum() %>%
+    magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
+  actual2 <- res %>%
+    dplyr::filter(Country == "CHNM", Year == 2002, Last.stage == MWTools::all_stages$final) %>%
+    magrittr::extract2(MWTools::psut_cols$Y) %>%
+    # Grab the first matrix in the column.
+    magrittr::extract2(1) %>%
+    magrittr::extract(MWTools::mw_products$feed, MWTools::mw_sectors$transport_sector)
+  expect_equal(actual2, expected2)
+})
+
+
 test_that("collapse_to_psut() works for inputs to Farms", {
   # This is an important test, because it checks whether aggregation
   # works at the level of the tidy data frame
@@ -268,6 +343,70 @@ test_that("collapse_to_psut() works for inputs to Farms", {
 })
 
 
+test_that("collapse_to_psut() works for inputs to Farms with Matrix objects", {
+  # This is an important test, because it checks whether aggregation
+  # works at the level of the tidy data frame
+  # (prior to forming matrices).
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  temp <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
+    specify_ktoe() %>%
+    MWTools::specify_primary_production() %>%
+    specify_useful_products() %>%
+    specify_fu_machines() %>%
+    specify_last_stages() %>%
+    MWTools::add_row_col_meta()
+  res <- temp %>%
+    MWTools::collapse_to_psut(matrix.class = "Matrix")
+
+  # Grab all the inputs to Farms (which is Biomass [from Resources])
+  farms_input <- temp %>%
+    dplyr::filter(.data[[MWTools::mat_meta_cols$rownames]] == RCLabels::paste_pref_suff(pref = MWTools::mw_products$biomass,
+                                                                                        suff = MWTools::mw_sectors$resources_sector,
+                                                                                        notation = RCLabels::from_notation)) %>%
+    dplyr::group_by(.data[[MWTools::mw_cols$country]], .data[[MWTools::mw_cols$year]], .data[[MWTools::mw_cols$last_stage]]) %>%
+    dplyr::summarise("{MWTools::mw_cols$e_dot}" := sum(.data[[MWTools::mw_cols$e_dot]]), .groups = "drop")
+
+  # Compare the data in farms_input to data in the U matrices.
+  years <- res[[MWTools::mw_cols$year]] %>% unique()
+  countries <- res[[MWTools::mw_cols$country]] %>% unique()
+  last_stages <- res[[MWTools::mw_cols$last_stage]] %>% unique()
+  for (coun in countries) {
+    for (yr in years) {
+      for (ls in last_stages) {
+        # Get the value out of the matrix
+        actual <- res %>%
+          dplyr::filter(.data[[MWTools::mw_cols$year]] == yr,
+                        .data[[MWTools::mw_cols$country]] == coun,
+                        .data[[MWTools::mw_cols$last_stage]] == ls) %>%
+          magrittr::extract2(MWTools::psut_cols$R) %>%
+          # Get the first and only item in the R column
+          magrittr::extract2(1) %>%
+          # Get the entry in the first row and first column
+          magrittr::extract(1, 1)
+        # Get the correct item from farms_input
+        expected <- farms_input %>%
+          dplyr::filter(.data[[MWTools::mw_cols$year]] == yr,
+                        .data[[MWTools::mw_cols$country]] == coun,
+                        .data[[MWTools::mw_cols$last_stage]] == ls) %>%
+          magrittr::extract2(MWTools::mw_cols$e_dot) %>%
+          magrittr::extract2(1)
+        expect_equal(actual, expected)
+      }
+    }
+  }
+})
+
+
 test_that("Energy is balanced in PSUT matrices", {
   hmw_df <- hmw_test_data_path() %>%
     read.csv() %>%
@@ -299,6 +438,37 @@ test_that("Energy is balanced in PSUT matrices", {
 })
 
 
+test_that("Energy is balanced in PSUT Matrix objects", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  psut <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
+    specify_ktoe() %>%
+    MWTools::specify_primary_production() %>%
+    specify_useful_products() %>%
+    specify_fu_machines() %>%
+    specify_last_stages() %>%
+    MWTools::add_row_col_meta() %>%
+    MWTools::collapse_to_psut(matrix.class = "Matrix")
+  balanced <- psut %>%
+    Recca::verify_SUT_energy_balance()
+  expect_true(all(balanced[[".SUT_energy_balance"]] %>% unlist()))
+  # Test with prep_psut()
+  psut2 <- MWTools::prep_psut(.hmw_df = hmw_df, .amw_df = amw_df)
+  balanced2 <- psut2 %>%
+    Recca::verify_SUT_energy_balance()
+  expect_true(all(balanced2[[".SUT_energy_balance"]] %>% unlist()))
+})
+
+
 test_that("calc_S_units() works as expected", {
   hmw_df <- hmw_test_data_path() %>%
     read.csv() %>%
@@ -319,6 +489,48 @@ test_that("calc_S_units() works as expected", {
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
     MWTools::collapse_to_psut() %>%
+    calc_S_units()
+
+  # Need items in the S_units column to *not* have names.
+  expect_null(with_sunits[[MWTools::psut_cols$s_units]] %>%
+                names())
+
+  # Check a few examples
+  expect_true(all(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% rownames() == c("Biomass", "Feed")))
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% colnames() == "ktoe")
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::rowtype() == MWTools::mw_cols$product)
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::coltype() == MWTools::row_col_types$unit)
+
+  expect_true(all(with_sunits[[MWTools::psut_cols$s_units]][[10]] %>% rownames() == c("Biomass", "Food", "HuMech")))
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% colnames() == "ktoe")
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::rowtype() == MWTools::mw_cols$product)
+  expect_true(with_sunits[[MWTools::psut_cols$s_units]][[1]] %>% matsbyname::coltype() == MWTools::row_col_types$unit)
+
+  # Make sure the unit column remains in the data frame
+  expect_true(MWTools::mw_cols$unit %in% names(with_sunits))
+})
+
+
+test_that("calc_S_units() works with Matrix objects", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  with_sunits <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
+    specify_ktoe() %>%
+    MWTools::specify_primary_production() %>%
+    specify_useful_products() %>%
+    specify_fu_machines() %>%
+    specify_last_stages() %>%
+    MWTools::add_row_col_meta() %>%
+    MWTools::collapse_to_psut(matrix.class = "Matrix") %>%
     calc_S_units()
 
   # Need items in the S_units column to *not* have names.
@@ -377,6 +589,42 @@ test_that("calc_U_feed_U_eiou_r_eiou() works as expected", {
 })
 
 
+test_that("calc_U_feed_U_eiou_r_eiou() works with Matrix objects", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  with_U_cols <- specify_energy_type_method(hmw_df, amw_df) %>%
+    specify_product() %>%
+    specify_ktoe() %>%
+    MWTools::specify_primary_production() %>%
+    specify_useful_products() %>%
+    specify_fu_machines() %>%
+    specify_last_stages() %>%
+    MWTools::add_row_col_meta() %>%
+    MWTools::collapse_to_psut(matrix.class = "Matrix") %>%
+    calc_S_units() %>%
+    calc_U_feed_U_eiou_r_eiou()
+
+  for (i in 1:nrow(with_U_cols)) {
+    expect_true(!is.null(with_U_cols[[MWTools::psut_cols$U_feed]][[i]]))
+    expect_true(!is.null(with_U_cols[[MWTools::psut_cols$U_eiou]][[i]]))
+    expect_true(matsbyname::equal_byname(with_U_cols[[MWTools::psut_cols$U]][[i]], with_U_cols[[MWTools::psut_cols$U_feed]][[i]]))
+    expect_true(matsbyname::equal_byname(matsbyname::hadamardproduct_byname(with_U_cols[[MWTools::psut_cols$U]][[i]], 0),
+                                         with_U_cols[[MWTools::psut_cols$U_eiou]][[i]]))
+    # The U_eiou and r_eiou columns should contain all 0 matrices.
+    expect_true(matsbyname::iszero_byname(with_U_cols[[MWTools::psut_cols$U_eiou]][[i]]))
+    expect_true(matsbyname::iszero_byname(with_U_cols[[MWTools::psut_cols$r_eiou]][[i]]))
+  }
+})
+
+
 test_that("prep_psut() works as expected", {
   hmw_df <- hmw_test_data_path() %>%
     read.csv() %>%
@@ -389,6 +637,39 @@ test_that("prep_psut() works as expected", {
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
   psut <- prep_psut(hmw_df, amw_df)
+  # Because values are tested in the test for collapse_to_psut(),
+  # only test for non-NULL return value here.
+  expect_true(!is.null(psut))
+  expect_true(MWTools::psut_cols$R %in% names(psut))
+  expect_true(MWTools::psut_cols$U %in% names(psut))
+  expect_true(MWTools::psut_cols$V %in% names(psut))
+  expect_true(MWTools::psut_cols$Y %in% names(psut))
+  expect_true(MWTools::psut_cols$s_units %in% names(psut))
+  expect_true(MWTools::psut_cols$U_feed %in% names(psut))
+  expect_true(MWTools::psut_cols$U_eiou %in% names(psut))
+})
+
+
+test_that("prep_psut() works with Matrix objects", {
+  hmw_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  amw_df <- amw_test_data_path() %>%
+    read.csv() %>%
+    calc_amw_pfu() %>%
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  psut <- prep_psut(hmw_df, amw_df, matrix.class = "Matrix")
+
+  # Check that we made Matrix objects in all matrix columns.
+  for (j in 6:ncol(psut)) {
+    for (i in 1:nrow(psut)) {
+      expect_true(matsbyname::is.Matrix(psut[[i, j]][[1]]))
+    }
+  }
+
   # Because values are tested in the test for collapse_to_psut(),
   # only test for non-NULL return value here.
   expect_true(!is.null(psut))
@@ -421,6 +702,43 @@ test_that("trapping zero-row output in prep_psut() works as expected", {
   colnames(hmw_data) <- cnames
   amw_data <- hmw_data
   should_have_no_rows <- prep_psut(hmw_data, amw_data)
+  expect_equal(nrow(should_have_no_rows), 0)
+  expected_colnames <- c(IEATools::iea_cols$country,
+                         IEATools::iea_cols$year,
+                         IEATools::iea_cols$method,
+                         IEATools::iea_cols$energy_type,
+                         IEATools::iea_cols$last_stage,
+                         IEATools::psut_cols$R,
+                         IEATools::psut_cols$U,
+                         IEATools::psut_cols$V,
+                         IEATools::psut_cols$Y,
+                         IEATools::psut_cols$s_units,
+                         IEATools::psut_cols$U_feed,
+                         IEATools::psut_cols$U_eiou,
+                         IEATools::psut_cols$r_eiou)
+  expect_equal(colnames(should_have_no_rows), expected_colnames)
+})
+
+
+test_that("trapping zero-row output in prep_psut() works with Matrix objects", {
+  # Make a couple bogus zero-row data frames with the right rows.
+  cnames <- c(IEATools::iea_cols$country,
+              IEATools::iea_cols$year,
+              MWTools::mw_constants$species,
+              MWTools::mw_constants$stage_col,
+              MWTools::mw_constants$sector_col,
+              IEATools::iea_cols$unit,
+              IEATools::iea_cols$e_dot)
+  hmw_data <- data.frame(Characters = character(), # Country
+                         Doubles = double(),       # Year
+                         Characters = character(), # Species
+                         Characters = character(), # Stage
+                         Characters = character(), # Sector
+                         Characters = character(), # Unit
+                         Doubles = double())       # E.dot
+  colnames(hmw_data) <- cnames
+  amw_data <- hmw_data
+  should_have_no_rows <- prep_psut(hmw_data, amw_data, matrix.class = "Matrix")
   expect_equal(nrow(should_have_no_rows), 0)
   expected_colnames <- c(IEATools::iea_cols$country,
                          IEATools::iea_cols$year,
