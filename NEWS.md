@@ -3,7 +3,7 @@ title: "Release notes for `MWTools`"
 output: html_document
 ---
 
-
+* Renamed `matrix.class` argument to `matrix_class`.
 * Now works with `Matrix` objects.
 
 

@@ -5,7 +5,7 @@
 #' Entries in the vector are for each type of muscle work energy carrier.
 #'
 #' @param .phi_table A table of phi (exergy-to-energy ratio) values.
-#' @param matrix.class The type of matrix to be created, one of "matrix" or "Matrix".
+#' @param matrix_class The type of matrix to be created, one of "matrix" or "Matrix".
 #'                     Default is "matrix".
 #' @param mw_energy_carriers A vector of string energy carriers
 #'                           relevant to muscle work calculations.
@@ -23,13 +23,13 @@
 #' phi_vec_mw()
 #' phi_vec_mw(mw_energy_carriers = c("Food", "Feed"))
 phi_vec_mw <- function(.phi_table = MWTools::phi_constants_mw,
-                       matrix.class = c("matrix", "Matrix"),
+                       matrix_class = c("matrix", "Matrix"),
                        mw_energy_carriers = MWTools::mw_products,
                        product = MWTools::mw_cols$product,
                        product_type = MWTools::row_col_types$product,
                        phi = "phi") {
 
-  matrix.class <- match.arg(matrix.class)
+  matrix_class <- match.arg(matrix_class)
 
   # Keep only those rows in the .phi_table that are also mw_energy_carriers.
   # First form a data frame from the mw_energy_carrier vector
@@ -39,7 +39,7 @@ phi_vec_mw <- function(.phi_table = MWTools::phi_constants_mw,
   keep <- dplyr::semi_join(.phi_table, carriers, by = product)
 
   # Create the vector as a matrix with 1 column.
-  if (matrix.class == "matrix") {
+  if (matrix_class == "matrix") {
     out <- matrix(1, nrow = nrow(keep), ncol = 1,
                   dimnames = list(keep[[product]] %>% unlist() %>% unname(), phi)) %>%
       matsbyname::setrowtype(product_type)

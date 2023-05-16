@@ -223,7 +223,7 @@ test_that("collapse_to_psut() works for Matrix objects", {
     specify_fu_machines() %>%
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
-    MWTools::collapse_to_psut(matrix.class = "Matrix")
+    MWTools::collapse_to_psut(matrix_class = "Matrix")
 
   # Ensure that every entry in the matrix columns is a Matrix
   for (mat in c(MWTools::psut_cols$R,
@@ -366,7 +366,7 @@ test_that("collapse_to_psut() works for inputs to Farms with Matrix objects", {
     specify_last_stages() %>%
     MWTools::add_row_col_meta()
   res <- temp %>%
-    MWTools::collapse_to_psut(matrix.class = "Matrix")
+    MWTools::collapse_to_psut(matrix_class = "Matrix")
 
   # Grab all the inputs to Farms (which is Biomass [from Resources])
   farms_input <- temp %>%
@@ -457,7 +457,7 @@ test_that("Energy is balanced in PSUT Matrix objects", {
     specify_fu_machines() %>%
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
-    MWTools::collapse_to_psut(matrix.class = "Matrix")
+    MWTools::collapse_to_psut(matrix_class = "Matrix")
   balanced <- psut %>%
     Recca::verify_SUT_energy_balance()
   expect_true(all(balanced[[".SUT_energy_balance"]] %>% unlist()))
@@ -530,7 +530,7 @@ test_that("calc_S_units() works with Matrix objects", {
     specify_fu_machines() %>%
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
-    MWTools::collapse_to_psut(matrix.class = "Matrix") %>%
+    MWTools::collapse_to_psut(matrix_class = "Matrix") %>%
     calc_S_units()
 
   # Need items in the S_units column to *not* have names.
@@ -608,7 +608,7 @@ test_that("calc_U_feed_U_eiou_r_eiou() works with Matrix objects", {
     specify_fu_machines() %>%
     specify_last_stages() %>%
     MWTools::add_row_col_meta() %>%
-    MWTools::collapse_to_psut(matrix.class = "Matrix") %>%
+    MWTools::collapse_to_psut(matrix_class = "Matrix") %>%
     calc_S_units() %>%
     calc_U_feed_U_eiou_r_eiou()
 
@@ -661,7 +661,7 @@ test_that("prep_psut() works with Matrix objects", {
     calc_amw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
-  psut <- prep_psut(hmw_df, amw_df, matrix.class = "Matrix")
+  psut <- prep_psut(hmw_df, amw_df, matrix_class = "Matrix")
 
   # Check that we made Matrix objects in all matrix columns.
   for (j in 6:ncol(psut)) {
@@ -738,7 +738,7 @@ test_that("trapping zero-row output in prep_psut() works with Matrix objects", {
                          Doubles = double())       # E.dot
   colnames(hmw_data) <- cnames
   amw_data <- hmw_data
-  should_have_no_rows <- prep_psut(hmw_data, amw_data, matrix.class = "Matrix")
+  should_have_no_rows <- prep_psut(hmw_data, amw_data, matrix_class = "Matrix")
   expect_equal(nrow(should_have_no_rows), 0)
   expected_colnames <- c(IEATools::iea_cols$country,
                          IEATools::iea_cols$year,
