@@ -6,7 +6,7 @@
 \usage{
 calc_S_units(
   .df = NULL,
-  matrix.class = c("matrix", "Matrix"),
+  matrix_class = c("matrix", "Matrix"),
   unit = MWTools::mw_cols$unit,
   R = MWTools::psut_cols$R,
   U = MWTools::psut_cols$U,
@@ -21,7 +21,7 @@ calc_S_units(
 \arguments{
 \item{.df}{A data frame. Default is \code{NULL}.}
 
-\item{matrix.class}{The type of matrix to be created, one of "matrix" or "Matrix".
+\item{matrix_class}{The type of matrix to be created, one of "matrix" or "Matrix".
 Default is "matrix".}
 
 \item{unit}{A string unit for each row or the name of the unit column in \code{.df}. See \code{MWTools::mw_cols}.}

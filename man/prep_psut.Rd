@@ -7,7 +7,7 @@
 prep_psut(
   .hmw_df,
   .amw_df,
-  matrix.class = c("matrix", "Matrix"),
+  matrix_class = c("matrix", "Matrix"),
   unit = IEATools::iea_cols$unit,
   R = IEATools::psut_cols$R,
   U = IEATools::psut_cols$U,
@@ -24,7 +24,7 @@ prep_psut(
 
 \item{.amw_df}{A data frame produced by \code{calc_amw_pfu()}.}
 
-\item{matrix.class}{The type of matrix to be created, one of "matrix" or "Matrix".
+\item{matrix_class}{The type of matrix to be created, one of "matrix" or "Matrix".
 Default is "matrix".}
 
 \item{unit, R, U, V, Y, s_units, U_feed, U_eiou, r_eiou}{Column names. See \code{IEATools::psut_cols}.}
