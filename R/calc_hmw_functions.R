@@ -96,7 +96,6 @@ fill_ilo_data <- function(.df,
     # and extrapolation is not possible from a single data point
     dplyr::filter(.data[[employed_count]] > 1 & .data[[hours_count]] > 1) %>%
     # Remove columns that are no longer needed
-    # dplyr::select(-employed_count, -hours_count) %>%
     dplyr::select(-dplyr::any_of(c(employed_count, hours_count))) %>%
 
 
