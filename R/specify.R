@@ -377,3 +377,40 @@ specify_ktoe <- function(.df,
       "{units_col}" := "ktoe"
     )
 }
+
+
+#' Converts units from EJ to TJ
+#'
+#' Primary-final-useful (PFU) data from `calc_hmw_pfu()` and `calc_amw_pfu()`
+#' are in EJ.
+#' This function converts entries in the `energy_col` from EJ (exajoules) to TJ (terajoules) and
+#' changes the `units_col` from "EJ" to "TJ".
+#'
+#' Prior to converting the `energy_col` from EJ to TJ,
+#' the `units_col` is verified to contain only "EJ".
+#' An error is thrown if any `units_col` entry is not in EJ.
+#'
+#' @param .df A data frame with `units_col` and `energy_col` columns.
+#' @param energy_col,units_col See `MWTools::mw_constants`.
+#'
+#' @return `.df` with `energy` column converted from EJ to TJ.
+#'
+#' @export
+#'
+#' @examples
+#' hmw_test_data_path() %>%
+#'   read.csv() %>%
+#'   calc_hmw_pfu() %>%
+#'   specify_TJ()
+specify_TJ <- function(.df,
+                       energy_col = MWTools::mw_cols$e_dot,
+                       units_col = MWTools::mw_cols$unit) {
+  # Verify that .df has units of EJ
+  assertthat::assert_that(all(.df[[units_col]] == "EJ"), msg = "units_col not in EJ in MWTools::specify_TJ().")
+  # Do the conversion
+  .df %>%
+    dplyr::mutate(
+      "{energy_col}" := .data[[energy_col]] * MWTools::unit_constants$EJ_to_TJ,
+      "{units_col}" := "TJ"
+    )
+}

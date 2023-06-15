@@ -331,10 +331,11 @@
 #'
 #' @format A string list with `r length(unit_constants)` entries.
 #' \describe{
-#' \item{kcal_to_mj}{The value 0.0041858, representing the conversion factor between kilocalories (kcal) and megajoules (MJ)}
+#' \item{kcal_to_mj}{The value 0.0041858, representing the conversion factor between kilocalories (kcal) and megajoules (MJ).}
 #' \item{hours_to_seconds}{The value 3600, representing the conversion factor between hours and seconds.}
-#' \item{joules_to_megajoules}{The value 0.000001, representing the conversion factor between joules (J) and megajoules (MJ)}
-#' \item{EJ_to_ktoe}{The value 23884.58966275, representing the conversion factor between exajoules (EJ) and kilotonnes of oil equivalent (ktoe)}
+#' \item{joules_to_megajoules}{The value 0.000001, representing the conversion factor from joules (J) and megajoules (MJ).}
+#' \item{EJ_to_ktoe}{The value 23884.58966275, representing the conversion factor from exajoules (EJ) to kilotonnes of oil equivalent (ktoe).}
+#' \item{EJ_to_TJ}{The value `1e6`, representing the conversion factor from exajoules (EJ) to terajoules (TJ).}
 #' }
 #'
 #' @examples

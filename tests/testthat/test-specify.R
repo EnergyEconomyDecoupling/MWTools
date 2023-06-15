@@ -178,3 +178,36 @@ test_that("specify_ktoe() works as expected", {
     )
   expect_true(all(check$diff == 0))
 })
+
+
+test_that("specify_TJ() works as expected", {
+  EJ_df <- hmw_test_data_path() %>%
+    read.csv() %>%
+    calc_hmw_pfu() %>%
+    dplyr::rename(
+      E.dot_EJ := E.dot
+    ) %>%
+    dplyr::mutate(
+      "{MWTools::mw_cols$unit}" := NULL
+    )
+  TJ_df <- EJ_df %>%
+    specify_TJ(energy_col = "E.dot_EJ") %>%
+    dplyr::rename(
+      E.dot_TJ = E.dot_EJ
+    ) %>%
+    dplyr::mutate(
+      "{MWTools::mw_cols$unit}" := NULL
+    )
+  expect_true(all(TJ_df[[MWTools::mw_cols$unit]] == "TJ"))
+  check <- dplyr::full_join(EJ_df, TJ_df, by = c("Country", "Year", "Species", "Stage", "Sector"))
+
+  check <- EJ_df %>%
+    dplyr::mutate(
+      new_TJ := .data[["E.dot_EJ"]] * MWTools::unit_constants$EJ_to_TJ,
+    ) %>%
+    dplyr::full_join(TJ_df, by = c("Country", "Year", "Species", "Stage", "Sector")) %>%
+    dplyr::mutate(
+      diff = new_TJ - E.dot_TJ
+    )
+  expect_true(all(check$diff == 0))
+})
