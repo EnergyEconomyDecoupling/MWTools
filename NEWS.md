@@ -3,8 +3,9 @@ title: "Release notes for `MWTools`"
 output: html_document
 ---
 
-* Added capability to change between TJ and ktoe units
+* Can now change between TJ and ktoe units
   via `output_unit` argument to `prep_psut()`.
+  Default is TJ.
 * Renamed `matrix.class` argument to `matrix_class`.
 * Now works with `Matrix` objects.
 
