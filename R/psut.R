@@ -531,6 +531,8 @@ calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
 #' @param .amw_df A data frame produced by `calc_amw_pfu()`.
 #' @param matrix_class The type of matrix to be created, one of "matrix" or "Matrix".
 #'                     Default is "matrix".
+#' @param output_unit A string of length one that specifies the output unit.
+#'                    One of "TJ" or "ktoe" for terajoules or kilotons of oil equivalent.
 #' @param unit,R,U,V,Y,s_units,U_feed,U_eiou,r_eiou Column names. See `IEATools::psut_cols`.
 #'
 #' @return A data frame of musle work PSUT matrices.
@@ -551,6 +553,7 @@ calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
 #' prep_psut(hmw_df, amw_df)
 prep_psut <- function(.hmw_df, .amw_df,
                       matrix_class = c("matrix", "Matrix"),
+                      output_unit = c("TJ", "ktoe"),
                       unit = IEATools::iea_cols$unit,
                       R = IEATools::psut_cols$R,
                       U = IEATools::psut_cols$U,
@@ -562,11 +565,19 @@ prep_psut <- function(.hmw_df, .amw_df,
                       r_eiou = IEATools::psut_cols$r_eiou) {
 
   matrix_class <- match.arg(matrix_class)
+  output_unit <- match.arg(output_unit)
 
   # Calculate a preliminary outbound data frame.
   out <- specify_energy_type_method(.hmw_df, .amw_df) %>%
-    specify_product() %>%
-    specify_ktoe() %>%
+    specify_product()
+  if (output_unit == "TJ") {
+    out <- out |>
+      specify_TJ()
+  } else if (output_unit == "ktoe") {
+    out <- out |>
+      specify_ktoe()
+  }
+  out <- out |>
     MWTools::specify_primary_production() %>%
     specify_useful_products() %>%
     specify_fu_machines() %>%

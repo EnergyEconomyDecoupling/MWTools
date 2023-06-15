@@ -755,3 +755,32 @@ test_that("trapping zero-row output in prep_psut() works with Matrix objects", {
                          IEATools::psut_cols$r_eiou)
   expect_equal(colnames(should_have_no_rows), expected_colnames)
 })
+
+
+test_that("prep_psut() works with ktoe units", {
+  hmw_df <- hmw_test_data_path() |>
+    read.csv() |>
+    calc_hmw_pfu() |>
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  amw_df <- amw_test_data_path() |>
+    read.csv() |>
+    calc_amw_pfu() |>
+    # Keep only a few years for speed.
+    dplyr::filter(Year %in% 2000:2002)
+  psut_TJ <- prep_psut(hmw_df, amw_df, matrix_class = "Matrix")
+  psut_ktoe <- prep_psut(hmw_df, amw_df, matrix_class = "Matrix", output_unit = "ktoe")
+
+  tj_colnames <- psut_TJ$S_units |>
+    matsbyname::getcolnames_byname() |>
+    unlist()
+  expect_true(all(tj_colnames == "TJ"))
+  ktoe_colnames <- psut_ktoe$S_units |>
+    matsbyname::getcolnames_byname() |>
+    unlist()
+  expect_true(all(ktoe_colnames == "ktoe"))
+  # Check that the values are different by the ratio of about 42.
+  R_TJ <- psut_TJ$R[[1]][1, 1]
+  R_ktoe <- psut_ktoe$R[[1]][1, 1]
+  expect_equal(R_TJ / R_ktoe, 41.868)
+})

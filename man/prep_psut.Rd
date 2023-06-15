@@ -8,6 +8,7 @@ prep_psut(
   .hmw_df,
   .amw_df,
   matrix_class = c("matrix", "Matrix"),
+  output_unit = c("TJ", "ktoe"),
   unit = IEATools::iea_cols$unit,
   R = IEATools::psut_cols$R,
   U = IEATools::psut_cols$U,
@@ -26,6 +27,9 @@ prep_psut(
 
 \item{matrix_class}{The type of matrix to be created, one of "matrix" or "Matrix".
 Default is "matrix".}
+
+\item{output_unit}{A string of length one that specifies the output unit.
+One of "TJ" or "ktoe" for terajoules or kilotons of oil equivalent.}
 
 \item{unit, R, U, V, Y, s_units, U_feed, U_eiou, r_eiou}{Column names. See \code{IEATools::psut_cols}.}
 }
