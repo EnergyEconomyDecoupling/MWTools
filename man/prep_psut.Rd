@@ -44,7 +44,7 @@ The bundled functions are:
 \itemize{
 \item \code{specify_energy_type_method()},
 \item \code{specify_product()},
-\item \code{specify_ktoe()},
+\item \code{specify_ktoe()} or \code{specify_TJ()}, depending on the value of \code{output_unit},
 \item \code{MWTools::specify_primary_production()},
 \item \code{specify_useful_products()},
 \item \code{specify_fu_machines()},

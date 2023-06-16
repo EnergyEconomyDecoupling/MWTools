@@ -34,7 +34,7 @@
 #'   calc_amw_pfu()
 #' specify_energy_type_method(hmw_df, amw_df) %>%
 #'   specify_product() %>%
-#'   specify_ktoe() %>%
+#'   specify_TJ() %>%
 #'   MWTools::specify_primary_production() %>%
 #'   specify_useful_products() %>%
 #'   specify_fu_machines() %>%
@@ -276,7 +276,7 @@ add_row_col_meta <- function(.df,
 #'   dplyr::filter(Year %in% 2000:2002)
 #' specify_energy_type_method(hmw_df, amw_df) %>%
 #'   specify_product() %>%
-#'   specify_ktoe() %>%
+#'   specify_TJ() %>%
 #'   MWTools::specify_primary_production() %>%
 #'   specify_useful_products() %>%
 #'   specify_fu_machines() %>%
@@ -369,7 +369,7 @@ collapse_to_psut <- function(.df,
 #'   dplyr::filter(Year %in% 2000:2002)
 #' specify_energy_type_method(hmw_df, amw_df) %>%
 #'   specify_product() %>%
-#'   specify_ktoe() %>%
+#'   specify_TJ() %>%
 #'   MWTools::specify_primary_production() %>%
 #'   specify_useful_products() %>%
 #'   specify_fu_machines() %>%
@@ -474,7 +474,7 @@ calc_S_units <- function(.df = NULL,
 #'   dplyr::filter(Year %in% 2000:2002)
 #' specify_energy_type_method(hmw_df, amw_df) %>%
 #'   specify_product() %>%
-#'   specify_ktoe() %>%
+#'   specify_TJ() %>%
 #'   MWTools::specify_primary_production() %>%
 #'   specify_useful_products() %>%
 #'   specify_fu_machines() %>%
@@ -513,7 +513,7 @@ calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
 #' The bundled functions are:
 #'   - `specify_energy_type_method()`,
 #'   - `specify_product()`,
-#'   - `specify_ktoe()`,
+#'   - `specify_ktoe()` or `specify_TJ()`, depending on the value of `output_unit`,
 #'   - `MWTools::specify_primary_production()`,
 #'   - `specify_useful_products()`,
 #'   - `specify_fu_machines()`,

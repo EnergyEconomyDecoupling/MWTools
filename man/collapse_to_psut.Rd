@@ -59,7 +59,7 @@ amw_df <- amw_test_data_path() \%>\%
   dplyr::filter(Year \%in\% 2000:2002)
 specify_energy_type_method(hmw_df, amw_df) \%>\%
   specify_product() \%>\%
-  specify_ktoe() \%>\%
+  specify_TJ() \%>\%
   MWTools::specify_primary_production() \%>\%
   specify_useful_products() \%>\%
   specify_fu_machines() \%>\%

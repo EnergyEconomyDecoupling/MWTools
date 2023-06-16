@@ -88,7 +88,7 @@ amw_df <- amw_test_data_path() \%>\%
   calc_amw_pfu()
 specify_energy_type_method(hmw_df, amw_df) \%>\%
   specify_product() \%>\%
-  specify_ktoe() \%>\%
+  specify_TJ() \%>\%
   MWTools::specify_primary_production() \%>\%
   specify_useful_products() \%>\%
   specify_fu_machines() \%>\%
