@@ -3,6 +3,11 @@ title: "Release notes for `MWTools`"
 output: html_document
 ---
 
+Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zenodo.7584858), 
+which always resolves to the latest release.
+
+
+
 * Can now change between TJ and ktoe units
   via `output_unit` argument to `prep_psut()`.
   Default is TJ.
