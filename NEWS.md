@@ -7,7 +7,7 @@ Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zeno
 which always resolves to the latest release.
 
 
-
+* Add DOI in reference and citation places.
 * Can now change between TJ and ktoe units
   via `output_unit` argument to `prep_psut()`.
   Default is TJ.
