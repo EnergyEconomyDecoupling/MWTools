@@ -305,3 +305,4 @@ test_that("calc_hmw_pfu() no longer throws a warning", {
                       calc_hmw_pfu(concordance_path = concordance_path, hmw_analysis_data_path = hmw_analysis_data_path))
 
 })
+
