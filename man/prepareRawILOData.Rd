@@ -4,10 +4,10 @@
 \alias{prepareRawILOData}
 \title{Prepare a unified ILO dataframe from raw employment and working hours data}
 \usage{
-prepareRawILOData(ilo_workingHours_data, ilo_employment_data)
+prepareRawILOData(ilo_working_hours_data, ilo_employment_data)
 }
 \arguments{
-\item{ilo_workingHours_data}{A dataframe containing raw ILO working hours data.}
+\item{ilo_working_hours_data}{A dataframe containing raw ILO working hours data.}
 
 \item{ilo_employment_data}{A dataframe containing raw ILO employment data.}
 }
@@ -16,6 +16,6 @@ Prepare a unified ILO dataframe from raw employment and working hours data,
 usually obtained using the {Rilostat} R package.
 }
 \examples{
-prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
                   ilo_employment_data = ilo_employment_data)
 }

@@ -30,12 +30,12 @@ test_that("hmw_analysis_data_path() works", {
                                             "hmw_analysis_data.xlsx")))
 })
 
-test_that("ilo_workingHours_test_data_path() works", {
+test_that("ilo_working_hours_test_data_path() works", {
 
-  test_path <- ilo_workingHours_test_data_path()
+  test_path <- ilo_working_hours_test_data_path()
   expect_true(endsWith(test_path, file.path("extdata",
                                             "test_data",
-                                            "test_ilo_workingHours_data.csv")))
+                                            "test_ilo_working_hours_data.csv")))
 })
 
 test_that("ilo_employment_test_data_path() works", {

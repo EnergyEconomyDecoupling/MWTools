@@ -1,8 +1,8 @@
 test_that("prepareRawILOData() works", {
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  rawILOData <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  rawILOData <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                   ilo_employment_data = test_ilo_employment_data)
 
   expected_colnames <- c("Country.code", "Sex", "Sector", "Year", "Employed.persons [persons]", "Working.hours [hours/year]")
@@ -13,15 +13,14 @@ test_that("prepareRawILOData() works", {
   expect_equal(expected_colnames, colnames(rawILOData))
   expect_equal(expected_nrow, nrow(rawILOData))
   expect_equal(expected_countrycodes, unique(rawILOData$Country.code))
-
 })
 
-test_that("add_hmw_region_codes() works", {
 
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+test_that("add_hmw_region_codes() works", {
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  hmw_data <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                 ilo_employment_data = test_ilo_employment_data)
 
   hmw_data_w.codes <- hmw_data %>%
@@ -42,10 +41,10 @@ test_that("add_hmw_region_codes() works", {
 
 
 test_that("fill_ilo_data() works", {
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  hmw_data <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                 ilo_employment_data = test_ilo_employment_data)
 
   hmw_data_filled <- hmw_data %>%
@@ -65,10 +64,10 @@ test_that("fill_ilo_data() works", {
 
 
 test_that("calc_total_hours_worked() works", {
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  hmw_data <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                 ilo_employment_data = test_ilo_employment_data)
 
   hmw_data_totalhours <- hmw_data %>%
@@ -84,10 +83,10 @@ test_that("calc_total_hours_worked() works", {
 
 
 test_that("get_broad.sector_data() works",{
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  hmw_data <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                 ilo_employment_data = test_ilo_employment_data)
 
   hmw_data_broad.sector <- hmw_data %>%
@@ -103,10 +102,10 @@ test_that("get_broad.sector_data() works",{
 
 
 test_that("split_labor_by_sector() works",{
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  hmw_data <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                 ilo_employment_data = test_ilo_employment_data)
 
   hmw_data_w.laborsplit <- hmw_data %>%
@@ -120,10 +119,10 @@ test_that("split_labor_by_sector() works",{
 
 
 test_that("calc_hmw_final_energy() works",{
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  hmw_data <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                 ilo_employment_data = test_ilo_employment_data)
 
   hmw_data_finalenergy <- hmw_data %>%
@@ -138,10 +137,10 @@ test_that("calc_hmw_final_energy() works",{
 
 
 test_that("calc_hmw_primary_energy() works",{
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  hmw_data <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                 ilo_employment_data = test_ilo_employment_data)
 
   hmw_data_primaryenergy <- hmw_data %>%
@@ -157,10 +156,10 @@ test_that("calc_hmw_primary_energy() works",{
 
 
 test_that("calc_hmw_useful_energy() works",{
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  hmw_data <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                 ilo_employment_data = test_ilo_employment_data)
 
   hmw_data_usefulenergy <- hmw_data %>%
@@ -181,10 +180,10 @@ test_that("calc_hmw_useful_energy() works",{
 
 
 test_that("tidy_hmw_data() works",{
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  hmw_data <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                 ilo_employment_data = test_ilo_employment_data)
 
   tidy_hmw_data <- hmw_data %>%
@@ -206,10 +205,10 @@ test_that("tidy_hmw_data() works",{
 
 
 test_that("calc_hmw_pfu() works",{
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  hmw_data <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                 ilo_employment_data = test_ilo_employment_data)
 
   hmw_data_pfu <- hmw_data %>%
@@ -231,10 +230,10 @@ test_that("calc_hmw_pfu() no longer throws a warning", {
 
   # pfu_energy_data <- read.csv(file = MWTools::hmw_test_data_path())
 
-  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 
-  pfu_energy_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+  pfu_energy_data <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                        ilo_employment_data = test_ilo_employment_data)
 
 

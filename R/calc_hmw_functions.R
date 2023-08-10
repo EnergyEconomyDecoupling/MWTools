@@ -3,15 +3,15 @@
 #' Prepare a unified ILO dataframe from raw employment and working hours data,
 #' usually obtained using the {Rilostat} R package.
 #'
-#' @param ilo_workingHours_data A dataframe containing raw ILO working hours data.
+#' @param ilo_working_hours_data A dataframe containing raw ILO working hours data.
 #' @param ilo_employment_data A dataframe containing raw ILO employment data.
 #'
 #' @export
 #'
 #' @examples
-#' prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#' prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
 #'                   ilo_employment_data = ilo_employment_data)
-prepareRawILOData <- function(ilo_workingHours_data, ilo_employment_data){
+prepareRawILOData <- function(ilo_working_hours_data, ilo_employment_data){
 
   # Establish constants
   country_code_col <- MWTools::conc_cols$country_code_col
@@ -26,7 +26,7 @@ prepareRawILOData <- function(ilo_workingHours_data, ilo_employment_data){
 
   # Mean weekly hours actually worked per employed person by sex and economic activity:
   # HOW_TEMP_SEX_ECO_NB_A
-  working_hours <- ilo_workingHours_data |>
+  working_hours <- ilo_working_hours_data |>
     dplyr::select(`ref_area`, `sex.label`, `classif1.label`, `time`, `obs_value`) |>
     magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year_col, yearly_working_hours_ilo_col))
 
