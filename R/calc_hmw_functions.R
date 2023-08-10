@@ -1,10 +1,23 @@
+#' Prepare a unified ILO dataframe from raw employment and working hours data
+#'
+#' Prepare a unified ILO dataframe from raw employment and working hours data,
+#' usually obtained using the {Rilostat} R package.
+#'
+#' @param ilo_workingHours_data A dataframe containing raw ILO working hours data.
+#' @param ilo_employment_data A dataframe containing raw ILO employment data.
+#'
+#' @export
+#'
+#' @examples
+#' prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                   ilo_employment_data = ilo_employment_data)
 prepareRawILOData <- function(ilo_workingHours_data, ilo_employment_data){
 
   # Establish constants
   country_code_col <- MWTools::conc_cols$country_code_col
   sex_ilo_col <- MWTools::ilo_cols$sex_ilo_col
   sector_col <- MWTools::mw_constants$sector_col
-  year <- MWTools::mw_cols$year
+  year_col <- MWTools::mw_cols$year
   ref_area_col <- MWTools::ilo_cols$ref_area_col
   yearly_working_hours_ilo_col <- MWTools::ilo_cols$yearly_working_hours_ilo_col
   employed_persons_ilo_col <- MWTools::ilo_cols$employed_persons_ilo_col
@@ -14,20 +27,18 @@ prepareRawILOData <- function(ilo_workingHours_data, ilo_employment_data){
   # Mean weekly hours actually worked per employed person by sex and economic activity:
   # HOW_TEMP_SEX_ECO_NB_A
   working_hours <- ilo_workingHours_data |>
-    Rilostat::label_ilostat(code = c(ref_area_col)) |>
-    dplyr::select(ref_area_col, `sex.label`, `classif1.label`, time, obs_value) |> # Create constants
-    magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year, yearly_working_hours_ilo_col))
+    dplyr::select(`ref_area`, `sex.label`, `classif1.label`, `time`, `obs_value`) |>
+    magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year_col, yearly_working_hours_ilo_col))
 
   # Employment by sex and economic activity (thousands): EMP_TEMP_SEX_ECO_NB_A
   employment <- ilo_employment_data |>
-    Rilostat::label_ilostat(code = c(ref_area_col)) |>
-    dplyr::select(ref_area_col, sex.label, classif1.label, time, obs_value) |>
-    magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year, employed_persons_ilo_col))
+    dplyr::select(`ref_area`, `sex.label`, `classif1.label`, `time`, `obs_value`) |>
+    magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year_col, employed_persons_ilo_col))
 
   # Convert Employed persons [1000 persons] to employed persons [persons] and
   # mean working hours [hours/week] to mean working hours [hours/year]
   ilo_hmw_data <- employment |>
-    dplyr::left_join(working_hours, by = c(country_code_col, sex_ilo_col, sector_col, year)) |>
+    dplyr::left_join(working_hours, by = c(country_code_col, sex_ilo_col, sector_col, year_col)) |>
     dplyr::mutate(
       "{employed_persons_ilo_col}" := .data[[employed_persons_ilo_col]] * 1000
     ) |>
@@ -39,7 +50,7 @@ prepareRawILOData <- function(ilo_workingHours_data, ilo_employment_data){
       "{sex_ilo_col}" := stringr::str_replace(.data[[sex_ilo_col]], stringr::fixed("Sex: "), "")
     ) |>
     dplyr::mutate(
-      "{year}" := as.numeric(.data[[year]])
+      "{year_col}" := as.numeric(.data[[year_col]])
     ) |>
     # Manually change the ILO country code for Kosovo from KOS to XKX, this is the
     # only country code which does not correspond to the other datasets as
@@ -54,12 +65,6 @@ prepareRawILOData <- function(ilo_workingHours_data, ilo_employment_data){
   return(ilo_hmw_data)
 
 }
-
-
-
-
-
-
 
 
 #' Add the regional codes used on analysis of human muscle work.

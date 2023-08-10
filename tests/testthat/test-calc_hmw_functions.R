@@ -1,5 +1,29 @@
+test_that("prepareRawILOData() works", {
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  rawILOData <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                  ilo_employment_data = test_ilo_employment_data)
+
+  expected_colnames <- c("Country.code", "Sex", "Sector", "Year", "Employed.persons [persons]", "Working.hours [hours/year]")
+  expected_nrow <- 2812
+  expected_countrycodes <- "GBR"
+
+  expect_true(!is.null(rawILOData))
+  expect_equal(expected_colnames, colnames(rawILOData))
+  expect_equal(expected_nrow, nrow(rawILOData))
+  expect_equal(expected_countrycodes, unique(rawILOData$Country.code))
+
+})
+
 test_that("add_hmw_region_codes() works", {
-  hmw_data <- read.csv(file = hmw_test_data_path())
+
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                ilo_employment_data = test_ilo_employment_data)
+
   hmw_data_w.codes <- hmw_data %>%
     add_hmw_region_codes()
   expect_true(!is.null(hmw_data_w.codes))
@@ -7,7 +31,7 @@ test_that("add_hmw_region_codes() works", {
   expect_equal(colnames(hmw_data_w.codes), c("Country", "HMW.Region.code", "Sex",
                                              "Sector", "Year", "Employed.persons [persons]",
                                              "Working.hours [hours/year]"))
-  expect_equal(nrow(hmw_data_w.codes), 4080)
+  expect_equal(nrow(hmw_data_w.codes), 2812) # v1.1 4080
   expect_equal(nrow(dplyr::filter(hmw_data_w.codes,
                                   Country == "GBR",
                                   Sex == "Female",
@@ -18,7 +42,12 @@ test_that("add_hmw_region_codes() works", {
 
 
 test_that("fill_ilo_data() works", {
-  hmw_data <- read.csv(file = hmw_test_data_path())
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                ilo_employment_data = test_ilo_employment_data)
+
   hmw_data_filled <- hmw_data %>%
     add_hmw_region_codes() %>%
     fill_ilo_data()
@@ -26,17 +55,22 @@ test_that("fill_ilo_data() works", {
   expect_equal(nrow(dplyr::filter(hmw_data_filled ,
                                   Sector == "Economic activity (ISIC-Rev.2): 0. Activities not Adequately Defined")),
                0)
-  expect_equal(nrow(hmw_data_filled), 10248)
+  expect_equal(nrow(hmw_data_filled), 10187) # v1.1 10248
   expect_equal(colnames(hmw_data_filled), c("Country", "HMW.Region.code", "Sex",
                                             "Sector", "Year", "Employed.persons [persons]",
                                             "Working.hours [hours/year]"))
-  expect_equal(hmw_data_filled[1, "Employed.persons [persons]"] %>% as.numeric(), 151000)
-  expect_equal(hmw_data_filled[1, "Working.hours [hours/year]"] %>% as.numeric(), 1653.6)
+  expect_equal(hmw_data_filled[1, "Employed.persons [persons]"] %>% as.numeric(), 30570) # v1.1 151000
+  expect_equal(hmw_data_filled[1, "Working.hours [hours/year]"] %>% as.numeric(), 6379.780) # v1.1 1653.6
 })
 
 
 test_that("calc_total_hours_worked() works", {
-  hmw_data <- read.csv(file = hmw_test_data_path())
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                ilo_employment_data = test_ilo_employment_data)
+
   hmw_data_totalhours <- hmw_data %>%
     add_hmw_region_codes() %>%
     fill_ilo_data() %>%
@@ -45,12 +79,17 @@ test_that("calc_total_hours_worked() works", {
   expect_equal(colnames(hmw_data_totalhours), c("Country", "HMW.Region.code", "Sex",
                                                 "Sector", "Year", "Employed.persons [persons]",
                                                 "Total.hours [hours/year]"))
-  expect_equal(hmw_data_totalhours[1, "Total.hours [hours/year]"] %>% as.numeric(), 249693600)
+  expect_equal(hmw_data_totalhours[1, "Total.hours [hours/year]"] %>% as.numeric(), 195029752) # v1.1 249693600
 })
 
 
 test_that("get_broad.sector_data() works",{
-  hmw_data <- read.csv(file = hmw_test_data_path())
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                ilo_employment_data = test_ilo_employment_data)
+
   hmw_data_broad.sector <- hmw_data %>%
     add_hmw_region_codes() %>%
     fill_ilo_data() %>%
@@ -64,7 +103,12 @@ test_that("get_broad.sector_data() works",{
 
 
 test_that("split_labor_by_sector() works",{
-  hmw_data <- read.csv(file = hmw_test_data_path())
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                ilo_employment_data = test_ilo_employment_data)
+
   hmw_data_w.laborsplit <- hmw_data %>%
     add_hmw_region_codes() %>%
     fill_ilo_data() %>%
@@ -76,7 +120,12 @@ test_that("split_labor_by_sector() works",{
 
 
 test_that("calc_hmw_final_energy() works",{
-  hmw_data <- read.csv(file = hmw_test_data_path())
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                ilo_employment_data = test_ilo_employment_data)
+
   hmw_data_finalenergy <- hmw_data %>%
     add_hmw_region_codes() %>%
     fill_ilo_data() %>%
@@ -89,7 +138,12 @@ test_that("calc_hmw_final_energy() works",{
 
 
 test_that("calc_hmw_primary_energy() works",{
-  hmw_data <- read.csv(file = hmw_test_data_path())
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                ilo_employment_data = test_ilo_employment_data)
+
   hmw_data_primaryenergy <- hmw_data %>%
     add_hmw_region_codes() %>%
     fill_ilo_data() %>%
@@ -103,7 +157,12 @@ test_that("calc_hmw_primary_energy() works",{
 
 
 test_that("calc_hmw_useful_energy() works",{
-  hmw_data <- read.csv(file = hmw_test_data_path())
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                ilo_employment_data = test_ilo_employment_data)
+
   hmw_data_usefulenergy <- hmw_data %>%
     add_hmw_region_codes() %>%
     fill_ilo_data() %>%
@@ -122,7 +181,12 @@ test_that("calc_hmw_useful_energy() works",{
 
 
 test_that("tidy_hmw_data() works",{
-  hmw_data <- read.csv(file = hmw_test_data_path())
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                ilo_employment_data = test_ilo_employment_data)
+
   tidy_hmw_data <- hmw_data %>%
     add_hmw_region_codes() %>%
     fill_ilo_data() %>%
@@ -142,7 +206,12 @@ test_that("tidy_hmw_data() works",{
 
 
 test_that("calc_hmw_pfu() works",{
-  hmw_data <- read.csv(file = hmw_test_data_path())
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                ilo_employment_data = test_ilo_employment_data)
+
   hmw_data_pfu <- hmw_data %>%
     calc_hmw_pfu()
   expect_true(!is.null(hmw_data_pfu))
@@ -160,7 +229,14 @@ test_that("calc_hmw_pfu() no longer throws a warning", {
   concordance_path <- MWTools::fao_concordance_path()
   hmw_analysis_data_path <- MWTools::hmw_analysis_data_path()
 
-  pfu_energy_data <- read.csv(file = MWTools::hmw_test_data_path())
+  # pfu_energy_data <- read.csv(file = MWTools::hmw_test_data_path())
+
+  test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  pfu_energy_data <- prepareRawILOData(ilo_workingHours_data = test_ilo_workingHours_data,
+                                       ilo_employment_data = test_ilo_employment_data)
+
 
   expect_no_warning(pfu_energy_data %>%
                       add_hmw_region_codes(concordance_path = concordance_path))

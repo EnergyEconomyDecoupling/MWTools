@@ -38,12 +38,12 @@ Usually produced by calling the
 Calculate the primary energy consumed by human workers
 }
 \examples{
-primary_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
-  add_hmw_region_codes() \%>\%
-  fill_ilo_data() \%>\%
-  calc_total_hours_worked() \%>\%
-  get_broad.sector_data() \%>\%
-  split_labor_by_sector() \%>\%
-  calc_hmw_final_energy() \%>\%
+primary_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+  add_hmw_region_codes() |>
+  fill_ilo_data() |>
+  calc_total_hours_worked() |>
+  get_broad.sector_data() |>
+  split_labor_by_sector() |>
+  calc_hmw_final_energy() |>
   calc_hmw_primary_energy()
 }

@@ -39,6 +39,6 @@ retrieved using the \code{fao_concordance_path} function.}
 ...
 }
 \examples{
-working_humans_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
+working_humans_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
   add_hmw_region_codes()
 }

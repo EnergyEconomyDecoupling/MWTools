@@ -41,7 +41,7 @@ groups of data for which there are no values at all, then interpolating
 and extrapolating groups of data for which there is atleast one value.
 }
 \examples{
-working_humans_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
-  add_hmw_region_codes() \%>\%
+working_humans_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+  add_hmw_region_codes() |>
   fill_ilo_data()
 }

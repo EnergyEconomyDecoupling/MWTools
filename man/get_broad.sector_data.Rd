@@ -25,9 +25,9 @@ Usually produced by calling the
 Retrieve data with sectors organised by "Broad sector"
 }
 \examples{
-working_hours_sector_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
-  add_hmw_region_codes() \%>\%
-  fill_ilo_data() \%>\%
-  calc_total_hours_worked() \%>\%
+working_hours_sector_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+  add_hmw_region_codes() |>
+  fill_ilo_data() |>
+  calc_total_hours_worked() |>
   get_broad.sector_data()
 }

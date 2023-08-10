@@ -52,11 +52,11 @@ Usually produced by calling the
 ...
 }
 \examples{
-final_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
-  add_hmw_region_codes() \%>\%
-  fill_ilo_data() \%>\%
-  calc_total_hours_worked() \%>\%
-  get_broad.sector_data() \%>\%
-  split_labor_by_sector() \%>\%
+final_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+  add_hmw_region_codes() |>
+  fill_ilo_data() |>
+  calc_total_hours_worked() |>
+  get_broad.sector_data() |>
+  split_labor_by_sector() |>
   calc_hmw_final_energy()
 }

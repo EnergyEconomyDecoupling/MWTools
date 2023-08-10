@@ -26,10 +26,12 @@ working_hours_code <- MWTools::ilo_codes$working_hours_code
 employment_code <- MWTools::ilo_codes$employment_code
 
 ilo_workingHours_data <- Rilostat::get_ilostat(id = working_hours_code,
-                                               quiet = TRUE)
+                                               quiet = TRUE) |>
+  Rilostat::label_ilostat(code = c("ref_area"))
 
 ilo_employment_data <- Rilostat::get_ilostat(id = employment_code,
-                                             quiet = TRUE)
+                                             quiet = TRUE) |>
+  Rilostat::label_ilostat(code = c("ref_area"))
 
 saveRDS(object = ilo_workingHours_data,
         file = PFUSetup::get_abs_paths(version = version)$ilo_employment_data_path)

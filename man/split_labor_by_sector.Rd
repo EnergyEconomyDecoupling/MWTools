@@ -48,10 +48,10 @@ Usually produced by calling the
 Title
 }
 \examples{
-working_hours_labor_type_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
-  add_hmw_region_codes() \%>\%
-  fill_ilo_data() \%>\%
-  calc_total_hours_worked() \%>\%
-  get_broad.sector_data() \%>\%
+working_hours_labor_type_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+  add_hmw_region_codes() |>
+  fill_ilo_data() |>
+  calc_total_hours_worked() |>
+  get_broad.sector_data() |>
   split_labor_by_sector()
 }
