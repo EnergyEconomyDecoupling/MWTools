@@ -36,8 +36,11 @@ This function employs \code{matsindf::matsindf_apply()} internally, so
 \code{U} can be either a single matrix or the name of the \code{U} column in \code{.df}.
 }
 \examples{
-hmw_df <- hmw_test_data_path() \%>\%
-  read.csv() \%>\%
+ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+hmw_data <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
+                              ilo_employment_data = ilo_employment_data)
+hmw_df <- hmw_data \%>\%
   calc_hmw_pfu() \%>\%
   # Keep only a few years for speed.
   dplyr::filter(Year \%in\% 2000:2002)

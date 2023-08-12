@@ -1,7 +1,12 @@
 test_that("add_row_col_meta() works as expected", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                                       ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu()
+
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
     calc_amw_pfu()
@@ -130,8 +135,11 @@ test_that("add_row_col_meta() works as expected", {
 
 
 test_that("collapse_to_psut() works as expected", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -205,8 +213,11 @@ test_that("collapse_to_psut() works as expected", {
 
 
 test_that("collapse_to_psut() works for Matrix objects", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -283,8 +294,11 @@ test_that("collapse_to_psut() works for inputs to Farms", {
   # This is an important test, because it checks whether aggregation
   # works at the level of the tidy data frame
   # (prior to forming matrices).
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -347,8 +361,11 @@ test_that("collapse_to_psut() works for inputs to Farms with Matrix objects", {
   # This is an important test, because it checks whether aggregation
   # works at the level of the tidy data frame
   # (prior to forming matrices).
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -408,8 +425,11 @@ test_that("collapse_to_psut() works for inputs to Farms with Matrix objects", {
 
 
 test_that("Energy is balanced in PSUT matrices", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -439,8 +459,11 @@ test_that("Energy is balanced in PSUT matrices", {
 
 
 test_that("Energy is balanced in PSUT Matrix objects", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -470,8 +493,11 @@ test_that("Energy is balanced in PSUT Matrix objects", {
 
 
 test_that("calc_S_units() works as expected", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -512,8 +538,11 @@ test_that("calc_S_units() works as expected", {
 
 
 test_that("calc_S_units() works with Matrix objects", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -554,8 +583,11 @@ test_that("calc_S_units() works with Matrix objects", {
 
 
 test_that("calc_U_feed_U_eiou_r_eiou() works as expected", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -590,8 +622,11 @@ test_that("calc_U_feed_U_eiou_r_eiou() works as expected", {
 
 
 test_that("calc_U_feed_U_eiou_r_eiou() works with Matrix objects", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -626,8 +661,11 @@ test_that("calc_U_feed_U_eiou_r_eiou() works with Matrix objects", {
 
 
 test_that("prep_psut() works as expected", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -651,8 +689,11 @@ test_that("prep_psut() works as expected", {
 
 
 test_that("prep_psut() works with Matrix objects", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)
@@ -758,8 +799,11 @@ test_that("trapping zero-row output in prep_psut() works with Matrix objects", {
 
 
 test_that("prep_psut() works with ktoe units", {
-  hmw_df <- hmw_test_data_path() |>
-    read.csv() |>
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() |>
     # Keep only a few years for speed.
     dplyr::filter(Year %in% 2000:2002)

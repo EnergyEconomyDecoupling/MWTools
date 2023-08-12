@@ -80,8 +80,11 @@ This function take the output of \code{specify_last_stages()}
 and converts to PSUT matrices in a data frame.
 }
 \examples{
-hmw_df <- hmw_test_data_path() \%>\%
-  read.csv() \%>\%
+ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+hmw_data <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
+                              ilo_employment_data = ilo_employment_data)
+hmw_df <- hmw_data \%>\%
   calc_hmw_pfu()
 amw_df <- amw_test_data_path() \%>\%
   read.csv() \%>\%
