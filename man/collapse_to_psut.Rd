@@ -47,9 +47,9 @@ It also aggregates data frame rows that will end up at the same
 row, column location in the matrices.
 }
 \examples{
-ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
 ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
-hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+hmw_data <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
                               ilo_employment_data = ilo_employment_data)
 hmw_df <- hmw_data \%>\%
   calc_hmw_pfu() \%>\%

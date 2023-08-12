@@ -57,9 +57,9 @@ hmw_analysis_data_path <- function() {
 #' @export
 #'
 #' @examples
-#' ilo_workingHours_test_data_path()
-ilo_workingHours_test_data_path <- function() {
-  file.path("extdata", "test_data", "test_ilo_workingHours_data.csv") %>%
+#' ilo_working_hours_test_data_path()
+ilo_working_hours_test_data_path <- function() {
+  file.path("extdata", "test_data", "test_ilo_working_hours_data.csv") %>%
     system.file(package = "MWTools")
 }
 
