@@ -6,6 +6,7 @@ output: html_document
 Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zenodo.7584858), 
 which always resolves to the latest release.
 
+# MWTools 0.2.0 (2023-08-12)
 
 * Add DOI in reference and citation places.
 * Can now change between TJ and ktoe units
@@ -13,6 +14,7 @@ which always resolves to the latest release.
   Default is TJ.
 * Renamed `matrix.class` argument to `matrix_class`.
 * Now works with `Matrix` objects.
+* Splitting raw ILO data into separate working hours and employment objects, and adding a function `prepareRawILOData` to prepare this raw data.
 
 
 # MWTools 0.1.2 (2023-01-30)
