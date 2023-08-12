@@ -42,7 +42,7 @@ The helper function `calc_amw_pfu` returns a tidy data frame containing data for
 ```{r get_example_data}
 library(MWTools)
 
-fao_fp <- PFUSetup::get_abs_paths()$fao_data_path
+fao_fp <- PFUSetup::get_abs_paths(version = "v1.2")$fao_data_path
 
 fao_raw_rds <- readr::read_rds(file = fao_fp)
 
@@ -63,11 +63,13 @@ Using data for the number of employed persons and mean yearly working hours the 
 ``` {r hmw_pfu}
 library(MWTools)
 
-ilo_fp <- PFUSetup::get_abs_paths()$ilo_data_path
+ilo_working_hours_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_workingHours_data_path)
+ilo_employment_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_employment_data_path)
 
-ilo_raw_rds <- readr::read_rds(file = ilo_fp)
+preparedILOData <- prepareRawILOData(ilo_workingHours_data = ilo_working_hours_data,
+                                     ilo_employment_data = ilo_employment_data)
 
-hmw_pfu_data <- calc_hmw_pfu(.df = ilo_raw_rds,
+hmw_pfu_data <- calc_hmw_pfu(.df = preparedILOData,
                              concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
                              hmw_analysis_data_path = PFUSetup::get_abs_paths()$hmw_analysis_data_path)
 
