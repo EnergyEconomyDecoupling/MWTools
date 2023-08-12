@@ -290,7 +290,6 @@ test_that("calc_useful_energy",{
 })
 
 
-
 test_that("tidy_pfu_data works", {
 
   test_data_path <- amw_test_data_path()

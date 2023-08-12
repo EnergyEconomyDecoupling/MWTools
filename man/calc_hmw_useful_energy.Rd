@@ -45,13 +45,17 @@ Usually produced by calling the
 Calculate the useful energy produced by human workers
 }
 \examples{
-useful_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
-  add_hmw_region_codes() \%>\%
-  fill_ilo_data() \%>\%
-  calc_total_hours_worked() \%>\%
-  get_broad.sector_data() \%>\%
-  split_labor_by_sector() \%>\%
-  calc_hmw_final_energy() \%>\%
-  calc_hmw_primary_energy() \%>\%
+ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+hmw_data <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
+                              ilo_employment_data = ilo_employment_data)
+useful_energy_data <- hmw_data |>
+  add_hmw_region_codes() |>
+  fill_ilo_data() |>
+  calc_total_hours_worked() |>
+  get_broad.sector_data() |>
+  split_labor_by_sector() |>
+  calc_hmw_final_energy() |>
+  calc_hmw_primary_energy() |>
   calc_hmw_useful_energy()
 }

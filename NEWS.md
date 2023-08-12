@@ -3,9 +3,22 @@ title: "Release notes for `MWTools`"
 output: html_document
 ---
 
+Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zenodo.7584858), 
+which always resolves to the latest release.
+
+
+* Add DOI in reference and citation places.
+* Can now change between TJ and ktoe units
+  via `output_unit` argument to `prep_psut()`.
+  Default is TJ.
+* Renamed `matrix.class` argument to `matrix_class`.
+* Now works with `Matrix` objects.
+
+
 # MWTools 0.1.2 (2023-01-30)
 
 * Adding Zenodo badge
+
 
 # MWTools 0.1.1 (2023-01-28)
 
