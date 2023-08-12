@@ -61,8 +61,11 @@ Default values are assumed for function arguments.
 The "Unit" column is deleted after the "S_units" column is created.
 }
 \examples{
-hmw_df <- hmw_test_data_path() \%>\%
-  read.csv() \%>\%
+ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+                              ilo_employment_data = ilo_employment_data)
+hmw_df <- hmw_data \%>\%
   calc_hmw_pfu() \%>\%
   # Keep only a few years for speed.
   dplyr::filter(Year \%in\% 2000:2002)

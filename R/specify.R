@@ -28,8 +28,11 @@
 #' @export
 #'
 #' @examples
-#' hmw_df <- hmw_test_data_path() %>%
-#'   read.csv() %>%
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' hmw_df <- hmw_data %>%
 #'   calc_hmw_pfu()
 #' amw_df <- amw_test_data_path() %>%
 #'   read.csv() %>%
@@ -76,8 +79,11 @@ specify_energy_type_method <- function(.hmw_df, .amw_df,
 #' @export
 #'
 #' @examples
-#' hmw_df <- hmw_test_data_path() %>%
-#'   read.csv() %>%
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' hmw_df <- hmw_data %>%
 #'   calc_hmw_pfu() %>%
 #'   specify_product()
 #' amw_df <- amw_test_data_path() %>%
@@ -140,8 +146,11 @@ specify_product <- function(.df,
 #' @export
 #'
 #' @examples
-#' hmw_df <- hmw_test_data_path() %>%
-#'   read.csv() %>%
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' hmw_df <- hmw_data %>%
 #'   calc_hmw_pfu()
 #' amw_df <- amw_test_data_path() %>%
 #'   read.csv() %>%
@@ -188,8 +197,11 @@ specify_primary_production <- function(.df,
 #' @export
 #'
 #' @examples
-#' hmw_df <- hmw_test_data_path() %>%
-#'   read.csv() %>%
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' hmw_df <- hmw_data %>%
 #'   calc_hmw_pfu()
 #' amw_df <- amw_test_data_path() %>%
 #'   read.csv() %>%
@@ -243,8 +255,11 @@ specify_useful_products <- function(.df,
 #' @export
 #'
 #' @examples
-#' hmw_df <- hmw_test_data_path() %>%
-#'   read.csv() %>%
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' hmw_df <- hmw_data %>%
 #'   calc_hmw_pfu()
 #' amw_df <- amw_test_data_path() %>%
 #'   read.csv() %>%
@@ -303,8 +318,11 @@ specify_fu_machines <- function(.df,
 #' @export
 #'
 #' @examples
-#' hmw_df <- hmw_test_data_path() %>%
-#'   read.csv() %>%
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' hmw_df <- hmw_data %>%
 #'   calc_hmw_pfu()
 #' amw_df <- amw_test_data_path() %>%
 #'   read.csv() %>%
@@ -361,8 +379,11 @@ specify_last_stages <- function(.df,
 #' @export
 #'
 #' @examples
-#' hmw_test_data_path() %>%
-#'   read.csv() %>%
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' hmw_data %>%
 #'   calc_hmw_pfu() %>%
 #'   specify_ktoe()
 specify_ktoe <- function(.df,
@@ -398,8 +419,11 @@ specify_ktoe <- function(.df,
 #' @export
 #'
 #' @examples
-#' hmw_test_data_path() %>%
-#'   read.csv() %>%
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' hmw_data %>%
 #'   calc_hmw_pfu() %>%
 #'   specify_TJ()
 specify_TJ <- function(.df,

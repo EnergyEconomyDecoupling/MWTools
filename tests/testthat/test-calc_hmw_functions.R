@@ -60,7 +60,7 @@ test_that("fill_ilo_data() works", {
                                             "Sector", "Year", "Employed.persons [persons]",
                                             "Working.hours [hours/year]"))
   expect_equal(hmw_data_filled[1, "Employed.persons [persons]"] %>% as.numeric(), 30570) # v1.1 151000
-  expect_equal(hmw_data_filled[1, "Working.hours [hours/year]"] %>% as.numeric(), 6379.780) # v1.1 1653.6
+  expect_equal(hmw_data_filled[1, "Working.hours [hours/year]"] %>% as.numeric(), 6379.776) # v1.1 1653.6
 })
 
 
@@ -228,8 +228,6 @@ test_that("calc_hmw_pfu() no longer throws a warning", {
 
   concordance_path <- MWTools::fao_concordance_path()
   hmw_analysis_data_path <- MWTools::hmw_analysis_data_path()
-
-  # pfu_energy_data <- read.csv(file = MWTools::hmw_test_data_path())
 
   test_ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
   test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())

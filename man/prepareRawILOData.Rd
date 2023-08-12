@@ -16,6 +16,8 @@ Prepare a unified ILO dataframe from raw employment and working hours data,
 usually obtained using the {Rilostat} R package.
 }
 \examples{
+ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
                   ilo_employment_data = ilo_employment_data)
 }

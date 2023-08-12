@@ -21,6 +21,10 @@ calc_hmw_pfu(
 Calculate primary, final, and useful human muscle work.
 }
 \examples{
-pfu_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+                              ilo_employment_data = ilo_employment_data)
+pfu_energy_data <- hmw_data |>
   calc_hmw_pfu()
 }

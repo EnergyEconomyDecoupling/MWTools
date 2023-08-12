@@ -9,6 +9,8 @@
 #' @export
 #'
 #' @examples
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
 #' prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
 #'                   ilo_employment_data = ilo_employment_data)
 prepareRawILOData <- function(ilo_workingHours_data, ilo_employment_data){
@@ -27,12 +29,12 @@ prepareRawILOData <- function(ilo_workingHours_data, ilo_employment_data){
   # Mean weekly hours actually worked per employed person by sex and economic activity:
   # HOW_TEMP_SEX_ECO_NB_A
   working_hours <- ilo_workingHours_data |>
-    dplyr::select(`ref_area`, `sex.label`, `classif1.label`, `time`, `obs_value`) |>
+    dplyr::select("ref_area", "sex.label", "classif1.label", "time", "obs_value") |>
     magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year_col, yearly_working_hours_ilo_col))
 
   # Employment by sex and economic activity (thousands): EMP_TEMP_SEX_ECO_NB_A
   employment <- ilo_employment_data |>
-    dplyr::select(`ref_area`, `sex.label`, `classif1.label`, `time`, `obs_value`) |>
+    dplyr::select("ref_area", "sex.label", "classif1.label", "time", "obs_value") |>
     magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year_col, employed_persons_ilo_col))
 
   # Convert Employed persons [1000 persons] to employed persons [persons] and
@@ -83,7 +85,11 @@ prepareRawILOData <- function(ilo_workingHours_data, ilo_employment_data){
 #' @export
 #'
 #' @examples
-#' working_humans_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' working_humans_data <- hmw_data |>
 #'   add_hmw_region_codes()
 add_hmw_region_codes <- function(.df,
                                  concordance_path = MWTools::fao_concordance_path(),
@@ -135,7 +141,11 @@ add_hmw_region_codes <- function(.df,
 #' @export
 #'
 #' @examples
-#' working_humans_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' working_humans_data <- hmw_data |>
 #'   add_hmw_region_codes() |>
 #'   fill_ilo_data()
 fill_ilo_data <- function(.df,
@@ -203,7 +213,11 @@ fill_ilo_data <- function(.df,
 #' @export
 #'
 #' @examples
-#' working_hours_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' working_hours_data <- hmw_data |>
 #'   add_hmw_region_codes() |>
 #'   fill_ilo_data() |>
 #'   calc_total_hours_worked()
@@ -237,7 +251,11 @@ calc_total_hours_worked <- function(.df,
 #' @export
 #'
 #' @examples
-#' working_hours_sector_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' working_hours_sector_data <- hmw_data |>
 #'   add_hmw_region_codes() |>
 #'   fill_ilo_data() |>
 #'   calc_total_hours_worked() |>
@@ -274,7 +292,11 @@ get_broad.sector_data <- function(.df,
 #' @export
 #'
 #' @examples
-#' working_hours_labor_type_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' working_hours_labor_type_data <- hmw_data |>
 #'   add_hmw_region_codes() |>
 #'   fill_ilo_data() |>
 #'   calc_total_hours_worked() |>
@@ -355,7 +377,11 @@ split_labor_by_sector <- function(.df,
 #' @export
 #'
 #' @examples
-#' final_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' final_energy_data <- hmw_data |>
 #'   add_hmw_region_codes() |>
 #'   fill_ilo_data() |>
 #'   calc_total_hours_worked() |>
@@ -440,7 +466,11 @@ calc_hmw_final_energy <- function(
 #' @export
 #'
 #' @examples
-#' primary_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' primary_energy_data <- hmw_data |>
 #'   add_hmw_region_codes() |>
 #'   fill_ilo_data() |>
 #'   calc_total_hours_worked() |>
@@ -501,7 +531,11 @@ calc_hmw_primary_energy <- function(.df,
 #' @export
 #'
 #' @examples
-#' useful_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' useful_energy_data <- hmw_data |>
 #'   add_hmw_region_codes() |>
 #'   fill_ilo_data() |>
 #'   calc_total_hours_worked() |>
@@ -569,7 +603,11 @@ calc_hmw_useful_energy <- function(.df,
 #' @export
 #'
 #' @examples
-#' tidied_pfu_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' tidied_pfu_data <- hmw_data |>
 #'   add_hmw_region_codes() |>
 #'   fill_ilo_data() |>
 #'   calc_total_hours_worked() |>
@@ -638,7 +676,11 @@ tidy_hmw_pfu <- function(.df,
 #' @export
 #'
 #' @examples
-#' pfu_energy_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+#' ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+#' ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+#' hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+#'                               ilo_employment_data = ilo_employment_data)
+#' pfu_energy_data <- hmw_data |>
 #'   calc_hmw_pfu()
 calc_hmw_pfu <- function(.df,
                          concordance_path = MWTools::fao_concordance_path(),

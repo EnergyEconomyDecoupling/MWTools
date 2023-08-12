@@ -46,7 +46,11 @@ Usually produced by calling the
 Produce a tidy human muscle work data frame
 }
 \examples{
-tidied_pfu_data <- read.csv(file = MWTools::hmw_test_data_path()) |>
+ilo_workingHours_data <- read.csv(file = MWTools::ilo_workingHours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+hmw_data <- prepareRawILOData(ilo_workingHours_data = ilo_workingHours_data,
+                              ilo_employment_data = ilo_employment_data)
+tidied_pfu_data <- hmw_data |>
   add_hmw_region_codes() |>
   fill_ilo_data() |>
   calc_total_hours_worked() |>
