@@ -14,7 +14,8 @@ which always resolves to the latest release.
   Default is TJ.
 * Renamed `matrix.class` argument to `matrix_class`.
 * Now works with `Matrix` objects.
-* Splitting raw ILO data into separate working hours and employment objects, and adding a function `prepareRawILOData` to prepare this raw data.
+* Split raw ILO data into separate working hours and employment objects, and
+  added a function `prepareRawILOData()` to prepare this raw data.
 
 
 # MWTools 0.1.2 (2023-01-30)
