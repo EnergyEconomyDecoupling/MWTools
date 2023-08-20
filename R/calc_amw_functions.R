@@ -42,7 +42,7 @@ tidy_fao_live_animals <- function(.df,
   live_animals <- live_animals %>%
     # Replaces "Head" with Number
     dplyr::mutate(
-      "{unit}" := stringr::str_replace(.data[[unit]], "Head", "Number") #  Not replacing correctly.
+      "{unit}" := stringr::str_replace(.data[[unit]], "Head", "Number")
     ) %>%
     # Replaces "No" with Number
     dplyr::mutate(
@@ -51,7 +51,7 @@ tidy_fao_live_animals <- function(.df,
 
   # Converts "1000 Number" to "Number"
   live_animals_1000 <- live_animals %>%
-    dplyr::filter(.data[[unit]] == "1000 Number") %>% # ????????????????????????
+    dplyr::filter(.data[[unit]] == "1000 Number") %>%
     dplyr::mutate(
       "{value}" := .data[[value]] * 1000
     )
@@ -240,7 +240,7 @@ get_working_species <- function(.df,
                        values_from = dplyr::all_of(value))
   working_species <- replace(working_species, is.na(working_species), 0)
 
-  if(camelids_other %in% colnames(working_species)){
+  if(camelids_other %in% colnames(working_species) & camels %in% colnames(working_species)){
 
     working_species_w.camelids <- working_species %>%
       dplyr::mutate(
@@ -248,7 +248,7 @@ get_working_species <- function(.df,
         .keep = "unused"
       )
 
-  } else if(camels %in% colnames(working_species)) {
+  } else if(camels %in% colnames(working_species) & !(camelids_other %in% colnames(working_species))) {
 
     working_species_w.camelids <- working_species %>%
       dplyr::mutate(
@@ -256,9 +256,13 @@ get_working_species <- function(.df,
         .keep = "unused"
       )
 
-  } else {
+  } else if (!(camels %in% colnames(working_species)) & !(camelids_other %in% colnames(working_species))) {
 
-    working_species_w.camelids <- working_species
+    working_species_w.camelids <- working_species %>%
+      dplyr::mutate(
+        "{camelids}" := 0,
+        .keep = "unused"
+      )
 
   }
 
