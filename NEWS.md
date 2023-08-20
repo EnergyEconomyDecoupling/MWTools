@@ -8,7 +8,7 @@ which always resolves to the latest release.
 
 # MWTools 0.2.1 (2023-08-20)
 
-* Adding tests for calc_amw_functions.R to ensure 100% test coverage.
+* Adding tests for `calc_amw_functions.R` to ensure 100% test coverage.
 * Tests:
     * Now at 451 tests, all passing.
     * Test coverage is at 100 %.
