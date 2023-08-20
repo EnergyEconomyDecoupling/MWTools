@@ -6,6 +6,9 @@ output: html_document
 Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zenodo.7584858), 
 which always resolves to the latest release.
 
+# MWTools 0.2.1 (2023-08-20)
+* Adding tests for calc_amw_functions.R to ensure 100% test coverage.
+
 # MWTools 0.2.0 (2023-08-12)
 
 * Add DOI in reference and citation places.
