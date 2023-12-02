@@ -11,7 +11,7 @@ Author:
              comment = c(ORCID = "0000-0001-9260-7827")),
       person(given = "Matthew",
              family = "Heun", 
-             role = c("aut"),
+             role = "aut",
              email = "matthew.heun@me.com"),
              comment = c(ORCID = "0000-0002-7438-214X")))
 Maintainer: Zeke Marshall <marshall_zeke@outlook.com> and Matthew Kuperus Heun <matthew.heun@me.com>

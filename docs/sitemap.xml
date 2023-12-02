@@ -4,6 +4,12 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>/CONTRIBUTING.html</loc>
+  </url>
+  <url>
     <loc>/LICENSE-text.html</loc>
   </url>
   <url>
@@ -130,6 +136,12 @@
     <loc>/reference/ilo_cols.html</loc>
   </url>
   <url>
+    <loc>/reference/ilo_employment_test_data_path.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ilo_working_hours_test_data_path.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
@@ -169,6 +181,9 @@
     <loc>/reference/prep_psut.html</loc>
   </url>
   <url>
+    <loc>/reference/prepareRawILOData.html</loc>
+  </url>
+  <url>
     <loc>/reference/psut_cols.html</loc>
   </url>
   <url>
@@ -176,6 +191,9 @@
   </url>
   <url>
     <loc>/reference/row_col_types.html</loc>
+  </url>
+  <url>
+    <loc>/reference/specify_TJ.html</loc>
   </url>
   <url>
     <loc>/reference/specify_energy_type_method.html</loc>
