@@ -6,12 +6,19 @@ output: html_document
 Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zenodo.7584858), 
 which always resolves to the latest release.
 
+
+* Added code of conduct and contributing pages to documentation.
+* No new tests.
+    * Still at 451 tests, all passing.
+    * Test coverage remains at 100%.
+
+
 # MWTools 0.2.1 (2023-08-20)
 
 * Adding tests for `calc_amw_functions.R` to ensure 100% test coverage.
 * Tests:
     * Now at 451 tests, all passing.
-    * Test coverage is at 100 %.
+    * Test coverage is at 100%.
 
 
 # MWTools 0.2.0 (2023-08-12)
@@ -26,7 +33,7 @@ which always resolves to the latest release.
   added a function `prepareRawILOData()` to prepare this raw data.
 * Tests:
     * Now at 447 tests, all passing.
-    * Test coverage is at 99.17 %.
+    * Test coverage is at 99.17%.
 
 
 # MWTools 0.1.2 (2023-01-30)
