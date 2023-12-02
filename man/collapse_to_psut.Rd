@@ -6,6 +6,7 @@
 \usage{
 collapse_to_psut(
   .df,
+  matrix_class = c("matrix", "Matrix"),
   country = MWTools::mw_cols$country,
   year = MWTools::mw_cols$year,
   method = MWTools::mw_cols$method,
@@ -25,6 +26,9 @@ collapse_to_psut(
 \item{.df}{A data frame created by \code{add_row_col_meta()} so that it contains
 metadata columns for creating PSUT matrices.}
 
+\item{matrix_class}{The type of matrix to be created, one of "matrix" or "Matrix".
+Default is "matrix".}
+
 \item{country, year, method, energy_type, last_stage, unit, e_dot}{See \code{MWTools::mw_cols}.}
 
 \item{matnames, matvals, rownames, colnames, rowtypes, coltypes}{See \code{MWTools::mat_meta_cols}.}
@@ -43,8 +47,11 @@ It also aggregates data frame rows that will end up at the same
 row, column location in the matrices.
 }
 \examples{
-hmw_df <- hmw_test_data_path() \%>\%
-  read.csv() \%>\%
+ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+hmw_data <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
+                              ilo_employment_data = ilo_employment_data)
+hmw_df <- hmw_data \%>\%
   calc_hmw_pfu() \%>\%
   # Keep only a few years for speed.
   dplyr::filter(Year \%in\% 2000:2002)
@@ -55,7 +62,7 @@ amw_df <- amw_test_data_path() \%>\%
   dplyr::filter(Year \%in\% 2000:2002)
 specify_energy_type_method(hmw_df, amw_df) \%>\%
   specify_product() \%>\%
-  specify_ktoe() \%>\%
+  specify_TJ() \%>\%
   MWTools::specify_primary_production() \%>\%
   specify_useful_products() \%>\%
   specify_fu_machines() \%>\%

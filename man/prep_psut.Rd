@@ -7,6 +7,8 @@
 prep_psut(
   .hmw_df,
   .amw_df,
+  matrix_class = c("matrix", "Matrix"),
+  output_unit = c("TJ", "ktoe"),
   unit = IEATools::iea_cols$unit,
   R = IEATools::psut_cols$R,
   U = IEATools::psut_cols$U,
@@ -23,6 +25,12 @@ prep_psut(
 
 \item{.amw_df}{A data frame produced by \code{calc_amw_pfu()}.}
 
+\item{matrix_class}{The type of matrix to be created, one of "matrix" or "Matrix".
+Default is "matrix".}
+
+\item{output_unit}{A string of length one that specifies the output unit.
+One of "TJ" or "ktoe" for terajoules or kilotons of oil equivalent.}
+
 \item{unit, R, U, V, Y, s_units, U_feed, U_eiou, r_eiou}{Column names. See \code{IEATools::psut_cols}.}
 }
 \value{
@@ -36,7 +44,7 @@ The bundled functions are:
 \itemize{
 \item \code{specify_energy_type_method()},
 \item \code{specify_product()},
-\item \code{specify_ktoe()},
+\item \code{specify_ktoe()} or \code{specify_TJ()}, depending on the value of \code{output_unit},
 \item \code{MWTools::specify_primary_production()},
 \item \code{specify_useful_products()},
 \item \code{specify_fu_machines()},
@@ -53,8 +61,11 @@ Default values are assumed for function arguments.
 The "Unit" column is deleted after the "S_units" column is created.
 }
 \examples{
-hmw_df <- hmw_test_data_path() \%>\%
-  read.csv() \%>\%
+ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+hmw_data <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
+                              ilo_employment_data = ilo_employment_data)
+hmw_df <- hmw_data \%>\%
   calc_hmw_pfu() \%>\%
   # Keep only a few years for speed.
   dplyr::filter(Year \%in\% 2000:2002)

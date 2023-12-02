@@ -6,6 +6,7 @@
 \usage{
 phi_vec_mw(
   .phi_table = MWTools::phi_constants_mw,
+  matrix_class = c("matrix", "Matrix"),
   mw_energy_carriers = MWTools::mw_products,
   product = MWTools::mw_cols$product,
   product_type = MWTools::row_col_types$product,
@@ -14,6 +15,9 @@ phi_vec_mw(
 }
 \arguments{
 \item{.phi_table}{A table of phi (exergy-to-energy ratio) values.}
+
+\item{matrix_class}{The type of matrix to be created, one of "matrix" or "Matrix".
+Default is "matrix".}
 
 \item{mw_energy_carriers}{A vector of string energy carriers
 relevant to muscle work calculations.

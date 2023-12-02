@@ -1,6 +1,9 @@
 test_that("specify_energy_type_method() works as expected", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu()
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
@@ -18,8 +21,11 @@ test_that("specify_energy_type_method() works as expected", {
 
 test_that("specify_product() works as expected", {
   # Create a sample input data frame
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu()
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
@@ -39,8 +45,11 @@ test_that("specify_product() works as expected", {
 
 
 test_that("specify_primary_production() works as expected", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu()
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
@@ -64,8 +73,11 @@ test_that("specify_primary_production() works as expected", {
 
 
 test_that("specify_useful_products() works as expected", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu()
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
@@ -89,8 +101,11 @@ test_that("specify_useful_products() works as expected", {
 
 
 test_that("specify_fu_machines() works as expected", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu()
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
@@ -117,8 +132,11 @@ test_that("specify_fu_machines() works as expected", {
 
 
 test_that("specify_last_stages() works as expected", {
-  hmw_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  hmw_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu()
   amw_df <- amw_test_data_path() %>%
     read.csv() %>%
@@ -148,8 +166,11 @@ test_that("specify_last_stages() works as expected", {
 
 
 test_that("specify_ktoe() works as expected", {
-  EJ_df <- hmw_test_data_path() %>%
-    read.csv() %>%
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  EJ_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                             ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     dplyr::rename(
       E.dot_EJ := E.dot
@@ -175,6 +196,42 @@ test_that("specify_ktoe() works as expected", {
     dplyr::full_join(ktoe_df, by = c("Country", "Year", "Species", "Stage", "Sector")) %>%
     dplyr::mutate(
       diff = new_ktoe - E.dot_ktoe
+    )
+  expect_true(all(check$diff == 0))
+})
+
+
+test_that("specify_TJ() works as expected", {
+  test_ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+  test_ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+  EJ_df <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
+                             ilo_employment_data = test_ilo_employment_data) %>%
+    calc_hmw_pfu() %>%
+    dplyr::rename(
+      E.dot_EJ := E.dot
+    ) %>%
+    dplyr::mutate(
+      "{MWTools::mw_cols$unit}" := NULL
+    )
+  TJ_df <- EJ_df %>%
+    specify_TJ(energy_col = "E.dot_EJ") %>%
+    dplyr::rename(
+      E.dot_TJ = E.dot_EJ
+    ) %>%
+    dplyr::mutate(
+      "{MWTools::mw_cols$unit}" := NULL
+    )
+  expect_true(all(TJ_df[[MWTools::mw_cols$unit]] == "TJ"))
+  check <- dplyr::full_join(EJ_df, TJ_df, by = c("Country", "Year", "Species", "Stage", "Sector"))
+
+  check <- EJ_df %>%
+    dplyr::mutate(
+      new_TJ := .data[["E.dot_EJ"]] * MWTools::unit_constants$EJ_to_TJ,
+    ) %>%
+    dplyr::full_join(TJ_df, by = c("Country", "Year", "Species", "Stage", "Sector")) %>%
+    dplyr::mutate(
+      diff = new_TJ - E.dot_TJ
     )
   expect_true(all(check$diff == 0))
 })

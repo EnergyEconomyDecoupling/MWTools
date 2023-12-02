@@ -26,8 +26,12 @@ Usually produced by calling the
 Calc...
 }
 \examples{
-working_hours_data <- read.csv(file = MWTools::hmw_test_data_path()) \%>\%
-  add_hmw_region_codes() \%>\%
-  fill_ilo_data() \%>\%
+ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+hmw_data <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
+                              ilo_employment_data = ilo_employment_data)
+working_hours_data <- hmw_data |>
+  add_hmw_region_codes() |>
+  fill_ilo_data() |>
   calc_total_hours_worked()
 }

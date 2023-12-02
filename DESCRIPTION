@@ -1,8 +1,8 @@
 Package: MWTools
 Type: Package
 Title: Functions For Calculation of Muscle Work Within the PSUT Framework
-Version: 0.1.1
-Date: 2023-01-28
+Version: 0.2.2
+Date: 2023-12-02
 Author:
     c(person(given = "Zeke",
              family = "Marshall",
@@ -11,7 +11,7 @@ Author:
              comment = c(ORCID = "0000-0001-9260-7827")),
       person(given = "Matthew",
              family = "Heun", 
-             role = c("aut"),
+             role = "aut",
              email = "matthew.heun@me.com"),
              comment = c(ORCID = "0000-0002-7438-214X")))
 Maintainer: Zeke Marshall <marshall_zeke@outlook.com> and Matthew Kuperus Heun <matthew.heun@me.com>

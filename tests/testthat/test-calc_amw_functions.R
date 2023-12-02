@@ -63,11 +63,27 @@ test_that("trim_fao_data works", {
 
 
 
-test_that("get_working_species works", {
+test_that("get_working_species works with 'Camelids, other'", {
 
   test_data_path <- amw_test_data_path()
 
-  test_data <- read.csv(test_data_path)
+  test_data <- read.csv(test_data_path) |>
+    dplyr::filter(item != "Camelids, other")
+
+  # "Camelids, other" are present for 2019 only by default, then removed in
+  # tidy_fao_live_animals() as 1 data point cannot be interpolated or extrapolated,
+  # add dummy test data
+  test_data_camelids <- test_data |>
+    dplyr::filter(item != "Camelids, other") |>
+    dplyr::filter(item == "Camels") |>
+    dplyr::mutate(
+      "item" = dplyr::case_when(
+        item == "Camels" ~ "Camelids, other",
+        TRUE ~ as.character(item)
+      )
+    )
+
+  test_data <- rbind(test_data, test_data_camelids)
 
   live_animals_w.species <- test_data %>%
     tidy_fao_live_animals() %>%
@@ -96,7 +112,32 @@ test_that("get_working_species works without 'Camelids, other'", {
     tidy_fao_live_animals() %>%
     add_concordance_codes() %>%
     trim_fao_data() %>%
+    dplyr::filter(Species != "Camelids, other") %>% # "Camelids, other" are absent by default
+    get_working_species()
+
+  expect_true(!is.null(live_animals_w.species))
+
+  expect_equal(unique(live_animals_w.species$Country.code), "CHNM")
+
+  expect_equal(nrow(live_animals_w.species), 366)
+
+  expect_equal(unique(live_animals_w.species$Species),
+               c("Asses", "Buffaloes", "Cattle", "Horses", "Mules", "Camelids"))
+
+})
+
+test_that("get_working_species works without 'Camelids, other' or 'Camels'.", {
+
+  test_data_path <- amw_test_data_path()
+
+  test_data <- read.csv(test_data_path)
+
+  live_animals_w.species <- test_data %>%
+    tidy_fao_live_animals() %>%
+    add_concordance_codes() %>%
+    trim_fao_data() %>%
     dplyr::filter(Species != "Camelids, other") %>%
+    dplyr::filter(Species != "Camels") %>%
     get_working_species()
 
   expect_true(!is.null(live_animals_w.species))
@@ -288,7 +329,6 @@ test_that("calc_useful_energy",{
                                                            "Useful.energy.total [MJ/year]", "Useful.energy.Ag [MJ/year]",
                                                            "Useful.energy.Tr [MJ/year]"))
 })
-
 
 
 test_that("tidy_pfu_data works", {

@@ -6,6 +6,7 @@
 \usage{
 calc_S_units(
   .df = NULL,
+  matrix_class = c("matrix", "Matrix"),
   unit = MWTools::mw_cols$unit,
   R = MWTools::psut_cols$R,
   U = MWTools::psut_cols$U,
@@ -19,6 +20,9 @@ calc_S_units(
 }
 \arguments{
 \item{.df}{A data frame. Default is \code{NULL}.}
+
+\item{matrix_class}{The type of matrix to be created, one of "matrix" or "Matrix".
+Default is "matrix".}
 
 \item{unit}{A string unit for each row or the name of the unit column in \code{.df}. See \code{MWTools::mw_cols}.}
 
@@ -50,8 +54,11 @@ of the \code{R}, \code{U}, \code{V}, and \code{Y} matrices.
 The \code{unit} column will remain in \code{.df} on output and will need to be deleted afterward.
 }
 \examples{
-hmw_df <- hmw_test_data_path() \%>\%
-  read.csv() \%>\%
+ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+hmw_data <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
+                              ilo_employment_data = ilo_employment_data)
+hmw_df <- hmw_data \%>\%
   calc_hmw_pfu() \%>\%
   # Keep only a few years for speed.
   dplyr::filter(Year \%in\% 2000:2002)
@@ -62,7 +69,7 @@ amw_df <- amw_test_data_path() \%>\%
   dplyr::filter(Year \%in\% 2000:2002)
 specify_energy_type_method(hmw_df, amw_df) \%>\%
   specify_product() \%>\%
-  specify_ktoe() \%>\%
+  specify_TJ() \%>\%
   MWTools::specify_primary_production() \%>\%
   specify_useful_products() \%>\%
   specify_fu_machines() \%>\%

@@ -50,15 +50,28 @@ hmw_analysis_data_path <- function() {
     system.file(package = "MWTools")
 }
 
-#' Gives a file path to the ILO human muscle work test data
+#' Gives a file path to the ILO working hours test data
 #'
-#' @return a path to to the ILO human muscle work test data bundled with this package
+#' @return a path to to the ILO working hours test data bundled with this package
 #'
 #' @export
 #'
 #' @examples
-#' hmw_test_data_path()
-hmw_test_data_path <- function() {
-  file.path("extdata", "test_data", "test_hmw_data.csv") %>%
+#' ilo_working_hours_test_data_path()
+ilo_working_hours_test_data_path <- function() {
+  file.path("extdata", "test_data", "test_ilo_working_hours_data.csv") %>%
+    system.file(package = "MWTools")
+}
+
+#' Gives a file path to the ILO employment test data
+#'
+#' @return a path to to the ILO employment test data bundled with this package
+#'
+#' @export
+#'
+#' @examples
+#' ilo_employment_test_data_path()
+ilo_employment_test_data_path <- function() {
+  file.path("extdata", "test_data", "test_ilo_employment_data.csv") %>%
     system.file(package = "MWTools")
 }
