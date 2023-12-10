@@ -1,0 +1,9 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles: {}
+last_built: 2023-12-10T18:39Z
+urls:
+  reference: https://energyeconomydecoupling.github.io/MWTools/reference
+  article: https://energyeconomydecoupling.github.io/MWTools/articles
+
