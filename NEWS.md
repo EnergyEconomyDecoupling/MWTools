@@ -6,6 +6,10 @@ output: html_document
 Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zenodo.7584858), 
 which always resolves to the latest release.
 
+
+
+# MWTools 0.2.4 (2023-12-10)
+
 * Fixed errors in author list.
 * Fixed GitHub pages deployment by adding package dependencies.
   Also, don't do `local::.. github::MatthewHeu/IEATools`, because
