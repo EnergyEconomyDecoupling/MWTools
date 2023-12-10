@@ -9,6 +9,7 @@ which always resolves to the latest release.
 
 # MWTools 0.2.3 (2023-12-10)
 
+* Added spell checks and fixed several spelling errors.
 * Fixed pkgdown GitHub pages.
 * No new tests.
     * Still at 451 tests, all passing.
