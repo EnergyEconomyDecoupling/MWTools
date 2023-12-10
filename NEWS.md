@@ -7,6 +7,12 @@ Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zeno
 which always resolves to the latest release.
 
 
+* Fixed pkgdown GitHub pages.
+* No new tests.
+    * Still at 451 tests, all passing.
+    * Test coverage remains at 100%.
+
+
 # MWTools 0.2.2 (2023-12-02) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10251505.svg)](https://doi.org/10.5281/zenodo.10251505)
 
 * Added code of conduct and contributing pages to documentation.
