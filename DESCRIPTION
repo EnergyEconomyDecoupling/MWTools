@@ -1,19 +1,17 @@
 Package: MWTools
-Type: Package
 Title: Functions For Calculation of Muscle Work Within the PSUT Framework
-Version: 0.2.3
+Version: 0.2.4
 Date: 2023-12-10
-Author:
-    c(person(given = "Zeke",
-             family = "Marshall",
-             role = c("aut", "cre"),
-             email = "marshall_zeke@outlook.com",
-             comment = c(ORCID = "0000-0001-9260-7827")),
-      person(given = "Matthew",
-             family = "Heun", 
-             role = "aut",
-             email = "matthew.heun@me.com"),
-             comment = c(ORCID = "0000-0002-7438-214X")))
+Authors@R: c(person(given = "Zeke",
+                    family = "Marshall",
+                    role = c("aut", "cre"),
+                    email = "marshall_zeke@outlook.com",
+                    comment = c(ORCID = "0000-0001-9260-7827")),
+             person(given = "Matthew",
+                    family = "Heun", 
+                    role = "aut",
+                    email = "matthew.heun@me.com",
+                    comment = c(ORCID = "0000-0002-7438-214X")))
 Maintainer: Zeke Marshall <marshall_zeke@outlook.com> and Matthew Kuperus Heun <matthew.heun@me.com>
 Description: MWTools provides functions for retrieving and wrangling data for the
              calculation of human and animal muscle work data, and conversion into

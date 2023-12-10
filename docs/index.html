@@ -30,7 +30,7 @@
     
     <a class="navbar-brand me-2" href="index.html">MWTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,7 @@
 <div class="section level2">
 <h2 id="animal-muscle-work">Animal Muscle Work<a class="anchor" aria-label="anchor" href="#animal-muscle-work"></a>
 </h2>
-<p>Raw data for the estimation of animal muscle work is obtained from the Food and Agriculture Organisation of the United Nations Statistical Database (FAOSTAT), via the <code>R</code> package <code>FAOSTAT</code>. The <code>MWTools</code> package provides a wrapper function for downloading data for the number of live animals, <code>down_fao_live_animals</code>, which utilises the function <code><a href="https://rdrr.io/pkg/FAOSTAT/man/download_faostat_bulk.html" class="external-link">FAOSTAT::get_faostat_bulk()</a></code>. Once downloaded <code>MWTools</code> provides a number of functions for the calculation of the number of working animals by species, country, year and in agriculture, transport, and in total.</p>
+<p>Raw data for the estimation of animal muscle work is obtained from the Food and Agriculture Organisation of the United Nations Statistical Database (FAOSTAT), via the <code>R</code> package <code>FAOSTAT</code>. The <code>MWTools</code> package provides a wrapper function for downloading data for the number of live animals, <code>down_fao_live_animals</code>, which utilises the function <code>FAOSTAT::get_faostat_bulk()</code>. Once downloaded <code>MWTools</code> provides a number of functions for the calculation of the number of working animals by species, country, year and in agriculture, transport, and in total.</p>
 <p>The helper function <code>calc_amw_pfu</code> returns a tidy data frame containing data for the primary, final, and useful energy by species, country, year and in agriculture, transport, and in total.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://energyeconomydecoupling.github.io/MWTools/">MWTools</a></span><span class="op">)</span></span>
@@ -164,8 +164,8 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Zeke Marshall <br><small class="roles"> Maintainer </small>  </li>
-<li><a href="authors.html">More about authors...</a></li>
+<li>Zeke Marshall <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-9260-7827" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Matthew Heun <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-7438-214X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
@@ -187,7 +187,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Zeke Marshall.</p>
+<p>Developed by Zeke Marshall, Matthew Heun.</p>
 </div>
 
 <div class="pkgdown-footer-right">
