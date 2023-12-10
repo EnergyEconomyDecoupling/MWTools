@@ -183,7 +183,7 @@ trim_fao_data <- function(.df,
 #'
 #' Using a tidy dataframe containing the number of live animals, this function
 #' restricts the species of animals to: Asses, Camels, Cattle, Horses, Mules,
-#' Buffaloes, and Camelids, other; then combines Camels and Camlelids, other
+#' Buffaloes, and Camelids, other; then combines Camels and Camelids, other
 #' into a combined "Camelids" species group.
 #'
 #' @param .df A tidy data frame containing the number of live animals by
@@ -688,7 +688,7 @@ calc_useful_energy <- function(.df,
 
 }
 
-#' Tidy a data frame containg primary, final, and useful energy data for working animals
+#' Tidy a data frame containing primary, final, and useful energy data for working animals
 #'
 #' @param .df A data frame containing the primary, final, and useful energy
 #'            associated with each working animal species.

@@ -547,7 +547,7 @@ calc_U_feed_U_eiou_r_eiou <- function(.df = NULL,
 #'                    One of "TJ" or "ktoe" for terajoules or kilotons of oil equivalent.
 #' @param unit,R,U,V,Y,s_units,U_feed,U_eiou,r_eiou Column names. See `IEATools::psut_cols`.
 #'
-#' @return A data frame of musle work PSUT matrices.
+#' @return A data frame of muscle work PSUT matrices.
 #'
 #' @export
 #'

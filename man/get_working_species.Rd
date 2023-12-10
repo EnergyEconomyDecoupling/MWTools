@@ -40,7 +40,7 @@ country over time. Usually produced by calling the
 \description{
 Using a tidy dataframe containing the number of live animals, this function
 restricts the species of animals to: Asses, Camels, Cattle, Horses, Mules,
-Buffaloes, and Camelids, other; then combines Camels and Camlelids, other
+Buffaloes, and Camelids, other; then combines Camels and Camelids, other
 into a combined "Camelids" species group.
 }
 \examples{

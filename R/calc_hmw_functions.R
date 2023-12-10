@@ -127,7 +127,7 @@ add_hmw_region_codes <- function(.df,
 #' Fill missing values from the ILO for the number of employed persons and
 #' yearly working hours by adding years absent from the raw data, removing
 #' groups of data for which there are no values at all, then interpolating
-#' and extrapolating groups of data for which there is atleast one value.
+#' and extrapolating groups of data for which there is at least one value.
 #'
 #' @param .df The ILO labor data with added region codes.
 #'            Usually produced by calling the

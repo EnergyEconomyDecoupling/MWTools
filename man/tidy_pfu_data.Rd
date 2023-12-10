@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_amw_functions.R
 \name{tidy_pfu_data}
 \alias{tidy_pfu_data}
-\title{Tidy a data frame containg primary, final, and useful energy data for working animals}
+\title{Tidy a data frame containing primary, final, and useful energy data for working animals}
 \usage{
 tidy_pfu_data(
   .df,
@@ -47,7 +47,7 @@ Usually produced by calling the
 \item{useful_energy_ag, useful_energy_tr, final_energy_ag, final_energy_tr, primary_energy_ag, primary_energy_tr, working_animals_ag_col, working_animals_tr_col}{See \code{MWTools::amw_analysis_constants}.}
 }
 \description{
-Tidy a data frame containg primary, final, and useful energy data for working animals
+Tidy a data frame containing primary, final, and useful energy data for working animals
 }
 \examples{
 working_animals_data <- read.csv(file = MWTools::amw_test_data_path()) \%>\%
