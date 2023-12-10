@@ -8,7 +8,7 @@ which always resolves to the latest release.
 
 
 
-# MWTools 0.2.4 (2023-12-10)
+# MWTools 0.2.4 (2023-12-10) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10342042.svg)](https://doi.org/10.5281/zenodo.10342042)
 
 * Fixed errors in author list.
 * Fixed GitHub pages deployment by adding package dependencies.
