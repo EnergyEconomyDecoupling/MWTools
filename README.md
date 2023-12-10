@@ -43,7 +43,7 @@ and in agriculture, transport, and in total.
 ``` r
 library(MWTools)
 
-fao_fp <- PFUSetup::get_abs_paths()$fao_data_path
+fao_fp <- PFUSetup::get_abs_paths(version = "v1.2")$fao_data_path
 
 fao_raw_rds <- readr::read_rds(file = fao_fp)
 
@@ -77,11 +77,13 @@ work can be estimated using the helper function `MWTools::calc_hmw_pfu`.
 ``` r
 library(MWTools)
 
-ilo_fp <- PFUSetup::get_abs_paths()$ilo_data_path
+ilo_working_hours_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_working_hours_data_path)
+ilo_employment_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_employment_data_path)
 
-ilo_raw_rds <- readr::read_rds(file = ilo_fp)
+preparedILOData <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
+                                     ilo_employment_data = ilo_employment_data)
 
-hmw_pfu_data <- calc_hmw_pfu(.df = ilo_raw_rds,
+hmw_pfu_data <- calc_hmw_pfu(.df = preparedILOData,
                              concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
                              hmw_analysis_data_path = PFUSetup::get_abs_paths()$hmw_analysis_data_path)
 
@@ -100,3 +102,8 @@ head(hmw_pfu_data)
 ## PSUT matrices
 
 PFU data can be converted to PSUT matrices using `prep_psut()`.
+
+## More Information
+
+Find more information, including vignettes and function documentation,
+at <https://energyeconomydecoupling.github.io/MWTools/>.
