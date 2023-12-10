@@ -9,7 +9,7 @@
 #' \item{value}{The name of the data column containing the values of a given observation.}
 #' \item{value_count}{The name of the column containing data on the number of observations associated with each `value` data points group.}
 #' \item{sector_col}{The name of the metadata column containing the sector associated with the `value`.}
-#' \item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the `value`. Usally one of "Primary", "Final", or "Useful".}
+#' \item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the `value`. Usually one of "Primary", "Final", or "Useful".}
 #' \item{exemplar_method_col}{The metadata column "Exemplar/Method" representing the regional exemplar or method used for a particular data series.}
 #' \item{method_source_col}{The metadata column "Method/Source" representing the method or source of information use for a particular data series.}
 #' }
@@ -174,7 +174,7 @@
 #' \item{useful_energy_hmw_col}{The data column "Useful energy \[MJ/year\]", which contains data on the yearly useful work performed by all working persons in megajoules (MJ).}
 #' \item{power_col}{The data column "Power \[W\]", which contains data on the power output of humans performing muscle work.}
 #' \item{plate_waste_col}{The data column "Plate waste \[-\]", which contains data on the proportion of food waste by region.}
-#' \item{hmw_harvest_waste_col}{The data column "arvest waste \[-\]", which contains data on the proportion of phytomass lost at the harvest stage by region.}
+#' \item{hmw_harvest_waste_col}{The data column "Harvest waste \[-\]", which contains data on the proportion of phytomass lost at the harvest stage by region.}
 #' }
 #'
 #' @examples
@@ -293,7 +293,7 @@
 #' \item{primary_energy_total}{The data column "Primary.energy.total \[MJ/year\]" representing the primary energy (total feed crop biomass) embodied in the total final energy required by working animals.}
 #' \item{primary_energy_ag}{The data column "Primary.energy.Ag \[MJ/year\]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals in agriculture.}
 #' \item{primary_energy_tr}{The data column "Primary.energy.Tr \[MJ/year\]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals transporting goods outside of agriculture.}
-#' \item{amw_region_col}{The data column "MMW.Region" representing the animal muscle work region.}
+#' \item{amw_region_col}{The data column "AMW.Region" representing the animal muscle work region.}
 #' \item{metric_col}{The metadata column "Metric" representing the metric name associated with a particular data series.}
 #' \item{yes_const}{The string "Yes" representing when a quantity is present or applicable.}
 #' }
@@ -311,12 +311,12 @@
 #' \describe{
 #' \item{country_code_col}{The metadata column name "Country.code" containing three letter ISO 3166-1 country codes.}
 #' \item{country_col}{The metadata column name "Country" containing three letter ISO 3166-1 country codes.}
-#' \item{country_incl_col}{The metadata column name "Country.incl." containing either "Yes" or "No" depending on whether a particulr region or country shoule be included for analysis in `MWTools`.}
-#' \item{exemplar_country_col}{THe metadata column name "Exemplar.country", representing the country from which some data should be taken if absent from a particular country.}
+#' \item{country_incl_col}{The metadata column name "Country.incl." containing either "Yes" or "No" depending on whether a particular region or country should be included for analysis in `MWTools`.}
+#' \item{exemplar_country_col}{The metadata column name "Exemplar.country", representing the country from which some data should be taken if absent from a particular country.}
 #' \item{amw_region_code_col}{The metadata column "AMW.Region.code" telling the region for this row.}
 #' \item{hmw_region_code_col}{The metadata column "HMW.Region.code" telling the region for this row.}
 #' \item{region_code_col}{The metadata column "Region.code" telling the region for this row.}
-#' \item{agg_code_col}{The metadata column "Agg.Code", representing the country, or country group code for individual country level data to be aggreagted in to.}
+#' \item{agg_code_col}{The metadata column "Agg.Code", representing the country, or country group code for individual country level data to be aggregated in to.}
 #' \item{mapping_sheet}{The name of the sheet for name mappings.}
 #' }
 #'
@@ -393,10 +393,10 @@
 #' \item{industry_broad.sector}{The string "Industry" representing the industry sector. One of the ILO's "Broad sectors".}
 #' \item{services_broad.sector}{The string "Services" representing the services sector. One of the ILO's "Broad sectors".}
 #' \item{transport.sector}{The string "Transport" representing the transport sector.}
-#' \item{not_classified_broad.sector}{The string "Not classfied" representing unclassified labor data. One of the ILO's "Broad sectors".}
+#' \item{not_classified_broad.sector}{The string "Not classified" representing unclassified labor data. One of the ILO's "Broad sectors".}
 #' \item{non_agriculture_broad.sector}{The string "Non-agriculture" representing all sectors outside of agriculture. One of the ILO's "Broad sectors".}
 #' \item{total_sector}{The string "Total" representing the entire economy. One of the ILO's "Broad sectors".}
-#' \item{resources_sectors}{The string "Resources" representing resouce sectors.}
+#' \item{resources_sectors}{The string "Resources" representing resource sectors.}
 #' \item{farms}{The string "Farms" representing the farming sector.}
 #' \item{food_production}{The string "Food production" representing the food production sector.}
 #' \item{feed_production}{The string "Feed production" representing the feed production sector.}

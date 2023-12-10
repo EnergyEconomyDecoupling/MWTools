@@ -12,7 +12,7 @@ A string list with 8 entries.
 \item{value}{The name of the data column containing the values of a given observation.}
 \item{value_count}{The name of the column containing data on the number of observations associated with each \code{value} data points group.}
 \item{sector_col}{The name of the metadata column containing the sector associated with the \code{value}.}
-\item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the \code{value}. Usally one of "Primary", "Final", or "Useful".}
+\item{stage_col}{The name of the metadata column containing the stage of the energy conversion chain associated with the \code{value}. Usually one of "Primary", "Final", or "Useful".}
 \item{exemplar_method_col}{The metadata column "Exemplar/Method" representing the regional exemplar or method used for a particular data series.}
 \item{method_source_col}{The metadata column "Method/Source" representing the method or source of information use for a particular data series.}
 }

@@ -25,7 +25,7 @@ A string list with 19 entries.
 \item{useful_energy_hmw_col}{The data column "Useful energy [MJ/year]", which contains data on the yearly useful work performed by all working persons in megajoules (MJ).}
 \item{power_col}{The data column "Power [W]", which contains data on the power output of humans performing muscle work.}
 \item{plate_waste_col}{The data column "Plate waste [-]", which contains data on the proportion of food waste by region.}
-\item{hmw_harvest_waste_col}{The data column "arvest waste [-]", which contains data on the proportion of phytomass lost at the harvest stage by region.}
+\item{hmw_harvest_waste_col}{The data column "Harvest waste [-]", which contains data on the proportion of phytomass lost at the harvest stage by region.}
 }
 }
 \usage{
