@@ -5,6 +5,12 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/MWTools)](https://CRAN.R-project.org/package=MWTools)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Codecov test
 coverage](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools/branch/master/graph/badge.svg)](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools?branch=master)
 [![R-CMD-check](https://github.com/EnergyEconomyDecoupling/MWTools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/EnergyEconomyDecoupling/MWTools/actions/workflows/R-CMD-check.yaml)
@@ -43,7 +49,7 @@ and in agriculture, transport, and in total.
 ``` r
 library(MWTools)
 
-fao_fp <- PFUSetup::get_abs_paths()$fao_data_path
+fao_fp <- PFUSetup::get_abs_paths(version = "v1.2")$fao_data_path
 
 fao_raw_rds <- readr::read_rds(file = fao_fp)
 
@@ -77,11 +83,13 @@ work can be estimated using the helper function `MWTools::calc_hmw_pfu`.
 ``` r
 library(MWTools)
 
-ilo_fp <- PFUSetup::get_abs_paths()$ilo_data_path
+ilo_working_hours_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_working_hours_data_path)
+ilo_employment_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_employment_data_path)
 
-ilo_raw_rds <- readr::read_rds(file = ilo_fp)
+preparedILOData <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
+                                     ilo_employment_data = ilo_employment_data)
 
-hmw_pfu_data <- calc_hmw_pfu(.df = ilo_raw_rds,
+hmw_pfu_data <- calc_hmw_pfu(.df = preparedILOData,
                              concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
                              hmw_analysis_data_path = PFUSetup::get_abs_paths()$hmw_analysis_data_path)
 
@@ -100,3 +108,8 @@ head(hmw_pfu_data)
 ## PSUT matrices
 
 PFU data can be converted to PSUT matrices using `prep_psut()`.
+
+## More Information
+
+Find more information, including vignettes and function documentation,
+at <https://energyeconomydecoupling.github.io/MWTools/>.

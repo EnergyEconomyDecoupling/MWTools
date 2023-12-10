@@ -34,7 +34,7 @@ One of "TJ" or "ktoe" for terajoules or kilotons of oil equivalent.}
 \item{unit, R, U, V, Y, s_units, U_feed, U_eiou, r_eiou}{Column names. See \code{IEATools::psut_cols}.}
 }
 \value{
-A data frame of musle work PSUT matrices.
+A data frame of muscle work PSUT matrices.
 }
 \description{
 Starting from human and animal muscle work data frames,

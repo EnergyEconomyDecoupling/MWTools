@@ -7,7 +7,16 @@ Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zeno
 which always resolves to the latest release.
 
 
-# MWTools 0.2.2 (2023-12-02)
+# MWTools 0.2.3 (2023-12-10)
+
+* Added spell checks and fixed several spelling errors.
+* Fixed pkgdown GitHub pages.
+* No new tests.
+    * Still at 451 tests, all passing.
+    * Test coverage remains at 100%.
+
+
+# MWTools 0.2.2 (2023-12-02) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10251505.svg)](https://doi.org/10.5281/zenodo.10251505)
 
 * Added code of conduct and contributing pages to documentation.
 * No new tests.
@@ -15,7 +24,7 @@ which always resolves to the latest release.
     * Test coverage remains at 100%.
 
 
-# MWTools 0.2.1 (2023-08-20)
+# MWTools 0.2.1 (2023-08-20) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8266809.svg)](https://doi.org/10.5281/zenodo.8266809)
 
 * Adding tests for `calc_amw_functions.R` to ensure 100% test coverage.
 * Tests:
@@ -23,7 +32,7 @@ which always resolves to the latest release.
     * Test coverage is at 100%.
 
 
-# MWTools 0.2.0 (2023-08-12)
+# MWTools 0.2.0 (2023-08-12) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8240992.svg)](https://doi.org/10.5281/zenodo.8240992)
 
 * Add DOI in reference and citation places.
 * Can now change between TJ and ktoe units
@@ -38,7 +47,7 @@ which always resolves to the latest release.
     * Test coverage is at 99.17%.
 
 
-# MWTools 0.1.2 (2023-01-30)
+# MWTools 0.1.2 (2023-01-30) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7584859.svg)](https://doi.org/10.5281/zenodo.7584859)
 
 * Adding Zenodo badge
 

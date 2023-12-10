@@ -17,6 +17,9 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
+[![CRAN status](https://www.r-pkg.org/badges/version/MWTools)](https://CRAN.R-project.org/package=MWTools)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Codecov test coverage](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools/branch/master/graph/badge.svg)](https://codecov.io/gh/EnergyEconomyDecoupling/MWTools?branch=master)
 [![R-CMD-check](https://github.com/EnergyEconomyDecoupling/MWTools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/EnergyEconomyDecoupling/MWTools/actions/workflows/R-CMD-check.yaml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7584859.svg)](https://doi.org/10.5281/zenodo.7584859)
@@ -63,10 +66,10 @@ Using data for the number of employed persons and mean yearly working hours the 
 ``` {r hmw_pfu}
 library(MWTools)
 
-ilo_working_hours_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_workingHours_data_path)
+ilo_working_hours_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_working_hours_data_path)
 ilo_employment_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_employment_data_path)
 
-preparedILOData <- prepareRawILOData(ilo_workingHours_data = ilo_working_hours_data,
+preparedILOData <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
                                      ilo_employment_data = ilo_employment_data)
 
 hmw_pfu_data <- calc_hmw_pfu(.df = preparedILOData,
@@ -80,3 +83,9 @@ head(hmw_pfu_data)
 ## PSUT matrices
 
 PFU data can be converted to PSUT matrices using `prep_psut()`.
+
+
+## More Information
+
+Find more information, including vignettes and function documentation, at 
+<https://energyeconomydecoupling.github.io/MWTools/>.

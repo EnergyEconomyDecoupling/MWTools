@@ -39,7 +39,7 @@ A string list with 35 entries.
 \item{primary_energy_total}{The data column "Primary.energy.total [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the total final energy required by working animals.}
 \item{primary_energy_ag}{The data column "Primary.energy.Ag [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals in agriculture.}
 \item{primary_energy_tr}{The data column "Primary.energy.Tr [MJ/year]" representing the primary energy (total feed crop biomass) embodied in the final energy required by working animals transporting goods outside of agriculture.}
-\item{amw_region_col}{The data column "MMW.Region" representing the animal muscle work region.}
+\item{amw_region_col}{The data column "AMW.Region" representing the animal muscle work region.}
 \item{metric_col}{The metadata column "Metric" representing the metric name associated with a particular data series.}
 \item{yes_const}{The string "Yes" representing when a quantity is present or applicable.}
 }

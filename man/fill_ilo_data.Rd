@@ -38,7 +38,7 @@ Usually produced by calling the
 Fill missing values from the ILO for the number of employed persons and
 yearly working hours by adding years absent from the raw data, removing
 groups of data for which there are no values at all, then interpolating
-and extrapolating groups of data for which there is atleast one value.
+and extrapolating groups of data for which there is at least one value.
 }
 \examples{
 ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
