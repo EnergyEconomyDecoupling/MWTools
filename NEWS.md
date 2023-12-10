@@ -17,7 +17,7 @@ which always resolves to the latest release.
     * Test coverage remains at 100%.
 
 
-# MWTools 0.2.3 (2023-12-10)
+# MWTools 0.2.3 (2023-12-10) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10340976.svg)](https://doi.org/10.5281/zenodo.10340976)
 
 * Added spell checks and fixed several spelling errors.
 * Fixed pkgdown GitHub pages.
