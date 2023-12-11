@@ -36,10 +36,12 @@ Imports:
     zoo
 Suggests: 
     covr,
+    FAOSTAT,
     IEATools,
     knitr,
     matsbyname,
     Recca,
+    Rilostat,
     spelling,
     testthat (>= 3.0.0)
 Depends: 
