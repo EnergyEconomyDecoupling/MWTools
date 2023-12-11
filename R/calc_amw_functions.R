@@ -51,10 +51,12 @@ tidy_fao_live_animals <- function(.df,
 
   # Converts "1000 Number" to "Number"
   live_animals_1000 <- live_animals %>%
-    dplyr::filter(.data[[unit]] == "1000 Number") %>%
-    dplyr::mutate(
-      "{value}" := .data[[value]] * 1000
-    )
+    # There has been a change in units for the FAO data.
+    # dplyr::filter(.data[[unit]] == "1000 Number") %>%
+    # dplyr::mutate(
+    #   "{value}" := .data[[value]] * 1000
+    # )
+    dplyr::filter(.data[[unit]] == "An")
 
   # Extracts data for Unit = "Number"
   live_animals_1 <- live_animals %>%
