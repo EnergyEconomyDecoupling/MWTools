@@ -7,6 +7,12 @@ Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zeno
 which always resolves to the latest release.
 
 
+* It appears there has been a change in the units column of the FAO data.
+  "1000 Number" has been replaced by "An", 
+  presumably indicating that previously the FAO had been reporting 
+  thousands of animals but now they are reporting total numbers of animals.
+  `tidy_fao_live_animals()` has been adjusted to accommodate this change.
+
 
 # MWTools 0.2.4 (2023-12-10) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10342042.svg)](https://doi.org/10.5281/zenodo.10342042)
 
