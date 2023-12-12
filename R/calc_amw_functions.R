@@ -6,6 +6,8 @@
 #' @param .df A data frame containing the raw FAO live animals data,
 #'            corresponding to the "QCL" FAO bulk download query.
 #' @param country_name,species,year,unit,value,value_count See `MWTools::mw_constants`.
+#' @param mw_species A list all species used in the `MWTools` package, see `MWTools::mw_species`.
+#' @param cattle,cattle_and_buffaloes,buffaloes See `MWTools::mw_species`.
 #' @param area_fao_col,item_fao_col,year_fao_col,unit_fao_col,value_fao_col
 #'        See `MWTools::fao_cols`.
 #' @param col_1960,col_2020 See `MWTools::hmw_analysis_constants`.
@@ -24,6 +26,10 @@ tidy_fao_live_animals <- function(.df,
                                   unit = MWTools::mw_cols$unit,
                                   value = MWTools::mw_constants$value,
                                   value_count = MWTools::mw_constants$value_count,
+                                  mw_species = MWTools::mw_species,
+                                  cattle = MWTools::mw_species$cattle,
+                                  cattle_and_buffaloes = MWTools::mw_species$cattle_and_buffaloes,
+                                  buffaloes = MWTools::mw_species$buffaloes,
                                   area_fao_col = MWTools::fao_cols$area_fao_col,
                                   item_fao_col = MWTools::fao_cols$item_fao_col,
                                   year_fao_col = MWTools::fao_cols$year_fao_col,
@@ -32,40 +38,73 @@ tidy_fao_live_animals <- function(.df,
                                   col_1960 = MWTools::hmw_analysis_constants$col_1960,
                                   col_2020 = MWTools::hmw_analysis_constants$col_2020){
 
+
+  # As of some unknown time prior to 2023/12/12 the FAO have changed the units
+  # returned by the FAOSTAT::get_faostat_bulk(code = "QCL") function to only
+  # "An" - the number of animals.
+  # To review in 2024/06 after re-checking units returned from FAOSTAT.
+  # Two species names (items) relevant to MWTools were also changed:
+  # Mules -> Mules and hinnies
+  # Buffaloes -> Cattle and Buffaloes
+  # Zeke Marshall
+
   # Read file into a tidy data frame
-  live_animals <- .df %>%
-    dplyr::filter(.data[[item_fao_col]] %in% MWTools::mw_species) %>%
-    dplyr::select(dplyr::all_of(c(area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col))) %>%
+  # live_animals <- .df %>%
+  #   dplyr::filter(.data[[item_fao_col]] %in% MWTools::mw_species) %>%
+  #   dplyr::select(dplyr::all_of(c(area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col))) %>%
+  #   magrittr::set_colnames(c(country_name, species, year, unit, value))
+  #
+  # # Replaces unit designations with name "Number" or "1000 Number"
+  # live_animals <- live_animals %>%
+  #   # Replaces "Head" with Number
+  #   dplyr::mutate(
+  #     "{unit}" := stringr::str_replace(.data[[unit]], "Head", "Number")
+  #   ) %>%
+  #   # Replaces "No" with Number
+  #   dplyr::mutate(
+  #     "{unit}" := stringr::str_replace(.data[[unit]], "No", "Number")
+  #   )
+  #
+  # # Converts "1000 Number" to "Number"
+  # live_animals_1000 <- live_animals %>%
+  #   # There has been a change in units for the FAO data.
+  #   # dplyr::filter(.data[[unit]] == "1000 Number") %>%
+  #   # dplyr::mutate(
+  #   #   "{value}" := .data[[value]] * 1000
+  #   # )
+  #   dplyr::filter(.data[[unit]] %in% c("An", "1000 An", "1000 No"))
+  #
+  #
+  # # Extracts data for Unit = "Number"
+  # live_animals_1 <- live_animals %>%
+  #   dplyr::filter(.data[[unit]] == "Number")
+  #
+  # # Re-combines live animals data
+  # live_animals_fixednum <- live_animals_1000 %>%
+  #   rbind(live_animals_1) %>%
+  #   dplyr::select(-dplyr::all_of(c(unit)))
+
+  fao_data_trimmed <- .df %>%
+    dplyr::select(dplyr::all_of(c(area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col)))
+
+  live_animals_buffaloes <- fao_data_trimmed %>%
+    dplyr::filter(.data[[item_fao_col]] %in% c(cattle, cattle_and_buffaloes)) %>%
+    tidyr::pivot_wider(id_cols = dplyr::all_of(c(area_fao_col, year_fao_col, unit_fao_col)),
+                       values_from = dplyr::all_of(value_fao_col),
+                       names_from = dplyr::all_of(item_fao_col)) %>%
+    dplyr::mutate("{buffaloes}" := .data[[cattle_and_buffaloes]] - .data[[cattle]], .keep = "unused") |>
+    tidyr::pivot_longer(cols = buffaloes,
+                        names_to = item_fao_col,
+                        values_to = value_fao_col)
+
+  live_animals_noBuffaloes <- fao_data_trimmed %>%
+    dplyr::filter(.data[[item_fao_col]] %in% setdiff(mw_species, cattle_and_buffaloes))
+
+  live_animals_recombined <- rbind(live_animals_noBuffaloes, live_animals_buffaloes) %>%
     magrittr::set_colnames(c(country_name, species, year, unit, value))
 
-  # Replaces unit designations with name "Number" or "1000 Number"
-  live_animals <- live_animals %>%
-    # Replaces "Head" with Number
-    dplyr::mutate(
-      "{unit}" := stringr::str_replace(.data[[unit]], "Head", "Number")
-    ) %>%
-    # Replaces "No" with Number
-    dplyr::mutate(
-      "{unit}" := stringr::str_replace(.data[[unit]], "No", "Number")
-    )
-
-  # Converts "1000 Number" to "Number"
-  live_animals_1000 <- live_animals %>%
-    dplyr::filter(.data[[unit]] == "1000 Number") %>%
-    dplyr::mutate(
-      "{value}" := .data[[value]] * 1000
-    )
-
-  # Extracts data for Unit = "Number"
-  live_animals_1 <- live_animals %>%
-    dplyr::filter(.data[[unit]] == "Number")
-
-  # Re-combines live animals data
-  live_animals_fixednum <- live_animals_1000 %>%
-    rbind(live_animals_1) %>%
-    dplyr::select(-dplyr::all_of(c(unit)))
-
-  live_animals_final <- live_animals_fixednum %>%
+  live_animals_final <- live_animals_recombined %>%
+    dplyr::select(-dplyr::all_of(c(unit))) %>%
     dplyr::group_by(.data[[country_name]], .data[[species]]) %>%
 
     # Add a column containing the number of data points for each group of data

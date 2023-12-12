@@ -9,12 +9,14 @@ test_that("tidy_fao_live_animals works", {
 
   expect_true(!is.null(live_animals))
 
+  expect_true(all(unique(live_animals$Species) == c("Asses", "Buffaloes", "Camels", "Cattle", "Horses", "Mules and hinnies")))
+
   expect_equal(unique(live_animals$Country.name), c("China", "China, mainland"))
 
   expect_equal(colnames(live_animals), c("Country.name", "Species", "Year",
                                          "Value"))
 
-  expect_equal(nrow(live_animals), 732)
+  expect_equal(nrow(live_animals), 744)
 
 })
 
@@ -37,7 +39,7 @@ test_that("add_concordance_codes works", {
                                                  "Country.name", "Species", "Year",
                                                  "Value", "Country.incl."))
 
-  expect_equal(nrow(live_animals_w.codes), 732)
+  expect_equal(nrow(live_animals_w.codes), 744)
 
 })
 
@@ -57,7 +59,7 @@ test_that("trim_fao_data works", {
 
   expect_equal(unique(live_animals_trimmed$Country.code), "CHNM")
 
-  expect_equal(nrow(live_animals_trimmed), 366)
+  expect_equal(nrow(live_animals_trimmed), 372)
 
 })
 
@@ -95,10 +97,10 @@ test_that("get_working_species works with 'Camelids, other'", {
 
   expect_equal(unique(live_animals_w.species$Country.code), "CHNM")
 
-  expect_equal(nrow(live_animals_w.species), 366)
+  expect_equal(nrow(live_animals_w.species), 372)
 
   expect_equal(unique(live_animals_w.species$Species),
-               c("Asses", "Buffaloes", "Cattle", "Horses", "Mules", "Camelids"))
+               c("Asses", "Buffaloes", "Cattle", "Horses", "Mules and hinnies", "Camelids"))
 
 })
 
@@ -119,10 +121,10 @@ test_that("get_working_species works without 'Camelids, other'", {
 
   expect_equal(unique(live_animals_w.species$Country.code), "CHNM")
 
-  expect_equal(nrow(live_animals_w.species), 366)
+  expect_equal(nrow(live_animals_w.species), 372)
 
   expect_equal(unique(live_animals_w.species$Species),
-               c("Asses", "Buffaloes", "Cattle", "Horses", "Mules", "Camelids"))
+               c("Asses", "Buffaloes", "Cattle", "Horses", "Mules and hinnies", "Camelids"))
 
 })
 
@@ -144,10 +146,10 @@ test_that("get_working_species works without 'Camelids, other' or 'Camels'.", {
 
   expect_equal(unique(live_animals_w.species$Country.code), "CHNM")
 
-  expect_equal(nrow(live_animals_w.species), 366)
+  expect_equal(nrow(live_animals_w.species), 372)
 
   expect_equal(unique(live_animals_w.species$Species),
-               c("Asses", "Buffaloes", "Cattle", "Horses", "Mules", "Camelids"))
+               c("Asses", "Buffaloes", "Cattle", "Horses", "Mules and hinnies", "Camelids"))
 
 })
 
@@ -167,7 +169,10 @@ test_that("calc_working_animals works", {
 
   expect_true(!is.null(working_animals))
 
-  expect_equal(nrow(working_animals), 366)
+  expect_equal(nrow(working_animals), 372)
+
+  expect_equal(unique(working_animals$Species),
+               c("Asses", "Buffaloes", "Cattle", "Horses", "Mules and hinnies", "Camelids"))
 
   expect_equal(colnames(working_animals), c("Country.code", "AMW.Region.code",
                                             "Year", "Species",
@@ -192,7 +197,7 @@ test_that("calc_sector_split works", {
 
   expect_true(!is.null(working_animals_s.split))
 
-  expect_equal(nrow(working_animals_s.split), 366)
+  expect_equal(nrow(working_animals_s.split), 372)
 
   expect_equal(colnames(working_animals_s.split), c("Country.code", "AMW.Region.code",
                                                     "Year", "Species",
@@ -220,7 +225,7 @@ test_that("calc_yearly_feed works", {
 
   expect_true(!is.null(working_animals_w.feed))
 
-  expect_equal(nrow(working_animals_w.feed), 366)
+  expect_equal(nrow(working_animals_w.feed), 372)
 
   expect_equal(colnames(working_animals_w.feed), c("Country.code", "AMW.Region.code",
                                                    "Year", "Species", "Live.animals",
@@ -248,7 +253,7 @@ test_that("calc_final_energy works", {
 
   expect_true(!is.null(working_animals_w.finalenergy))
 
-  expect_equal(nrow(working_animals_w.finalenergy), 366)
+  expect_equal(nrow(working_animals_w.finalenergy), 372)
 
   expect_equal(colnames(working_animals_w.finalenergy), c("Country.code", "AMW.Region.code",
                                                           "Year", "Species", "Live.animals",
@@ -279,7 +284,7 @@ test_that("calc_primary_energy",{
 
   expect_true(!is.null(working_animals_w.primaryenergy))
 
-  expect_equal(nrow(working_animals_w.primaryenergy), 366)
+  expect_equal(nrow(working_animals_w.primaryenergy), 372)
 
   expect_equal(colnames(working_animals_w.primaryenergy), c("Country.code", "AMW.Region.code",
                                                             "Year", "Species", "Live.animals",
@@ -314,7 +319,7 @@ test_that("calc_useful_energy",{
 
   expect_true(!is.null(working_animals_w.usefulenergy))
 
-  expect_equal(nrow(working_animals_w.usefulenergy), 366)
+  expect_equal(nrow(working_animals_w.usefulenergy), 372)
 
   expect_equal(colnames(working_animals_w.usefulenergy), c("Country.code", "AMW.Region.code",
                                                            "Year", "Species", "Live.animals",
@@ -352,7 +357,7 @@ test_that("tidy_pfu_data works", {
 
   expect_true(!is.null(tidy_pfu_data))
 
-  expect_equal(nrow(tidy_pfu_data), 2196)
+  expect_equal(nrow(tidy_pfu_data), 2232)
 
   expect_equal(colnames(tidy_pfu_data), c("Country", "Year", "Species",
                                           "Stage", "Sector", "Unit",
@@ -372,7 +377,7 @@ test_that("calc_amw_pfu", {
 
   expect_true(!is.null(tidy_pfu_data))
 
-  expect_equal(nrow(tidy_pfu_data), 2196)
+  expect_equal(nrow(tidy_pfu_data), 2232)
 
   expect_equal(colnames(tidy_pfu_data), c("Country", "Year", "Species",
                                           "Stage", "Sector", "Unit",

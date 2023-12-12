@@ -1,6 +1,6 @@
 Package: MWTools
 Title: Functions For Calculation of Muscle Work Within the PSUT Framework
-Version: 0.2.4
+Version: 0.2.5
 Date: 2023-12-10
 Authors@R: c(person(given = "Zeke",
                     family = "Marshall",
@@ -36,10 +36,12 @@ Imports:
     zoo
 Suggests: 
     covr,
+    FAOSTAT,
     IEATools,
     knitr,
     matsbyname,
     Recca,
+    Rilostat,
     spelling,
     testthat (>= 3.0.0)
 Depends: 

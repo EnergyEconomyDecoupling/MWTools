@@ -12,6 +12,10 @@ tidy_fao_live_animals(
   unit = MWTools::mw_cols$unit,
   value = MWTools::mw_constants$value,
   value_count = MWTools::mw_constants$value_count,
+  mw_species = MWTools::mw_species,
+  cattle = MWTools::mw_species$cattle,
+  cattle_and_buffaloes = MWTools::mw_species$cattle_and_buffaloes,
+  buffaloes = MWTools::mw_species$buffaloes,
   area_fao_col = MWTools::fao_cols$area_fao_col,
   item_fao_col = MWTools::fao_cols$item_fao_col,
   year_fao_col = MWTools::fao_cols$year_fao_col,
@@ -26,6 +30,10 @@ tidy_fao_live_animals(
 corresponding to the "QCL" FAO bulk download query.}
 
 \item{country_name, species, year, unit, value, value_count}{See \code{MWTools::mw_constants}.}
+
+\item{mw_species}{A list all species used in the \code{MWTools} package, see \code{MWTools::mw_species}.}
+
+\item{cattle, cattle_and_buffaloes, buffaloes}{See \code{MWTools::mw_species}.}
 
 \item{area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col}{See \code{MWTools::fao_cols}.}
 

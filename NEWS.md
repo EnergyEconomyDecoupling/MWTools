@@ -6,9 +6,26 @@ output: html_document
 Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zenodo.7584858), 
 which always resolves to the latest release.
 
+# MWTools 0.2.5 (2023-12-12)
+
+* It appears there has been a change in the units column of the FAO data.
+  "1000 Number" has been replaced by "An", 
+  presumably indicating that previously the FAO had been reporting 
+  thousands of animals but now they are reporting total numbers of animals.
+  `tidy_fao_live_animals()` has been adjusted to accommodate this change.
+* Two name changes and one reallocation of data relevant to `MWTools` occurred
+  in the 2023 release of the FAO data retrieved via `FAOSTAT`. "Buffaloes" is 
+  now incorporated in a combined "Cattle and Buffaloes" item. To fix this we
+  calculate "Buffaloes" by subtracting "Cattle" from "Cattle and Buffaloes".
+  The species "Mules" has been renamed "Mules and hinnies".
+* Two tests added in `test-calc_amw_functions.R` to ensure these name changes 
+  are flowing through the functions.
+    * Now at 453 tests, all passing.
+    * Test coverage remains at 100%.
+  
 
 
-# MWTools 0.2.4 (2023-12-10)
+# MWTools 0.2.4 (2023-12-10) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10342042.svg)](https://doi.org/10.5281/zenodo.10342042)
 
 * Fixed errors in author list.
 * Fixed GitHub pages deployment by adding package dependencies.
