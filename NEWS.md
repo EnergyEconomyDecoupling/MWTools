@@ -7,6 +7,8 @@ Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zeno
 which always resolves to the latest release.
 
 
+# MWTools 0.2.6 (2023-12-21)
+
 * Added a statement of need to the README file.
 * Added a vignette, moving some example code 
   out of the README file.
