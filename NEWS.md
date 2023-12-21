@@ -12,7 +12,7 @@ which always resolves to the latest release.
   out of the README file.
 
 
-# MWTools 0.2.5 (2023-12-12)
+# MWTools 0.2.5 (2023-12-12) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10365505.svg)](https://doi.org/10.5281/zenodo.10365505)
 
 * It appears there has been a change in the units column of the FAO data.
   "1000 Number" has been replaced by "An", 
