@@ -10,6 +10,9 @@ which always resolves to the latest release.
 * Added a statement of need to the README file.
 * Added a vignette, moving some example code 
   out of the README file.
+* No new tests.
+    * Still at 453 tests, all passing.
+    * Test coverage remains at 100%.
 
 
 # MWTools 0.2.5 (2023-12-12) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10365505.svg)](https://doi.org/10.5281/zenodo.10365505)
