@@ -12,7 +12,7 @@ MWTools::down_fao_live_animals."><!-- mathjax --><script src="https://cdnjs.clou
     
     <a class="navbar-brand me-2" href="../index.html">MWTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,10 @@ MWTools::down_fao_live_animals."><!-- mathjax --><script src="https://cdnjs.clou
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/MWTools.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
@@ -56,6 +59,10 @@ MWTools::down_fao_live_animals."><!-- mathjax --><script src="https://cdnjs.clou
 <span>  unit <span class="op">=</span> <span class="fu">MWTools</span><span class="fu">::</span><span class="va"><a href="mw_cols.html">mw_cols</a></span><span class="op">$</span><span class="va">unit</span>,</span>
 <span>  value <span class="op">=</span> <span class="fu">MWTools</span><span class="fu">::</span><span class="va"><a href="mw_constants.html">mw_constants</a></span><span class="op">$</span><span class="va">value</span>,</span>
 <span>  value_count <span class="op">=</span> <span class="fu">MWTools</span><span class="fu">::</span><span class="va"><a href="mw_constants.html">mw_constants</a></span><span class="op">$</span><span class="va">value_count</span>,</span>
+<span>  mw_species <span class="op">=</span> <span class="fu">MWTools</span><span class="fu">::</span><span class="va"><a href="mw_species.html">mw_species</a></span>,</span>
+<span>  cattle <span class="op">=</span> <span class="fu">MWTools</span><span class="fu">::</span><span class="va"><a href="mw_species.html">mw_species</a></span><span class="op">$</span><span class="va">cattle</span>,</span>
+<span>  cattle_and_buffaloes <span class="op">=</span> <span class="fu">MWTools</span><span class="fu">::</span><span class="va"><a href="mw_species.html">mw_species</a></span><span class="op">$</span><span class="va">cattle_and_buffaloes</span>,</span>
+<span>  buffaloes <span class="op">=</span> <span class="fu">MWTools</span><span class="fu">::</span><span class="va"><a href="mw_species.html">mw_species</a></span><span class="op">$</span><span class="va">buffaloes</span>,</span>
 <span>  area_fao_col <span class="op">=</span> <span class="fu">MWTools</span><span class="fu">::</span><span class="va"><a href="fao_cols.html">fao_cols</a></span><span class="op">$</span><span class="va">area_fao_col</span>,</span>
 <span>  item_fao_col <span class="op">=</span> <span class="fu">MWTools</span><span class="fu">::</span><span class="va"><a href="fao_cols.html">fao_cols</a></span><span class="op">$</span><span class="va">item_fao_col</span>,</span>
 <span>  year_fao_col <span class="op">=</span> <span class="fu">MWTools</span><span class="fu">::</span><span class="va"><a href="fao_cols.html">fao_cols</a></span><span class="op">$</span><span class="va">year_fao_col</span>,</span>
@@ -75,6 +82,14 @@ corresponding to the "QCL" FAO bulk download query.</p></dd>
 
 <dt>country_name, species, year, unit, value, value_count</dt>
 <dd><p>See <code><a href="mw_constants.html">MWTools::mw_constants</a></code>.</p></dd>
+
+
+<dt>mw_species</dt>
+<dd><p>A list all species used in the <code>MWTools</code> package, see <code><a href="mw_species.html">MWTools::mw_species</a></code>.</p></dd>
+
+
+<dt>cattle, cattle_and_buffaloes, buffaloes</dt>
+<dd><p>See <code><a href="mw_species.html">MWTools::mw_species</a></code>.</p></dd>
 
 
 <dt>area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col</dt>

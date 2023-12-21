@@ -1,0 +1,111 @@
+---
+title: "IEATools"
+output: rmarkdown::html_vignette
+bibliography: References.bib
+vignette: >
+  %\VignetteIndexEntry{IEATools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Introduction
+
+In societal energy analysis and societal exergy analysis (SEA), 
+animals and humans provide energy to society by performing _muscle work_.
+A previous study by [@Steenwyk:2022ww](https://doi.org/10.1007/s41247-022-00096-z)
+developed and standardized ways to estimate
+muscle work contributed to society by animals and humans.
+And data exist from the UN's
+[Food and Agriculture Organization](https://www.fao.org/home/en) (FAO) and
+the [International Labor Organization](https://www.ilo.org) (ILO)
+that could be used for such purposes.
+However, none of the data are in the PSUT format
+proposed by 
+[@Heun:2018](https://doi.org/10.1016/j.apenergy.2018.05.109).
+Computational tools are needed to gather and shape relevant data.
+
+The examples below show how to use `MWTools` to address
+the needs described above.
+
+
+## Examples
+
+### Animal Muscle Work
+
+Raw data for the estimation of animal muscle work
+is obtained from the Food and Agriculture Organisation 
+of the United Nations Statistical Database (FAOSTAT), 
+via the `R` package `FAOSTAT`.
+The `MWTools` package provides a wrapper function 
+for downloading data for the number of live animals,
+`down_fao_live_animals()`, which utilises the function `FAOSTAT::get_faostat_bulk()`. 
+Once downloaded, `MWTools` provides a number of functions
+for the calculation of the number of working animals 
+by species, country, year and in agriculture, transport, and in total.
+
+The helper function `calc_amw_pfu()` returns a tidy data frame
+containing data for the primary, final, and useful energy 
+by species, country, year and in agriculture, transport, and in total.
+
+```{r get_example_data}
+library(MWTools)
+
+fao_fp <- PFUSetup::get_abs_paths(version = "v1.2")$fao_data_path
+
+fao_raw_rds <- readr::read_rds(file = fao_fp)
+
+amw_pfu_data <- calc_amw_pfu(.df = fao_raw_rds,
+                             concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
+                             amw_analysis_data_path = PFUSetup::get_abs_paths()$amw_analysis_data_path)
+
+head(amw_pfu_data)
+```
+
+
+### Human Muscle Work
+
+Raw data for the estimation of human muscle work
+is obtained from the International Labor Organisation (ILO), 
+via the `R` package `Rilostat`.
+The `MWTools` package includes bundled ILO data for the number of employed persons by sector and mean number of working hours by sector.
+
+Using data for the number of employed persons and 
+mean yearly working hours,
+the primary, final, and useful energy associated 
+with human muscle work can be estimated 
+using the helper function `calc_hmw_pfu()`.
+
+``` {r hmw_pfu}
+library(MWTools)
+
+ilo_working_hours_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_working_hours_data_path)
+ilo_employment_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_employment_data_path)
+
+preparedILOData <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
+                                     ilo_employment_data = ilo_employment_data)
+
+hmw_pfu_data <- calc_hmw_pfu(.df = preparedILOData,
+                             concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
+                             hmw_analysis_data_path = PFUSetup::get_abs_paths()$hmw_analysis_data_path)
+
+head(hmw_pfu_data)
+```
+
+
+### PSUT matrices
+
+PFU data can be converted to PSUT matrices using `prep_psut()`.
+
+
+## Conclusion
+
+The functions in the `MWTools` package can streamline and assist inclusion 
+of animal and human muscle work in societal exergy analysis.
