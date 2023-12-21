@@ -30,7 +30,7 @@ the final energy ("Biomass").'><!-- mathjax --><script src="https://cdnjs.cloudf
     
     <a class="navbar-brand me-2" href="../index.html">MWTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,10 @@ the final energy ("Biomass").'><!-- mathjax --><script src="https://cdnjs.cloudf
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/MWTools.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
@@ -129,7 +132,7 @@ replacing any <code>NA</code> values with <code>0</code> in the <code>e_dot</cod
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="calc_amw_pfu.html">calc_amw_pfu</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">specify_energy_type_method</span><span class="op">(</span><span class="va">hmw_df</span>, <span class="va">amw_df</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3,294 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3,330 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Country  Year Species       Stage   Sector   Unit    E.dot Energy.type Method</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> GBR      <span style="text-decoration: underline;">1</span>960 Human females Final   Agricul… EJ    8.68<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span> E           PCM   </span>
@@ -142,7 +145,7 @@ replacing any <code>NA</code> values with <code>0</code> in the <code>e_dot</cod
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> GBR      <span style="text-decoration: underline;">1</span>960 Human females Useful  Industry EJ    7.43<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span> E           PCM   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> GBR      <span style="text-decoration: underline;">1</span>960 Human females Useful  Services EJ    4.77<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span> E           PCM   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> GBR      <span style="text-decoration: underline;">1</span>960 Human males   Final   Agricul… EJ    4.64<span style="color: #949494;">e</span><span style="color: #BB0000;">-3</span> E           PCM   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3,284 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3,320 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
