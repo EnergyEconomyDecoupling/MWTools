@@ -93,7 +93,7 @@ tidy_fao_live_animals <- function(.df,
                        values_from = dplyr::all_of(value_fao_col),
                        names_from = dplyr::all_of(item_fao_col)) %>%
     dplyr::mutate("{buffaloes}" := .data[[cattle_and_buffaloes]] - .data[[cattle]], .keep = "unused") |>
-    tidyr::pivot_longer(cols = buffaloes,
+    tidyr::pivot_longer(cols = dplyr::all_of(buffaloes),
                         names_to = item_fao_col,
                         values_to = value_fao_col)
 
