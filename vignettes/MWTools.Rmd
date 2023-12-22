@@ -1,5 +1,5 @@
 ---
-title: "IEATools"
+title: "MWTools"
 output: rmarkdown::html_vignette
 bibliography: References.bib
 vignette: >
