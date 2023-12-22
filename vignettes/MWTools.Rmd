@@ -3,7 +3,7 @@ title: "MWTools"
 output: rmarkdown::html_vignette
 bibliography: References.bib
 vignette: >
-  %\VignetteIndexEntry{IEATools}
+  %\VignetteIndexEntry{MWTools}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
