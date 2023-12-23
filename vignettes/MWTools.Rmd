@@ -35,75 +35,82 @@ Computational tools are needed to gather and shape relevant data.
 The examples below show how to use `MWTools` to address
 the needs described above.
 
-
 ## Examples
 
 ### Animal Muscle Work
 
-Raw data for the estimation of animal muscle work
-is obtained from the Food and Agriculture Organisation 
-of the United Nations Statistical Database (FAOSTAT), 
-via the `R` package `FAOSTAT`.
-The `MWTools` package provides a wrapper function 
-for downloading data for the number of live animals,
-`down_fao_live_animals()`, which utilises the function `FAOSTAT::get_faostat_bulk()`. 
-Once downloaded, `MWTools` provides a number of functions
-for the calculation of the number of working animals 
-by species, country, year and in agriculture, transport, and in total.
+Raw data for the estimation of animal muscle work is obtained from the Food and 
+Agriculture Organisation of the United Nations Statistical Database (FAOSTAT), 
+via the `R` package `FAOSTAT` as follows.
 
-The helper function `calc_amw_pfu()` returns a tidy data frame
-containing data for the primary, final, and useful energy 
-by species, country, year and in agriculture, transport, and in total.
-
-```{r get_example_data}
-library(MWTools)
-
-fao_fp <- PFUSetup::get_abs_paths(version = "v1.2")$fao_data_path
-
-fao_raw_rds <- readr::read_rds(file = fao_fp)
-
-amw_pfu_data <- calc_amw_pfu(.df = fao_raw_rds,
-                             concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
-                             amw_analysis_data_path = PFUSetup::get_abs_paths()$amw_analysis_data_path)
-
-head(amw_pfu_data)
+```{r down_amw_example, eval = FALSE}
+raw_amw_data <- FAOSTAT::get_faostat_bulk(code = "QCL",  data_folder = tempdir())
 ```
 
+The helper function `calc_amw_pfu` returns a tidy data frame containing data for
+the primary, final, and useful energy by species, country, year and in
+the agriculture, transport, and total sectors.
+
+```{r calc_amw_example}
+test_amw_data <- read.csv(file = MWTools::amw_test_data_path())
+
+amw_pfu_data <- MWTools::calc_amw_pfu(.df = test_amw_data,
+                                      concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
+                                      amw_analysis_data_path = PFUSetup::get_abs_paths()$amw_analysis_data_path)
+```
+
+```{r amw_example_glimpse, echo=FALSE}
+tibble::glimpse(amw_pfu_data)
+```
 
 ### Human Muscle Work
 
-Raw data for the estimation of human muscle work
-is obtained from the International Labor Organisation (ILO), 
-via the `R` package `Rilostat`.
-The `MWTools` package includes bundled ILO data for the number of employed persons by sector and mean number of working hours by sector.
+Raw data for the estimation of human muscle work is obtained from the 
+International Labor Organisation (ILO), via the `R` package `Rilostat` as 
+follows: 
 
-Using data for the number of employed persons and 
-mean yearly working hours,
-the primary, final, and useful energy associated 
-with human muscle work can be estimated 
-using the helper function `calc_hmw_pfu()`.
+```{r down_hmw_example, eval = FALSE}
+ilo_working_hours_data <- Rilostat::get_ilostat(id = MWTools::ilo_codes$working_hours_code,
+                                                quiet = TRUE) |>
+  Rilostat::label_ilostat(code = c("ref_area"))
 
-``` {r hmw_pfu}
-library(MWTools)
-
-ilo_working_hours_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_working_hours_data_path)
-ilo_employment_data <- readr::read_rds(file = PFUSetup::get_abs_paths(version = "v1.2")$ilo_employment_data_path)
-
-preparedILOData <- prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
-                                     ilo_employment_data = ilo_employment_data)
-
-hmw_pfu_data <- calc_hmw_pfu(.df = preparedILOData,
-                             concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
-                             hmw_analysis_data_path = PFUSetup::get_abs_paths()$hmw_analysis_data_path)
-
-head(hmw_pfu_data)
+ilo_employment_data <- Rilostat::get_ilostat(id = MWTools::ilo_codes$employment_code,
+                                             quiet = TRUE) |>
+  Rilostat::label_ilostat(code = c("ref_area"))
 ```
 
+Using data for the number of employed persons and mean yearly working hours the 
+primary, final, and useful energy associated with human muscle work can be 
+estimated using the helper function `MWTools::calc_hmw_pfu` as below.
+
+``` {r calc_hmw_example}
+ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())
+ilo_employment_data <- read.csv(file = MWTools::ilo_employment_test_data_path())
+
+preparedILOData <- MWTools::prepareRawILOData(ilo_working_hours_data = ilo_working_hours_data,
+                                              ilo_employment_data = ilo_employment_data)
+
+hmw_pfu_data <- MWTools::calc_hmw_pfu(.df = preparedILOData,
+                                      concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
+                                      hmw_analysis_data_path = PFUSetup::get_abs_paths()$hmw_analysis_data_path)
+```
+
+```{r hmw_example_glimpse, echo=FALSE}
+tibble::glimpse(hmw_pfu_data)
+```
 
 ### PSUT matrices
 
 PFU data can be converted to PSUT matrices using `prep_psut()`.
 
+```{r prep_psut_example}
+mw_psut <- MWTools::prep_psut(.hmw_df = hmw_pfu_data,
+                              .amw_df = amw_pfu_data)
+```
+
+```{r psut_example_glimpse, echo=FALSE}
+tibble::glimpse(mw_psut)
+```
 
 ## Conclusion
 
