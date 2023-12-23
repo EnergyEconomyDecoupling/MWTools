@@ -6,8 +6,14 @@ output: html_document
 Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zenodo.7584858), 
 which always resolves to the latest release.
 
+# MWTools 0.2.7 (2023-12-23) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.<>.svg)](https://doi.org/10.5281/zenodo.<>)
 
-# MWTools 0.2.6 (2023-12-21)
+* Fixing vignette.
+* No new tests.
+    * Still at 453 tests, all passing.
+    * Test coverage remains at 100%.
+
+# MWTools 0.2.6 (2023-12-21) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10420270.svg)](https://doi.org/10.5281/zenodo.10420270)
 
 * Added a statement of need to the README file.
 * Added a vignette, moving some example code 
