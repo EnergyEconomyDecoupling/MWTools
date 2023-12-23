@@ -20,6 +20,7 @@ which always resolves to the latest release.
     * Still at 453 tests, all passing.
     * Test coverage remains at 100%.
 
+
 # MWTools 0.2.6 (2023-12-21) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10420270.svg)](https://doi.org/10.5281/zenodo.10420270)
 
 * Added a statement of need to the README file.
