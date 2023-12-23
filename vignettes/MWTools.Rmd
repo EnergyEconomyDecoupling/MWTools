@@ -55,8 +55,8 @@ the agriculture, transport, and total sectors.
 test_amw_data <- read.csv(file = MWTools::amw_test_data_path())
 
 amw_pfu_data <- MWTools::calc_amw_pfu(.df = test_amw_data,
-                                      concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
-                                      amw_analysis_data_path = PFUSetup::get_abs_paths()$amw_analysis_data_path)
+                                      concordance_path = MWTools::fao_concordance_path(),
+                                      amw_analysis_data_path = MWTools::amw_analysis_data_path())
 ```
 
 ```{r amw_example_glimpse, echo=FALSE}
@@ -91,8 +91,8 @@ preparedILOData <- MWTools::prepareRawILOData(ilo_working_hours_data = ilo_worki
                                               ilo_employment_data = ilo_employment_data)
 
 hmw_pfu_data <- MWTools::calc_hmw_pfu(.df = preparedILOData,
-                                      concordance_path = PFUSetup::get_abs_paths()$mw_concordance_path,
-                                      hmw_analysis_data_path = PFUSetup::get_abs_paths()$hmw_analysis_data_path)
+                                      concordance_path = MWTools::fao_concordance_path(),
+                                      hmw_analysis_data_path = MWTools::hmw_analysis_data_path())
 ```
 
 ```{r hmw_example_glimpse, echo=FALSE}
