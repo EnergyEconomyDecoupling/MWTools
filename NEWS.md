@@ -7,6 +7,16 @@ Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zeno
 which always resolves to the latest release.
 
 
+# MWTools 0.2.9 (2023-12-25)
+
+* Fix lingering problems with the vignette
+  on some testing platforms.
+  For example, on Ubuntu, references in the `MWTools.Rmd` vignette failed because
+  `.bib` file was named `references.bib` but the vignette
+  looked for `References.bib`. 
+  This problem was fixed by changing the name of the file to `References.bib`.
+
+
 # MWTools 0.2.8 (2023-12-23) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10429640.svg)](https://doi.org/10.5281/zenodo.10429640)
 
 * Fixing vignette.
