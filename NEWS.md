@@ -15,6 +15,9 @@ which always resolves to the latest release.
   `.bib` file was named `references.bib` but the vignette
   looked for `References.bib`. 
   This problem was fixed by changing the name of the file to `References.bib`.
+* No new tests.
+    * Still at 453 tests, all passing.
+    * Test coverage remains at 100%.
 
 
 # MWTools 0.2.8 (2023-12-23) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10429640.svg)](https://doi.org/10.5281/zenodo.10429640)
