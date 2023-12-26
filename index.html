@@ -30,7 +30,7 @@
     
     <a class="navbar-brand me-2" href="index.html">MWTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,9 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="articles/MWTools.html">Get started</a>
+</li>
 <li class="nav-item">
   <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
@@ -57,87 +60,43 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
+  <main id="main" class="col-md-9">
+<div class="section level1">
 <div class="page-header"><h1 id="mwtools">MWTools<a class="anchor" aria-label="anchor" href="#mwtools"></a>
 </h1></div>
-<!-- badges: start -->
-
-<p>The <code>R</code> package <code>MWTools</code> provides functions for the estimation of human and animal muscle work for use in Societal Exergy Analysis (SEA), and using the Physical Supply Use Table (PSUT) framework.</p>
+<div class="section level2">
+<h2 id="statement-of-need">Statement of need<a class="anchor" aria-label="anchor" href="#statement-of-need"></a>
+</h2>
+<p>In societal energy analysis and societal exergy analysis (SEA), animals and humans provide energy to society by performing <em>muscle work</em>. A previous study by <a href="https://doi.org/10.1007/s41247-022-00096-z" class="external-link">Steenwyk et al. (2022)</a> developed and standardized ways to estimate muscle work contributed to society by animals and humans. And data exist from the UN’s <a href="https://www.fao.org/home/en" class="external-link">Food and Agriculture Organization</a> (FAO) and the <a href="https://www.ilo.org" class="external-link">International Labor Organization</a> (ILO) that could be used for such purposes. However, none of the data are in the PSUT format proposed by <a href="https://doi.org/10.1016/j.apenergy.2018.05.109" class="external-link">Heun, Owen, and Brockway (2018)</a>. Computational tools are needed to gather and shape relevant data.</p>
+<p>This package provides functions for the estimation of animal and human muscle work for use in SEA with the Physical Supply Use Table (PSUT) framework.</p>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install this package from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"EnergyEconomyDecoupling/MWTools"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="animal-muscle-work">Animal Muscle Work<a class="anchor" aria-label="anchor" href="#animal-muscle-work"></a>
-</h2>
-<p>Raw data for the estimation of animal muscle work is obtained from the Food and Agriculture Organisation of the United Nations Statistical Database (FAOSTAT), via the <code>R</code> package <code>FAOSTAT</code>. The <code>MWTools</code> package provides a wrapper function for downloading data for the number of live animals, <code>down_fao_live_animals</code>, which utilises the function <code><a href="https://rdrr.io/pkg/FAOSTAT/man/download_faostat_bulk.html" class="external-link">FAOSTAT::get_faostat_bulk()</a></code>. Once downloaded <code>MWTools</code> provides a number of functions for the calculation of the number of working animals by species, country, year and in agriculture, transport, and in total.</p>
-<p>The helper function <code>calc_amw_pfu</code> returns a tidy data frame containing data for the primary, final, and useful energy by species, country, year and in agriculture, transport, and in total.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://energyeconomydecoupling.github.io/MWTools/">MWTools</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">fao_fp</span> <span class="op">&lt;-</span> <span class="fu">PFUSetup</span><span class="fu">::</span><span class="fu">get_abs_paths</span><span class="op">(</span>version <span class="op">=</span> <span class="st">"v1.2"</span><span class="op">)</span><span class="op">$</span><span class="va">fao_data_path</span></span>
-<span></span>
-<span><span class="va">fao_raw_rds</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">read_rds</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">fao_fp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">amw_pfu_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/calc_amw_pfu.html">calc_amw_pfu</a></span><span class="op">(</span>.df <span class="op">=</span> <span class="va">fao_raw_rds</span>,</span>
-<span>                             concordance_path <span class="op">=</span> <span class="fu">PFUSetup</span><span class="fu">::</span><span class="fu">get_abs_paths</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">mw_concordance_path</span>,</span>
-<span>                             amw_analysis_data_path <span class="op">=</span> <span class="fu">PFUSetup</span><span class="fu">::</span><span class="fu">get_abs_paths</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">amw_analysis_data_path</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">amw_pfu_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 7</span></span>
-<span><span class="co">#&gt;   Country  Year Species Stage   Sector      Unit     E.dot</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 AFG      1960 Asses   Useful  Agriculture EJ    0.000125</span></span>
-<span><span class="co">#&gt; 2 AFG      1960 Asses   Useful  Transport   EJ    0.000706</span></span>
-<span><span class="co">#&gt; 3 AFG      1960 Asses   Final   Agriculture EJ    0.00190 </span></span>
-<span><span class="co">#&gt; 4 AFG      1960 Asses   Final   Transport   EJ    0.0108  </span></span>
-<span><span class="co">#&gt; 5 AFG      1960 Asses   Primary Agriculture EJ    0.00423 </span></span>
-<span><span class="co">#&gt; 6 AFG      1960 Asses   Primary Transport   EJ    0.0240</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="human-muscle-work">Human Muscle Work<a class="anchor" aria-label="anchor" href="#human-muscle-work"></a>
-</h2>
-<p>Raw data for the estimation of human muscle work is obtained from the International Labor Organisation (ILO), via the <code>R</code> package <code>Rilostat</code>. The <code>MWTools</code> package includes bundled ILO data for the number of employed persons by sector and mean number of working hours by sector.</p>
-<p>Using data for the number of employed persons and mean yearly working hours the primary, final, and useful energy associated with human muscle work can be estimated using the helper function <code><a href="reference/calc_hmw_pfu.html">MWTools::calc_hmw_pfu</a></code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://energyeconomydecoupling.github.io/MWTools/">MWTools</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">ilo_working_hours_data</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">read_rds</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">PFUSetup</span><span class="fu">::</span><span class="fu">get_abs_paths</span><span class="op">(</span>version <span class="op">=</span> <span class="st">"v1.2"</span><span class="op">)</span><span class="op">$</span><span class="va">ilo_working_hours_data_path</span><span class="op">)</span></span>
-<span><span class="va">ilo_employment_data</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">read_rds</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">PFUSetup</span><span class="fu">::</span><span class="fu">get_abs_paths</span><span class="op">(</span>version <span class="op">=</span> <span class="st">"v1.2"</span><span class="op">)</span><span class="op">$</span><span class="va">ilo_employment_data_path</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">preparedILOData</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepareRawILOData.html">prepareRawILOData</a></span><span class="op">(</span>ilo_working_hours_data <span class="op">=</span> <span class="va">ilo_working_hours_data</span>,</span>
-<span>                                     ilo_employment_data <span class="op">=</span> <span class="va">ilo_employment_data</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">hmw_pfu_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/calc_hmw_pfu.html">calc_hmw_pfu</a></span><span class="op">(</span>.df <span class="op">=</span> <span class="va">preparedILOData</span>,</span>
-<span>                             concordance_path <span class="op">=</span> <span class="fu">PFUSetup</span><span class="fu">::</span><span class="fu">get_abs_paths</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">mw_concordance_path</span>,</span>
-<span>                             hmw_analysis_data_path <span class="op">=</span> <span class="fu">PFUSetup</span><span class="fu">::</span><span class="fu">get_abs_paths</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">hmw_analysis_data_path</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">hmw_pfu_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 7</span></span>
-<span><span class="co">#&gt;   Country  Year Species       Stage   Sector      Unit     E.dot</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 AFG      1960 Human females Final   Agriculture EJ    0.00686 </span></span>
-<span><span class="co">#&gt; 2 AFG      1960 Human females Final   Industry    EJ    0.000842</span></span>
-<span><span class="co">#&gt; 3 AFG      1960 Human females Final   Services    EJ    0.000393</span></span>
-<span><span class="co">#&gt; 4 AFG      1960 Human females Primary Agriculture EJ    0.0156  </span></span>
-<span><span class="co">#&gt; 5 AFG      1960 Human females Primary Industry    EJ    0.00191 </span></span>
-<span><span class="co">#&gt; 6 AFG      1960 Human females Primary Services    EJ    0.000892</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="psut-matrices">PSUT matrices<a class="anchor" aria-label="anchor" href="#psut-matrices"></a>
-</h2>
-<p>PFU data can be converted to PSUT matrices using <code><a href="reference/prep_psut.html">prep_psut()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="more-information">More Information<a class="anchor" aria-label="anchor" href="#more-information"></a>
 </h2>
 <p>Find more information, including vignettes and function documentation, at <a href="https://energyeconomydecoupling.github.io/MWTools/" class="uri">https://energyeconomydecoupling.github.io/MWTools/</a>.</p>
 </div>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Heun:2018" class="csl-entry">
+Heun, Matthew Kuperus, Anne Owen, and Paul E. Brockway. 2018. “A Physical Supply-Use Table Framework for Energy Analysis on the Energy Conversion Chain.” <em>Applied Energy</em> 226 (September): 1134–62. <a href="https://doi.org/10.1016/j.apenergy.2018.05.109" class="external-link uri">https://doi.org/10.1016/j.apenergy.2018.05.109</a>.
 </div>
+<div id="ref-Steenwyk:2022ww" class="csl-entry">
+Steenwyk, Paul, Matthew Kuperus Heun, Paul Brockway, Tânia Sousa, and Sofia Henriques. 2022. “The Contributions of Muscle and Machine Work to Land and Labor Productivity in World Agriculture Since 1800.” <em>Biophysical Economics and Sustainability</em> 7 (2): 1–17. <a href="https://doi.org/10.1007/s41247-022-00096-z" class="external-link uri">https://doi.org/10.1007/s41247-022-00096-z</a>.
+</div>
+</div>
+</div>
+</div>
+
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MWTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,6 +19,9 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/MWTools.html">Get started</a>
+</li>
+<li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="active nav-item">
@@ -39,7 +42,44 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.5" id="mwtools-025-2023-12-12">MWTools 0.2.5 (2023-12-12)<a class="anchor" aria-label="anchor" href="#mwtools-025-2023-12-12"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.9" id="mwtools-029-2023-12-25">MWTools 0.2.9 (2023-12-25)<a class="anchor" aria-label="anchor" href="#mwtools-029-2023-12-25"></a></h2>
+<ul><li>Fix lingering problems with the vignette on some testing platforms. For example, on Ubuntu, references in the <code>MWTools.Rmd</code> vignette failed because <code>.bib</code> file was named <code>references.bib</code> but the vignette looked for <code>References.bib</code>. This problem was fixed by changing the name of the file to <code>References.bib</code>.</li>
+<li>No new tests.
+<ul><li>Still at 453 tests, all passing.</li>
+<li>Test coverage remains at 100%.</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.8" id="mwtools-028-2023-12-23-doi">MWTools 0.2.8 (2023-12-23) <a href="https://doi.org/10.5281/zenodo.10429640" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.10429640.svg" alt="DOI"></a>
+<a class="anchor" aria-label="anchor" href="#mwtools-028-2023-12-23-doi"></a></h2>
+<ul><li>Fixing vignette.</li>
+<li>No new tests.
+<ul><li>Still at 453 tests, all passing.</li>
+<li>Test coverage remains at 100%.</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.7" id="mwtools-027-2023-12-23-doi">MWTools 0.2.7 (2023-12-23) <a href="https://doi.org/10.5281/zenodo.10427232" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.10427232.svg" alt="DOI"></a>
+<a class="anchor" aria-label="anchor" href="#mwtools-027-2023-12-23-doi"></a></h2>
+<ul><li>Fixing vignette.</li>
+<li>No new tests.
+<ul><li>Still at 453 tests, all passing.</li>
+<li>Test coverage remains at 100%.</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.6" id="mwtools-026-2023-12-21-doi">MWTools 0.2.6 (2023-12-21) <a href="https://doi.org/10.5281/zenodo.10420270" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.10420270.svg" alt="DOI"></a>
+<a class="anchor" aria-label="anchor" href="#mwtools-026-2023-12-21-doi"></a></h2>
+<ul><li>Added a statement of need to the README file.</li>
+<li>Added a vignette, moving some example code out of the README file.</li>
+<li>No new tests.
+<ul><li>Still at 453 tests, all passing.</li>
+<li>Test coverage remains at 100%.</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.5" id="mwtools-025-2023-12-12-doi">MWTools 0.2.5 (2023-12-12) <a href="https://doi.org/10.5281/zenodo.10365505" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.10365505.svg" alt="DOI"></a>
+<a class="anchor" aria-label="anchor" href="#mwtools-025-2023-12-12-doi"></a></h2>
 <ul><li>It appears there has been a change in the units column of the FAO data. “1000 Number” has been replaced by “An”, presumably indicating that previously the FAO had been reporting thousands of animals but now they are reporting total numbers of animals. <code><a href="../reference/tidy_fao_live_animals.html">tidy_fao_live_animals()</a></code> has been adjusted to accommodate this change.</li>
 <li>Two name changes and one reallocation of data relevant to <code>MWTools</code> occurred in the 2023 release of the FAO data retrieved via <code>FAOSTAT</code>. “Buffaloes” is now incorporated in a combined “Cattle and Buffaloes” item. To fix this we calculate “Buffaloes” by subtracting “Cattle” from “Cattle and Buffaloes”. The species “Mules” has been renamed “Mules and hinnies”.</li>
 <li>Two tests added in <code>test-calc_amw_functions.R</code> to ensure these name changes are flowing through the functions.
