@@ -183,7 +183,7 @@ test_that("collapse_to_psut() works as expected", {
     magrittr::extract2(MWTools::mw_cols$e_dot) %>%
     magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
   actual1 <- res %>%
-    dplyr::filter(Country == "GBR", Year == 2000, Last.stage == "Useful") %>%
+    dplyr::filter(Country == "GBR", Year == 2000, LastStage == "Useful") %>%
     magrittr::extract2(MWTools::psut_cols$Y) %>%
     magrittr::extract2(1) %>%
     matsbyname::select_rows_byname(retain_pattern = RCLabels::make_or_pattern("HuMech [from Human females]")) %>%
@@ -203,7 +203,7 @@ test_that("collapse_to_psut() works as expected", {
     sum() %>%
     magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
   actual2 <- res %>%
-    dplyr::filter(Country == "CHNM", Year == 2002, Last.stage == MWTools::all_stages$final) %>%
+    dplyr::filter(Country == "CHNM", Year == 2002, LastStage == MWTools::all_stages$final) %>%
     magrittr::extract2(MWTools::psut_cols$Y) %>%
     # Grab the first matrix in the column.
     magrittr::extract2(1) %>%
@@ -261,7 +261,7 @@ test_that("collapse_to_psut() works for Matrix objects", {
     magrittr::extract2(MWTools::mw_cols$e_dot) %>%
     magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
   actual1 <- res %>%
-    dplyr::filter(Country == "GBR", Year == 2000, Last.stage == "Useful") %>%
+    dplyr::filter(Country == "GBR", Year == 2000, LastStage == "Useful") %>%
     magrittr::extract2(MWTools::psut_cols$Y) %>%
     magrittr::extract2(1) %>%
     matsbyname::select_rows_byname(retain_pattern = RCLabels::make_or_pattern("HuMech [from Human females]")) %>%
@@ -281,7 +281,7 @@ test_that("collapse_to_psut() works for Matrix objects", {
     sum() %>%
     magrittr::multiply_by(MWTools::unit_constants$EJ_to_ktoe)
   actual2 <- res %>%
-    dplyr::filter(Country == "CHNM", Year == 2002, Last.stage == MWTools::all_stages$final) %>%
+    dplyr::filter(Country == "CHNM", Year == 2002, LastStage == MWTools::all_stages$final) %>%
     magrittr::extract2(MWTools::psut_cols$Y) %>%
     # Grab the first matrix in the column.
     magrittr::extract2(1) %>%
@@ -739,7 +739,7 @@ test_that("trapping zero-row output in prep_psut() works as expected", {
                          Characters = character(), # Stage
                          Characters = character(), # Sector
                          Characters = character(), # Unit
-                         Doubles = double())       # E.dot
+                         Doubles = double())       # Edot
   colnames(hmw_data) <- cnames
   amw_data <- hmw_data
   should_have_no_rows <- prep_psut(hmw_data, amw_data)
