@@ -173,7 +173,7 @@ test_that("specify_ktoe() works as expected", {
                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     dplyr::rename(
-      E.dot_EJ := E.dot
+      E.dot_EJ := Edot
     ) %>%
     dplyr::mutate(
       "{MWTools::mw_cols$unit}" := NULL
@@ -209,7 +209,7 @@ test_that("specify_TJ() works as expected", {
                              ilo_employment_data = test_ilo_employment_data) %>%
     calc_hmw_pfu() %>%
     dplyr::rename(
-      E.dot_EJ := E.dot
+      E.dot_EJ := Edot
     ) %>%
     dplyr::mutate(
       "{MWTools::mw_cols$unit}" := NULL
