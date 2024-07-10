@@ -79,7 +79,7 @@ usethis::use_data(all_stages, overwrite = TRUE)
 # ILO bundled data columns
 #
 ilo_cols <- list(ref_area_col = "ref_area",
-                 sex_ilo_col = "Sex",
+                 sex_ilo_col = "sex",
                  yearly_working_hours_ilo_col = "Working.hours [hours/year]",
                  employed_persons_ilo_col = "Employed.persons [persons]",
                  employed_count = "Employed.persons.count",
