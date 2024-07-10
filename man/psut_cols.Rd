@@ -5,7 +5,7 @@
 \alias{psut_cols}
 \title{Column names in PSUT data frames}
 \format{
-A string list with 14 entries.
+A string list with 16 entries.
 \describe{
 See \code{IEATools::psut_cols}.
 }

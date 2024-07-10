@@ -1,4 +1,4 @@
-"","ref_area","ref_area.label","source.label","indicator.label","sex.label","classif1.label","time","obs_value","obs_status.label","note_classif.label","note_indicator.label","note_source.label"
+"","ref_area","ref_area","source","indicator","sex","classif1","time","obs_value","obs_status","note_classif","note_indicator","note_source"
 "1","GBR","United Kingdom","LFS - EU Labour Force Survey","Employment by sex and economic activity (thousands)","Sex: Total","Economic activity (Broad sector): Total","2019",32693.14,NA,NA,NA,"Repository: Eurostat special tabulation"
 "2","GBR","United Kingdom","LFS - EU Labour Force Survey","Employment by sex and economic activity (thousands)","Sex: Total","Economic activity (Broad sector): Agriculture","2019",340.061,NA,NA,NA,"Repository: Eurostat special tabulation"
 "3","GBR","United Kingdom","LFS - EU Labour Force Survey","Employment by sex and economic activity (thousands)","Sex: Total","Economic activity (Broad sector): Non-agriculture","2019",32222.675,NA,NA,NA,"Repository: Eurostat special tabulation"

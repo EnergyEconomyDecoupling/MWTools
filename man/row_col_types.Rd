@@ -5,7 +5,7 @@
 \alias{row_col_types}
 \title{Row and column types for matrices made from muscle work data frames}
 \format{
-A string list with 5 entries.
+A string list with 6 entries.
 \describe{
 See \code{IEATools::row_col_types}.
 }

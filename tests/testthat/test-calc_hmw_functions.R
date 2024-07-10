@@ -5,7 +5,7 @@ test_that("prepareRawILOData() works", {
   rawILOData <- prepareRawILOData(ilo_working_hours_data = test_ilo_working_hours_data,
                                   ilo_employment_data = test_ilo_employment_data)
 
-  expected_colnames <- c("Country.code", "Sex", "Sector", "Year", "Employed.persons [persons]", "Working.hours [hours/year]")
+  expected_colnames <- c("Country.code", "sex", "Sector", "Year", "Employed.persons [persons]", "Working.hours [hours/year]")
   expected_nrow <- 4501
   expected_countrycodes <- "GBR"
 
@@ -27,13 +27,13 @@ test_that("add_hmw_region_codes() works", {
     add_hmw_region_codes()
   expect_true(!is.null(hmw_data_w.codes))
   expect_true(unique(hmw_data_w.codes$HMW.Region.code) == "WE")
-  expect_equal(colnames(hmw_data_w.codes), c("Country", "HMW.Region.code", "Sex",
+  expect_equal(colnames(hmw_data_w.codes), c("Country", "HMW.Region.code", "sex",
                                              "Sector", "Year", "Employed.persons [persons]",
                                              "Working.hours [hours/year]"))
   expect_equal(nrow(hmw_data_w.codes), 4501)
   expect_equal(nrow(dplyr::filter(hmw_data_w.codes,
                                   Country == "GBR",
-                                  Sex == "Female",
+                                  sex == "Female",
                                   Sector == "Economic activity (Aggregate): Construction",
                                   Year == 1983)),
                1) # was 0 for v1.1
@@ -55,7 +55,7 @@ test_that("fill_ilo_data() works", {
                                   Sector == "Economic activity (ISIC-Rev.2): 0. Activities not Adequately Defined")),
                0)
   expect_equal(nrow(hmw_data_filled), 10187) # v1.1 10248
-  expect_equal(colnames(hmw_data_filled), c("Country", "HMW.Region.code", "Sex",
+  expect_equal(colnames(hmw_data_filled), c("Country", "HMW.Region.code", "sex",
                                             "Sector", "Year", "Employed.persons [persons]",
                                             "Working.hours [hours/year]"))
   expect_equal(hmw_data_filled[1, "Employed.persons [persons]"] %>% as.numeric(), 151000)
@@ -75,7 +75,7 @@ test_that("calc_total_hours_worked() works", {
     fill_ilo_data() %>%
     calc_total_hours_worked()
   expect_true(!is.null(hmw_data_totalhours))
-  expect_equal(colnames(hmw_data_totalhours), c("Country", "HMW.Region.code", "Sex",
+  expect_equal(colnames(hmw_data_totalhours), c("Country", "HMW.Region.code", "sex",
                                                 "Sector", "Year", "Employed.persons [persons]",
                                                 "Total.hours [hours/year]"))
   expect_equal(hmw_data_totalhours[1, "Total.hours [hours/year]"] %>% as.numeric(), 240035640)

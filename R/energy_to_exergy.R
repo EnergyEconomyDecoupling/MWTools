@@ -42,11 +42,13 @@ phi_vec_mw <- function(.phi_table = MWTools::phi_constants_mw,
   if (matrix_class == "matrix") {
     out <- matrix(1, nrow = nrow(keep), ncol = 1,
                   dimnames = list(keep[[product]] %>% unlist() %>% unname(), phi)) %>%
-      matsbyname::setrowtype(product_type)
+      matsbyname::setrowtype(product_type) |>
+      matsbyname::setcoltype(phi)
   } else {
     out <- matsbyname::Matrix(1, nrow = nrow(keep), ncol = 1,
                               dimnames = list(keep[[product]] %>% unlist() %>% unname(), phi)) %>%
-      matsbyname::setrowtype(product_type)
+      matsbyname::setrowtype(product_type) |>
+      matsbyname::setcoltype(phi)
   }
   return(out)
 }

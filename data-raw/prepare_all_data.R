@@ -21,7 +21,7 @@ saveRDS(object = fao_amw_data,
 # Prepare FAO Test Data ---------------------------------------------------
 fao_amw_data <- readRDS(file = PFUSetup::get_abs_paths(version = version)[["fao_data_path"]])
 
-amw_test_data <- fao_amw_data %>%
+amw_test_data <- fao_amw_data |>
   dplyr::filter(area %in% c("China, mainland", "China"))
 
 write.csv(x = amw_test_data, file = "./inst/extdata/test_data/test_amw_data.csv")
