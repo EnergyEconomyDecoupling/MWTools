@@ -7,6 +7,14 @@ Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zeno
 which always resolves to the latest release.
 
 
+* Change column names to conform to new downloaded 
+  files.
+* Update column names to eliminate some "."s.
+* No new tests.
+    * Still at 453 tests, all passing.
+    * Test coverage remains at 100%.
+
+
 ## MWTools 0.2.9 (2023-12-25) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10431628.svg)](https://doi.org/10.5281/zenodo.10431628)
 
 * Fix lingering problems with the vignette
