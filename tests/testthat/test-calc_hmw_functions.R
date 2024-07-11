@@ -33,8 +33,8 @@ test_that("add_hmw_region_codes() works", {
   expect_equal(nrow(hmw_data_w.codes), 4501)
   expect_equal(nrow(dplyr::filter(hmw_data_w.codes,
                                   Country == "GBR",
-                                  sex == "Female",
-                                  Sector == "Economic activity (Aggregate): Construction",
+                                  sex == "SEX_F",
+                                  Sector == "ECO_AGGREGATE_CON",
                                   Year == 1983)),
                1) # was 0 for v1.1
 })
@@ -96,8 +96,7 @@ test_that("get_broad.sector_data() works",{
     get_broad.sector_data()
   expect_true(!is.null(hmw_data_broad.sector))
   expect_equal(unique(hmw_data_broad.sector$Sector), c("Agriculture", "Industry",
-                                                       "Non-agriculture", "Not classified",
-                                                       "Services", "Total"))
+                                                       "Services"))
 })
 
 

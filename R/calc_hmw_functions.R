@@ -29,13 +29,11 @@ prepareRawILOData <- function(ilo_working_hours_data, ilo_employment_data){
   # Mean weekly hours actually worked per employed person by sex and economic activity:
   # HOW_TEMP_SEX_ECO_NB_A
   working_hours <- ilo_working_hours_data |>
-    # dplyr::select("ref_area", "sex.label", "classif1.label", "time", "obs_value") |>
     dplyr::select(dplyr::all_of(c("ref_area", "sex", "classif1", "time", "obs_value"))) |>
     magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year_col, yearly_working_hours_ilo_col))
 
   # Employment by sex and economic activity (thousands): EMP_TEMP_SEX_ECO_NB_A
   employment <- ilo_employment_data |>
-    # dplyr::select("ref_area", "sex.label", "classif1.label", "time", "obs_value") |>
     dplyr::select(dplyr::all_of(c("ref_area", "sex", "classif1", "time", "obs_value"))) |>
     magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year_col, employed_persons_ilo_col))
 
@@ -67,7 +65,6 @@ prepareRawILOData <- function(ilo_working_hours_data, ilo_employment_data){
     )
 
   return(ilo_hmw_data)
-
 }
 
 
