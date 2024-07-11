@@ -248,7 +248,11 @@ calc_total_hours_worked <- function(.df,
 #'            `calc_total_hours_worked` functions in sequence on the raw FAO data.
 #' @param sex_ilo_col See `MWTools::ilo_cols`.
 #' @param sector_col See `mWTools::mw_constants`.
-#'
+#' @param ilo_agr_name,ilo_ind_name,ilo_ser_name,agr_name,ind_name,ser_name String names in `.df` and the outgoing data frame for the ILO economic sectors of interest to MW calculations.
+#' @param ilo_female_name,ilo_male_name,female_name,male_name String names in `.df` and the outgoing data frame for the ILO sex identifiers of interest to MW calculations.
+#'                                                            For now, we include only males and females.
+#'                                                            There are instances of "other" that will need to be dealt with
+#'                                                            in future releases.
 #'
 #' @export
 #'
@@ -264,18 +268,41 @@ calc_total_hours_worked <- function(.df,
 #'   get_broad.sector_data()
 get_broad.sector_data <- function(.df,
                                   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
-                                  sector_col = MWTools::mw_constants$sector_col){
+                                  sector_col = MWTools::mw_constants$sector_col,
+                                  ilo_agr_name = MWTools::hmw_sector_constants$ilo_agr_name,
+                                  ilo_ind_name = MWTools::hmw_sector_constants$ilo_ind_name,
+                                  ilo_ser_name = MWTools::hmw_sector_constants$ilo_ser_name,
+                                  agr_name = MWTools::hmw_sector_constants$agr_name,
+                                  ind_name = MWTools::hmw_sector_constants$ind_name,
+                                  ser_name = MWTools::hmw_sector_constants$ser_name,
+                                  ilo_female_name = MWTools::hmw_sex_constants$ilo_female_name,
+                                  ilo_male_name = MWTools::hmw_sex_constants$ilo_male_name,
+                                  female_name = MWTools::hmw_sex_constants$female_name,
+                                  male_name = MWTools::hmw_sex_constants$male_name){
 
   .df |>
-    dplyr::filter(stringr::str_detect(.data[[sector_col]], pattern = stringr::fixed("(Broad sector):"))) |>
+    dplyr::filter(.data[[sector_col]] %in% c(ilo_agr_name, ilo_ind_name, ilo_ser_name)) |>
     dplyr::mutate(
-      "{sector_col}" := stringr::str_replace(.data[[sector_col]], ".*?\\:\\s", "")
-      ) |>
-    dplyr::filter(.data[[sex_ilo_col]] != "Total")
-
+      "{sector_col}" := dplyr::case_when(
+        .data[[sector_col]] == ilo_agr_name ~ agr_name,
+        .data[[sector_col]] == ilo_ind_name ~ ind_name,
+        .data[[sector_col]] == ilo_ser_name ~ ser_name,
+        TRUE ~ NA_character_
+      )
+    ) |>
+    # dplyr::filter(.data[[sex_ilo_col]] != "Total")
+    dplyr::filter(.data[[sex_ilo_col]] %in% c(ilo_female_name, ilo_male_name)) |>
+    dplyr::mutate(
+      "{sex_ilo_col}" := dplyr::case_when(
+        .data[[sex_ilo_col]] == ilo_female_name ~ female_name,
+        .data[[sex_ilo_col]] == ilo_male_name ~ male_name,
+        TRUE ~ NA_character_
+      )
+    )
 }
 
-#' Title
+
+#' Splits ILO labor data by sector
 #'
 #' @param .df A data frame containing the number of hours worked by broad sector.
 #'            Usually produced by calling the

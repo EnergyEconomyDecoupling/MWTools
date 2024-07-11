@@ -113,6 +113,32 @@ usethis::use_data(hmw_analysis_constants, overwrite = TRUE)
 
 
 #
+# Human Muscle Work (hmw) sector constants
+#
+hmw_sector_constants <- list(ilo_agr_name = "ECO_SECTOR_AGR",
+                             ilo_ind_name = "ECO_SECTOR_IND",
+                             ilo_ser_name = "ECO_SECTOR_SER",
+                             agr_name = "Agriculture",
+                             ind_name = "Industry",
+                             ser_name = "Services")
+usethis::use_data(hmw_sector_constants, overwrite = TRUE)
+
+
+#
+# Human Muscle Work (hmw) sex constants
+#
+hmw_sex_constants <- list(ilo_female_name = "SEX_F",
+                          ilo_male_name = "SEX_M",
+                          ilo_other_name = "SEX_O",
+                          ilo_total_name = "SEX_T",
+                          female_name = "Female",
+                          male_name = "Male",
+                          other_name = "Other",
+                          total_name = "Total")
+usethis::use_data(hmw_sex_constants, overwrite = TRUE)
+
+
+#
 # Working animal species
 #
 mw_species <- list(asses = "Asses",

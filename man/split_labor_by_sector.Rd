@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_hmw_functions.R
 \name{split_labor_by_sector}
 \alias{split_labor_by_sector}
-\title{Title}
+\title{Splits ILO labor data by sector}
 \usage{
 split_labor_by_sector(
   .df,
@@ -45,7 +45,7 @@ Usually produced by calling the
 \item{agriculture, industry, services}{See \code{MWTools::mw_sectors}.}
 }
 \description{
-Title
+Splits ILO labor data by sector
 }
 \examples{
 ilo_working_hours_data <- read.csv(file = MWTools::ilo_working_hours_test_data_path())

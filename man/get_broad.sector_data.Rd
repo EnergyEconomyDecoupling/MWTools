@@ -7,7 +7,17 @@
 get_broad.sector_data(
   .df,
   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
-  sector_col = MWTools::mw_constants$sector_col
+  sector_col = MWTools::mw_constants$sector_col,
+  ilo_agr_name = MWTools::hmw_sector_constants$ilo_agr_name,
+  ilo_ind_name = MWTools::hmw_sector_constants$ilo_ind_name,
+  ilo_ser_name = MWTools::hmw_sector_constants$ilo_ser_name,
+  agr_name = MWTools::hmw_sector_constants$agr_name,
+  ind_name = MWTools::hmw_sector_constants$ind_name,
+  ser_name = MWTools::hmw_sector_constants$ser_name,
+  ilo_female_name = MWTools::hmw_sex_constants$ilo_female_name,
+  ilo_male_name = MWTools::hmw_sex_constants$ilo_male_name,
+  female_name = MWTools::hmw_sex_constants$female_name,
+  male_name = MWTools::hmw_sex_constants$male_name
 )
 }
 \arguments{
@@ -20,6 +30,13 @@ Usually produced by calling the
 \item{sex_ilo_col}{See \code{MWTools::ilo_cols}.}
 
 \item{sector_col}{See \code{mWTools::mw_constants}.}
+
+\item{ilo_agr_name, ilo_ind_name, ilo_ser_name, agr_name, ind_name, ser_name}{String names in \code{.df} and the outgoing data frame for the ILO economic sectors of interest to MW calculations.}
+
+\item{ilo_female_name, ilo_male_name, female_name, male_name}{String names in \code{.df} and the outgoing data frame for the ILO sex identifiers of interest to MW calculations.
+For now, we include only males and females.
+There are instances of "other" that will need to be dealt with
+in future releases.}
 }
 \description{
 Retrieve data with sectors organised by "Broad sector"

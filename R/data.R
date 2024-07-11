@@ -182,6 +182,46 @@
 "hmw_analysis_constants"
 
 
+#' ILO sector name constants
+#'
+#' A string list containing the names of relevant ILO sectors.
+#'
+#' @format A string list with `r length(hmw_sector_constants)` entries.
+#' \describe{
+#' \item{ilo_agr_name}{The string name for the agriculture sector in the ILO data.}
+#' \item{ilo_ind_name}{The string name for the industry sector in the ILO data.}
+#' \item{ilo_ser_name}{The string name for the services sector in the ILO data.}
+#' \item{agr_name}{The string name of the agriculture sector in the CL-PFU database, namely "Agriculture".}
+#' \item{ind_name}{The string name of the industrial sector in the CL-PFU database, namely "Industry".}
+#' \item{ser_name}{The string name of the services sector in the CL-PFU database, namely "Services".}
+#' }
+#'
+#' @examples
+#' hmw_sector_constants
+"hmw_sector_constants"
+
+
+#' ILO sex name constants
+#'
+#' A string list containing the names of relevant ILO sex identifiers.
+#'
+#' @format A string list with `r length(hmw_sex_constants)` entries.
+#' \describe{
+#' \item{ilo_female_name}{The string name identifying the female sex in the ILO data.}
+#' \item{ilo_male_name}{The string name identifying the male sex in the ILO data.}
+#' \item{ilo_other_name}{The string name identifying the other sex in the ILO data.}
+#' \item{ilo_total_name}{The string name identifying the total sex in the ILO data.}
+#' \item{female_name}{The string name identifying the female sex in the CL-PFU database, namely "Female".}
+#' \item{male_name}{The string name identifying the male sex in the CL-PFU database, namely "Male".}
+#' \item{other_name}{The string name identifying the other sex in the CL-PFU database, namely "Other".}
+#' \item{total_name}{The string name identifying the total sex in the CL-PFU database, namely "Total".}
+#' }
+#'
+#' @examples
+#' hmw_sex_constants
+"hmw_sex_constants"
+
+
 #' Working animal species
 #'
 #' A string list containing the species of animals considered to perform muscle work
