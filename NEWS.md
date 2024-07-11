@@ -7,7 +7,7 @@ Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zeno
 which always resolves to the latest release.
 
 
-* Change column names to conform to new downloaded 
+* Change column names to conform to new downloaded ILO
   files.
 * Update column names to eliminate some "."s.
 * No new tests.
