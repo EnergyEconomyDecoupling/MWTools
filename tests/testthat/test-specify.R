@@ -94,7 +94,7 @@ test_that("specify_useful_products() works as expected", {
       .suff = RCLabels::get_pref_suff(.data[[MWTools::mw_cols$product]],
                                       which = "suff",
                                       notation = RCLabels::from_notation),
-      .OK = .data[[".suff"]] == .data[[MWTools::mw_constants$species]]
+      .OK = .data[[".suff"]] == .data[[MWTools::conc_cols$species]]
     )
   expect_true(all(check$.OK))
 })
@@ -120,7 +120,7 @@ test_that("specify_fu_machines() works as expected", {
   check <- res %>%
     dplyr::filter(.data[[MWTools::mw_constants$stage_col]] == MWTools::all_stages$useful) %>%
     dplyr::mutate(
-      .suff = RCLabels::get_pref_suff(.data[[MWTools::mw_constants$species]],
+      .suff = RCLabels::get_pref_suff(.data[[MWTools::conc_cols$species]],
                                       which = "suff",
                                       notation = RCLabels::arrow_notation),
       .OK = .data[[".suff"]] == RCLabels::get_pref_suff(.data[[MWTools::mw_cols$product]],
@@ -235,3 +235,4 @@ test_that("specify_TJ() works as expected", {
     )
   expect_true(all(check$diff == 0))
 })
+

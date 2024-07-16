@@ -10,7 +10,7 @@ specify_product(
   primary = MWTools::all_stages$primary,
   final = MWTools::all_stages$final,
   useful = MWTools::all_stages$useful,
-  species = MWTools::mw_constants$species,
+  concordance_species = MWTools::conc_cols$species,
   human = MWTools::mw_species$human,
   stage = MWTools::mw_constants$stage_col,
   sector = MWTools::mw_constants$sector_col,
@@ -30,8 +30,6 @@ specify_product(
 
 \item{primary, final, useful}{See \code{MWTools::all_stages}.}
 
-\item{species}{See \code{MWTools::mw_constants}.}
-
 \item{human}{See \code{MWTools::mw_species}.}
 
 \item{stage, sector}{See \code{MWTools::mw_constants}.}
@@ -39,6 +37,8 @@ specify_product(
 \item{biomass, food, feed, hu_mech, an_mech, an_p}{See \code{MWTools::mw_products}.}
 
 \item{transport}{See \code{MWTools::sectors}.}
+
+\item{species}{See \code{MWTools::mw_constants}.}
 }
 \value{
 A data frame with additional rows needed for converting to PSUT matrices.

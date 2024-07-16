@@ -8,7 +8,7 @@ specify_useful_products(
   .df,
   product = MWTools::mw_cols$product,
   stage = MWTools::mw_constants$stage_col,
-  species = MWTools::mw_constants$species,
+  concordance_species = MWTools::conc_cols$species,
   useful = MWTools::all_stages$useful,
   notation = RCLabels::from_notation
 )

@@ -646,7 +646,8 @@ calc_hmw_useful_energy <- function(.df,
 tidy_hmw_pfu <- function(.df,
                          year = MWTools::mw_cols$year,
                          sector_col = MWTools::mw_constants$sector_col,
-                         species = MWTools::mw_constants$species,
+                         # species = MWTools::mw_constants$species,
+                         concordance_species = MWTools::conc_cols$species,
                          energy_col = MWTools::mw_cols$e_dot,
                          stage_col = MWTools::mw_constants$stage_col,
                          units_col = MWTools::mw_cols$unit,
@@ -674,7 +675,7 @@ tidy_hmw_pfu <- function(.df,
         TRUE ~ "Unknown sector column value"
       )
     ) |>
-    dplyr::rename("{species}" := dplyr::all_of(sex_ilo_col)) |>
+    dplyr::rename("{concordance_species}" := dplyr::all_of(sex_ilo_col)) |>
     dplyr::mutate(
       "{energy_col}" := .data[[energy_col]] * 0.000000000001,
       "{units_col}" := "EJ", .before = dplyr::all_of(energy_col)
@@ -682,7 +683,7 @@ tidy_hmw_pfu <- function(.df,
     dplyr::group_by(
       dplyr::across({{ country_col }}),
       dplyr::across({{ year }}),
-      dplyr::across({{ species }}),
+      dplyr::across({{ concordance_species }}),
       dplyr::across({{ stage_col }}),
       dplyr::across({{ sector_col }}),
       dplyr::across({{ units_col }})

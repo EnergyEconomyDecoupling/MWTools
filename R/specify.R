@@ -96,7 +96,8 @@ specify_product <- function(.df,
                             primary = MWTools::all_stages$primary,
                             final = MWTools::all_stages$final,
                             useful = MWTools::all_stages$useful,
-                            species = MWTools::mw_constants$species,
+                            # species = MWTools::mw_constants$species,
+                            concordance_species = MWTools::conc_cols$species,
                             human = MWTools::mw_species$human,
                             stage = MWTools::mw_constants$stage_col,
                             sector = MWTools::mw_constants$sector_col,
@@ -113,9 +114,9 @@ specify_product <- function(.df,
     dplyr::mutate(
       "{product}" := dplyr::case_when(
         .data[[stage]] == primary ~ biomass,
-        .data[[stage]] == final & startsWith(.data[[species]], human) ~ food,
+        .data[[stage]] == final & startsWith(.data[[concordance_species]], human) ~ food,
         .data[[stage]] == final ~ feed,
-        .data[[stage]] == useful & startsWith(.data[[species]], human) ~ hu_mech,
+        .data[[stage]] == useful & startsWith(.data[[concordance_species]], human) ~ hu_mech,
         .data[[stage]] == useful & .data[[sector]] == transport ~ an_p,
         .data[[stage]] == useful ~ an_mech,
         TRUE ~ NA_character_
@@ -213,7 +214,8 @@ specify_primary_production <- function(.df,
 specify_useful_products <- function(.df,
                                     product = MWTools::mw_cols$product,
                                     stage = MWTools::mw_constants$stage_col,
-                                    species = MWTools::mw_constants$species,
+                                    # species = MWTools::mw_constants$species,
+                                    concordance_species = MWTools::conc_cols$species,
                                     useful = MWTools::all_stages$useful,
                                     notation = RCLabels::from_notation) {
   # Find all useful rows
@@ -225,7 +227,7 @@ specify_useful_products <- function(.df,
       "{product}" := RCLabels::paste_pref_suff(pref = .data[[product]],
                                                # Get the prefix of the species, in case
                                                # specify_fu_machines() has already been called.
-                                               suff = RCLabels::get_pref_suff(.data[[species]],
+                                               suff = RCLabels::get_pref_suff(.data[[concordance_species]],
                                                                               which = "pref",
                                                                               notation = notation),
                                                notation = notation),
@@ -272,24 +274,25 @@ specify_useful_products <- function(.df,
 specify_fu_machines <- function(.df,
                                 product = MWTools::mw_cols$product,
                                 stage = MWTools::mw_constants$stage_col,
-                                species = MWTools::mw_constants$species,
+                                # species = MWTools::mw_constants$species,
+                                concordance_species = MWTools::conc_cols$species,
                                 final = MWTools::all_stages$final,
                                 useful = MWTools::all_stages$useful,
                                 product_notation = RCLabels::from_notation,
                                 machine_notation = RCLabels::arrow_notation) {
   fu_machine_rows <- .df %>%
     dplyr::filter(.data[[stage]] == useful)
-  # Specify the fu machines (in this case, species)
+  # Specify the fu machines (in this case, concordance_species)
   specified_fu_machines <- fu_machine_rows %>%
     dplyr::mutate(
-      "{species}" := RCLabels::paste_pref_suff(pref = .data[[species]],
+      "{concordance_species}" := RCLabels::paste_pref_suff(pref = .data[[concordance_species]],
                                                # Get the prefix of the product, in case
                                                # specify_useful_products() has already been called.
                                                suff = RCLabels::get_pref_suff(.data[[product]],
                                                                               which = "pref",
                                                                               notation = product_notation),
                                                notation = machine_notation),
-      "{species}" := as.character(.data[[species]])
+      "{concordance_species}" := as.character(.data[[concordance_species]])
     )
   .df %>%
     # Eliminate useful energy rows

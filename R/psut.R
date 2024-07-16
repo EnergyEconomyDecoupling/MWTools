@@ -63,7 +63,8 @@ add_row_col_meta <- function(.df,
                              final = MWTools::all_stages$final,
                              useful = MWTools::all_stages$useful,
                              # Column names
-                             species = MWTools::mw_constants$species,
+                             # species = MWTools::mw_constants$species,
+                             concordance_species = MWTools::conc_cols$species,
                              sector = MWTools::mw_constants$sector_col,
                              stage = MWTools::mw_constants$stage_col,
                              product = MWTools::mw_cols$product,
@@ -136,7 +137,7 @@ add_row_col_meta <- function(.df,
       "{matnames}" := U_name,
       "{rownames}" := .data[[product]],
       "{colnames}" := dplyr::case_when(
-        (.data[[species]] %in% c(human_females, human_males)) ~ food_production,
+        (.data[[concordance_species]] %in% c(human_females, human_males)) ~ food_production,
         TRUE ~ feed_production
       ),
       "{rowtypes}" := product_type,
@@ -193,9 +194,9 @@ add_row_col_meta <- function(.df,
           # (the only other option, so everything below *will* be energy for useful last stage),
           # the column in the U matrix is the specified name
           # of the human or animal machine.
-          # If the species is a human being, then the column name (Industry) is
+          # If the concordance_species is a human being, then the column name (Industry) is
           # Species -> hu_mech.
-          .data[[species]] %in% c(human_females, human_males) ~ RCLabels::paste_pref_suff(pref = .data[[species]],
+          .data[[concordance_species]] %in% c(human_females, human_males) ~ RCLabels::paste_pref_suff(pref = .data[[concordance_species]],
                                                                                           suff = hu_mech,
                                                                                           notation = species_notation),
           # If we get here, we have taken care of all of the humans, so only animals remain.
@@ -204,11 +205,11 @@ add_row_col_meta <- function(.df,
           # but the Useful product can be either AnMech or AnP,
           # depending on the final demand category.
           # The energy product going into the Transport sector is AnP.
-          .data[[sector]] == transport ~ RCLabels::paste_pref_suff(pref = .data[[species]],
+          .data[[sector]] == transport ~ RCLabels::paste_pref_suff(pref = .data[[concordance_species]],
                                                                    suff = an_p,
                                                                    notation = species_notation),
           # The energy product going into any other sector is AnMech.
-          TRUE ~ RCLabels::paste_pref_suff(pref = .data[[species]],
+          TRUE ~ RCLabels::paste_pref_suff(pref = .data[[concordance_species]],
                                            suff = an_mech,
                                            notation = species_notation)
         ),
@@ -226,7 +227,7 @@ add_row_col_meta <- function(.df,
   useful_rows_V <- useful_rows %>%
     dplyr::mutate(
       "{matnames}" := V_name,
-      "{rownames}" := .data[[species]],
+      "{rownames}" := .data[[concordance_species]],
       "{colnames}" := .data[[product]],
       "{rowtypes}" := industry_type,
       "{coltypes}" := product_type
