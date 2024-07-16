@@ -11,7 +11,8 @@
 #' @param resources,farms,food_production,feed_production,transport See `MWTools::mw_sectors`
 #' @param human_females,human_males See `MWTools::mw_species`.
 #' @param final,useful See `MWTools::all_stages`.
-#' @param species,sector,stage See `MWTools::mw_constants`
+#' @param sector,stage See `MWTools::mw_constants`
+#' @param concordance_species See `MWTools::conc_cols`.
 #' @param product,last_stage See `MWTools::mw_cols`.
 #' @param matnames,rownames,colnames,rowtypes,coltypes See `MWTools::mat_meta_cols`.
 #' @param R_name,U_name,V_name,Y_name See `MWTools::psut_cols`.
@@ -63,7 +64,6 @@ add_row_col_meta <- function(.df,
                              final = MWTools::all_stages$final,
                              useful = MWTools::all_stages$useful,
                              # Column names
-                             # species = MWTools::mw_constants$species,
                              concordance_species = MWTools::conc_cols$species,
                              sector = MWTools::mw_constants$sector_col,
                              stage = MWTools::mw_constants$stage_col,

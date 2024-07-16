@@ -16,7 +16,9 @@ specify_useful_products(
 \arguments{
 \item{.df}{A data frame, usually the output of \code{MWTools::specify_primary_production()}.}
 
-\item{product, stage, species}{See \code{MWTools::mw_constants}.}
+\item{product, stage}{See \code{MWTools::mw_constants}.}
+
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
 
 \item{useful}{See \code{MWTools::all_stages}.}
 

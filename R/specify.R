@@ -68,7 +68,7 @@ specify_energy_type_method <- function(.hmw_df, .amw_df,
 #' @param .df A data frame, likely produced by `specify_energy_type_method()`.
 #' @param product The name of the column to be added. See `MWTools::mw_constants`.
 #' @param primary,final,useful See `MWTools::all_stages`.
-#' @param species See `MWTools::mw_constants`.
+#' @param concordance_species See `MWTools::conc_cols`.
 #' @param human See `MWTools::mw_species`.
 #' @param stage,sector See `MWTools::mw_constants`.
 #' @param biomass,food,feed,hu_mech,an_mech,an_p See `MWTools::mw_products`.
@@ -96,7 +96,6 @@ specify_product <- function(.df,
                             primary = MWTools::all_stages$primary,
                             final = MWTools::all_stages$final,
                             useful = MWTools::all_stages$useful,
-                            # species = MWTools::mw_constants$species,
                             concordance_species = MWTools::conc_cols$species,
                             human = MWTools::mw_species$human,
                             stage = MWTools::mw_constants$stage_col,
@@ -189,7 +188,8 @@ specify_primary_production <- function(.df,
 #' to include a `[from X]` suffix.
 #'
 #' @param .df A data frame, usually the output of `MWTools::specify_primary_production()`.
-#' @param product,stage,species See `MWTools::mw_constants`.
+#' @param product,stage See `MWTools::mw_constants`.
+#' @param concordance_species See `MWTools::conc_cols`.
 #' @param useful See `MWTools::all_stages`.
 #' @param notation See `RCLabels::from_notation`.
 #'
@@ -214,7 +214,6 @@ specify_primary_production <- function(.df,
 specify_useful_products <- function(.df,
                                     product = MWTools::mw_cols$product,
                                     stage = MWTools::mw_constants$stage_col,
-                                    # species = MWTools::mw_constants$species,
                                     concordance_species = MWTools::conc_cols$species,
                                     useful = MWTools::all_stages$useful,
                                     notation = RCLabels::from_notation) {
@@ -247,7 +246,8 @@ specify_useful_products <- function(.df,
 #' This function renames final-to-useful industries (in this case, species) to the desired form.
 #'
 #' @param .df A data frame, likely the output of `specify_useful_products()`.
-#' @param product,stage,species See `MWTools::mw_constants`.
+#' @param product,stage See `MWTools::mw_constants`.
+#' @param concordance_species See `MWTools::conc_cols`.
 #' @param final,useful See `MWTools::all_stages`.
 #' @param product_notation The notation for products. Default is `RCLabels::from_notation`.
 #' @param machine_notation The notation for machines. Default is `RCLabels::arrow_notation`.
@@ -274,7 +274,6 @@ specify_useful_products <- function(.df,
 specify_fu_machines <- function(.df,
                                 product = MWTools::mw_cols$product,
                                 stage = MWTools::mw_constants$stage_col,
-                                # species = MWTools::mw_constants$species,
                                 concordance_species = MWTools::conc_cols$species,
                                 final = MWTools::all_stages$final,
                                 useful = MWTools::all_stages$useful,

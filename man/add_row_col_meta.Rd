@@ -54,6 +54,10 @@ likely the output from \code{specify_last_stages()}.}
 
 \item{final, useful}{See \code{MWTools::all_stages}.}
 
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
+
+\item{sector, stage}{See \code{MWTools::mw_constants}}
+
 \item{product, last_stage}{See \code{MWTools::mw_cols}.}
 
 \item{matnames, rownames, colnames, rowtypes, coltypes}{See \code{MWTools::mat_meta_cols}.}
@@ -67,8 +71,6 @@ likely the output from \code{specify_last_stages()}.}
 \item{resource_notation}{The notation for resources. Default is \code{RCLabels::of_notation}.}
 
 \item{species_notation}{The notation for species. Default is \code{RCLabels::arrow_notation}.}
-
-\item{species, sector, stage}{See \code{MWTools::mw_constants}}
 }
 \value{
 A data frame containing PSUT matrices

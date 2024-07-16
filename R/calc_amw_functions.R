@@ -341,6 +341,7 @@ get_working_species <- function(.df,
 #'                               which returns the path the analysis data bundled
 #'                               with the `MWTools` package.
 #' @param year,species,exemplar_method_col See `MWTools::mw_constants`.
+#' @param concordance_species See `MWTools::conc_cols`.
 #' @param prop_working_animals_col,wa_perc_sheet,working_animals_total_col,live_animals_col,amw_region_col See `MWTools::amw_analysis_constants`.
 #' @param amw_region_code_col See `MWTools::conc_cols`.
 #'
@@ -412,7 +413,8 @@ calc_working_animals <- function(.df,
 #'                               over time. Set to the function `MWTools::amw_analysis_data_path()`,
 #'                               by default, which returns the path the analysis data
 #'                               bundled with the `MWTools` package.
-#' @param year,species,method_source See `MWTools::mw_constants`.
+#' @param year,method_source See `MWTools::mw_constants`.
+#' @param concordance_species See `MWTools::conc_cols`.
 #' @param metric,amw_region_col,wa_enduse_sheet,working_animals_total_col,working_animals_ag_col,working_animals_tr_col,prop_wkg_anmls_ag_col,prop_wkg_anmls_tr_col
 #'        See `MWTools::amw_analysis_constants`.
 #' @param amw_region_code_col See `MWTools::conc_cols`.
@@ -432,7 +434,6 @@ calc_working_animals <- function(.df,
 calc_sector_split <- function(.df,
                               amw_analysis_data_path = MWTools::amw_analysis_data_path(),
                               year = MWTools::mw_cols$year,
-                              species = MWTools::mw_constants$species,
                               concordance_species = MWTools::conc_cols$species,
                               method_source = MWTools::mw_constants$method_source,
                               metric = MWTools::amw_analysis_constants$metric,
@@ -487,7 +488,8 @@ calc_sector_split <- function(.df,
 #'                               over time. Set to the function `MWTools::amw_analysis_data_path()`,
 #'                               by default, which returns the path the analysis data
 #'                               bundled with the `MWTools` package.
-#' @param species,method_source See `MWTools::mw_constants`.
+#' @param method_source See `MWTools::mw_constants`.
+#' @param concordance_species See `MWTools::conc_cols`.
 #' @param wa_feed_sheet,wa_days_hours_sheet,working_days_col,nonworking_days_col,working_hours_col,working_day_feed_col,nonworking_day_feed_col,working_yearly_feed_col,nonwkg_yearly_feed_col,total_yearly_feed_col
 #'        See `MWTools::amw_analysis_constants`.
 #' @param amw_region_code_col See `MWTools::conc_cols`.
@@ -506,7 +508,6 @@ calc_sector_split <- function(.df,
 #'   calc_yearly_feed()
 calc_yearly_feed <- function(.df,
                              amw_analysis_data_path = MWTools::amw_analysis_data_path(),
-                             # species = MWTools::mw_constants$species,
                              concordance_species = MWTools::conc_cols$species,
                              method_source = MWTools::mw_constants$method_source,
                              wa_feed_sheet= MWTools::amw_analysis_constants$wa_feed_sheet,
@@ -674,7 +675,8 @@ calc_primary_energy <- function(.df,
 #'                               `MWTools::amw_analysis_data_path()` by default,
 #'                               which returns the path the analysis data bundled with
 #'                               the `MWTools` package.
-#' @param species,method_source See `MWTools::mw_constants`.
+#' @param method_source See `MWTools::mw_constants`.
+#' @param concordance_species See `MWTools::conc_cols`.
 #' @param wa_power_sheet,wa_days_hours_sheet See `MWTools::amw_analysis_constants`.
 #' @param working_hours_col,working_seconds_col See `MWTools::amw_analysis_constants`.
 #' @param amw_region_code_col,power_per_animal See `MWTools::amw_analysis_constants`.
@@ -755,7 +757,8 @@ calc_useful_energy <- function(.df,
 #'            `calc_primary_energy()`, and
 #'            `calc_useful_energy()` functions in sequence on the raw FAO data.
 #' @param country_code_col,country_col,amw_region_code_col See `MWTools::conc_cols`.
-#' @param year,species,sector_col,stage_col,energy_col,units_col See `MWTools::mw_constants`.
+#' @param year,sector_col,stage_col,energy_col,units_col See `MWTools::mw_constants`.
+#' @param concordance_species See `MWTools::conc_cols`.
 #' @param useful_energy_ag,useful_energy_tr,final_energy_ag,final_energy_tr,primary_energy_ag,primary_energy_tr,working_animals_ag_col,working_animals_tr_col See `MWTools::amw_analysis_constants`.
 #'
 #' @export
@@ -778,7 +781,6 @@ tidy_pfu_data <- function(.df,
                           country_col = MWTools::conc_cols$country_col,
                           amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
                           year = MWTools::mw_cols$year,
-                          # species = MWTools::mw_constants$species,
                           concordance_species = MWTools::conc_cols$species,
                           sector_col = MWTools::mw_constants$sector_col,
                           stage_col = MWTools::mw_constants$stage_col,

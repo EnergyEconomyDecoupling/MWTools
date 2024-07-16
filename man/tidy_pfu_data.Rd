@@ -42,7 +42,9 @@ Usually produced by calling the
 
 \item{country_code_col, country_col, amw_region_code_col}{See \code{MWTools::conc_cols}.}
 
-\item{year, species, sector_col, stage_col, energy_col, units_col}{See \code{MWTools::mw_constants}.}
+\item{year, sector_col, stage_col, energy_col, units_col}{See \code{MWTools::mw_constants}.}
+
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
 
 \item{useful_energy_ag, useful_energy_tr, final_energy_ag, final_energy_tr, primary_energy_ag, primary_energy_tr, working_animals_ag_col, working_animals_tr_col}{See \code{MWTools::amw_analysis_constants}.}
 }

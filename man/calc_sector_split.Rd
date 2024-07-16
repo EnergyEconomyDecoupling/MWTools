@@ -8,7 +8,6 @@ calc_sector_split(
   .df,
   amw_analysis_data_path = MWTools::amw_analysis_data_path(),
   year = MWTools::mw_cols$year,
-  species = MWTools::mw_constants$species,
   concordance_species = MWTools::conc_cols$species,
   method_source = MWTools::mw_constants$method_source,
   metric = MWTools::amw_analysis_constants$metric,
@@ -38,7 +37,9 @@ over time. Set to the function \code{MWTools::amw_analysis_data_path()},
 by default, which returns the path the analysis data
 bundled with the \code{MWTools} package.}
 
-\item{year, species, method_source}{See \code{MWTools::mw_constants}.}
+\item{year, method_source}{See \code{MWTools::mw_constants}.}
+
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
 
 \item{metric, amw_region_col, wa_enduse_sheet, working_animals_total_col, working_animals_ag_col, working_animals_tr_col, prop_wkg_anmls_ag_col, prop_wkg_anmls_tr_col}{See \code{MWTools::amw_analysis_constants}.}
 

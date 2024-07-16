@@ -18,7 +18,9 @@ specify_fu_machines(
 \arguments{
 \item{.df}{A data frame, likely the output of \code{specify_useful_products()}.}
 
-\item{product, stage, species}{See \code{MWTools::mw_constants}.}
+\item{product, stage}{See \code{MWTools::mw_constants}.}
+
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
 
 \item{final, useful}{See \code{MWTools::all_stages}.}
 

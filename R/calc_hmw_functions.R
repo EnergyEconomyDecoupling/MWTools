@@ -621,6 +621,7 @@ calc_hmw_useful_energy <- function(.df,
 #'            `calc_hmw_primary_energy`, and
 #'            `calc_hmw_useful_energy` functions in sequence on the raw FAO data.
 #' @param year,sector_col,species,energy_col,stage_col,units_col See `MWTools::mw_constants`.
+#' @param concordance_species See `MWTools::conc_cols`.
 #' @param sex_ilo_col See `MWTools::ilo_cols`.
 #' @param country_col,hmw_region_code_col See `MWTools::conc_cols`.
 #' @param final_energy_col,primary_energy_col,useful_energy_hmw_col,labor_type_col See `MWTools::hmw_analysis_constants`.
@@ -646,7 +647,6 @@ calc_hmw_useful_energy <- function(.df,
 tidy_hmw_pfu <- function(.df,
                          year = MWTools::mw_cols$year,
                          sector_col = MWTools::mw_constants$sector_col,
-                         # species = MWTools::mw_constants$species,
                          concordance_species = MWTools::conc_cols$species,
                          energy_col = MWTools::mw_cols$e_dot,
                          stage_col = MWTools::mw_constants$stage_col,

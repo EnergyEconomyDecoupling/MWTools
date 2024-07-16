@@ -36,6 +36,8 @@ Usually produced by calling the
 
 \item{year, sector_col, species, energy_col, stage_col, units_col}{See \code{MWTools::mw_constants}.}
 
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
+
 \item{sex_ilo_col}{See \code{MWTools::ilo_cols}.}
 
 \item{country_col, hmw_region_code_col}{See \code{MWTools::conc_cols}.}

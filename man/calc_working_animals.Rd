@@ -36,6 +36,8 @@ with the \code{MWTools} package.}
 
 \item{year, species, exemplar_method_col}{See \code{MWTools::mw_constants}.}
 
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
+
 \item{prop_working_animals_col, wa_perc_sheet, working_animals_total_col, live_animals_col, amw_region_col}{See \code{MWTools::amw_analysis_constants}.}
 
 \item{amw_region_code_col}{See \code{MWTools::conc_cols}.}
