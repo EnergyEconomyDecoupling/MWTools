@@ -9,6 +9,7 @@ calc_working_animals(
   amw_analysis_data_path = MWTools::amw_analysis_data_path(),
   year = MWTools::mw_cols$year,
   species = MWTools::mw_constants$species,
+  concordance_species = MWTools::conc_cols$species,
   exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
   prop_working_animals_col = MWTools::amw_analysis_constants$prop_working_animals_col,
   wa_perc_sheet = MWTools::amw_analysis_constants$wa_perc_sheet,

@@ -9,6 +9,7 @@ calc_sector_split(
   amw_analysis_data_path = MWTools::amw_analysis_data_path(),
   year = MWTools::mw_cols$year,
   species = MWTools::mw_constants$species,
+  concordance_species = MWTools::conc_cols$species,
   method_source = MWTools::mw_constants$method_source,
   metric = MWTools::amw_analysis_constants$metric,
   amw_region_col = MWTools::amw_analysis_constants$amw_region_col,

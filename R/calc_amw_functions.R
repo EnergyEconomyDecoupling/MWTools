@@ -87,23 +87,27 @@ tidy_fao_live_animals <- function(.df,
   fao_data_trimmed <- .df %>%
     dplyr::select(dplyr::all_of(c(area_fao_col, item_fao_col, year_fao_col, unit_fao_col, value_fao_col)))
 
-  live_animals_buffaloes <- fao_data_trimmed %>%
-    dplyr::filter(.data[[item_fao_col]] %in% c(cattle, cattle_and_buffaloes)) %>%
-    tidyr::pivot_wider(id_cols = dplyr::all_of(c(area_fao_col, year_fao_col, unit_fao_col)),
-                       values_from = dplyr::all_of(value_fao_col),
-                       names_from = dplyr::all_of(item_fao_col)) %>%
-    dplyr::mutate("{buffaloes}" := .data[[cattle_and_buffaloes]] - .data[[cattle]], .keep = "unused") |>
-    tidyr::pivot_longer(cols = dplyr::all_of(buffaloes),
-                        names_to = item_fao_col,
-                        values_to = value_fao_col)
+  # As of July 2024, the FAO are now including Buffaloes and Cattles as
+  # distinct and separate species.
+  # So there is no longer a need to perform this subtraction.
+  #
+  # live_animals_buffaloes <- fao_data_trimmed %>%
+  #   dplyr::filter(.data[[item_fao_col]] %in% c(cattle, cattle_and_buffaloes)) %>%
+  #   tidyr::pivot_wider(id_cols = dplyr::all_of(c(area_fao_col, year_fao_col, unit_fao_col)),
+  #                      values_from = dplyr::all_of(value_fao_col),
+  #                      names_from = dplyr::all_of(item_fao_col)) %>%
+  #   dplyr::mutate("{buffaloes}" := .data[[cattle_and_buffaloes]] - .data[[cattle]], .keep = "unused") |>
+  #   tidyr::pivot_longer(cols = dplyr::all_of(buffaloes),
+  #                       names_to = item_fao_col,
+  #                       values_to = value_fao_col)
 
-  live_animals_noBuffaloes <- fao_data_trimmed %>%
-    dplyr::filter(.data[[item_fao_col]] %in% setdiff(mw_species, cattle_and_buffaloes))
+  # live_animals_noBuffaloes <- fao_data_trimmed %>%
+  #   dplyr::filter(.data[[item_fao_col]] %in% setdiff(mw_species, cattle_and_buffaloes))
+#
+#   live_animals_recombined <- rbind(live_animals_noBuffaloes, live_animals_buffaloes) %>%
+#     magrittr::set_colnames(c(country_name, species, year, unit, value))
 
-  live_animals_recombined <- rbind(live_animals_noBuffaloes, live_animals_buffaloes) %>%
-    magrittr::set_colnames(c(country_name, species, year, unit, value))
-
-  live_animals_final <- live_animals_recombined %>%
+  live_animals_final <- fao_data_trimmed %>%
     dplyr::select(-dplyr::all_of(c(unit))) %>%
     dplyr::group_by(.data[[country_name]], .data[[species]]) %>%
 
@@ -354,6 +358,7 @@ calc_working_animals <- function(.df,
                                  amw_analysis_data_path = MWTools::amw_analysis_data_path(),
                                  year = MWTools::mw_cols$year,
                                  species = MWTools::mw_constants$species,
+                                 concordance_species = MWTools::conc_cols$species,
                                  exemplar_method_col = MWTools::mw_constants$exemplar_method_col,
                                  prop_working_animals_col = MWTools::amw_analysis_constants$prop_working_animals_col,
                                  wa_perc_sheet = MWTools::amw_analysis_constants$wa_perc_sheet,
@@ -368,7 +373,7 @@ calc_working_animals <- function(.df,
                                              sheet = wa_perc_sheet) %>%
     tibble::tibble() %>%
     dplyr::select(-dplyr::all_of(c(exemplar_method_col, amw_region_col))) %>%
-    tidyr::pivot_longer(cols = -dplyr::all_of(c(species, amw_region_code_col)),
+    tidyr::pivot_longer(cols = -dplyr::all_of(c(concordance_species, amw_region_code_col)),
                         names_to = year,
                         values_to = prop_working_animals_col) %>%
     dplyr::mutate(
@@ -376,10 +381,14 @@ calc_working_animals <- function(.df,
     )
 
   .df %>%
-    dplyr::left_join(working_animals_prop, by = c(species, amw_region_code_col, year)) %>%
+    dplyr::rename(
+      "{concordance_species}" := dplyr::all_of(species)
+    ) |>
+    dplyr::left_join(working_animals_prop,
+                     by = c(concordance_species, amw_region_code_col, year)) %>%
     dplyr::mutate(
       "{working_animals_total_col}" := .data[[live_animals_col]] * .data[[prop_working_animals_col]]
-      )
+    )
 }
 
 
@@ -424,6 +433,7 @@ calc_sector_split <- function(.df,
                               amw_analysis_data_path = MWTools::amw_analysis_data_path(),
                               year = MWTools::mw_cols$year,
                               species = MWTools::mw_constants$species,
+                              concordance_species = MWTools::conc_cols$species,
                               method_source = MWTools::mw_constants$method_source,
                               metric = MWTools::amw_analysis_constants$metric,
                               amw_region_col = MWTools::amw_analysis_constants$amw_region_col,
@@ -438,7 +448,7 @@ calc_sector_split <- function(.df,
   end_use <- readxl::read_excel(amw_analysis_data_path,
                                 sheet = wa_enduse_sheet) %>%
     dplyr::select(-dplyr::all_of(c(method_source, metric, amw_region_col))) %>%
-    tidyr::pivot_longer(cols = -dplyr::all_of(c(species, amw_region_code_col)),
+    tidyr::pivot_longer(cols = -dplyr::all_of(c(concordance_species, amw_region_code_col)),
                         names_to = year,
                         values_to = prop_wkg_anmls_ag_col) %>%
     dplyr::mutate(
@@ -447,7 +457,7 @@ calc_sector_split <- function(.df,
       )
 
   .df %>%
-    dplyr::left_join(end_use, by = c(species, amw_region_code_col, year)) %>%
+    dplyr::left_join(end_use, by = c(concordance_species, amw_region_code_col, year)) %>%
     dplyr::mutate(
       "{working_animals_ag_col}" := .data[[working_animals_total_col]] * .data[[prop_wkg_anmls_ag_col]],
       "{working_animals_tr_col}" := .data[[working_animals_total_col]] * .data[[prop_wkg_anmls_tr_col]]
