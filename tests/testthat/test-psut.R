@@ -177,7 +177,7 @@ test_that("collapse_to_psut() works as expected", {
   expected1 <- hmw_df %>%
     dplyr::filter(.data[[MWTools::mw_cols$country]] == "GBR",
                   .data[[MWTools::mw_cols$year]] == 2000,
-                  .data[[MWTools::mw_constants$species]] == "Human females",
+                  .data[[MWTools::conc_cols$species]] == "Human females",
                   .data[[MWTools::mw_constants$sector_col]] == "Agriculture",
                   .data[[MWTools::mw_constants$stage_col]] == MWTools::all_stages$useful) %>%
     magrittr::extract2(MWTools::mw_cols$e_dot) %>%
@@ -255,7 +255,7 @@ test_that("collapse_to_psut() works for Matrix objects", {
   expected1 <- hmw_df %>%
     dplyr::filter(.data[[MWTools::mw_cols$country]] == "GBR",
                   .data[[MWTools::mw_cols$year]] == 2000,
-                  .data[[MWTools::mw_constants$species]] == "Human females",
+                  .data[[MWTools::conc_cols$species]] == "Human females",
                   .data[[MWTools::mw_constants$sector_col]] == "Agriculture",
                   .data[[MWTools::mw_constants$stage_col]] == MWTools::all_stages$useful) %>%
     magrittr::extract2(MWTools::mw_cols$e_dot) %>%
@@ -728,7 +728,7 @@ test_that("trapping zero-row output in prep_psut() works as expected", {
   # Make a couple bogus zero-row data frames with the right rows.
   cnames <- c(IEATools::iea_cols$country,
               IEATools::iea_cols$year,
-              MWTools::mw_constants$species,
+              MWTools::conc_cols$species,
               MWTools::mw_constants$stage_col,
               MWTools::mw_constants$sector_col,
               IEATools::iea_cols$unit,
@@ -765,7 +765,7 @@ test_that("trapping zero-row output in prep_psut() works with Matrix objects", {
   # Make a couple bogus zero-row data frames with the right rows.
   cnames <- c(IEATools::iea_cols$country,
               IEATools::iea_cols$year,
-              MWTools::mw_constants$species,
+              MWTools::conc_cols$species,
               MWTools::mw_constants$stage_col,
               MWTools::mw_constants$sector_col,
               IEATools::iea_cols$unit,
@@ -828,3 +828,4 @@ test_that("prep_psut() works with ktoe units", {
   R_ktoe <- psut_ktoe$R[[1]][1, 1]
   expect_equal(R_TJ / R_ktoe, 41.868)
 })
+
