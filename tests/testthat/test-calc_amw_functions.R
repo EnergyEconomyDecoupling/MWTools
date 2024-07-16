@@ -192,13 +192,13 @@ test_that("calc_working_animals works", {
 
   expect_equal(nrow(working_animals), 378)
 
-  expect_equal(unique(live_animals_w.species[[MWTools::mw_constants$species]]),
+  expect_equal(unique(working_animals[[MWTools::conc_cols$species]]),
                c(MWTools::mw_species$asses,
                  MWTools::mw_species$buffaloes,
                  MWTools::mw_species$cattle,
                  MWTools::mw_species$horses,
                  MWTools::mw_species$mules,
-                 MWTools::mw_species$camelids_other))
+                 MWTools::mw_species$camelids))
 
   expect_equal(colnames(working_animals),
                c(MWTools::conc_cols$country_code_col,
@@ -263,12 +263,19 @@ test_that("calc_yearly_feed works", {
 
   expect_equal(nrow(working_animals_w.feed), 378)
 
-  expect_equal(colnames(working_animals_w.feed), c("Country.code", "AMW.Region.code",
-                                                   "Year", "Species", "Live.animals",
-                                                   "Prop.Working.animals", "Working.animals.total",
-                                                   "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
-                                                   "Working.animals.Ag", "Working.animals.Tr",
-                                                   "Total.yearly.feed [MJ/year per animal]"))
+  expect_equal(colnames(working_animals_w.feed),
+               c(MWTools::conc_cols$country_code_col,
+                 MWTools::conc_cols$amw_region_code_col,
+                 MWTools::mw_cols$year,
+                 MWTools::conc_cols$species,
+                 MWTools::amw_analysis_constants$live_animals_col,
+                 MWTools::amw_analysis_constants$prop_working_animals_col,
+                 MWTools::amw_analysis_constants$working_animals_total_col,
+                 MWTools::amw_analysis_constants$prop_wkg_anmls_ag_col,
+                 MWTools::amw_analysis_constants$prop_wkg_anmls_tr_col,
+                 MWTools::amw_analysis_constants$working_animals_ag_col,
+                 MWTools::amw_analysis_constants$working_animals_tr_col,
+                 MWTools::amw_analysis_constants$total_yearly_feed_col))
 })
 
 
@@ -292,14 +299,22 @@ test_that("calc_final_energy works", {
 
   expect_equal(nrow(working_animals_w.finalenergy), 378)
 
-  expect_equal(colnames(working_animals_w.finalenergy), c("Country.code", "AMW.Region.code",
-                                                          "Year", "Species", "Live.animals",
-                                                          "Prop.Working.animals", "Working.animals.total",
-                                                          "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
-                                                          "Working.animals.Ag", "Working.animals.Tr",
-                                                          "Total.yearly.feed [MJ/year per animal]",
-                                                          "Final.energy.total [MJ/year]", "Final.energy.Ag [MJ/year]",
-                                                          "Final.energy.Tr [MJ/year]"))
+  expect_equal(colnames(working_animals_w.finalenergy),
+               c(MWTools::conc_cols$country_code_col,
+                 MWTools::conc_cols$amw_region_code_col,
+                 MWTools::mw_cols$year,
+                 MWTools::conc_cols$species,
+                 MWTools::amw_analysis_constants$live_animals_col,
+                 MWTools::amw_analysis_constants$prop_working_animals_col,
+                 MWTools::amw_analysis_constants$working_animals_total_col,
+                 MWTools::amw_analysis_constants$prop_wkg_anmls_ag_col,
+                 MWTools::amw_analysis_constants$prop_wkg_anmls_tr_col,
+                 MWTools::amw_analysis_constants$working_animals_ag_col,
+                 MWTools::amw_analysis_constants$working_animals_tr_col,
+                 MWTools::amw_analysis_constants$total_yearly_feed_col,
+                 MWTools::amw_analysis_constants$final_energy_total,
+                 MWTools::amw_analysis_constants$final_energy_ag,
+                 MWTools::amw_analysis_constants$final_energy_tr))
 })
 
 
@@ -324,19 +339,29 @@ test_that("calc_primary_energy",{
 
   expect_equal(nrow(working_animals_w.primaryenergy), 378)
 
-  expect_equal(colnames(working_animals_w.primaryenergy), c("Country.code", "AMW.Region.code",
-                                                            "Year", "Species", "Live.animals",
-                                                            "Prop.Working.animals", "Working.animals.total",
-                                                            "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
-                                                            "Working.animals.Ag", "Working.animals.Tr",
-                                                            "Total.yearly.feed [MJ/year per animal]",
-                                                            "Final.energy.total [MJ/year]", "Final.energy.Ag [MJ/year]",
-                                                            "Final.energy.Tr [MJ/year]", "Primary.energy.total [MJ/year]",
-                                                            "Primary.energy.Ag [MJ/year]", "Primary.energy.Tr [MJ/year]"))
+  expect_equal(colnames(working_animals_w.primaryenergy),
+               c(MWTools::conc_cols$country_code_col,
+                 MWTools::conc_cols$amw_region_code_col,
+                 MWTools::mw_cols$year,
+                 MWTools::conc_cols$species,
+                 MWTools::amw_analysis_constants$live_animals_col,
+                 MWTools::amw_analysis_constants$prop_working_animals_col,
+                 MWTools::amw_analysis_constants$working_animals_total_col,
+                 MWTools::amw_analysis_constants$prop_wkg_anmls_ag_col,
+                 MWTools::amw_analysis_constants$prop_wkg_anmls_tr_col,
+                 MWTools::amw_analysis_constants$working_animals_ag_col,
+                 MWTools::amw_analysis_constants$working_animals_tr_col,
+                 MWTools::amw_analysis_constants$total_yearly_feed_col,
+                 MWTools::amw_analysis_constants$final_energy_total,
+                 MWTools::amw_analysis_constants$final_energy_ag,
+                 MWTools::amw_analysis_constants$final_energy_tr,
+                 MWTools::amw_analysis_constants$primary_energy_total,
+                 MWTools::amw_analysis_constants$primary_energy_ag,
+                 MWTools::amw_analysis_constants$primary_energy_tr))
 })
 
 
-test_that("calc_useful_energy",{
+test_that("calc_useful_energy() works as expected",{
 
   test_data_path <- amw_test_data_path()
 
@@ -358,18 +383,30 @@ test_that("calc_useful_energy",{
 
   expect_equal(nrow(working_animals_w.usefulenergy), 378)
 
-  expect_equal(colnames(working_animals_w.usefulenergy), c("Country.code", "AMW.Region.code",
-                                                           "Year", "Species", "Live.animals",
-                                                           "Prop.Working.animals", "Working.animals.total",
-                                                           "Prop.Working.animals.Ag", "Prop.Working.animals.Tr",
-                                                           "Working.animals.Ag", "Working.animals.Tr",
-                                                           "Total.yearly.feed [MJ/year per animal]",
-                                                           "Final.energy.total [MJ/year]", "Final.energy.Ag [MJ/year]",
-                                                           "Final.energy.Tr [MJ/year]", "Primary.energy.total [MJ/year]",
-                                                           "Primary.energy.Ag [MJ/year]", "Primary.energy.Tr [MJ/year]",
-                                                           "Power.per.animal [W]", "Working.seconds [seconds per animal]",
-                                                           "Useful.energy.total [MJ/year]", "Useful.energy.Ag [MJ/year]",
-                                                           "Useful.energy.Tr [MJ/year]"))
+  expect_equal(colnames(working_animals_w.usefulenergy),
+               c(MWTools::conc_cols$country_code_col,
+                 MWTools::conc_cols$amw_region_code_col,
+                 MWTools::mw_cols$year,
+                 MWTools::conc_cols$species,
+                 MWTools::amw_analysis_constants$live_animals_col,
+                 MWTools::amw_analysis_constants$prop_working_animals_col,
+                 MWTools::amw_analysis_constants$working_animals_total_col,
+                 MWTools::amw_analysis_constants$prop_wkg_anmls_ag_col,
+                 MWTools::amw_analysis_constants$prop_wkg_anmls_tr_col,
+                 MWTools::amw_analysis_constants$working_animals_ag_col,
+                 MWTools::amw_analysis_constants$working_animals_tr_col,
+                 MWTools::amw_analysis_constants$total_yearly_feed_col,
+                 MWTools::amw_analysis_constants$final_energy_total,
+                 MWTools::amw_analysis_constants$final_energy_ag,
+                 MWTools::amw_analysis_constants$final_energy_tr,
+                 MWTools::amw_analysis_constants$primary_energy_total,
+                 MWTools::amw_analysis_constants$primary_energy_ag,
+                 MWTools::amw_analysis_constants$primary_energy_tr,
+                 MWTools::amw_analysis_constants$power_per_animal,
+                 MWTools::amw_analysis_constants$working_seconds_col,
+                 MWTools::amw_analysis_constants$useful_energy_total,
+                 MWTools::amw_analysis_constants$useful_energy_ag,
+                 MWTools::amw_analysis_constants$useful_energy_tr))
 })
 
 
@@ -396,10 +433,14 @@ test_that("tidy_pfu_data works", {
 
   expect_equal(nrow(tidy_pfu_data), 2268)
 
-  expect_equal(colnames(tidy_pfu_data), c("Country", "Year", "Species",
-                                          "Stage", "Sector", "Unit",
-                                          "Edot"))
-
+  expect_equal(colnames(tidy_pfu_data),
+               c(MWTools::conc_cols$country_col,
+                 MWTools::fao_cols$year_fao_col,
+                 MWTools::conc_cols$species,
+                 MWTools::mw_constants$stage_col,
+                 MWTools::mw_constants$sector_col,
+                 MWTools::fao_cols$unit_fao_col,
+                 "Edot"))
 })
 
 
@@ -416,9 +457,14 @@ test_that("calc_amw_pfu", {
 
   expect_equal(nrow(tidy_pfu_data), 2268)
 
-  expect_equal(colnames(tidy_pfu_data), c("Country", "Year", "Species",
-                                          "Stage", "Sector", "Unit",
-                                          "Edot"))
+  expect_equal(colnames(tidy_pfu_data),
+               c(MWTools::conc_cols$country_col,
+                 MWTools::fao_cols$year_fao_col,
+                 MWTools::conc_cols$species,
+                 MWTools::mw_constants$stage_col,
+                 MWTools::mw_constants$sector_col,
+                 MWTools::fao_cols$unit_fao_col,
+                 "Edot"))
 })
 
 

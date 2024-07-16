@@ -7,7 +7,7 @@
 calc_useful_energy(
   .df,
   amw_analysis_data_path = MWTools::amw_analysis_data_path(),
-  species = MWTools::mw_constants$species,
+  concordance_species = MWTools::conc_cols$species,
   method_source = MWTools::mw_constants$method_source,
   wa_power_sheet = MWTools::amw_analysis_constants$wa_power_sheet,
   wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,
@@ -44,8 +44,6 @@ power outputs of working animals. Set to the function
 which returns the path the analysis data bundled with
 the \code{MWTools} package.}
 
-\item{species, method_source}{See \code{MWTools::mw_constants}.}
-
 \item{wa_power_sheet, wa_days_hours_sheet}{See \code{MWTools::amw_analysis_constants}.}
 
 \item{working_hours_col, working_seconds_col}{See \code{MWTools::amw_analysis_constants}.}
@@ -55,6 +53,8 @@ the \code{MWTools} package.}
 \item{useful_energy_total, useful_energy_ag, useful_energy_tr}{See \code{MWTools::amw_analysis_constants}.}
 
 \item{working_animals_total_col, working_animals_ag_col, working_animals_tr_col, working_days_col}{See \code{MWTools::amw_analysis_constants}.}
+
+\item{species, method_source}{See \code{MWTools::mw_constants}.}
 }
 \description{
 Calculate the useful energy produced by working animals performing muscle work

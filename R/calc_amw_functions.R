@@ -506,7 +506,8 @@ calc_sector_split <- function(.df,
 #'   calc_yearly_feed()
 calc_yearly_feed <- function(.df,
                              amw_analysis_data_path = MWTools::amw_analysis_data_path(),
-                             species = MWTools::mw_constants$species,
+                             # species = MWTools::mw_constants$species,
+                             concordance_species = MWTools::conc_cols$species,
                              method_source = MWTools::mw_constants$method_source,
                              wa_feed_sheet= MWTools::amw_analysis_constants$wa_feed_sheet,
                              wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,
@@ -532,16 +533,16 @@ calc_yearly_feed <- function(.df,
       )
 
   yearly_feed <- feed %>%
-    dplyr::left_join(working_days, by = c(species, amw_region_code_col)) %>%
+    dplyr::left_join(working_days, by = c(concordance_species, amw_region_code_col)) %>%
     dplyr::mutate(
       "{working_yearly_feed_col}" := .data[[working_day_feed_col]] * .data[[working_days_col]],
       "{nonwkg_yearly_feed_col}" := .data[[nonworking_day_feed_col]] * .data[[nonworking_days_col]],
       "{total_yearly_feed_col}" := .data[[working_yearly_feed_col]] + .data[[nonwkg_yearly_feed_col]]
       ) %>%
-    dplyr::select(dplyr::all_of(c(species, amw_region_code_col, total_yearly_feed_col)))
+    dplyr::select(dplyr::all_of(c(concordance_species, amw_region_code_col, total_yearly_feed_col)))
 
   .df %>%
-    dplyr::left_join(yearly_feed, by = c(species, amw_region_code_col))
+    dplyr::left_join(yearly_feed, by = c(concordance_species, amw_region_code_col))
 }
 
 
@@ -697,7 +698,8 @@ calc_primary_energy <- function(.df,
 #'   calc_useful_energy()
 calc_useful_energy <- function(.df,
                                amw_analysis_data_path = MWTools::amw_analysis_data_path(),
-                               species = MWTools::mw_constants$species,
+                               # species = MWTools::mw_constants$species,
+                               concordance_species = MWTools::conc_cols$species,
                                method_source = MWTools::mw_constants$method_source,
                                wa_power_sheet= MWTools::amw_analysis_constants$wa_power_sheet,
                                wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,
@@ -716,19 +718,19 @@ calc_useful_energy <- function(.df,
   power <- readxl::read_excel(amw_analysis_data_path,
                               sheet = wa_power_sheet) %>%
     dplyr::select(-dplyr::all_of(method_source)) %>%
-    magrittr::set_colnames(c(species, amw_region_code_col, power_per_animal))
+    magrittr::set_colnames(c(concordance_species, amw_region_code_col, power_per_animal))
 
   working_time <- readxl::read_excel(amw_analysis_data_path,
                                      sheet = wa_days_hours_sheet) %>%
     dplyr::select(-dplyr::all_of(c(method_source, working_days_col))) %>%
-    magrittr::set_colnames(c(species, amw_region_code_col, working_hours_col)) %>%
+    magrittr::set_colnames(c(concordance_species, amw_region_code_col, working_hours_col)) %>%
     dplyr::mutate(
       "{working_seconds_col}" := .data[[working_hours_col]] * 3600, .keep = "unused"
       )
 
   .df %>%
-    dplyr::left_join(power, by = c(species, amw_region_code_col)) %>%
-    dplyr::left_join(working_time, by = c(species, amw_region_code_col)) %>%
+    dplyr::left_join(power, by = c(concordance_species, amw_region_code_col)) %>%
+    dplyr::left_join(working_time, by = c(concordance_species, amw_region_code_col)) %>%
     dplyr::mutate(
       "{useful_energy_total}" := .data[[working_animals_total_col]] * .data[[power_per_animal]] * .data[[working_seconds_col]] / 1000000,
       "{useful_energy_ag}" := .data[[working_animals_ag_col]] * .data[[power_per_animal]] * .data[[working_seconds_col]] / 1000000,
@@ -776,7 +778,8 @@ tidy_pfu_data <- function(.df,
                           country_col = MWTools::conc_cols$country_col,
                           amw_region_code_col = MWTools::conc_cols$amw_region_code_col,
                           year = MWTools::mw_cols$year,
-                          species = MWTools::mw_constants$species,
+                          # species = MWTools::mw_constants$species,
+                          concordance_species = MWTools::conc_cols$species,
                           sector_col = MWTools::mw_constants$sector_col,
                           stage_col = MWTools::mw_constants$stage_col,
                           energy_col = MWTools::mw_cols$e_dot,
@@ -791,7 +794,7 @@ tidy_pfu_data <- function(.df,
                           working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col) {
 
   .df %>%
-    dplyr::select(dplyr::all_of(c(country_code_col, year, species,
+    dplyr::select(dplyr::all_of(c(country_code_col, year, concordance_species,
                                   useful_energy_ag, useful_energy_tr,
                                   final_energy_ag, final_energy_tr,
                                   primary_energy_ag, primary_energy_tr))) %>%
@@ -816,7 +819,7 @@ tidy_pfu_data <- function(.df,
       "{units_col}" := "EJ",
       .before = dplyr::all_of(energy_col)
     ) %>%
-    magrittr::set_colnames(c(country_col, year, species,
+    magrittr::set_colnames(c(country_col, year, concordance_species,
                              stage_col, sector_col, units_col, energy_col))
 }
 
