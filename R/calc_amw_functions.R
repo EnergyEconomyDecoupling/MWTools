@@ -829,23 +829,6 @@ tidy_pfu_data <- function(.df,
     #
     # End of new code
     #
-    # dplyr::mutate(
-    #   "{sector_col}" := stringr::str_replace_all(.data[[sector_col]], stringr::fixed(" [MJ/year]"), ""),
-    #   "{sector_col}" := dplyr::case_when(
-    #     .data[[sector_col]] == "Ag" ~ "Agriculture",
-    #     .data[[sector_col]] == "Tr" ~ "Transport",
-    #     TRUE ~ "Unknown sector column value"
-    #   )
-    # ) %>%
-    # dplyr::mutate(
-    #   "{energy_col}" := .data[[energy_col]] * 0.000000000001
-    # ) %>%
-    # dplyr::mutate(
-    #   "{units_col}" := "EJ",
-    #   .before = dplyr::all_of(energy_col)
-    # ) %>%
-    # magrittr::set_colnames(c(country_col, year, concordance_species,
-    #                          stage_col, sector_col, units_col, energy_col))
     dplyr::mutate(
       "{sector_col}" := stringr::str_replace_all(.data[[sector_col]],
                                                  stringr::fixed(" [MJ/year]"), ""),
