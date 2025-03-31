@@ -16,6 +16,7 @@ A string list with 9 entries.
 \item{region_code_col}{The metadata column "Region.code" telling the region for this row.}
 \item{agg_code_col}{The metadata column "Agg.Code", representing the country, or country group code for individual country level data to be aggregated in to.}
 \item{mapping_sheet}{The name of the sheet for name mappings.}
+\item{species}{The name of the species column in the concordance spreadsheet.}
 }
 }
 \usage{

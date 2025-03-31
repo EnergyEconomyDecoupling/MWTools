@@ -795,17 +795,46 @@ tidy_pfu_data <- function(.df,
                           working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
                           working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col) {
 
+
+
+
+
+
+  # This modified code works as of 31 March 2025.
   .df %>%
     dplyr::select(dplyr::all_of(c(country_code_col, year, concordance_species,
                                   useful_energy_ag, useful_energy_tr,
                                   final_energy_ag, final_energy_tr,
                                   primary_energy_ag, primary_energy_tr))) %>%
+    # The following line is commented, because it fails as of 31 March 2025
+    # for data from the PFU pipeline,
+    # despite working in all tests within this package.
+    # The commented line below is preferred, because
+    # it is simpler and more concise.
+    # I may be working around a bug in the tidyr package.
+    #   tidyr::pivot_longer(cols = dplyr::all_of(c(useful_energy_ag, useful_energy_tr,
+    #                                              final_energy_ag, final_energy_tr,
+    #                                              primary_energy_ag, primary_energy_tr)),
+    #                       names_to = c(stage_col, sector_col),
+    #                       names_sep = ".energy.",
+    #                       values_to = energy_col) %>%
     tidyr::pivot_longer(cols = dplyr::all_of(c(useful_energy_ag, useful_energy_tr,
                                                final_energy_ag, final_energy_tr,
                                                primary_energy_ag, primary_energy_tr)),
-                        names_to = c(stage_col, sector_col),
-                        names_sep = ".energy.",
-                        values_to = energy_col) %>%
+                        names_to = "TempCol",
+                        values_to = energy_col) |>
+    dplyr::mutate(
+      # Extract everything before ".energy."
+      "{stage_col}" := stringr::str_extract(TempCol, ".*(?=\\.energy\\.)"),
+      # Extract everything after ".energy."
+      "{sector_col}" := stringr::str_extract(TempCol, "(?<=\\.energy\\.).*"),
+      TempCol = NULL
+    ) |>
+    # Move the Edot column to the end.
+    dplyr::relocate(dplyr::all_of(energy_col), .after = dplyr::last_col()) |>
+    #
+    # End of new code
+    #
     dplyr::mutate(
       "{sector_col}" := stringr::str_replace_all(.data[[sector_col]], stringr::fixed(" [MJ/year]"), ""),
       "{sector_col}" := dplyr::case_when(

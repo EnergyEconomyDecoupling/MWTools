@@ -7,11 +7,16 @@ Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zeno
 which always resolves to the latest release.
 
 
+* Changed `tidy_pfu_data()` to manually split column names
+  after `tidyr::pivot_longer()`. 
+  Using the built-in `names_sep` functionality of `pivot_longer()` 
+  is not working for some data frames
+  (despite working for all tests).
 * Change column names to conform to new downloaded ILO
   files.
 * Update column names to eliminate some "."s.
 * No new tests.
-    * Still at 453 tests, all passing.
+    * Now at 452 tests, all passing.
     * Test coverage remains at 100%.
 
 
@@ -71,7 +76,6 @@ which always resolves to the latest release.
     * Now at 453 tests, all passing.
     * Test coverage remains at 100%.
   
-
 
 ## MWTools 0.2.4 (2023-12-10) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10342042.svg)](https://doi.org/10.5281/zenodo.10342042)
 
