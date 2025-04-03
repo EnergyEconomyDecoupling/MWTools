@@ -7,7 +7,7 @@ Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zeno
 which always resolves to the latest release.
 
 
-## MWTools 0.2.10 (2025-04-02) 
+## MWTools 0.2.10 (2025-04-02) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15128150.svg)](https://doi.org/10.5281/zenodo.15128150)
 
 * Changed `tidy_pfu_data()` to manually split column names
   after `tidyr::pivot_longer()`. 
