@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   MWTools: MWTools.html
-last_built: 2025-04-03T01:06Z
+last_built: 2025-04-03T01:10Z
 urls:
   reference: https://energyeconomydecoupling.github.io/MWTools/reference
   article: https://energyeconomydecoupling.github.io/MWTools/articles
