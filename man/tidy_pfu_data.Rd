@@ -22,7 +22,8 @@ tidy_pfu_data(
   primary_energy_ag = MWTools::amw_analysis_constants$primary_energy_ag,
   primary_energy_tr = MWTools::amw_analysis_constants$primary_energy_tr,
   working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
-  working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col
+  working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col,
+  .temp_col = "TempCol"
 )
 }
 \arguments{
@@ -47,6 +48,9 @@ Usually produced by calling the
 \item{concordance_species}{See \code{MWTools::conc_cols}.}
 
 \item{useful_energy_ag, useful_energy_tr, final_energy_ag, final_energy_tr, primary_energy_ag, primary_energy_tr, working_animals_ag_col, working_animals_tr_col}{See \code{MWTools::amw_analysis_constants}.}
+
+\item{.temp_col}{The name of a temporary column used internally.
+Default is "TempCol".}
 }
 \description{
 Tidy a data frame containing primary, final, and useful energy data for working animals

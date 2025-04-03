@@ -1,7 +1,7 @@
 Package: MWTools
 Title: Functions For Calculation of Muscle Work Within the PSUT Framework
-Version: 0.2.9
-Date: 2023-12-25
+Version: 0.2.10
+Date: 2025-04-02
 Authors@R: c(person(given = "Zeke",
                     family = "Marshall",
                     role = c("aut", "cre"),
