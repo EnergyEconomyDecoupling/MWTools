@@ -760,6 +760,8 @@ calc_useful_energy <- function(.df,
 #' @param year,sector_col,stage_col,energy_col,units_col See `MWTools::mw_constants`.
 #' @param concordance_species See `MWTools::conc_cols`.
 #' @param useful_energy_ag,useful_energy_tr,final_energy_ag,final_energy_tr,primary_energy_ag,primary_energy_tr,working_animals_ag_col,working_animals_tr_col See `MWTools::amw_analysis_constants`.
+#' @param .temp_col The name of a temporary column used internally.
+#'                  Default is "TempCol".
 #'
 #' @export
 #'
@@ -793,7 +795,8 @@ tidy_pfu_data <- function(.df,
                           primary_energy_ag = MWTools::amw_analysis_constants$primary_energy_ag,
                           primary_energy_tr = MWTools::amw_analysis_constants$primary_energy_tr,
                           working_animals_ag_col = MWTools::amw_analysis_constants$working_animals_ag_col,
-                          working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col) {
+                          working_animals_tr_col = MWTools::amw_analysis_constants$working_animals_tr_col,
+                          .temp_col = "TempCol") {
 
   .df %>%
     dplyr::select(dplyr::all_of(c(country_code_col, year, concordance_species,
@@ -815,14 +818,14 @@ tidy_pfu_data <- function(.df,
     tidyr::pivot_longer(cols = dplyr::all_of(c(useful_energy_ag, useful_energy_tr,
                                                final_energy_ag, final_energy_tr,
                                                primary_energy_ag, primary_energy_tr)),
-                        names_to = "TempCol",
+                        names_to = .temp_col,
                         values_to = energy_col) |>
     dplyr::mutate(
       # Extract everything before ".energy."
-      "{stage_col}" := stringr::str_extract(TempCol, ".*(?=\\.energy\\.)"),
+      "{stage_col}" := stringr::str_extract(.data[[.temp_col]], ".*(?=\\.energy\\.)"),
       # Extract everything after ".energy."
-      "{sector_col}" := stringr::str_extract(TempCol, "(?<=\\.energy\\.).*"),
-      TempCol = NULL
+      "{sector_col}" := stringr::str_extract(.data[[.temp_col]], "(?<=\\.energy\\.).*"),
+      "{.temp_col}" := NULL
     ) |>
     # Move the Edot column to the end.
     dplyr::relocate(dplyr::all_of(energy_col), .after = dplyr::last_col()) |>

@@ -3,13 +3,13 @@ citHeader("To cite MWTools in publications use:")
 citEntry(entry = "Manual",
   title        = "MWTools: Functions For Calculation of Muscle Work Within the PSUT Framework",
   author       = personList(as.person("Zeke Marshall"), as.person("Matthew Kuperus Heun")),
-  year         = "2023",
-  note         = "R package version 0.2.9",
+  year         = "2025",
+  note         = "R package version 0.2.10",
   url          = "https://doi.org/10.5281/zenodo.7584858",
 
   textVersion  =
-  paste("Zeke Marshall and Matthew Kuperus Heun (2023).",
+  paste("Zeke Marshall and Matthew Kuperus Heun (2025).",
         "MWTools: Functions For Calculation of Muscle Work Within the PSUT Framework.",
-        "R package version 0.2.9.",
+        "R package version 0.2.10.",
         "https://doi.org/10.5281/zenodo.7584858")
 )
