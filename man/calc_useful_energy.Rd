@@ -7,7 +7,7 @@
 calc_useful_energy(
   .df,
   amw_analysis_data_path = MWTools::amw_analysis_data_path(),
-  species = MWTools::mw_constants$species,
+  concordance_species = MWTools::conc_cols$species,
   method_source = MWTools::mw_constants$method_source,
   wa_power_sheet = MWTools::amw_analysis_constants$wa_power_sheet,
   wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,
@@ -44,7 +44,9 @@ power outputs of working animals. Set to the function
 which returns the path the analysis data bundled with
 the \code{MWTools} package.}
 
-\item{species, method_source}{See \code{MWTools::mw_constants}.}
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
+
+\item{method_source}{See \code{MWTools::mw_constants}.}
 
 \item{wa_power_sheet, wa_days_hours_sheet}{See \code{MWTools::amw_analysis_constants}.}
 

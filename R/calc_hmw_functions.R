@@ -1,7 +1,7 @@
 #' Prepare a unified ILO dataframe from raw employment and working hours data
 #'
 #' Prepare a unified ILO dataframe from raw employment and working hours data,
-#' usually obtained using the {Rilostat} R package.
+#' usually obtained using the `Rilostat` R package.
 #'
 #' @param ilo_working_hours_data A dataframe containing raw ILO working hours data.
 #' @param ilo_employment_data A dataframe containing raw ILO employment data.
@@ -29,14 +29,12 @@ prepareRawILOData <- function(ilo_working_hours_data, ilo_employment_data){
   # Mean weekly hours actually worked per employed person by sex and economic activity:
   # HOW_TEMP_SEX_ECO_NB_A
   working_hours <- ilo_working_hours_data |>
-    # dplyr::select("ref_area", "sex.label", "classif1.label", "time", "obs_value") |>
-    dplyr::select(dplyr::all_of(c("ref_area", "sex.label", "classif1.label", "time", "obs_value"))) |>
+    dplyr::select(dplyr::all_of(c("ref_area", "sex", "classif1", "time", "obs_value"))) |>
     magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year_col, yearly_working_hours_ilo_col))
 
   # Employment by sex and economic activity (thousands): EMP_TEMP_SEX_ECO_NB_A
   employment <- ilo_employment_data |>
-    # dplyr::select("ref_area", "sex.label", "classif1.label", "time", "obs_value") |>
-    dplyr::select(dplyr::all_of(c("ref_area", "sex.label", "classif1.label", "time", "obs_value"))) |>
+    dplyr::select(dplyr::all_of(c("ref_area", "sex", "classif1", "time", "obs_value"))) |>
     magrittr::set_colnames(c(country_code_col, sex_ilo_col, sector_col, year_col, employed_persons_ilo_col))
 
   # Convert Employed persons [1000 persons] to employed persons [persons] and
@@ -67,7 +65,6 @@ prepareRawILOData <- function(ilo_working_hours_data, ilo_employment_data){
     )
 
   return(ilo_hmw_data)
-
 }
 
 
@@ -248,7 +245,11 @@ calc_total_hours_worked <- function(.df,
 #'            `calc_total_hours_worked` functions in sequence on the raw FAO data.
 #' @param sex_ilo_col See `MWTools::ilo_cols`.
 #' @param sector_col See `mWTools::mw_constants`.
-#'
+#' @param ilo_agr_name,ilo_ind_name,ilo_ser_name,agr_name,ind_name,ser_name String names in `.df` and the outgoing data frame for the ILO economic sectors of interest to MW calculations.
+#' @param ilo_female_name,ilo_male_name,female_name,male_name String names in `.df` and the outgoing data frame for the ILO sex identifiers of interest to MW calculations.
+#'                                                            For now, we include only males and females.
+#'                                                            There are instances of "other" that will need to be dealt with
+#'                                                            in future releases.
 #'
 #' @export
 #'
@@ -264,18 +265,41 @@ calc_total_hours_worked <- function(.df,
 #'   get_broad.sector_data()
 get_broad.sector_data <- function(.df,
                                   sex_ilo_col = MWTools::ilo_cols$sex_ilo_col,
-                                  sector_col = MWTools::mw_constants$sector_col){
+                                  sector_col = MWTools::mw_constants$sector_col,
+                                  ilo_agr_name = MWTools::hmw_sector_constants$ilo_agr_name,
+                                  ilo_ind_name = MWTools::hmw_sector_constants$ilo_ind_name,
+                                  ilo_ser_name = MWTools::hmw_sector_constants$ilo_ser_name,
+                                  agr_name = MWTools::hmw_sector_constants$agr_name,
+                                  ind_name = MWTools::hmw_sector_constants$ind_name,
+                                  ser_name = MWTools::hmw_sector_constants$ser_name,
+                                  ilo_female_name = MWTools::hmw_sex_constants$ilo_female_name,
+                                  ilo_male_name = MWTools::hmw_sex_constants$ilo_male_name,
+                                  female_name = MWTools::hmw_sex_constants$female_name,
+                                  male_name = MWTools::hmw_sex_constants$male_name){
 
   .df |>
-    dplyr::filter(stringr::str_detect(.data[[sector_col]], pattern = stringr::fixed("(Broad sector):"))) |>
+    dplyr::filter(.data[[sector_col]] %in% c(ilo_agr_name, ilo_ind_name, ilo_ser_name)) |>
     dplyr::mutate(
-      "{sector_col}" := stringr::str_replace(.data[[sector_col]], ".*?\\:\\s", "")
-      ) |>
-    dplyr::filter(.data[[sex_ilo_col]] != "Total")
-
+      "{sector_col}" := dplyr::case_when(
+        .data[[sector_col]] == ilo_agr_name ~ agr_name,
+        .data[[sector_col]] == ilo_ind_name ~ ind_name,
+        .data[[sector_col]] == ilo_ser_name ~ ser_name,
+        TRUE ~ NA_character_
+      )
+    ) |>
+    # dplyr::filter(.data[[sex_ilo_col]] != "Total")
+    dplyr::filter(.data[[sex_ilo_col]] %in% c(ilo_female_name, ilo_male_name)) |>
+    dplyr::mutate(
+      "{sex_ilo_col}" := dplyr::case_when(
+        .data[[sex_ilo_col]] == ilo_female_name ~ female_name,
+        .data[[sex_ilo_col]] == ilo_male_name ~ male_name,
+        TRUE ~ NA_character_
+      )
+    )
 }
 
-#' Title
+
+#' Splits ILO labor data by sector
 #'
 #' @param .df A data frame containing the number of hours worked by broad sector.
 #'            Usually produced by calling the
@@ -597,6 +621,7 @@ calc_hmw_useful_energy <- function(.df,
 #'            `calc_hmw_primary_energy`, and
 #'            `calc_hmw_useful_energy` functions in sequence on the raw FAO data.
 #' @param year,sector_col,species,energy_col,stage_col,units_col See `MWTools::mw_constants`.
+#' @param concordance_species See `MWTools::conc_cols`.
 #' @param sex_ilo_col See `MWTools::ilo_cols`.
 #' @param country_col,hmw_region_code_col See `MWTools::conc_cols`.
 #' @param final_energy_col,primary_energy_col,useful_energy_hmw_col,labor_type_col See `MWTools::hmw_analysis_constants`.
@@ -622,7 +647,7 @@ calc_hmw_useful_energy <- function(.df,
 tidy_hmw_pfu <- function(.df,
                          year = MWTools::mw_cols$year,
                          sector_col = MWTools::mw_constants$sector_col,
-                         species = MWTools::mw_constants$species,
+                         concordance_species = MWTools::conc_cols$species,
                          energy_col = MWTools::mw_cols$e_dot,
                          stage_col = MWTools::mw_constants$stage_col,
                          units_col = MWTools::mw_cols$unit,
@@ -650,7 +675,7 @@ tidy_hmw_pfu <- function(.df,
         TRUE ~ "Unknown sector column value"
       )
     ) |>
-    dplyr::rename("{species}" := dplyr::all_of(sex_ilo_col)) |>
+    dplyr::rename("{concordance_species}" := dplyr::all_of(sex_ilo_col)) |>
     dplyr::mutate(
       "{energy_col}" := .data[[energy_col]] * 0.000000000001,
       "{units_col}" := "EJ", .before = dplyr::all_of(energy_col)
@@ -658,7 +683,7 @@ tidy_hmw_pfu <- function(.df,
     dplyr::group_by(
       dplyr::across({{ country_col }}),
       dplyr::across({{ year }}),
-      dplyr::across({{ species }}),
+      dplyr::across({{ concordance_species }}),
       dplyr::across({{ stage_col }}),
       dplyr::across({{ sector_col }}),
       dplyr::across({{ units_col }})

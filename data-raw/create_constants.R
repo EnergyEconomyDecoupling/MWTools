@@ -7,8 +7,8 @@ library(IEATools)
 # Constants for use in MWTools package
 #
 
-mw_constants <- list(country_name = "Country.name",
-                     species = "Species",
+mw_constants <- list(country_name = "Area",
+                     species = "Item",
                      value = "Value",
                      value_count = "Value.count",
                      sector_col = "Sector",
@@ -79,7 +79,7 @@ usethis::use_data(all_stages, overwrite = TRUE)
 # ILO bundled data columns
 #
 ilo_cols <- list(ref_area_col = "ref_area",
-                 sex_ilo_col = "Sex",
+                 sex_ilo_col = "sex",
                  yearly_working_hours_ilo_col = "Working.hours [hours/year]",
                  employed_persons_ilo_col = "Employed.persons [persons]",
                  employed_count = "Employed.persons.count",
@@ -113,16 +113,42 @@ usethis::use_data(hmw_analysis_constants, overwrite = TRUE)
 
 
 #
+# Human Muscle Work (hmw) sector constants
+#
+hmw_sector_constants <- list(ilo_agr_name = "ECO_SECTOR_AGR",
+                             ilo_ind_name = "ECO_SECTOR_IND",
+                             ilo_ser_name = "ECO_SECTOR_SER",
+                             agr_name = "Agriculture",
+                             ind_name = "Industry",
+                             ser_name = "Services")
+usethis::use_data(hmw_sector_constants, overwrite = TRUE)
+
+
+#
+# Human Muscle Work (hmw) sex constants
+#
+hmw_sex_constants <- list(ilo_female_name = "SEX_F",
+                          ilo_male_name = "SEX_M",
+                          ilo_other_name = "SEX_O",
+                          ilo_total_name = "SEX_T",
+                          female_name = "Female",
+                          male_name = "Male",
+                          other_name = "Other",
+                          total_name = "Total")
+usethis::use_data(hmw_sex_constants, overwrite = TRUE)
+
+
+#
 # Working animal species
 #
 mw_species <- list(asses = "Asses",
+                   buffaloes = "Buffalo",
                    camels = "Camels",
                    cattle = "Cattle",
-                   cattle_and_buffaloes = "Cattle and Buffaloes",
+                   # cattle_and_buffaloes = "Cattle and Buffaloes",
                    horses = "Horses",
                    mules = "Mules and hinnies",
-                   buffaloes = "Buffaloes",
-                   camelids_other = "Camelids, other",
+                   camelids_other = "Other camelids",
                    camelids = "Camelids",
                    human_females = "Human females",
                    human_males = "Human males",
@@ -133,11 +159,11 @@ usethis::use_data(mw_species, overwrite = TRUE)
 #
 # FAO data columns
 #
-fao_cols <- list(area_fao_col = "area",
-                 item_fao_col = "item",
-                 year_fao_col = "year",
-                 unit_fao_col = "unit",
-                 value_fao_col = "value")
+fao_cols <- list(area_fao_col = "Area",
+                 item_fao_col = "Item",
+                 year_fao_col = "Year",
+                 unit_fao_col = "Unit",
+                 value_fao_col = "Value")
 usethis::use_data(fao_cols, overwrite = TRUE)
 
 
@@ -206,7 +232,8 @@ conc_cols <- list(country_code_col = "Country.code",
                   amw_region_code_col = "AMW.Region.code",
                   hmw_region_code_col = "HMW.Region.code",
                   region_code_col = "Region.code",
-                  mapping_sheet = "Mapping")
+                  mapping_sheet = "Mapping",
+                  species = "Species")
 usethis::use_data(conc_cols, overwrite = TRUE)
 
 

@@ -21,7 +21,7 @@ add_row_col_meta(
   human_males = MWTools::mw_species$human_males,
   final = MWTools::all_stages$final,
   useful = MWTools::all_stages$useful,
-  species = MWTools::mw_constants$species,
+  concordance_species = MWTools::conc_cols$species,
   sector = MWTools::mw_constants$sector_col,
   stage = MWTools::mw_constants$stage_col,
   product = MWTools::mw_cols$product,
@@ -54,7 +54,9 @@ likely the output from \code{specify_last_stages()}.}
 
 \item{final, useful}{See \code{MWTools::all_stages}.}
 
-\item{species, sector, stage}{See \code{MWTools::mw_constants}}
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
+
+\item{sector, stage}{See \code{MWTools::mw_constants}}
 
 \item{product, last_stage}{See \code{MWTools::mw_cols}.}
 

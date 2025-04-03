@@ -7,7 +7,7 @@
 calc_yearly_feed(
   .df,
   amw_analysis_data_path = MWTools::amw_analysis_data_path(),
-  species = MWTools::mw_constants$species,
+  concordance_species = MWTools::conc_cols$species,
   method_source = MWTools::mw_constants$method_source,
   wa_feed_sheet = MWTools::amw_analysis_constants$wa_feed_sheet,
   wa_days_hours_sheet = MWTools::amw_analysis_constants$wa_days_hours_sheet,
@@ -39,7 +39,9 @@ over time. Set to the function \code{MWTools::amw_analysis_data_path()},
 by default, which returns the path the analysis data
 bundled with the \code{MWTools} package.}
 
-\item{species, method_source}{See \code{MWTools::mw_constants}.}
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
+
+\item{method_source}{See \code{MWTools::mw_constants}.}
 
 \item{wa_feed_sheet, wa_days_hours_sheet, working_days_col, nonworking_days_col, working_hours_col, working_day_feed_col, nonworking_day_feed_col, working_yearly_feed_col, nonwkg_yearly_feed_col, total_yearly_feed_col}{See \code{MWTools::amw_analysis_constants}.}
 

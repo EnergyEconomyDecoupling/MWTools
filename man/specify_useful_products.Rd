@@ -8,7 +8,7 @@ specify_useful_products(
   .df,
   product = MWTools::mw_cols$product,
   stage = MWTools::mw_constants$stage_col,
-  species = MWTools::mw_constants$species,
+  concordance_species = MWTools::conc_cols$species,
   useful = MWTools::all_stages$useful,
   notation = RCLabels::from_notation
 )
@@ -16,7 +16,9 @@ specify_useful_products(
 \arguments{
 \item{.df}{A data frame, usually the output of \code{MWTools::specify_primary_production()}.}
 
-\item{product, stage, species}{See \code{MWTools::mw_constants}.}
+\item{product, stage}{See \code{MWTools::mw_constants}.}
+
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
 
 \item{useful}{See \code{MWTools::all_stages}.}
 

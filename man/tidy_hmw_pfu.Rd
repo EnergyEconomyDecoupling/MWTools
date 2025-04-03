@@ -8,7 +8,7 @@ tidy_hmw_pfu(
   .df,
   year = MWTools::mw_cols$year,
   sector_col = MWTools::mw_constants$sector_col,
-  species = MWTools::mw_constants$species,
+  concordance_species = MWTools::conc_cols$species,
   energy_col = MWTools::mw_cols$e_dot,
   stage_col = MWTools::mw_constants$stage_col,
   units_col = MWTools::mw_cols$unit,
@@ -35,6 +35,8 @@ Usually produced by calling the
 \code{calc_hmw_useful_energy} functions in sequence on the raw FAO data.}
 
 \item{year, sector_col, species, energy_col, stage_col, units_col}{See \code{MWTools::mw_constants}.}
+
+\item{concordance_species}{See \code{MWTools::conc_cols}.}
 
 \item{sex_ilo_col}{See \code{MWTools::ilo_cols}.}
 

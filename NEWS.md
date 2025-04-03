@@ -7,7 +7,22 @@ Cite all releases with doi [10.5281/zenodo.7584858](https://doi.org/10.5281/zeno
 which always resolves to the latest release.
 
 
-# MWTools 0.2.9 (2023-12-25)
+## MWTools 0.2.10 (2025-04-02) 
+
+* Changed `tidy_pfu_data()` to manually split column names
+  after `tidyr::pivot_longer()`. 
+  Using the built-in `names_sep` functionality of `pivot_longer()` 
+  is not working for some data frames
+  (despite working for all tests).
+* Change column names to conform to new downloaded ILO
+  files.
+* Update column names to eliminate some "."s.
+* No new tests.
+    * Now at 452 tests, all passing.
+    * Test coverage remains at 100%.
+
+
+## MWTools 0.2.9 (2023-12-25) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10431628.svg)](https://doi.org/10.5281/zenodo.10431628)
 
 * Fix lingering problems with the vignette
   on some testing platforms.
@@ -20,7 +35,7 @@ which always resolves to the latest release.
     * Test coverage remains at 100%.
 
 
-# MWTools 0.2.8 (2023-12-23) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10429640.svg)](https://doi.org/10.5281/zenodo.10429640)
+## MWTools 0.2.8 (2023-12-23) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10429640.svg)](https://doi.org/10.5281/zenodo.10429640)
 
 * Fixing vignette.
 * No new tests.
@@ -28,7 +43,7 @@ which always resolves to the latest release.
     * Test coverage remains at 100%.
 
 
-# MWTools 0.2.7 (2023-12-23) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10427232.svg)](https://doi.org/10.5281/zenodo.10427232)
+## MWTools 0.2.7 (2023-12-23) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10427232.svg)](https://doi.org/10.5281/zenodo.10427232)
 
 * Fixing vignette.
 * No new tests.
@@ -36,7 +51,7 @@ which always resolves to the latest release.
     * Test coverage remains at 100%.
 
 
-# MWTools 0.2.6 (2023-12-21) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10420270.svg)](https://doi.org/10.5281/zenodo.10420270)
+## MWTools 0.2.6 (2023-12-21) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10420270.svg)](https://doi.org/10.5281/zenodo.10420270)
 
 * Added a statement of need to the README file.
 * Added a vignette, moving some example code 
@@ -46,7 +61,7 @@ which always resolves to the latest release.
     * Test coverage remains at 100%.
 
 
-# MWTools 0.2.5 (2023-12-12) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10365505.svg)](https://doi.org/10.5281/zenodo.10365505)
+## MWTools 0.2.5 (2023-12-12) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10365505.svg)](https://doi.org/10.5281/zenodo.10365505)
 
 * It appears there has been a change in the units column of the FAO data.
   "1000 Number" has been replaced by "An", 
@@ -64,8 +79,7 @@ which always resolves to the latest release.
     * Test coverage remains at 100%.
   
 
-
-# MWTools 0.2.4 (2023-12-10) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10342042.svg)](https://doi.org/10.5281/zenodo.10342042)
+## MWTools 0.2.4 (2023-12-10) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10342042.svg)](https://doi.org/10.5281/zenodo.10342042)
 
 * Fixed errors in author list.
 * Fixed GitHub pages deployment by adding package dependencies.
@@ -78,7 +92,7 @@ which always resolves to the latest release.
     * Test coverage remains at 100%.
 
 
-# MWTools 0.2.3 (2023-12-10) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10340976.svg)](https://doi.org/10.5281/zenodo.10340976)
+## MWTools 0.2.3 (2023-12-10) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10340976.svg)](https://doi.org/10.5281/zenodo.10340976)
 
 * Added spell checks and fixed several spelling errors.
 * Fixed pkgdown GitHub pages.
@@ -87,7 +101,7 @@ which always resolves to the latest release.
     * Test coverage remains at 100%.
 
 
-# MWTools 0.2.2 (2023-12-02) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10251505.svg)](https://doi.org/10.5281/zenodo.10251505)
+## MWTools 0.2.2 (2023-12-02) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10251505.svg)](https://doi.org/10.5281/zenodo.10251505)
 
 * Added code of conduct and contributing pages to documentation.
 * No new tests.
@@ -95,7 +109,7 @@ which always resolves to the latest release.
     * Test coverage remains at 100%.
 
 
-# MWTools 0.2.1 (2023-08-20) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8266809.svg)](https://doi.org/10.5281/zenodo.8266809)
+## MWTools 0.2.1 (2023-08-20) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8266809.svg)](https://doi.org/10.5281/zenodo.8266809)
 
 * Adding tests for `calc_amw_functions.R` to ensure 100% test coverage.
 * Tests:
@@ -103,7 +117,7 @@ which always resolves to the latest release.
     * Test coverage is at 100%.
 
 
-# MWTools 0.2.0 (2023-08-12) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8240992.svg)](https://doi.org/10.5281/zenodo.8240992)
+## MWTools 0.2.0 (2023-08-12) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8240992.svg)](https://doi.org/10.5281/zenodo.8240992)
 
 * Add DOI in reference and citation places.
 * Can now change between TJ and ktoe units
@@ -118,12 +132,12 @@ which always resolves to the latest release.
     * Test coverage is at 99.17%.
 
 
-# MWTools 0.1.2 (2023-01-30) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7584859.svg)](https://doi.org/10.5281/zenodo.7584859)
+## MWTools 0.1.2 (2023-01-30) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7584859.svg)](https://doi.org/10.5281/zenodo.7584859)
 
 * Adding Zenodo badge
 
 
-# MWTools 0.1.1 (2023-01-28)
+## MWTools 0.1.1 (2023-01-28)
 
 * Responded to changes in `tidyselect`, 
   eliminating warnings from several `dplyr::all_of()` invocations.
@@ -146,6 +160,6 @@ which always resolves to the latest release.
   Species (or Sex), Stage, Sector, and E.dot.
 
 
-# MWTools 0.1.0
+## MWTools 0.1.0
 
 * Added a `NEWS.md` file to track changes to the package.

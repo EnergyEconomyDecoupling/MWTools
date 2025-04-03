@@ -1,7 +1,7 @@
 Package: MWTools
 Title: Functions For Calculation of Muscle Work Within the PSUT Framework
-Version: 0.2.9
-Date: 2023-12-25
+Version: 0.2.10
+Date: 2025-04-02
 Authors@R: c(person(given = "Zeke",
                     family = "Marshall",
                     role = c("aut", "cre"),
@@ -21,7 +21,10 @@ Language: en-US
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
+Config/testthat/edition: 3
+Config/testthat/parallel: true
+Config/testthat/start-first: psut, specify, calc_hmw_functions, calc_amw_functions
 Imports:
     assertthat,
     dplyr,
@@ -51,6 +54,5 @@ Remotes:
     github::EnergyEconomyDecoupling/PFUSetup
 Depends: 
     R (>= 2.10)
-Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://energyeconomydecoupling.github.io/MWTools/
